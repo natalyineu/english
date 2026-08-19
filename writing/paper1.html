@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing — Paper 1</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.task-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow);
+}
+.notice-box {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 20px 0;
+  background: var(--bg);
+  font-family: 'Lora', Georgia, serif;
+  font-size: .93rem;
+  line-height: 1.7;
+}
+.notice-box h3 { font-size: 1rem; text-align: center; margin-bottom: 12px; font-family: 'Inter', sans-serif; }
+.word-count-badge {
+  display: inline-block;
+  background: var(--red);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.bullet-points { margin: 12px 0 0 0; list-style: disc; padding-left: 20px; font-size: .9rem; color: var(--text); }
+.bullet-points li { margin-bottom: 6px; }
+.write-area {
+  width: 100%;
+  min-height: 200px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: .95rem;
+  line-height: 1.8;
+  background: var(--card);
+  color: var(--text);
+  resize: vertical;
+  margin-top: 16px;
+  transition: border-color .15s;
+}
+.write-area:focus { outline: none; border-color: var(--sel); }
+.wc-display { font-size: .8rem; color: var(--muted); margin-top: 6px; }
+.criteria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.criterion {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background: var(--bg);
+}
+.criterion-name { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: 4px; }
+.criterion-desc { font-size: .82rem; color: var(--text); line-height: 1.5; }
+.model-toggle {
+  background: none;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  margin-top: 16px;
+  transition: border-color .15s, color .15s;
+}
+.model-toggle:hover { border-color: var(--sel); color: var(--sel); }
+.model-answer {
+  display: none;
+  margin-top: 16px;
+  background: var(--ok-bg);
+  border: 1px solid var(--ok);
+  border-radius: 8px;
+  padding: 20px 24px;
+  font-family: 'Lora', Georgia, serif;
+  font-size: .93rem;
+  line-height: 1.8;
+  color: var(--text);
+}
+.model-answer.visible { display: block; }
+.model-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ok); margin-bottom: 10px; display: block; font-family: 'Inter', sans-serif; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="#" class="nav-link">Paper 2–7 <span class="badge">Soon</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="paper1.html" class="nav-link active">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="#" class="nav-link">Paper 2–7 <span class="badge">Soon</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="#" class="nav-link">Paper 2–8 <span class="badge">Soon</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a> <span>›</span>
+        <a href="../index.html">Writing</a> <span>›</span> Paper 1
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Writing — Practice Paper 1</h1>
+      <p class="page-subtitle">24 marks · ~1 hour 5 minutes · 2 tasks · Write your response, then reveal the model answer</p>
+
+      <!-- Assessment criteria -->
+      <div class="task-card">
+        <div class="part-header">
+          <span class="part-label">Assessment</span>
+          <span class="part-title">How Writing is Marked</span>
+          <span class="part-marks">12 marks each</span>
+        </div>
+        <p class="part-instructions">Each writing task is marked out of 12 across four criteria (3 marks each):</p>
+        <div class="criteria-grid">
+          <div class="criterion">
+            <div class="criterion-name">Communicative achievement</div>
+            <div class="criterion-desc">Does the writing achieve its purpose and reach the intended reader?</div>
+          </div>
+          <div class="criterion">
+            <div class="criterion-name">Content</div>
+            <div class="criterion-desc">Are all the required points addressed fully and appropriately?</div>
+          </div>
+          <div class="criterion">
+            <div class="criterion-name">Organisation</div>
+            <div class="criterion-desc">Is the writing well structured with clear paragraphs and linking?</div>
+          </div>
+          <div class="criterion">
+            <div class="criterion-name">Language</div>
+            <div class="criterion-desc">Is the range of vocabulary and grammar appropriate and accurate?</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Task 1 -->
+      <div class="task-card">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Formal Email / Letter</span>
+          <span class="part-marks">12 marks</span>
+        </div>
+        <span class="word-count-badge">100–150 words</span>
+        <p class="part-instructions" style="margin-bottom:16px">Write an email to enter the competition advertised in the notice below. Mention:</p>
+        <ul class="bullet-points">
+          <li>when you use the centre</li>
+          <li>why you want the membership</li>
+          <li>how to improve our facilities</li>
+        </ul>
+
+        <div class="notice-box">
+          <h3>Free Leisure Centre Membership: Competition</h3>
+          <p>If you sometimes use our leisure centre, but you are not a member, why not win a year's free membership? All you have to do is write to us and tell us how we can make your experience unforgettable!</p>
+          <p>We will post the name of our winner on our page and send you your free membership card!</p>
+          <p><strong>Write to:</strong> Joanneblaire@llc.com</p>
+        </div>
+
+        <textarea class="write-area" id="task1-text" placeholder="Write your email here (100–150 words)..." oninput="countWords('task1-text', 'wc1', 100, 150)"></textarea>
+        <div class="wc-display" id="wc1">0 words</div>
+
+        <button class="model-toggle" onclick="toggleModel('model1', this)">Show model answer</button>
+        <div class="model-answer" id="model1">
+          <span class="model-label">Model answer</span>
+          <p>Dear Ms Blair,</p>
+          <p>I am writing to enter your free membership competition. I visit your leisure centre two or three times a week, mainly to use the swimming pool and the gym. I have been going there for about six months.</p>
+          <p>I would love to win the free membership because it would save me a considerable amount of money each month, which I could then spend on sports equipment.</p>
+          <p>In terms of improving the facilities, I would suggest extending the opening hours at weekends to at least ten o'clock in the evening. Many people work during the day and find it difficult to visit before closing time.</p>
+          <p>I hope you will consider my entry. I look forward to hearing from you.</p>
+          <p>Yours sincerely,<br>[Your name]</p>
+        </div>
+      </div>
+
+      <!-- Task 2 -->
+      <div class="task-card">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Personal / Narrative / Descriptive</span>
+          <span class="part-marks">12 marks</span>
+        </div>
+        <span class="word-count-badge">150–200 words</span>
+        <p class="part-instructions">Write an essay for your college magazine entitled <strong>'My earliest childhood memories'</strong>. Describe your clearest memory and say why you remember it.</p>
+
+        <textarea class="write-area" id="task2-text" placeholder="Write your essay here (150–200 words)..." oninput="countWords('task2-text', 'wc2', 150, 200)" style="min-height:260px"></textarea>
+        <div class="wc-display" id="wc2">0 words</div>
+
+        <button class="model-toggle" onclick="toggleModel('model2', this)">Show model answer</button>
+        <div class="model-answer" id="model2">
+          <span class="model-label">Model answer</span>
+          <p>When I think back to my earliest years, one memory stands out more vividly than any other: the day my grandfather taught me to ride a bicycle.</p>
+          <p>I must have been about five or six years old. It was a warm Saturday morning in summer, and we were in the park near my grandmother's house. My grandfather held the back of the saddle as I pedalled frantically, convinced I would fall the moment he let go. When I finally looked back and realised he had released the bike several seconds earlier, the mixture of surprise and pride I felt was unlike anything I had experienced before.</p>
+          <p>I think I remember this so clearly because it was the first time I had truly achieved something on my own. My grandfather's patience and encouragement on that morning taught me something I have carried through life: that the hardest part of learning anything is simply trusting yourself to try.</p>
+          <p>That bicycle has long since gone, but the feeling of that morning remains as sharp as ever.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+function countWords(textareaId, displayId, min, max) {
+  const text = document.getElementById(textareaId).value.trim();
+  const count = text ? text.split(/\s+/).length : 0;
+  const el = document.getElementById(displayId);
+  let color = 'var(--ok)';
+  if (count < min) color = 'var(--err)';
+  else if (count > max) color = 'var(--err)';
+  el.innerHTML = '<span style="color:' + color + ';font-weight:600">' + count + ' words</span> (target: ' + min + '–' + max + ')';
+}
+
+function toggleModel(id, btn) {
+  const el = document.getElementById(id);
+  if (el.classList.contains('visible')) {
+    el.classList.remove('visible');
+    btn.textContent = 'Show model answer';
+  } else {
+    el.classList.add('visible');
+    btn.textContent = 'Hide model answer';
+  }
+}
+</script>
+</body>
+</html>

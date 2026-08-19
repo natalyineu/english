@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading — Paper 1</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="site-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="paper1.html" class="nav-link active">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="#" class="nav-link">Paper 2 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 3 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 6 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 7 <span class="badge">Soon</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="#" class="nav-link">Paper 2–7 <span class="badge">Soon</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="#" class="nav-link">Paper 2–8 <span class="badge">Soon</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <a href="../index.html#reading">Reading</a>
+        <span>›</span>
+        Paper 1
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Reading — Practice Paper 1</h1>
+      <p class="page-subtitle">26 marks · ~1 hour 5 minutes · 4 parts · Select your answers then click Check</p>
+
+      <!-- Total score card (updates via JS) -->
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 26</span></div>
+        <div class="score-pass">Pass mark: 75/150 total (reading is 26 of those marks)</div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 1 — Multiple Choice
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part1">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Multiple Choice</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read the text and choose the correct answer for each question.</p>
+
+        <div class="passage">
+          <h3>There's a reason why we love computer games</h3>
+          <p>Computer games have become as much a part of our entertainment world as books and movies. Why is it that so many of us are drawn to the computer monitor or TV screen? A bit of history might help explain the phenomenon. Originally, computers were all work and no play, being expensive to build and operate. But computer engineers and designers, being overgrown kids after all, soon began to get comfortable with their big machines. It occurred to some of them that it might be a good idea to have the computer show some spaceships and planets cruising around the galaxy.</p>
+          <p>And in the 1960s a group of fun-loving computer geniuses created a game called <em>SpaceWar</em> in their idle hours. <em>SpaceWar</em> was well received by geniuses and many others as well, which motivated the geniuses to design some more fun stuff. Somehow the visual element of the games activated the imagination. Over time we got <em>Pong</em>, <em>PacMan</em> and a continually evolving string of games.</p>
+          <p>By the late 1980s, with the invention of <em>Sim City</em>, computer games software became quite sophisticated. This product expanded on what was going on in all the previous games; the players were drawn into an imaginary world. But <em>Sim City</em> actually allowed the user to create amazing cities and even worlds. Not unlike books and movies, such video games were therefore mentally very satisfying.</p>
+          <p>Also in the 1980s, a group of computer programmers began creating software that would show moving figures. The figures were stick people, but they could move their bodies to music. They had no facial features, but it was very exciting to think what might come with more powerful computers.</p>
+          <p>We have come a long way since then. The power of computers grew massively and the realism of games has taken a huge leap forward. A good computer game draws you in to another world and, unlike a book or a movie, it offers an interactive experience. There are now hundreds of options, numerous consoles to choose from and regular upgrades to keep the excitement high. You can really develop some hand-eye coordination by playing many of the current titles out there. But the biggest reason we love our computer games is that they capture our imagination in a variety of interactive ways.</p>
+        </div>
+
+        <div class="questions" id="p1-questions">
+          <!-- Q1 -->
+          <div class="question" data-correct="b">
+            <p class="question-text">1. <em>SpaceWar</em> was developed</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> as part of a serious computer project.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> by computer experts in their spare time.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> to show people what space travel is like.</button>
+            </div>
+          </div>
+          <!-- Q2 -->
+          <div class="question" data-correct="c">
+            <p class="question-text">2. After <em>SpaceWar</em>, more games appeared because</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> computer design improved.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> it wasn't exciting enough.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> people enjoyed playing it.</button>
+            </div>
+          </div>
+          <!-- Q3 -->
+          <div class="question" data-correct="a">
+            <p class="question-text">3. <em>Sim City</em> was different because it</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> gave players more power.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> showed cities in the future.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> depended on advanced computers.</button>
+            </div>
+          </div>
+          <!-- Q4 -->
+          <div class="question" data-correct="a">
+            <p class="question-text">4. The first moving figures</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> were very simply drawn.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> were easy to tell apart.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> weren't able to dance.</button>
+            </div>
+          </div>
+          <!-- Q5 -->
+          <div class="question" data-correct="b">
+            <p class="question-text">5. According to the writer, many modern computer games</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> take their themes from movies.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> allow players to be part of the game.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> are only effective if you play them online.</button>
+            </div>
+          </div>
+          <!-- Q6 -->
+          <div class="question" data-correct="c">
+            <p class="question-text">6. One of the benefits of computer games is that</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> players learn to develop games themselves.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> special equipment is never necessary.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> they improve physical abilities.</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkMC('part1', 6)">Check answers</button>
+        <div class="part-score" id="part1-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 2 — Gap-fill
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part2">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Sentence Gap-fill</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read the text. Use the sentences A–G to complete the gaps. Choose one sentence per gap. There is one extra sentence you will not need.</p>
+
+        <!-- Sentence options -->
+        <div class="gap-options">
+          <div class="gap-option-card"><span class="go-letter">A</span> Parents created secure environments to play in</div>
+          <div class="gap-option-card"><span class="go-letter">B</span> They've improvised and regulated their play by making up their own rules and characters</div>
+          <div class="gap-option-card"><span class="go-letter">C</span> Researchers recently repeated this experiment, and found very different results</div>
+          <div class="gap-option-card"><span class="go-letter">D</span> This recent trend has been shown to have an impact on their imagination</div>
+          <div class="gap-option-card"><span class="go-letter">E</span> As a result some teachers think playing is a waste of time</div>
+          <div class="gap-option-card"><span class="go-letter">F</span> This means that children talk to themselves about what they are going to do and how they are going to do it</div>
+          <div class="gap-option-card"><span class="go-letter">G</span> By comparing two studies, we can now prove that children's ability to self-regulate has been reduced in the past sixty years</div>
+        </div>
+
+        <div class="gaptext">
+          <p>Throughout history children have played in groups and taken part in imaginative games. They've pretended to be pirates and princesses, heroes and villains.
+            <select class="gap-select" id="gap-1" data-correct="B"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select>
+            However, the way in which children play has changed during recent times. Children now have a much wider range of toys to choose from and as a result spend less time playing pretend games.
+            <select class="gap-select" id="gap-2" data-correct="D"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select>
+          </p>
+          <p>Pretend games actually help children to develop an important learning skill called 'executive function', which improves their ability to self-regulate. Kids with good self-regulation are able to manage their emotions and behaviour, and display self-control and discipline.</p>
+          <p>
+            <select class="gap-select" id="gap-3" data-correct="G"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select>
+            In the late 1940s psychologists carried out a self-regulation study, in which young children were asked to perform a number of different exercises. One of the exercises in the experiment was to stand perfectly still without moving, which most three-year-olds were good at.
+            <select class="gap-select" id="gap-4" data-correct="C"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select>
+            They found that today's five-year-old children could only perform at the same level as three-year-olds in the 1940s and today's seven-year-olds were only just reaching the level of a five-year-old then.
+          </p>
+          <p>A child's level of 'executive function' can have a big effect on the success they have at school, as children learn more when they can pay attention and manage their feelings. One reason imaginative play is such a vital tool for building self-control is because it teaches children to engage in 'private speech'.
+            <select class="gap-select" id="gap-5" data-correct="F"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select>
+            When children's play is more structured, their private speech declines.
+          </p>
+          <p>Children are now starting their formal lessons in school at a much younger age and classes are often geared towards testing children and preparing them for exams.
+            <select class="gap-select" id="gap-6" data-correct="E"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select>
+            But it now seems that this environment we've created, which was designed to give children every advantage in life, may actually have deprived them of a vital activity. Play time, it seems, is extremely important for children.
+          </p>
+        </div>
+
+        <button class="check-btn" onclick="checkGapFill()">Check answers</button>
+        <div class="part-score" id="part2-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 3 — Matching
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part3">
+        <div class="part-header">
+          <span class="part-label">Part 3</span>
+          <span class="part-title">Matching</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read the four texts. For each question, choose which text (A, B, C or D) gives you the answer.</p>
+
+        <div class="text-grid">
+          <div class="text-block">
+            <div class="text-block-label">TEXT A</div>
+            <div class="text-block-body">Ideal for the weekend sailor, this boat can be towed by car and trailer to and from your house to wherever you would like to sail. Sailing areas have slipways where you can reverse your boat into water and then park your car. You may decide to store your boat near the water, in a boatyard or a caravan park. The boat can also be moored on the water. The safest and most secure way is to use a marina. These can easily be found on the coast, inland waterways and lakes.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">TEXT B</div>
+            <div class="text-block-body">When I was thirteen and my brother was ten, this farmer on a farm where we were staying on holiday took us a long way out to sea in his boat to do some fishing. It was a fantastic day. We had a great time, caught some fish and then very quickly the skies turned dark grey and we were in a race against time to get back to the coast as the winds got up and the rain poured down. It's only thinking back that I realise the danger we were in.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">TEXT C</div>
+            <div class="text-block-body">Before you start, ask someone who is experienced to show you the equipment on your boat. All boats are different. You should know the names of the different pieces of equipment and should have prepared your boat for the water at least once by yourself before setting sail. Your first sailing experience should be on a small inland lake. Pick a nice day with a steady light breeze and no rough weather. If you have a friend who can sail, take them along. Their experience will be invaluable.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">TEXT D</div>
+            <div class="text-block-body">We are a small club established to promote safety at sea and small boat angling. We have more than 150 members with over 90 boats. Members store their boats on club land, benefiting from full security. Boat sizes range from small outboard-driven dinghies up to those with a maximum length of 10.5 metres. The club aims to cater for the needs of sea anglers fishing from small boats within club waters that extend from St Catherine's Point in the East to Portland Bill in the West.</div>
+          </div>
+        </div>
+
+        <div class="matching-questions" id="p3-questions">
+          <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:4px">Which text…</p>
+          <div class="match-row">
+            <span class="match-q">1. describes a personal experience?</span>
+            <select class="match-select" id="m1" data-correct="B"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">2. encourages people to join an organisation?</span>
+            <select class="match-select" id="m2" data-correct="D"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">3. is aimed at potential purchasers?</span>
+            <select class="match-select" id="m3" data-correct="A"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+          </div>
+          <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-top:16px;margin-bottom:4px">Which text provides the answer to…</p>
+          <div class="match-row">
+            <span class="match-q">4. Where's the best place to store a boat?</span>
+            <select class="match-select" id="m4" data-correct="A"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">5. What sort of weather did someone have to cope with?</span>
+            <select class="match-select" id="m5" data-correct="B"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">6. Who wants to avoid accidents at sea?</span>
+            <select class="match-select" id="m6" data-correct="D"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">7. Where's the best place to learn to sail?</span>
+            <select class="match-select" id="m7" data-correct="C"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkMatching()">Check answers</button>
+        <div class="part-score" id="part3-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 4 — Short Answers
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part4">
+        <div class="part-header">
+          <span class="part-label">Part 4</span>
+          <span class="part-title">Short Answers</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read the text and answer the questions. Use a maximum of <strong>five words</strong> for each answer. Type your answer, then click Reveal to see the model answer.</p>
+
+        <div class="passage">
+          <h3>The Panama Canal</h3>
+          <p>The Panama Canal is a vital shipping lane linking the Atlantic and Pacific Oceans. Opened in 1914, it was one of the greatest engineering projects of the modern age. However, the concept of a canal through the Isthmus of Panama, a comparatively narrow strip of land linking North and South America, had been thought of as far back as the 16th century. When the Spanish explorer Vasco Núñez de Balboa led an expedition across the Isthmus of Panama in 1513, he saw the potential for a passage that would allow access from sea to sea without having to navigate around Cape Horn at the southernmost tip of South America.</p>
+          <p>In 1534, Charles V, King of Spain, formally ordered further investigation into the possibility of the construction of a ship canal across the Isthmus. The surveyed route followed, to a large extent, the course of the present-day Panama Canal. However, the governor politely informed Charles V that the undertaking of such an engineering operation was impossible.</p>
+          <p>Not until the late 18th century was a new Panama Canal construction project given much serious thought. This was when the historic 1789–1794 scientific expedition led by Alessandro Malaspina landed in Panama. By actually planning the excavation of the Panama Canal, Malaspina was able, for the first time, to demonstrate the feasibility of such a huge project.</p>
+          <p>Overland links continued on the Isthmus of Panama, facilitated by the construction of a railway in 1855. By then, Panama was free of Spanish colonial rule, but the idea of a water route through the Isthmus of Panama had not been forgotten. A new phase in the history of the Panama Canal was beginning.</p>
+          <p>In 1882, a French company under the renowned engineer Ferdinand de Lesseps, who had earlier built the Suez Canal, finally set about the construction. Their attempt was a disaster. Malaria and yellow fever killed most of the workforce, equipment failed in the heat and humidity, and geological and hydrological considerations were badly managed. The project was abandoned in 1889 at the expense of over 20,000 lives.</p>
+          <p>The construction of the Panama Canal would finally be realized when the United States, during the presidency of Theodore Roosevelt, bought out the French company, its equipment and excavations. Work began in 1904 and the Panama Canal was finally opened in 1914. The two great oceans, the Atlantic and the Pacific, had finally been linked through the landmass of Latin America.</p>
+          <p>The canal is approximately 80 kilometres long and incorporates a series of three locks, which are basically watertight compartments. The first raises ships to the Gatun Lake, the second lowers ships to another lake and the third lowers ships to sea level. The whole trip takes between eight to ten hours.</p>
+        </div>
+
+        <div class="sa-questions">
+          <div class="sa-row">
+            <p class="sa-q">1. Which part of South America did Balboa want to avoid?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa1">✓ Cape Horn</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">2. What was Charles V told about his plan for a canal?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa2">✓ It was impossible.</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">3. What did Malaspina do to show the canal could be built?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa3">✓ He planned the excavation.</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">4. What made the crossing of Panama easier in the 19th century?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa4">✓ (The construction of) a railway</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">5. What important political development occurred in the 19th century?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa5">✓ The end of Spanish rule</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">6. How long did the French attempt at canal construction last?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa6">✓ 7 years / 1882–1889</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">7. What happened to the French company?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa7">✓ It was sold (to USA).</div>
+          </div>
+        </div>
+
+        <button class="check-btn reveal" onclick="revealAnswers()">Reveal model answers</button>
+        <div class="part-score" id="part4-score"></div>
+      </div>
+
+    </div><!-- page-content -->
+  </main>
+</div>
+
+<script>
+// ── Scores ──
+const scores = { part1: 0, part2: 0, part3: 0, part4: 7 };
+
+function updateTotal() {
+  const total = scores.part1 + scores.part2 + scores.part3;
+  const el = document.getElementById('totalScore');
+  const num = document.getElementById('scoreNum');
+  el.style.display = 'block';
+  num.innerHTML = total + ' <span>/ 19</span>';
+}
+
+// ── Part 1: Multiple Choice ──
+function selectOption(btn) {
+  const qDiv = btn.closest('.question');
+  if (qDiv.dataset.checked) return;
+  qDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkMC(partId, total) {
+  const container = document.getElementById(partId + '-questions') || document.getElementById(partId).querySelector('.questions');
+  const questions = container.querySelectorAll('.question');
+  let score = 0;
+  questions.forEach(q => {
+    const correct = q.dataset.correct;
+    q.dataset.checked = '1';
+    const selected = q.querySelector('.option-btn.selected');
+    q.querySelectorAll('.option-btn').forEach(btn => {
+      if (btn.dataset.value === correct) btn.classList.add('correct');
+      else if (btn.classList.contains('selected')) btn.classList.add('wrong');
+      btn.disabled = true;
+    });
+    if (selected && selected.dataset.value === correct) score++;
+  });
+  scores[partId] = score;
+  const el = document.getElementById(partId + '-score');
+  el.textContent = 'Part 1 score: ' + score + ' / ' + total;
+  el.className = 'part-score visible' + (score === total ? ' perfect' : '');
+  updateTotal();
+}
+
+// ── Part 2: Gap-fill ──
+function checkGapFill() {
+  const gaps = document.querySelectorAll('.gap-select');
+  let score = 0;
+  gaps.forEach(sel => {
+    const correct = sel.dataset.correct;
+    if (sel.value === correct) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+  });
+  scores.part2 = score;
+  const el = document.getElementById('part2-score');
+  el.textContent = 'Part 2 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+// ── Part 3: Matching ──
+function checkMatching() {
+  const selects = document.querySelectorAll('.match-select');
+  let score = 0;
+  selects.forEach(sel => {
+    const correct = sel.dataset.correct;
+    if (sel.value === correct) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+  });
+  scores.part3 = score;
+  const el = document.getElementById('part3-score');
+  el.textContent = 'Part 3 score: ' + score + ' / 7';
+  el.className = 'part-score visible' + (score === 7 ? ' perfect' : '');
+  updateTotal();
+}
+
+// ── Part 4: Short Answers (reveal only) ──
+function revealAnswers() {
+  for (let i = 1; i <= 7; i++) {
+    document.getElementById('sa' + i).classList.add('visible');
+  }
+  const el = document.getElementById('part4-score');
+  el.textContent = 'Model answers revealed — mark yourself: each correct answer = 1 mark (7 total)';
+  el.className = 'part-score visible';
+}
+</script>
+</body>
+</html>
