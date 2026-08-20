@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading — Paper 2</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+</head>
+<body>
+<div class="site-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="paper2.html" class="nav-link active">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <a href="../index.html#reading">Reading</a>
+        <span>›</span>
+        Paper 2
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Reading — Practice Paper 2</h1>
+      <p class="page-subtitle">26 marks · ~1 hour 5 minutes · 4 parts · Select your answers then click Check</p>
+
+      <!-- Total score card -->
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 19</span></div>
+        <div class="score-pass">Pass mark: 75/150 total (reading is 26 of those marks)</div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 1 — Multiple Choice
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part1">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Multiple Choice</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read the text and choose the correct answer for each question.</p>
+
+        <div class="passage">
+          <h3>The benefits of learning music</h3>
+          <p>Learning to play a musical instrument is often thought of as a purely creative pursuit, but research increasingly suggests that musical training offers benefits that extend far beyond the world of art. Scientists and educators have found that children who study music consistently outperform their peers in areas such as mathematics, reading, and memory tasks.</p>
+          <p>One reason for this may lie in the way music engages the brain. Playing an instrument requires the simultaneous use of multiple cognitive functions: reading notation, coordinating hand movements, listening carefully and remembering sequences. This kind of complex mental workout appears to strengthen neural connections in ways that transfer to other subjects.</p>
+          <p>Music education also appears to support social development. Ensemble playing, whether in a school orchestra or a small band, teaches young people to listen to one another, to follow a shared goal and to manage both success and failure as a group. These are skills that prove valuable throughout life.</p>
+          <p>Furthermore, learning an instrument develops patience and persistence. Unlike many school subjects where progress can be measured quickly, musical proficiency comes slowly and demands sustained effort over months and years. Students who persevere often develop a tolerance for challenge that benefits them in all areas of their studies.</p>
+          <p>Despite these well-documented benefits, music education continues to face cuts in schools around the world, often seen as a luxury rather than a core subject. Many educators and parents argue that this is short-sighted, and that a rounded education should always include the arts alongside the sciences.</p>
+        </div>
+
+        <div class="questions" id="p1-questions">
+          <!-- Q1 -->
+          <div class="question" data-correct="b">
+            <p class="question-text">1. According to the passage, children who study music</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> become professional musicians more easily.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> tend to perform better in other school subjects.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> spend less time on other activities.</button>
+            </div>
+          </div>
+          <!-- Q2 -->
+          <div class="question" data-correct="a">
+            <p class="question-text">2. The passage suggests that playing a musical instrument</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> exercises several brain functions at the same time.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> mainly improves memory skills.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> is most beneficial for young children.</button>
+            </div>
+          </div>
+          <!-- Q3 -->
+          <div class="question" data-correct="c">
+            <p class="question-text">3. Ensemble playing is said to help young people</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> develop individual performance skills.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> become more competitive.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> learn to work towards a shared goal.</button>
+            </div>
+          </div>
+          <!-- Q4 -->
+          <div class="question" data-correct="b">
+            <p class="question-text">4. According to the passage, learning an instrument</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> shows quick results in most students.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> requires long-term effort and patience.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> is easier than learning academic subjects.</button>
+            </div>
+          </div>
+          <!-- Q5 -->
+          <div class="question" data-correct="a">
+            <p class="question-text">5. The writer suggests that cuts to music education are</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> unwise and short-sighted.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> necessary to save money.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> supported by most parents.</button>
+            </div>
+          </div>
+          <!-- Q6 -->
+          <div class="question" data-correct="c">
+            <p class="question-text">6. What is the main purpose of this passage?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> To encourage readers to take up a musical instrument.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> To compare music education in different countries.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> To argue that music should be part of all children's education.</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkMC('part1', 6)">Check answers</button>
+        <div class="part-score" id="part1-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 2 — Gap-fill
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part2">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Gap-fill</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Choose the correct word from the dropdown to complete each gap in the text.</p>
+
+        <div class="gaptext">
+          <p>Maintaining a healthy
+            <select class="gap-select" id="gap-1" data-correct="diet"><option value="">— select —</option><option>diet</option><option>menu</option><option>recipe</option><option>course</option><option>plan</option></select>
+            is one of the most important things we can do for our wellbeing. Good
+            <select class="gap-select" id="gap-2" data-correct="nutrition"><option value="">— select —</option><option>nutrition</option><option>supplement</option><option>ingredient</option><option>flavour</option><option>protein</option></select>
+            provides our bodies with the energy and nutrients they need to function properly. Experts recommend eating a
+            <select class="gap-select" id="gap-3" data-correct="balanced"><option value="">— select —</option><option>balanced</option><option>mixed</option><option>various</option><option>combined</option><option>separate</option></select>
+            variety of foods from all the main food groups every day. Reducing the
+            <select class="gap-select" id="gap-4" data-correct="intake"><option value="">— select —</option><option>intake</option><option>output</option><option>amount</option><option>portion</option><option>supply</option></select>
+            of processed foods and added sugars is particularly important for long-term health. Many people find it helpful to develop regular eating
+            <select class="gap-select" id="gap-5" data-correct="habits"><option value="">— select —</option><option>habits</option><option>patterns</option><option>routines</option><option>customs</option><option>practices</option></select>,
+            such as avoiding large meals late at night. Getting enough vitamins and minerals is
+            <select class="gap-select" id="gap-6" data-correct="essential"><option value="">— select —</option><option>essential</option><option>optional</option><option>useful</option><option>helpful</option><option>natural</option></select>
+            for the body to repair itself and fight disease.
+          </p>
+        </div>
+
+        <button class="check-btn" onclick="checkGapFill()">Check answers</button>
+        <div class="part-score" id="part2-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 3 — Matching
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part3">
+        <div class="part-header">
+          <span class="part-label">Part 3</span>
+          <span class="part-title">Matching</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read the five book descriptions. For each statement, choose which book (A–E) it refers to.</p>
+
+        <div class="text-grid">
+          <div class="text-block">
+            <div class="text-block-label">BOOK A — The Mountain Path</div>
+            <div class="text-block-body">A memoir about a woman who spent a year hiking in the Andes, describing both the physical challenges and the personal transformation she experienced.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">BOOK B — City Lights</div>
+            <div class="text-block-body">A novel set in 1960s New York, following a young jazz musician's rise from poverty to fame, with vivid descriptions of the city's music scene.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">BOOK C — The Last Harvest</div>
+            <div class="text-block-body">A documentary account of farming communities facing the effects of climate change, featuring interviews with farmers across three continents.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">BOOK D — Small Wonders</div>
+            <div class="text-block-body">A collection of short stories about everyday moments of unexpected kindness between strangers in a busy city.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">BOOK E — Future Cities</div>
+            <div class="text-block-body">A non-fiction exploration of how urban designers are rethinking cities to make them more sustainable and liveable in the coming decades.</div>
+          </div>
+        </div>
+
+        <div class="matching-questions" id="p3-questions">
+          <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:4px">Which book…</p>
+          <div class="match-row">
+            <span class="match-q">1. describes how agriculture is being affected by changes in the world's climate.</span>
+            <select class="match-select" id="m1" data-correct="C"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">2. The writer shares personal experiences of challenging physical activity in a foreign country.</span>
+            <select class="match-select" id="m2" data-correct="A"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">3. deals with human connections in an urban environment.</span>
+            <select class="match-select" id="m3" data-correct="D"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">4. The main character works in the performing arts.</span>
+            <select class="match-select" id="m4" data-correct="B"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">5. is concerned with how we might design better cities in the future.</span>
+            <select class="match-select" id="m5" data-correct="E"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">6. The author travelled internationally to research this book.</span>
+            <select class="match-select" id="m6" data-correct="C"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">7. is set in a major American city in the mid-twentieth century.</span>
+            <select class="match-select" id="m7" data-correct="B"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkMatching()">Check answers</button>
+        <div class="part-score" id="part3-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 4 — Short Answers
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part4">
+        <div class="part-header">
+          <span class="part-label">Part 4</span>
+          <span class="part-title">Short Answers</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read the text and answer the questions. Use a maximum of <strong>five words</strong> for each answer. Type your answer, then click Reveal to see the model answer.</p>
+
+        <div class="passage">
+          <h3>The history of the bicycle</h3>
+          <p>The bicycle has a longer history than many people realise. The earliest version, known as the "draisine", was invented in Germany in 1817 by Baron Karl von Drais. This simple device consisted of two wheels connected by a wooden frame, with no pedals — riders pushed themselves along the ground with their feet.</p>
+          <p>Pedals were added to the design in the 1860s, when the first true bicycles appeared in France. These early models, sometimes called "boneshakers" because of their extremely uncomfortable ride, had solid rubber tyres and iron frames. Despite the discomfort, they became popular among young men in European cities.</p>
+          <p>By the 1880s, a new design called the "safety bicycle" had appeared. Unlike the enormous front-wheeled "penny-farthings" that had become fashionable, the safety bicycle had two wheels of equal size and a chain drive, making it much easier and safer to ride. It also introduced pneumatic tyres, invented by John Boyd Dunlop, which greatly improved comfort.</p>
+          <p>The bicycle played an important role in social history, particularly for women. For the first time, women had an independent form of transport that did not require a horse or a male companion, giving them a new freedom of movement that was symbolically as well as practically significant.</p>
+        </div>
+
+        <div class="sa-questions">
+          <div class="sa-row">
+            <p class="sa-q">1. What was the name of the earliest version of the bicycle?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa1">✓ The draisine</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">2. Who invented it and in which year?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa2">✓ Baron Karl von Drais in 1817</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">3. What was missing from the earliest bicycles?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa3">✓ Pedals</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">4. What nickname was given to the bicycles of the 1860s?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa4">✓ Boneshakers</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">5. What was the name of the new design that appeared in the 1880s?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa5">✓ The safety bicycle</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">6. Who invented the pneumatic tyre?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa6">✓ John Boyd Dunlop</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">7. How did the bicycle particularly benefit women?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa7">✓ It gave them independent transport / new freedom of movement</div>
+          </div>
+        </div>
+
+        <button class="check-btn reveal" onclick="revealAnswers()">Reveal model answers</button>
+        <div class="part-score" id="part4-score"></div>
+      </div>
+
+    </div><!-- page-content -->
+  </main>
+</div>
+
+<script>
+// ── Scores ──
+const scores = { part1: 0, part2: 0, part3: 0, part4: 7 };
+
+function updateTotal() {
+  const total = scores.part1 + scores.part2 + scores.part3;
+  const el = document.getElementById('totalScore');
+  const num = document.getElementById('scoreNum');
+  el.style.display = 'block';
+  num.innerHTML = total + ' <span>/ 19</span>';
+}
+
+// ── Part 1: Multiple Choice ──
+function selectOption(btn) {
+  const qDiv = btn.closest('.question');
+  if (qDiv.dataset.checked) return;
+  qDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkMC(partId, total) {
+  const container = document.getElementById(partId + '-questions') || document.getElementById(partId).querySelector('.questions');
+  const questions = container.querySelectorAll('.question');
+  let score = 0;
+  questions.forEach(q => {
+    const correct = q.dataset.correct;
+    q.dataset.checked = '1';
+    const selected = q.querySelector('.option-btn.selected');
+    q.querySelectorAll('.option-btn').forEach(btn => {
+      if (btn.dataset.value === correct) btn.classList.add('correct');
+      else if (btn.classList.contains('selected')) btn.classList.add('wrong');
+      btn.disabled = true;
+    });
+    if (selected && selected.dataset.value === correct) score++;
+  });
+  scores[partId] = score;
+  const el = document.getElementById(partId + '-score');
+  el.textContent = 'Part 1 score: ' + score + ' / ' + total;
+  el.className = 'part-score visible' + (score === total ? ' perfect' : '');
+  updateTotal();
+}
+
+// ── Part 2: Gap-fill ──
+function checkGapFill() {
+  const gaps = document.querySelectorAll('.gap-select');
+  let score = 0;
+  gaps.forEach(sel => {
+    const correct = sel.dataset.correct;
+    if (sel.value === correct) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+  });
+  scores.part2 = score;
+  const el = document.getElementById('part2-score');
+  el.textContent = 'Part 2 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+// ── Part 3: Matching ──
+function checkMatching() {
+  const selects = document.querySelectorAll('.match-select');
+  let score = 0;
+  selects.forEach(sel => {
+    const correct = sel.dataset.correct;
+    if (sel.value === correct) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+  });
+  scores.part3 = score;
+  const el = document.getElementById('part3-score');
+  el.textContent = 'Part 3 score: ' + score + ' / 7';
+  el.className = 'part-score visible' + (score === 7 ? ' perfect' : '');
+  updateTotal();
+}
+
+// ── Part 4: Short Answers (reveal only) ──
+function revealAnswers() {
+  for (let i = 1; i <= 7; i++) {
+    document.getElementById('sa' + i).classList.add('visible');
+  }
+  const el = document.getElementById('part4-score');
+  el.textContent = 'Model answers revealed — mark yourself: each correct answer = 1 mark (7 total)';
+  el.className = 'part-score visible';
+}
+
+// ── Page sync (via db.js) ─────────────────────────────
+const PAGE_ID = 'reading_paper2';
+
+function collectState() {
+  return {
+    p1_sel:      [...document.querySelectorAll('#p1-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p1_checked:  !!document.querySelector('#p1-questions .question[data-checked]'),
+    p2_sel:      [...document.querySelectorAll('.gap-select')].map(s => s.value),
+    p2_checked:  !!document.querySelector('.gap-select[disabled]'),
+    p3_sel:      [...document.querySelectorAll('.match-select')].map(s => s.value),
+    p3_checked:  !!document.querySelector('.match-select[disabled]'),
+    p4_revealed: !!document.getElementById('sa1')?.classList.contains('visible'),
+  };
+}
+
+function savePage() { DB.savePage(PAGE_ID, collectState()); }
+
+function restorePage(s) {
+  if (!s) return;
+  document.querySelectorAll('#p1-questions .question').forEach((q, i) => {
+    const val = s.p1_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p1_checked) checkMC('part1', 6);
+  document.querySelectorAll('.gap-select').forEach((sel, i) => { if (s.p2_sel?.[i]) sel.value = s.p2_sel[i]; });
+  if (s.p2_checked) checkGapFill();
+  document.querySelectorAll('.match-select').forEach((sel, i) => { if (s.p3_sel?.[i]) sel.value = s.p3_sel[i]; });
+  if (s.p3_checked) checkMatching();
+  if (s.p4_revealed) revealAnswers();
+}
+
+['selectOption','checkMC','checkGapFill','checkMatching','revealAnswers'].forEach(name => {
+  const orig = window[name];
+  window[name] = function(...args) { orig(...args); savePage(); };
+});
+
+(async () => { restorePage(await DB.loadPage(PAGE_ID)); })();
+</script>
+</body>
+</html>
