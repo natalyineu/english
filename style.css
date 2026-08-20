@@ -599,6 +599,55 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; 
 .tag.listening { background: #fef3c7; color: #92400e; }
 .tag.speaking { background: #d1fae5; color: #065f46; }
 
+/* ── UI controls (theme / font / timer) ── */
+.ui-timer-block {
+  margin-bottom: 10px;
+  text-align: center;
+}
+.ui-timer-display {
+  font-size: 1.8rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--sb-text);
+  margin-bottom: 6px;
+}
+.ui-timer-row {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+.ui-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.ui-font-group {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+.ui-btn {
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--sb-text);
+  cursor: pointer;
+  transition: background .15s;
+  white-space: nowrap;
+}
+.ui-btn:hover { background: rgba(255,255,255,.2); }
+.ui-btn-ghost {
+  background: transparent;
+  border-color: rgba(255,255,255,.12);
+}
+.ui-btn-ghost:hover { background: rgba(255,255,255,.1); }
+
 /* ── Mobile ── */
 @media (max-width: 720px) {
   :root { --sidebar: 0px; }
