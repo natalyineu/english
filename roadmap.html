@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Roadmap — B2 Communicator Practice</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── Roadmap-specific ── */
+.live-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.live-card {
+  display: block;
+  background: var(--card);
+  border: 1.5px solid var(--sel);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  transition: transform .15s, box-shadow .15s;
+  color: inherit;
+  text-decoration: none;
+}
+.live-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(27,42,74,.16);
+  text-decoration: none;
+}
+.live-card .lc-icon { font-size: 1.6rem; display: block; margin-bottom: 10px; }
+.live-card .lc-label {
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--sel);
+  margin-bottom: 2px;
+}
+.live-card .lc-name { font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.live-card .lc-meta { font-size: .74rem; color: var(--muted); }
+
+/* Track table */
+.track-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 40px;
+}
+.track-table th {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 8px 14px;
+  text-align: left;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+.track-table th:first-child { border-radius: 8px 0 0 0; }
+.track-table th:last-child  { border-radius: 0 8px 0 0; }
+.track-table td {
+  padding: 14px 14px;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+  font-size: .87rem;
+  vertical-align: middle;
+}
+.track-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+.track-table tr:last-child td:last-child  { border-radius: 0 0 8px 0; }
+.track-table tr:last-child td { border-bottom: none; }
+.track-table td.paper-col {
+  font-weight: 700;
+  color: var(--text);
+  width: 56px;
+}
+.track-row-live td { background: var(--sel-bg); }
+.track-link {
+  color: var(--sel);
+  font-weight: 600;
+  font-size: .85rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.track-link:hover { text-decoration: underline; }
+.track-link::after { content: "→"; font-size: .8rem; }
+.track-soon {
+  font-size: .78rem;
+  color: var(--muted);
+  font-style: italic;
+}
+.track-desc { color: var(--text); }
+.track-desc small { display: block; color: var(--muted); font-size: .75rem; margin-top: 2px; }
+
+/* Status chip */
+.chip {
+  display: inline-block;
+  font-size: .67rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: 2px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.chip-live { background: var(--sel-bg); color: var(--sel); }
+.chip-content { background: var(--ok-bg); color: var(--ok); }
+.chip-soon  { background: var(--border); color: var(--muted); }
+
+/* Legend */
+.legend {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  font-size: .8rem;
+  color: var(--muted);
+  align-items: center;
+}
+.legend-item { display: flex; align-items: center; gap: 7px; }
+
+@media (max-width: 720px) {
+  .live-grid { grid-template-columns: 1fr 1fr; }
+  .track-table th, .track-table td { padding: 10px 10px; }
+  .track-table td.paper-col { width: 40px; }
+}
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="exam-info.md" class="nav-link">📋 Exam Info</a>
+        <a href="roadmap.html" class="nav-link active">🗺️ Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="#" class="nav-link">Paper 2 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 3 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 6 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 7 <span class="badge">Soon</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="#" class="nav-link">Paper 2 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 3 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 6 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 7 <span class="badge">Soon</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="#" class="nav-link">Paper 2 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 3 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 6 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 7 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 8 <span class="badge">Soon</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="#" class="nav-link">Paper 1 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 2 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 3 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 6 <span class="badge">Soon</span></a>
+        <a href="#" class="nav-link">Paper 7 <span class="badge">Soon</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reference</span>
+        <a href="vocabulary/b2-topics.md" class="nav-link">📚 Vocabulary</a>
+        <a href="grammar/b2-grammar.md" class="nav-link">📐 Grammar</a>
+        <a href="speaking/criteria.md" class="nav-link">🎯 Speaking Criteria</a>
+        <a href="writing/criteria.md" class="nav-link">✍️ Writing Criteria</a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="index.html">Dashboard</a>
+        <span>›</span>
+        Roadmap
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Roadmap</h1>
+      <p class="page-subtitle">What's live, what's next, and where to go right now.</p>
+
+      <!-- Live now -->
+      <h2 class="section-title">Live now</h2>
+      <div class="live-grid">
+
+        <a href="index.html" class="live-card">
+          <span class="lc-icon">🏠</span>
+          <div class="lc-label">Overview</div>
+          <div class="lc-name">Dashboard</div>
+          <div class="lc-meta">Progress overview · All skills</div>
+        </a>
+
+        <a href="exam-info.md" class="live-card">
+          <span class="lc-icon">📋</span>
+          <div class="lc-label">Reference</div>
+          <div class="lc-name">Exam Info</div>
+          <div class="lc-meta">Structure · Scoring · Timeline</div>
+        </a>
+
+        <a href="reading/paper1.html" class="live-card">
+          <span class="lc-icon">📖</span>
+          <div class="lc-label">Reading</div>
+          <div class="lc-name">Paper 1</div>
+          <div class="lc-meta">26 marks · Interactive quiz</div>
+        </a>
+
+        <a href="writing/paper1.html" class="live-card">
+          <span class="lc-icon">✍️</span>
+          <div class="lc-label">Writing</div>
+          <div class="lc-name">Paper 1</div>
+          <div class="lc-meta">24 marks · Model answers</div>
+        </a>
+
+        <a href="speaking/paper1.html" class="live-card">
+          <span class="lc-icon">🗣️</span>
+          <div class="lc-label">Speaking</div>
+          <div class="lc-name">Paper 1</div>
+          <div class="lc-meta">50 marks · 4 parts · Scripts</div>
+        </a>
+
+      </div>
+
+      <!-- Legend -->
+      <div class="legend">
+        <span style="font-weight:600;color:var(--text)">Key:</span>
+        <span class="legend-item"><span class="chip chip-live">Live</span> Interactive page, full answer key</span>
+        <span class="legend-item"><span class="chip chip-soon">Coming soon</span> Not yet built</span>
+      </div>
+
+      <!-- Reading track -->
+      <h2 class="section-title">📖 Reading — 5 papers</h2>
+      <table class="track-table" style="margin-bottom:32px">
+        <thead>
+          <tr>
+            <th>Paper</th>
+            <th>Topics</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="track-row-live">
+            <td class="paper-col">P1</td>
+            <td class="track-desc">Computer games · Playing &amp; learning · Sailing · Panama Canal<small>26 questions · 4 parts</small></td>
+            <td><a href="reading/paper1.html" class="track-link">Open</a></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P2</td>
+            <td class="track-desc">4 parts · 26 questions</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P3</td>
+            <td class="track-desc">4 parts · 26 questions</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P6</td>
+            <td class="track-desc">4 parts · 26 questions</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P7</td>
+            <td class="track-desc">4 parts · 26 questions</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Writing track -->
+      <h2 class="section-title">✍️ Writing — 5 papers</h2>
+      <table class="track-table" style="margin-bottom:32px">
+        <thead>
+          <tr>
+            <th>Paper</th>
+            <th>Topics</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="track-row-live">
+            <td class="paper-col">P1</td>
+            <td class="track-desc">Leisure centre email (100–150w) · Childhood memories essay (150–200w)<small>2 tasks · Model answers + examiner comments</small></td>
+            <td><a href="writing/paper1.html" class="track-link">Open</a></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P2</td>
+            <td class="track-desc">2 writing tasks</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P3</td>
+            <td class="track-desc">2 writing tasks</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P6</td>
+            <td class="track-desc">2 writing tasks</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P7</td>
+            <td class="track-desc">2 writing tasks</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Speaking track -->
+      <h2 class="section-title">🗣️ Speaking — 6 papers</h2>
+      <table class="track-table" style="margin-bottom:32px">
+        <thead>
+          <tr>
+            <th>Paper</th>
+            <th>Topics</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="track-row-live">
+            <td class="paper-col">P1</td>
+            <td class="track-desc">Personal questions · Role-plays · Holiday discussion · Monologue<small>4 parts · 13 minutes · Sample examiner prompts</small></td>
+            <td><a href="speaking/paper1.html" class="track-link">Open</a></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P2</td>
+            <td class="track-desc">4 parts · 13 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P3</td>
+            <td class="track-desc">4 parts · 13 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P6</td>
+            <td class="track-desc">4 parts · 13 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P7</td>
+            <td class="track-desc">4 parts · 13 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P8</td>
+            <td class="track-desc">4 parts · 13 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Listening track -->
+      <h2 class="section-title">🎧 Listening — 5 papers</h2>
+      <table class="track-table" style="margin-bottom:32px">
+        <thead>
+          <tr>
+            <th>Paper</th>
+            <th>Topics</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="paper-col">P1</td>
+            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P2</td>
+            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P3</td>
+            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P6</td>
+            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col">P7</td>
+            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Reference -->
+      <h2 class="section-title">📚 Reference</h2>
+      <table class="track-table">
+        <thead>
+          <tr>
+            <th>Resource</th>
+            <th>Contents</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="track-row-live">
+            <td class="paper-col" style="width:auto;font-size:.82rem">Exam Info</td>
+            <td class="track-desc">Exam structure · All 4 skills · Scoring bands · Results timeline<small>Sourced from the official LanguageCert page</small></td>
+            <td><a href="exam-info.md" class="track-link">Open</a></td>
+          </tr>
+          <tr>
+            <td class="paper-col" style="width:auto;font-size:.82rem">Grammar</td>
+            <td class="track-desc">B2-level grammar reference — from Handbook section 2.7</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col" style="width:auto;font-size:.82rem">Vocabulary</td>
+            <td class="track-desc">B2 topic vocabulary — from Handbook section 2.4</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col" style="width:auto;font-size:.82rem">Speaking Criteria</td>
+            <td class="track-desc">Assessment bands — from the Qualification Handbook Speaking</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col" style="width:auto;font-size:.82rem">Writing Criteria</td>
+            <td class="track-desc">Assessment bands — from the Qualification Handbook LRW</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+          <tr>
+            <td class="paper-col" style="width:auto;font-size:.82rem">Sample Feedback</td>
+            <td class="track-desc">Examiner comments on real candidate performances</td>
+            <td><span class="chip chip-soon">Coming soon</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div><!-- page-content -->
+  </main>
+</div>
+</body>
+</html>
