@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grammar — Relative Clauses</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+details.explanation-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0;margin-bottom:28px;box-shadow:var(--shadow)}
+details.explanation-panel summary{padding:18px 24px;font-weight:700;font-size:.95rem;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;color:var(--text)}
+details.explanation-panel summary::after{content:'▸';margin-left:auto;font-size:.8rem;color:var(--muted);transition:transform .2s}
+details[open].explanation-panel summary::after{transform:rotate(90deg)}
+.explanation-body{padding:0 24px 24px;border-top:1px solid var(--border)}
+.rule-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem}
+.rule-table th{background:var(--bg);padding:8px 12px;text-align:left;font-weight:700;color:var(--muted);border:1px solid var(--border)}
+.rule-table td{padding:8px 12px;border:1px solid var(--border);color:var(--text)}
+.rule-table tr:nth-child(even) td{background:var(--bg)}
+.example{font-style:italic;color:var(--muted);font-size:.85rem;margin:4px 0 4px 12px}
+.gf-questions{display:flex;flex-direction:column;gap:18px}
+.gf-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.gf-num{font-weight:700;min-width:22px;color:var(--muted);font-size:.88rem}
+.gf-sentence{font-size:.9rem;color:var(--text);line-height:1.7}
+.gf-input{font-family:'Inter',sans-serif;font-size:.88rem;border:1.5px solid var(--sel);border-radius:6px;padding:5px 10px;background:var(--sel-bg);color:var(--sel);min-width:120px;transition:border-color .15s,background .15s}
+.gf-input:focus{outline:none;border-color:var(--navy)}
+.gf-input.correct{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.gf-input.wrong{border-color:var(--err);background:var(--err-bg);color:var(--err)}
+.gf-reveal{display:none;font-size:.8rem;color:var(--ok);font-weight:600;margin-top:2px}
+.gf-reveal.visible{display:block}
+.ec-questions{display:flex;flex-direction:column;gap:22px}
+.ec-num-label{font-weight:700;font-size:.82rem;color:var(--muted);margin-bottom:4px}
+.ec-sentence{font-size:.92rem;font-style:italic;color:var(--text);background:var(--bg);border-left:3px solid var(--border);padding:8px 14px;border-radius:4px;margin-bottom:10px;line-height:1.6}
+.ec-input{font-family:'Inter',sans-serif;font-size:.88rem;border:1.5px solid var(--border);border-radius:7px;padding:8px 14px;width:100%;background:var(--card);color:var(--text);transition:border-color .15s}
+.ec-input:focus{outline:none;border-color:var(--sel)}
+.ec-input.correct{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.ec-input.wrong{border-color:var(--err);background:var(--err-bg)}
+.ec-answer{display:none;margin-top:6px;font-size:.82rem;color:var(--ok);font-weight:600}
+.ec-answer.visible{display:block}
+</style>
+</head>
+<body>
+<div class="site-wrap">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Grammar</span>
+        <a href="index.html" class="nav-link">📐 All Topics</a>
+        <a href="conditionals.html" class="nav-link">If clauses</a>
+        <a href="passive.html" class="nav-link">Passive voice</a>
+        <a href="reported.html" class="nav-link">Reported speech</a>
+        <a href="modals.html" class="nav-link">Modal verbs</a>
+        <a href="relative.html" class="nav-link active">Relative clauses</a>
+        <a href="tenses.html" class="nav-link">Perfect tenses</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a><span>›</span>
+        <a href="index.html">Grammar</a><span>›</span>
+        Relative Clauses
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Relative Clauses</h1>
+      <p class="page-subtitle">26 marks · defining &amp; non-defining · gap-fill, MC, error correction</p>
+
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 26</span></div>
+        <div class="score-pass">Complete all three exercises to see your total</div>
+      </div>
+
+      <details class="explanation-panel">
+        <summary>📖 Key Rules — Relative Clauses (click to expand)</summary>
+        <div class="explanation-body">
+          <table class="rule-table">
+            <tr><th>Pronoun</th><th>Refers to</th><th>Defining</th><th>Non-defining</th></tr>
+            <tr><td><strong>who / that</strong></td><td>People</td><td>Yes</td><td>who only</td></tr>
+            <tr><td><strong>which / that</strong></td><td>Things</td><td>Yes</td><td>which only</td></tr>
+            <tr><td><strong>whose</strong></td><td>Possession</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>where</strong></td><td>Places</td><td>Yes</td><td>Yes</td></tr>
+            <tr><td><strong>when</strong></td><td>Times</td><td>Yes</td><td>Yes</td></tr>
+          </table>
+          <p style="font-size:.85rem;font-weight:700;color:var(--text);margin-top:12px;">Defining relative clauses</p>
+          <p class="example">Identify which person/thing we mean. No commas. Can omit pronoun when it is the object: The film (that) I watched was brilliant.</p>
+          <p style="font-size:.85rem;font-weight:700;color:var(--text);margin-top:10px;">Non-defining relative clauses</p>
+          <p class="example">Add extra information. Always use commas. Cannot use <em>that</em>. Cannot omit the pronoun.</p>
+          <p class="example">My sister, <em>who</em> lives in Paris, is a chef. &nbsp;&nbsp; The report, <em>which</em> took months to write, was rejected.</p>
+          <p style="font-size:.85rem;color:var(--muted);margin-top:8px;">⚠️ Never use both the relative pronoun AND a personal pronoun: "The man who he called me" → "The man who called me".</p>
+        </div>
+      </details>
+
+      <!-- Exercise 1 -->
+      <div class="quiz-part" id="ex1">
+        <div class="part-header">
+          <span class="part-label">Exercise 1</span>
+          <span class="part-title">Gap-fill</span>
+          <span class="part-marks">10 marks</span>
+        </div>
+        <p class="part-instructions">Type the correct relative pronoun (who, which, that, where, whose, when).</p>
+
+        <div class="gf-questions" id="ex1-gf">
+          <div class="gf-row"><span class="gf-num">1.</span><div>
+            <div class="gf-sentence">The woman <input class="gf-input" data-answers="who|that" placeholder="…"> lives next door is a doctor.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">2.</span><div>
+            <div class="gf-sentence">The book <input class="gf-input" data-answers="that|which" placeholder="…"> I borrowed from the library was fascinating.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">3.</span><div>
+            <div class="gf-sentence">This is the town <input class="gf-input" data-answers="where" placeholder="…"> I grew up as a child.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">4.</span><div>
+            <div class="gf-sentence">The man <input class="gf-input" data-answers="whose" placeholder="…"> car was stolen reported it to the police immediately.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">5.</span><div>
+            <div class="gf-sentence">Do you remember the day <input class="gf-input" data-answers="when" placeholder="…"> we first met at university?</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">6.</span><div>
+            <div class="gf-sentence">The film, <input class="gf-input" data-answers="which" placeholder="…"> was directed by Spielberg, won several awards.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">7.</span><div>
+            <div class="gf-sentence">She's the person <input class="gf-input" data-answers="who|that|whom" placeholder="…"> I spoke to on the phone yesterday.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">8.</span><div>
+            <div class="gf-sentence">The restaurant <input class="gf-input" data-answers="where" placeholder="…"> we had dinner last night was very expensive.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">9.</span><div>
+            <div class="gf-sentence">Alexander Fleming, <input class="gf-input" data-answers="who" placeholder="…"> discovered penicillin, changed the history of medicine.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">10.</span><div>
+            <div class="gf-sentence">I know a place <input class="gf-input" data-answers="where" placeholder="…"> you can get the best coffee in town.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+        </div>
+
+        <button class="check-btn" id="ex1-btn" onclick="checkGapInputs('ex1', 10)">Check answers</button>
+        <div class="part-score" id="ex1-score"></div>
+      </div>
+
+      <!-- Exercise 2 -->
+      <div class="quiz-part" id="ex2">
+        <div class="part-header">
+          <span class="part-label">Exercise 2</span>
+          <span class="part-title">Multiple Choice</span>
+          <span class="part-marks">10 marks</span>
+        </div>
+        <p class="part-instructions">Choose the correct option (A, B or C) to complete each sentence.</p>
+
+        <div class="questions" id="ex2-questions">
+          <div class="question" data-correct="a">
+            <p class="question-text">1. The woman ___ works at reception is always very helpful.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> who</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> which</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> what</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">2. Paris, ___ is the capital of France, is one of the world's most visited cities.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> that</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> which</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> who</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">3. The man ___ bag was stolen called the police straight away.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> who</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> whose</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> which</button>
+            </div>
+          </div>
+          <div class="question" data-correct="a">
+            <p class="question-text">4. She's the colleague ___ helped me when I was completely lost on my first day.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> who</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> which</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> what</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">5. The annual report, ___ took three months to complete, was very well received.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> that</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> who</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> which</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">6. Is this the place ___ the famous battle took place in 1815?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> which</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> that</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> where</button>
+            </div>
+          </div>
+          <div class="question" data-correct="a">
+            <p class="question-text">7. He's the colleague ___ I told you about last week.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> who</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> which</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> whose</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">8. My brother, ___ lives in Canada, is visiting us next month.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> that</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> who</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> which</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">9. Summer is the time of year ___ the town really comes alive with tourists.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> which</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> where</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> when</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">10. The hotel ___ we stayed last summer had an amazing rooftop pool.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> which we stayed</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> that we stayed</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> where we stayed</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="check-btn" id="ex2-btn" onclick="checkMC('ex2', 10)">Check answers</button>
+        <div class="part-score" id="ex2-score"></div>
+      </div>
+
+      <!-- Exercise 3 -->
+      <div class="quiz-part" id="ex3">
+        <div class="part-header">
+          <span class="part-label">Exercise 3</span>
+          <span class="part-title">Error Correction</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Each sentence contains one mistake with a relative clause. Type the corrected sentence in full.</p>
+
+        <div class="ec-questions" id="ex3-ec">
+          <div class="ec-row">
+            <div class="ec-num-label">1.</div>
+            <div class="ec-sentence">The man which called this morning was my uncle.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="The man who called this morning was my uncle.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">2.</div>
+            <div class="ec-sentence">The book, that I enjoyed most this year, was very long.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="The book, which I enjoyed most this year, was very long.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">3.</div>
+            <div class="ec-sentence">She's the student whose she always gets the highest marks in the class.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="She's the student who always gets the highest marks in the class.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">4.</div>
+            <div class="ec-sentence">I know someone who he can fix your car at a very reasonable price.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="I know someone who can fix your car at a very reasonable price.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">5.</div>
+            <div class="ec-sentence">The hotel which we stayed was very comfortable and the staff were friendly.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="The hotel where we stayed was very comfortable and the staff were friendly.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">6.</div>
+            <div class="ec-sentence">This is the city where I was born in and grew up.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="This is the city where I was born and grew up.">
+            <div class="ec-answer"></div>
+          </div>
+        </div>
+
+        <button class="check-btn" id="ex3-btn" onclick="checkErrors('ex3')">Check answers</button>
+        <div class="part-score" id="ex3-score"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const PAGE_ID = 'grammar_relative';
+const scores = { ex1: 0, ex2: 0, ex3: 0 };
+function updateTotal(){const t=scores.ex1+scores.ex2+scores.ex3;document.getElementById('totalScore').style.display='block';document.getElementById('scoreNum').innerHTML=t+' <span>/ 26</span>';}
+function checkGapInputs(exId,total){const rows=document.querySelectorAll('#'+exId+'-gf .gf-row');let s=0;rows.forEach(row=>{const inp=row.querySelector('.gf-input');const rev=row.querySelector('.gf-reveal');if(!inp)return;const acc=inp.dataset.answers.split('|').map(a=>a.trim().toLowerCase());const val=inp.value.trim().toLowerCase();if(acc.includes(val)){inp.classList.add('correct');s++;}else{inp.classList.add('wrong');rev.textContent='✓ '+inp.dataset.answers.split('|')[0];rev.classList.add('visible');}inp.disabled=true;});scores[exId]=s;const el=document.getElementById(exId+'-score');el.textContent='Exercise 1 score: '+s+' / '+total;el.className='part-score visible'+(s===total?' perfect':'');document.getElementById(exId+'-btn').disabled=true;updateTotal();savePage();}
+function selectOption(btn){const qDiv=btn.closest('.question');if(qDiv.dataset.checked)return;qDiv.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');savePage();}
+function checkMC(partId,total){const container=document.getElementById(partId+'-questions');const questions=container.querySelectorAll('.question');let s=0;questions.forEach(q=>{const correct=q.dataset.correct;q.dataset.checked='1';const sel=q.querySelector('.option-btn.selected');q.querySelectorAll('.option-btn').forEach(btn=>{if(btn.dataset.value===correct)btn.classList.add('correct');else if(btn.classList.contains('selected'))btn.classList.add('wrong');btn.disabled=true;});if(sel&&sel.dataset.value===correct)s++;});scores[partId]=s;const el=document.getElementById(partId+'-score');el.textContent='Exercise 2 score: '+s+' / '+total;el.className='part-score visible'+(s===total?' perfect':'');document.getElementById(partId+'-btn').disabled=true;updateTotal();savePage();}
+function checkErrors(exId){const rows=document.querySelectorAll('#'+exId+'-ec .ec-row');let s=0;rows.forEach(row=>{const inp=row.querySelector('.ec-input');const ansEl=row.querySelector('.ec-answer');const correct=inp.dataset.answer.trim().toLowerCase();const val=inp.value.trim().toLowerCase();if(val===correct){inp.classList.add('correct');s++;}else{inp.classList.add('wrong');}ansEl.textContent='✓ '+inp.dataset.answer;ansEl.classList.add('visible');inp.disabled=true;});scores[exId]=s;const el=document.getElementById(exId+'-score');el.textContent='Exercise 3 score: '+s+' / 6';el.className='part-score visible'+(s===6?' perfect':'');document.getElementById(exId+'-btn').disabled=true;updateTotal();savePage();}
+function collectState(){return{gfInputs:[...document.querySelectorAll('#ex1-gf .gf-input')].map(i=>i.value),ex1Checked:!!document.querySelector('#ex1-gf .gf-input.correct, #ex1-gf .gf-input.wrong'),mcSel:[...document.querySelectorAll('#ex2-questions .question')].map(q=>q.querySelector('.option-btn.selected')?.dataset.value||''),ex2Checked:!!document.querySelector('#ex2-questions .question[data-checked]'),ecInputs:[...document.querySelectorAll('#ex3-ec .ec-input')].map(i=>i.value),ex3Checked:!!document.querySelector('#ex3-ec .ec-input.correct, #ex3-ec .ec-input.wrong')};}
+function savePage(){DB.savePage(PAGE_ID,collectState());}
+function restorePage(s){if(!s)return;if(s.gfInputs)document.querySelectorAll('#ex1-gf .gf-input').forEach((inp,i)=>{if(s.gfInputs[i])inp.value=s.gfInputs[i];});if(s.ex1Checked)checkGapInputs('ex1',10);if(s.mcSel)document.querySelectorAll('#ex2-questions .question').forEach((q,i)=>{if(s.mcSel[i])q.querySelector(`.option-btn[data-value="${s.mcSel[i]}"]`)?.classList.add('selected');});if(s.ex2Checked)checkMC('ex2',10);if(s.ecInputs)document.querySelectorAll('#ex3-ec .ec-input').forEach((inp,i)=>{if(s.ecInputs[i])inp.value=s.ecInputs[i];});if(s.ex3Checked)checkErrors('ex3');}
+document.querySelectorAll('.gf-input,.ec-input').forEach(inp=>inp.addEventListener('input',savePage));
+(async()=>{restorePage(await DB.loadPage(PAGE_ID));})();
+</script>
+</body>
+</html>

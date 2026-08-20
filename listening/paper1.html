@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listening — Paper 1</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.transcript-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  font-family: 'Lora', Georgia, serif;
+  font-size: .9rem;
+  line-height: 1.8;
+  color: var(--text);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.transcript-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.transcript-notice {
+  background: var(--sel-bg);
+  border: 1px solid var(--sel);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: .8rem;
+  color: var(--sel);
+  margin-bottom: 16px;
+}
+.speaker-tag { font-weight: 700; }
+.gf-row { margin: 12px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.gf-label { font-size: .9rem; flex: 1 1 300px; }
+.gf-input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: .9rem;
+  background: var(--bg);
+  color: var(--text);
+  width: 180px;
+}
+.gf-input.correct { border-color: #2d8a4e; background: #edf7f1; }
+.gf-input.wrong   { border-color: #c0392b; background: #fdecea; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .gf-input.correct { background: #1a3d2b; }
+  :root:not([data-theme="light"]) .gf-input.wrong   { background: #3d1a1a; }
+}
+:root[data-theme="dark"] .gf-input.correct { background: #1a3d2b; }
+:root[data-theme="dark"] .gf-input.wrong   { background: #3d1a1a; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="paper1.html" class="nav-link active">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <span>Listening</span>
+        <span>›</span>
+        Paper 1
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Listening — Practice Paper 1</h1>
+      <p class="page-subtitle">26 marks · ~30 minutes · 4 parts · Read transcript, answer questions</p>
+
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 26</span></div>
+        <div class="score-pass">Pass mark: 75/150 total (listening contributes 26 of those marks)</div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 1 — Multiple Choice (7 short conversations)
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part1">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Multiple Choice — Short Conversations</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read each transcript of a short conversation, then choose the best answer.</p>
+        <div class="transcript-notice">🎧 In the real exam, you <em>hear</em> these conversations. Here you can read the transcripts to practise.</div>
+
+        <div class="questions" id="p1mc-questions">
+
+          <!-- Q1 -->
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 1 — Airport</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Man:</span> "Excuse me — is this the right gate for the Manchester flight?"<br>
+              <span class="speaker-tag">Woman:</span> "No, that flight leaves from gate twelve. This is gate eight — it's the Edinburgh service."<br>
+              <span class="speaker-tag">Man:</span> "Oh no. Is gate twelve far from here?"<br>
+              <span class="speaker-tag">Woman:</span> "Just turn left and follow the signs. You should be fine if you hurry."
+            </div>
+            <p class="question-text">1. What does the man need to do?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Wait at gate eight for an announcement.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Go to a different gate quickly.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Check the departures board for an update.</button>
+            </div>
+          </div>
+
+          <!-- Q2 -->
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 2 — Restaurant</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "I'm afraid your table won't be ready for another twenty minutes."<br>
+              <span class="speaker-tag">Man:</span> "That's fine. Could we wait at the bar?"<br>
+              <span class="speaker-tag">Woman:</span> "Of course. I'll come and find you when your table is ready."<br>
+              <span class="speaker-tag">Man:</span> "Could we take a menu with us to look at while we wait?"<br>
+              <span class="speaker-tag">Woman:</span> "Absolutely. Here you are."
+            </div>
+            <p class="question-text">2. What will the man do while he waits?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Leave and come back later.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Sit at the bar and read the menu.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Ask for an earlier table.</button>
+            </div>
+          </div>
+
+          <!-- Q3 -->
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 3 — Office</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "Has the new IT system been set up yet?"<br>
+              <span class="speaker-tag">Man:</span> "It was supposed to be ready yesterday, but the technicians have run into some compatibility problems."<br>
+              <span class="speaker-tag">Woman:</span> "So when do they think it'll be working?"<br>
+              <span class="speaker-tag">Man:</span> "They're hoping to have it sorted by Friday at the latest."
+            </div>
+            <p class="question-text">3. Why is the IT system not ready?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> The technicians installed it incorrectly.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> There have been unexpected technical problems.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Nobody has had time to set it up.</button>
+            </div>
+          </div>
+
+          <!-- Q4 -->
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 4 — Phone Call</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Man:</span> "Hello, I ordered a parcel online last week and it still hasn't arrived."<br>
+              <span class="speaker-tag">Woman:</span> "Could I take your order number, please?"<br>
+              <span class="speaker-tag">Man:</span> "Yes, it's BX four seven nine two."<br>
+              <span class="speaker-tag">Woman:</span> "Let me check… I can see there's been a delay at our distribution centre. It should reach you by Thursday."<br>
+              <span class="speaker-tag">Man:</span> "Thursday? It was meant to arrive last Monday."
+            </div>
+            <p class="question-text">4. What does the man find out?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> His order has been lost.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> His parcel was delivered to the wrong address.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> His delivery will arrive later than expected.</button>
+            </div>
+          </div>
+
+          <!-- Q5 -->
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 5 — Shop</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "Excuse me, I bought this lamp here last month and it's stopped working."<br>
+              <span class="speaker-tag">Man:</span> "I'm sorry to hear that. Do you have your receipt?"<br>
+              <span class="speaker-tag">Woman:</span> "Yes, here it is."<br>
+              <span class="speaker-tag">Man:</span> "That's fine. We can exchange it for a new one or offer you a full refund — whichever you prefer."<br>
+              <span class="speaker-tag">Woman:</span> "I'd like a replacement, please."
+            </div>
+            <p class="question-text">5. What does the shop offer the woman?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> To swap the lamp or give her money back.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> To repair the lamp for free.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> A discount on a new lamp.</button>
+            </div>
+          </div>
+
+          <!-- Q6 -->
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 6 — Doctor's Surgery</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "I've been getting headaches almost every day this week."<br>
+              <span class="speaker-tag">Doctor:</span> "Are you drinking enough water? Dehydration is one of the most common causes of regular headaches."<br>
+              <span class="speaker-tag">Woman:</span> "Probably not as much as I should."<br>
+              <span class="speaker-tag">Doctor:</span> "Try drinking at least two litres a day and see if that helps. Come back if it doesn't improve within a week."
+            </div>
+            <p class="question-text">6. What does the doctor advise the woman to do?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Drink more water each day.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Take some medication straight away.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Have some blood tests done.</button>
+            </div>
+          </div>
+
+          <!-- Q7 -->
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 7 — Planning a Trip</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Man:</span> "I think we should book a camping trip for the bank holiday weekend."<br>
+              <span class="speaker-tag">Woman:</span> "Camping? I'd really rather have a proper bathroom, to be honest."<br>
+              <span class="speaker-tag">Man:</span> "Fair enough. What about a holiday cottage? We'd still be in the countryside."<br>
+              <span class="speaker-tag">Woman:</span> "Yes, that's a much better idea. We could look online tonight."
+            </div>
+            <p class="question-text">7. What do the friends agree to do?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Go camping in the countryside.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Postpone their plans until later.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Rent a cottage in the country.</button>
+            </div>
+          </div>
+
+        </div><!-- /p1mc-questions -->
+
+        <button class="check-btn" onclick="checkMC('p1mc', 7)">Check answers</button>
+        <div class="part-score" id="p1mc-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 2 — Matching (speakers to statements)
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part2">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Matching — Holiday Destinations</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read what six people say about their favourite holiday. Match each speaker (A–F) to what they liked most (1–7). There is one statement you will not need.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear these speakers. Here you can read the transcripts to practise.</div>
+
+        <!-- Statements -->
+        <div class="gap-options">
+          <div class="gap-option-card"><span class="go-letter">1</span> The beautiful beaches and the sea</div>
+          <div class="gap-option-card"><span class="go-letter">2</span> The historical buildings and museums</div>
+          <div class="gap-option-card"><span class="go-letter">3</span> The local food and restaurants</div>
+          <div class="gap-option-card"><span class="go-letter">4</span> The exciting outdoor activities</div>
+          <div class="gap-option-card"><span class="go-letter">5</span> The peaceful and relaxing atmosphere</div>
+          <div class="gap-option-card"><span class="go-letter">6</span> How affordable everything was</div>
+          <div class="gap-option-card"><span class="go-letter">7</span> The friendliness of the local people</div>
+        </div>
+
+        <!-- Speaker transcripts & dropdowns -->
+        <div class="matching-questions" id="p2-matching">
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker A</div>
+            <div class="transcript-box">"I spent a week in Athens and honestly I couldn't get enough of all the ancient sites. The Acropolis was breathtaking — I must have taken two hundred photos. I visited three different museums in just two days and every street corner had some kind of historical monument. It was like walking through a history book."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker A liked most:</span>
+              <select class="match-select" id="sp-A" data-correct="2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker B</div>
+            <div class="transcript-box">"My trip to Thailand was mostly about eating. I signed up for a cooking class on the first day, tried different street food every single evening, and made a point of visiting restaurants I'd read about for months before I went. Each meal was better than the last. I came home having put on about three kilos!"</div>
+            <div class="match-row">
+              <span class="match-q">Speaker B liked most:</span>
+              <select class="match-select" id="sp-B" data-correct="3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker C</div>
+            <div class="transcript-box">"We went to the Maldives for our anniversary and spent almost every day in or near the water. The snorkelling was absolutely incredible — the coral was untouched and the fish were extraordinary. And the white sand… I've never seen anything like it. We barely left the water the whole week."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker C liked most:</span>
+              <select class="match-select" id="sp-C" data-correct="1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker D</div>
+            <div class="transcript-box">"New Zealand was just incredible for getting the adrenaline going. We went bungee jumping on day two, then white water rafting, and spent the last two days hiking up in the mountains. My legs were absolutely destroyed by the end but I wouldn't change a single moment. It was the most alive I've ever felt."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker D liked most:</span>
+              <select class="match-select" id="sp-D" data-correct="4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker E</div>
+            <div class="transcript-box">"I needed a proper rest after a really stressful year, so I booked a week in the Algarve with a very simple brief: do nothing. I read four novels, sat by the pool for hours, and didn't visit a single museum or tourist attraction. No agenda, no plans, just complete and total relaxation. Absolute bliss."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker E liked most:</span>
+              <select class="match-select" id="sp-E" data-correct="5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker F</div>
+            <div class="transcript-box">"I went to Vietnam on a very tight budget and was genuinely amazed at how far my money went. A hotel room cost me twelve pounds a night, a full meal was about two pounds, and entrance to every attraction I visited was minimal. I got so much more than I expected for so little. I'd absolutely go back."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker F liked most:</span>
+              <select class="match-select" id="sp-F" data-correct="6"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+        </div><!-- /p2-matching -->
+
+        <button class="check-btn" onclick="checkP2Matching()">Check answers</button>
+        <div class="part-score" id="part2-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 3 — Gap-fill (radio interview)
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part3">
+        <div class="part-header">
+          <span class="part-label">Part 3</span>
+          <span class="part-title">Gap-fill — Urban Gardening</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a radio interview. Then complete the sentences below. Write <strong>one or two words</strong> from the transcript for each gap.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear this. Here you can read the transcript to practise.</div>
+
+        <div class="transcript-label">Radio interview transcript</div>
+        <div class="transcript-box">
+          <span class="speaker-tag">Presenter:</span> "Welcome to City Talk. Today I'm joined by Dr Anita Patel, who runs the Urban Roots community gardening project. Dr Patel, how long has the project been running?"<br><br>
+          <span class="speaker-tag">Dr Patel:</span> "We launched in 2019, so this is our fifth year. We've seen incredible growth — far beyond what we expected."<br><br>
+          <span class="speaker-tag">Presenter:</span> "And what's the project's main goal?"<br><br>
+          <span class="speaker-tag">Dr Patel:</span> "Our aim is to give people living in cities access to fresh, affordable vegetables. We focus mainly on low-income neighbourhoods where supermarkets are far away or prices are very high."<br><br>
+          <span class="speaker-tag">Presenter:</span> "How many growing sites do you currently have?"<br><br>
+          <span class="speaker-tag">Dr Patel:</span> "We now have thirty-two sites across the city. Some are small — just a few raised beds on a rooftop — but others are quite extensive."<br><br>
+          <span class="speaker-tag">Presenter:</span> "What do volunteers actually do when they come?"<br><br>
+          <span class="speaker-tag">Dr Patel:</span> "They plant seeds, water the beds, and help with the harvest. We also run fortnightly workshops on composting and natural pest control."<br><br>
+          <span class="speaker-tag">Presenter:</span> "Are there benefits beyond the food itself?"<br><br>
+          <span class="speaker-tag">Dr Patel:</span> "Absolutely. Many participants say they feel less isolated since joining. The mental health improvements have been really noticeable — people form genuine friendships here."<br><br>
+          <span class="speaker-tag">Presenter:</span> "And what does the future hold for Urban Roots?"<br><br>
+          <span class="speaker-tag">Dr Patel:</span> "We've just received a government grant to expand into three new districts before the end of the year. We're very excited."
+        </div>
+
+        <div class="gaptext" style="margin-top:16px">
+          <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:12px">Complete the sentences using words from the transcript above.</p>
+          <div class="gf-row">
+            <span class="gf-label">1. Urban Roots has been running for ___ years.</span>
+            <input class="gf-input" type="text" id="gf1" data-answers="five|5" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">2. The project focuses on areas where ___ are far away or expensive.</span>
+            <input class="gf-input" type="text" id="gf2" data-answers="supermarkets" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">3. The project currently runs ___ sites across the city.</span>
+            <input class="gf-input" type="text" id="gf3" data-answers="thirty-two|32" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">4. Volunteers help with planting, watering, and the ___.</span>
+            <input class="gf-input" type="text" id="gf4" data-answers="harvest" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">5. Participants say they feel less ___ since joining the project.</span>
+            <input class="gf-input" type="text" id="gf5" data-answers="isolated" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">6. The project received a government ___ to expand into new areas.</span>
+            <input class="gf-input" type="text" id="gf6" data-answers="grant" placeholder="your answer">
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkGapFill()">Check answers</button>
+        <div class="part-score" id="part3-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 4 — Multiple Choice (longer passage)
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part4">
+        <div class="part-header">
+          <span class="part-label">Part 4</span>
+          <span class="part-title">Multiple Choice — Renewable Energy</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a documentary extract, then choose the correct answer for each question.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear this passage. Here you can read the transcript to practise.</div>
+
+        <div class="transcript-label">Documentary transcript</div>
+        <div class="transcript-box">
+          <p>The race for clean energy is reshaping economies around the world. Of all the technologies involved, solar power has seen the most dramatic transformation. Once dismissed as too expensive for ordinary households, solar panels have fallen in cost by more than eighty percent over the past ten years. Last year, solar accounted for nearly a third of all new electricity generation installed worldwide — more than coal, gas, and nuclear combined.</p>
+          <p>Wind energy has also expanded rapidly. The United Kingdom now leads the world in offshore wind capacity, with more than ten thousand turbines operating around its coastlines. Unlike solar, wind turbines can generate power throughout the night, though their output depends heavily on wind speeds and weather conditions.</p>
+          <p>One persistent challenge facing the renewable energy sector is storage. On particularly sunny or windy days, power stations often generate far more electricity than the grid needs. Without adequate storage systems, this surplus is simply wasted. Scientists are therefore racing to develop more efficient battery technology. Some promising new designs can already store energy for up to seventy-two hours — a significant improvement on older systems.</p>
+          <p>The human impact of this energy transition should not be overlooked. Renewable energy creates many new jobs, particularly in engineering and manufacturing. However, it is also putting thousands of workers in fossil fuel industries out of work. Governments across the world are struggling to manage what analysts call the "just transition" — ensuring that communities built around coal mining and oil extraction do not simply collapse.</p>
+          <p>Despite all of these challenges, renewable energy now supplies over thirty percent of global electricity, a figure that has doubled in just eight years. Most energy analysts believe the transition away from fossil fuels is now irreversible, though achieving full carbon neutrality by 2050 will require far greater investment than governments are currently planning.</p>
+        </div>
+
+        <div class="questions" id="p4mc-questions">
+
+          <div class="question" data-correct="b">
+            <p class="question-text">1. What has happened to the cost of solar panels in the past decade?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> They have become slightly more affordable.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Their price has dropped by more than eighty percent.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> They now cost the same as conventional energy.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">2. What does the speaker say about solar energy's share of new installations last year?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It came second after natural gas.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">c)</span> It matched the output of coal and nuclear.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It exceeded all other energy types combined.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">3. What advantage does wind power have over solar energy?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Wind turbines are cheaper to build and install.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Wind energy can be generated during the night.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Wind power requires less maintenance over time.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">4. What happens to surplus energy on very sunny or windy days?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It is exported to neighbouring countries.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> It is stored automatically in the national grid.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It is lost because there is not enough storage capacity.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <p class="question-text">5. What progress has been made with new battery technology?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Some designs can now store energy for three days.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Batteries can now power entire cities overnight.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> New batteries are small enough to fit in any home.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">6. What does the "just transition" refer to?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> A rapid switch to one hundred percent renewable energy.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Supporting communities that lose fossil fuel jobs.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> A tax system that penalises carbon emissions.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <p class="question-text">7. What share of global electricity do renewables now supply?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> More than thirty percent.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> More than fifty percent.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Around twenty percent.</button>
+            </div>
+          </div>
+
+        </div><!-- /p4mc-questions -->
+
+        <button class="check-btn" onclick="checkMC('p4mc', 7)">Check answers</button>
+        <div class="part-score" id="p4mc-score"></div>
+      </div>
+
+    </div><!-- /page-content -->
+  </main>
+</div>
+
+<script>
+// ── Scores ──────────────────────────────────────
+const scores = { p1mc: 0, part2: 0, part3: 0, p4mc: 0 };
+
+function updateTotal() {
+  const total = scores.p1mc + scores.part2 + scores.part3 + scores.p4mc;
+  const el = document.getElementById('totalScore');
+  const num = document.getElementById('scoreNum');
+  el.style.display = 'block';
+  num.innerHTML = total + ' <span>/ 26</span>';
+}
+
+// ── selectOption (shared) ──────────────────────
+function selectOption(btn) {
+  const qDiv = btn.closest('.question');
+  if (qDiv.dataset.checked) return;
+  qDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+// ── checkMC — works for any MC part ───────────
+function checkMC(containerId, total) {
+  const container = document.getElementById(containerId + '-questions');
+  const questions = container.querySelectorAll('.question');
+  let score = 0;
+  questions.forEach(q => {
+    const correct = q.dataset.correct;
+    q.dataset.checked = '1';
+    const selected = q.querySelector('.option-btn.selected');
+    q.querySelectorAll('.option-btn').forEach(btn => {
+      if (btn.dataset.value === correct) btn.classList.add('correct');
+      else if (btn.classList.contains('selected')) btn.classList.add('wrong');
+      btn.disabled = true;
+    });
+    if (selected && selected.dataset.value === correct) score++;
+  });
+  scores[containerId] = score;
+  const label = containerId === 'p1mc' ? 'Part 1' : 'Part 4';
+  const el = document.getElementById(containerId + '-score');
+  el.textContent = label + ' score: ' + score + ' / ' + total;
+  el.className = 'part-score visible' + (score === total ? ' perfect' : '');
+  updateTotal();
+}
+
+// ── Part 2: Matching ───────────────────────────
+function checkP2Matching() {
+  const selects = document.querySelectorAll('#p2-matching .match-select');
+  let score = 0;
+  selects.forEach(sel => {
+    const correct = sel.dataset.correct;
+    if (sel.value === correct) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+  });
+  scores.part2 = score;
+  const el = document.getElementById('part2-score');
+  el.textContent = 'Part 2 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+// ── Part 3: Gap-fill ───────────────────────────
+function checkGapFill() {
+  const inputs = document.querySelectorAll('.gf-input');
+  let score = 0;
+  inputs.forEach(inp => {
+    const answers = inp.dataset.answers.split('|').map(a => a.trim().toLowerCase());
+    const val = inp.value.trim().toLowerCase();
+    if (val && answers.includes(val)) { inp.classList.add('correct'); score++; }
+    else inp.classList.add('wrong');
+    inp.disabled = true;
+  });
+  scores.part3 = score;
+  const el = document.getElementById('part3-score');
+  el.textContent = 'Part 3 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+// ── Page sync ──────────────────────────────────
+const PAGE_ID = 'listening_paper1';
+
+function collectState() {
+  return {
+    p1_sel:     [...document.querySelectorAll('#p1mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p1_checked: !!document.querySelector('#p1mc-questions .question[data-checked]'),
+    p2_sel:     [...document.querySelectorAll('#p2-matching .match-select')].map(s => s.value),
+    p2_checked: !!document.querySelector('#p2-matching .match-select[disabled]'),
+    p3_vals:    [...document.querySelectorAll('.gf-input')].map(i => i.value),
+    p3_checked: !!document.querySelector('.gf-input[disabled]'),
+    p4_sel:     [...document.querySelectorAll('#p4mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p4_checked: !!document.querySelector('#p4mc-questions .question[data-checked]'),
+  };
+}
+
+function savePage() { DB.savePage(PAGE_ID, collectState()); }
+
+function restorePage(s) {
+  if (!s) return;
+  document.querySelectorAll('#p1mc-questions .question').forEach((q, i) => {
+    const val = s.p1_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p1_checked) checkMC('p1mc', 7);
+  document.querySelectorAll('#p2-matching .match-select').forEach((sel, i) => { if (s.p2_sel?.[i]) sel.value = s.p2_sel[i]; });
+  if (s.p2_checked) checkP2Matching();
+  document.querySelectorAll('.gf-input').forEach((inp, i) => { if (s.p3_vals?.[i]) inp.value = s.p3_vals[i]; });
+  if (s.p3_checked) checkGapFill();
+  document.querySelectorAll('#p4mc-questions .question').forEach((q, i) => {
+    const val = s.p4_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p4_checked) checkMC('p4mc', 7);
+}
+
+['selectOption','checkMC','checkP2Matching','checkGapFill'].forEach(name => {
+  const orig = window[name];
+  window[name] = function(...args) { orig(...args); savePage(); };
+});
+
+(async () => { restorePage(await DB.loadPage(PAGE_ID)); })();
+</script>
+</body>
+</html>

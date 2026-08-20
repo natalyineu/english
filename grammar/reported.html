@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grammar — Reported Speech</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+details.explanation-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0;margin-bottom:28px;box-shadow:var(--shadow)}
+details.explanation-panel summary{padding:18px 24px;font-weight:700;font-size:.95rem;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;color:var(--text)}
+details.explanation-panel summary::after{content:'▸';margin-left:auto;font-size:.8rem;color:var(--muted);transition:transform .2s}
+details[open].explanation-panel summary::after{transform:rotate(90deg)}
+.explanation-body{padding:0 24px 24px;border-top:1px solid var(--border)}
+.rule-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem}
+.rule-table th{background:var(--bg);padding:8px 12px;text-align:left;font-weight:700;color:var(--muted);border:1px solid var(--border)}
+.rule-table td{padding:8px 12px;border:1px solid var(--border);color:var(--text)}
+.rule-table tr:nth-child(even) td{background:var(--bg)}
+.example{font-style:italic;color:var(--muted);font-size:.85rem;margin:4px 0 4px 12px}
+.gf-questions{display:flex;flex-direction:column;gap:18px}
+.gf-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.gf-num{font-weight:700;min-width:22px;color:var(--muted);font-size:.88rem}
+.gf-input{font-family:'Inter',sans-serif;font-size:.88rem;border:1.5px solid var(--sel);border-radius:6px;padding:5px 10px;background:var(--sel-bg);color:var(--sel);min-width:180px;transition:border-color .15s,background .15s}
+.gf-input:focus{outline:none;border-color:var(--navy)}
+.gf-input.correct{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.gf-input.wrong{border-color:var(--err);background:var(--err-bg);color:var(--err)}
+.gf-reveal{display:none;font-size:.8rem;color:var(--ok);font-weight:600;margin-top:2px}
+.gf-reveal.visible{display:block}
+.gf-sentence{font-size:.9rem;color:var(--text);line-height:1.7}
+.ec-questions{display:flex;flex-direction:column;gap:22px}
+.ec-num-label{font-weight:700;font-size:.82rem;color:var(--muted);margin-bottom:4px}
+.ec-sentence{font-size:.92rem;font-style:italic;color:var(--text);background:var(--bg);border-left:3px solid var(--border);padding:8px 14px;border-radius:4px;margin-bottom:10px;line-height:1.6}
+.ec-input{font-family:'Inter',sans-serif;font-size:.88rem;border:1.5px solid var(--border);border-radius:7px;padding:8px 14px;width:100%;background:var(--card);color:var(--text);transition:border-color .15s}
+.ec-input:focus{outline:none;border-color:var(--sel)}
+.ec-input.correct{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.ec-input.wrong{border-color:var(--err);background:var(--err-bg)}
+.ec-answer{display:none;margin-top:6px;font-size:.82rem;color:var(--ok);font-weight:600}
+.ec-answer.visible{display:block}
+</style>
+</head>
+<body>
+<div class="site-wrap">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Grammar</span>
+        <a href="index.html" class="nav-link">📐 All Topics</a>
+        <a href="conditionals.html" class="nav-link">If clauses</a>
+        <a href="passive.html" class="nav-link">Passive voice</a>
+        <a href="reported.html" class="nav-link active">Reported speech</a>
+        <a href="modals.html" class="nav-link">Modal verbs</a>
+        <a href="relative.html" class="nav-link">Relative clauses</a>
+        <a href="tenses.html" class="nav-link">Perfect tenses</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a><span>›</span>
+        <a href="index.html">Grammar</a><span>›</span>
+        Reported Speech
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Reported Speech</h1>
+      <p class="page-subtitle">26 marks · tense backshift, pronouns, reporting verbs · gap-fill, MC, error correction</p>
+
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 26</span></div>
+        <div class="score-pass">Complete all three exercises to see your total</div>
+      </div>
+
+      <details class="explanation-panel">
+        <summary>📖 Key Rules — Reported Speech (click to expand)</summary>
+        <div class="explanation-body">
+          <table class="rule-table">
+            <tr><th>Direct</th><th>Reported (backshift)</th></tr>
+            <tr><td>present simple → </td><td>past simple</td></tr>
+            <tr><td>present continuous → </td><td>past continuous</td></tr>
+            <tr><td>present perfect → </td><td>past perfect</td></tr>
+            <tr><td>past simple → </td><td>past perfect</td></tr>
+            <tr><td>will → </td><td>would</td></tr>
+            <tr><td>can → </td><td>could</td></tr>
+            <tr><td>may → </td><td>might</td></tr>
+          </table>
+          <p style="font-size:.85rem;font-weight:700;color:var(--text);margin-top:12px;">Time expressions:</p>
+          <p class="example">now → then &nbsp;|&nbsp; today → that day &nbsp;|&nbsp; yesterday → the day before &nbsp;|&nbsp; tomorrow → the next day / the following day &nbsp;|&nbsp; here → there</p>
+          <p style="font-size:.85rem;font-weight:700;color:var(--text);margin-top:10px;">Common reporting verbs:</p>
+          <p class="example"><strong>say</strong> (no object) &nbsp;|&nbsp; <strong>tell</strong> + object &nbsp;|&nbsp; <strong>ask</strong> (if/whether for yes/no questions) &nbsp;|&nbsp; <strong>admit / deny / suggest</strong> + -ing &nbsp;|&nbsp; <strong>promise / offer / refuse / agree</strong> + to-infinitive</p>
+          <p style="font-size:.85rem;color:var(--muted);margin-top:8px;">⚠️ <em>say</em> + (that) but <em>tell</em> + person + (that). Never: "She told that…"</p>
+        </div>
+      </details>
+
+      <!-- Exercise 1 -->
+      <div class="quiz-part" id="ex1">
+        <div class="part-header">
+          <span class="part-label">Exercise 1</span>
+          <span class="part-title">Gap-fill</span>
+          <span class="part-marks">10 marks</span>
+        </div>
+        <p class="part-instructions">Complete the reported speech. Type one word or short phrase per gap.</p>
+
+        <div class="gf-questions" id="ex1-gf">
+          <div class="gf-row"><span class="gf-num">1.</span><div>
+            <div class="gf-sentence">"I am tired," she said. &rarr; She said she <input class="gf-input" data-answers="was" placeholder="…"> tired.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">2.</span><div>
+            <div class="gf-sentence">"We will arrive tomorrow," they said. &rarr; They said they <input class="gf-input" data-answers="would arrive" placeholder="…"> the following day.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">3.</span><div>
+            <div class="gf-sentence">"I have finished the report," he told me. &rarr; He told me he <input class="gf-input" data-answers="had finished" placeholder="…"> the report.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">4.</span><div>
+            <div class="gf-sentence">"I don't know the answer," she admitted. &rarr; She admitted she <input class="gf-input" data-answers="didn't know|did not know" placeholder="…"> the answer.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">5.</span><div>
+            <div class="gf-sentence">"Can you help me?" he asked. &rarr; He asked if I <input class="gf-input" data-answers="could" placeholder="…"> help him.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">6.</span><div>
+            <div class="gf-sentence">"We went to Paris last summer," they said. &rarr; They said they <input class="gf-input" data-answers="had gone" placeholder="…"> to Paris the previous summer.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">7.</span><div>
+            <div class="gf-sentence">"I will call you tonight," she promised. &rarr; She promised she <input class="gf-input" data-answers="would call" placeholder="…"> me that night.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">8.</span><div>
+            <div class="gf-sentence">"Don't touch the equipment," the teacher said. &rarr; The teacher told us <input class="gf-input" data-answers="not to touch" placeholder="…"> the equipment.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">9.</span><div>
+            <div class="gf-sentence">"Are you feeling better?" the doctor asked. &rarr; The doctor asked if I <input class="gf-input" data-answers="was feeling" placeholder="…"> better.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">10.</span><div>
+            <div class="gf-sentence">"I have never visited Rome," he said. &rarr; He said he <input class="gf-input" data-answers="had never visited" placeholder="…"> Rome.</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+        </div>
+
+        <button class="check-btn" id="ex1-btn" onclick="checkGapInputs('ex1', 10)">Check answers</button>
+        <div class="part-score" id="ex1-score"></div>
+      </div>
+
+      <!-- Exercise 2 -->
+      <div class="quiz-part" id="ex2">
+        <div class="part-header">
+          <span class="part-label">Exercise 2</span>
+          <span class="part-title">Multiple Choice</span>
+          <span class="part-marks">10 marks</span>
+        </div>
+        <p class="part-instructions">Choose the correct option (A, B or C) to complete each sentence.</p>
+
+        <div class="questions" id="ex2-questions">
+          <div class="question" data-correct="b">
+            <p class="question-text">1. "I live in London," she said. &rarr; She said she ___ in London.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> lives</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> lived</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> had lived</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">2. "We can finish tomorrow," they said. &rarr; They said they ___ finish the next day.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> can</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> could</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> would</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">3. "Did you take my keys?" he asked. &rarr; He asked ___.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> if I took his keys</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> if I had taken his keys</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> that I took his keys</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">4. "Don't be late," she warned. &rarr; She warned me ___ late.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> not be</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> not to be</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> to not be</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">5. He said he ___ the film the week before.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> sees</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> saw</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> had seen</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">6. "I will help you," he promised. &rarr; He promised that he ___ help me.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> will</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> would</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> could</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">7. She said she ___ buy the ticket the day before she came.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> hasn't</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> didn't</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> hadn't managed to</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">8. "Where are you going?" she asked me. &rarr; She asked me ___.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> where I am going</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> where was I going</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> where I was going</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">9. "I'm studying law," he told us. &rarr; He told us he ___ law.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> is studying</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> was studying</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> studied</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">10. She denied ___ the money from the safe.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> to steal</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> stealing</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> she stole</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="check-btn" id="ex2-btn" onclick="checkMC('ex2', 10)">Check answers</button>
+        <div class="part-score" id="ex2-score"></div>
+      </div>
+
+      <!-- Exercise 3 -->
+      <div class="quiz-part" id="ex3">
+        <div class="part-header">
+          <span class="part-label">Exercise 3</span>
+          <span class="part-title">Error Correction</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Each sentence contains one mistake with reported speech. Type the corrected sentence in full.</p>
+
+        <div class="ec-questions" id="ex3-ec">
+          <div class="ec-row">
+            <div class="ec-num-label">1.</div>
+            <div class="ec-sentence">She said me that she was feeling tired after the journey.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="She told me that she was feeling tired after the journey.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">2.</div>
+            <div class="ec-sentence">He asked me where did I work.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="He asked me where I worked.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">3.</div>
+            <div class="ec-sentence">They said they will come the following day.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="They said they would come the following day.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">4.</div>
+            <div class="ec-sentence">She told she hadn't finished the project yet.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="She said she hadn't finished the project yet.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">5.</div>
+            <div class="ec-sentence">He denied to take the money from the till.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="He denied taking the money from the till.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">6.</div>
+            <div class="ec-sentence">The manager asked if I can start the following Monday.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="The manager asked if I could start the following Monday.">
+            <div class="ec-answer"></div>
+          </div>
+        </div>
+
+        <button class="check-btn" id="ex3-btn" onclick="checkErrors('ex3')">Check answers</button>
+        <div class="part-score" id="ex3-score"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const PAGE_ID = 'grammar_reported';
+const scores = { ex1: 0, ex2: 0, ex3: 0 };
+function updateTotal() { const t=scores.ex1+scores.ex2+scores.ex3; document.getElementById('totalScore').style.display='block'; document.getElementById('scoreNum').innerHTML=t+' <span>/ 26</span>'; }
+function checkGapInputs(exId,total){const rows=document.querySelectorAll('#'+exId+'-gf .gf-row');let s=0;rows.forEach(row=>{const inp=row.querySelector('.gf-input');const rev=row.querySelector('.gf-reveal');if(!inp)return;const acc=inp.dataset.answers.split('|').map(a=>a.trim().toLowerCase());const val=inp.value.trim().toLowerCase();if(acc.includes(val)){inp.classList.add('correct');s++;}else{inp.classList.add('wrong');rev.textContent='✓ '+inp.dataset.answers.split('|')[0];rev.classList.add('visible');}inp.disabled=true;});scores[exId]=s;const el=document.getElementById(exId+'-score');el.textContent='Exercise 1 score: '+s+' / '+total;el.className='part-score visible'+(s===total?' perfect':'');document.getElementById(exId+'-btn').disabled=true;updateTotal();savePage();}
+function selectOption(btn){const qDiv=btn.closest('.question');if(qDiv.dataset.checked)return;qDiv.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');savePage();}
+function checkMC(partId,total){const container=document.getElementById(partId+'-questions');const questions=container.querySelectorAll('.question');let s=0;questions.forEach(q=>{const correct=q.dataset.correct;q.dataset.checked='1';const sel=q.querySelector('.option-btn.selected');q.querySelectorAll('.option-btn').forEach(btn=>{if(btn.dataset.value===correct)btn.classList.add('correct');else if(btn.classList.contains('selected'))btn.classList.add('wrong');btn.disabled=true;});if(sel&&sel.dataset.value===correct)s++;});scores[partId]=s;const el=document.getElementById(partId+'-score');el.textContent='Exercise 2 score: '+s+' / '+total;el.className='part-score visible'+(s===total?' perfect':'');document.getElementById(partId+'-btn').disabled=true;updateTotal();savePage();}
+function checkErrors(exId){const rows=document.querySelectorAll('#'+exId+'-ec .ec-row');let s=0;rows.forEach(row=>{const inp=row.querySelector('.ec-input');const ansEl=row.querySelector('.ec-answer');const correct=inp.dataset.answer.trim().toLowerCase();const val=inp.value.trim().toLowerCase();if(val===correct){inp.classList.add('correct');s++;}else{inp.classList.add('wrong');}ansEl.textContent='✓ '+inp.dataset.answer;ansEl.classList.add('visible');inp.disabled=true;});scores[exId]=s;const el=document.getElementById(exId+'-score');el.textContent='Exercise 3 score: '+s+' / 6';el.className='part-score visible'+(s===6?' perfect':'');document.getElementById(exId+'-btn').disabled=true;updateTotal();savePage();}
+function collectState(){return{gfInputs:[...document.querySelectorAll('#ex1-gf .gf-input')].map(i=>i.value),ex1Checked:!!document.querySelector('#ex1-gf .gf-input.correct, #ex1-gf .gf-input.wrong'),mcSel:[...document.querySelectorAll('#ex2-questions .question')].map(q=>q.querySelector('.option-btn.selected')?.dataset.value||''),ex2Checked:!!document.querySelector('#ex2-questions .question[data-checked]'),ecInputs:[...document.querySelectorAll('#ex3-ec .ec-input')].map(i=>i.value),ex3Checked:!!document.querySelector('#ex3-ec .ec-input.correct, #ex3-ec .ec-input.wrong')};}
+function savePage(){DB.savePage(PAGE_ID,collectState());}
+function restorePage(s){if(!s)return;if(s.gfInputs)document.querySelectorAll('#ex1-gf .gf-input').forEach((inp,i)=>{if(s.gfInputs[i])inp.value=s.gfInputs[i];});if(s.ex1Checked)checkGapInputs('ex1',10);if(s.mcSel)document.querySelectorAll('#ex2-questions .question').forEach((q,i)=>{if(s.mcSel[i])q.querySelector(`.option-btn[data-value="${s.mcSel[i]}"]`)?.classList.add('selected');});if(s.ex2Checked)checkMC('ex2',10);if(s.ecInputs)document.querySelectorAll('#ex3-ec .ec-input').forEach((inp,i)=>{if(s.ecInputs[i])inp.value=s.ecInputs[i];});if(s.ex3Checked)checkErrors('ex3');}
+document.querySelectorAll('.gf-input,.ec-input').forEach(inp=>inp.addEventListener('input',savePage));
+(async()=>{restorePage(await DB.loadPage(PAGE_ID));})();
+</script>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listening — Paper 2</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.transcript-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  font-family: 'Lora', Georgia, serif;
+  font-size: .9rem;
+  line-height: 1.8;
+  color: var(--text);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.transcript-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.transcript-notice {
+  background: var(--sel-bg);
+  border: 1px solid var(--sel);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: .8rem;
+  color: var(--sel);
+  margin-bottom: 16px;
+}
+.speaker-tag { font-weight: 700; }
+.gf-row { margin: 12px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.gf-label { font-size: .9rem; flex: 1 1 300px; }
+.gf-input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: .9rem;
+  background: var(--bg);
+  color: var(--text);
+  width: 180px;
+}
+.gf-input.correct { border-color: #2d8a4e; background: #edf7f1; }
+.gf-input.wrong   { border-color: #c0392b; background: #fdecea; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .gf-input.correct { background: #1a3d2b; }
+  :root:not([data-theme="light"]) .gf-input.wrong   { background: #3d1a1a; }
+}
+:root[data-theme="dark"] .gf-input.correct { background: #1a3d2b; }
+:root[data-theme="dark"] .gf-input.wrong   { background: #3d1a1a; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="paper2.html" class="nav-link active">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <span>Listening</span>
+        <span>›</span>
+        Paper 2
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Listening — Practice Paper 2</h1>
+      <p class="page-subtitle">26 marks · ~30 minutes · 4 parts · Read transcript, answer questions</p>
+
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 26</span></div>
+        <div class="score-pass">Pass mark: 75/150 total (listening contributes 26 of those marks)</div>
+      </div>
+
+      <!-- PART 1 -->
+      <div class="quiz-part" id="part1">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Multiple Choice — Daily Life Conversations</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read each transcript of a short conversation, then choose the best answer.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear these conversations. Here you can read the transcripts to practise.</div>
+
+        <div class="questions" id="p1mc-questions">
+
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 1 — Gym</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Man:</span> "I'd like to renew my membership. It expired last week."<br>
+              <span class="speaker-tag">Woman:</span> "Of course. Would you like to stay on the same monthly plan or switch to annual?"<br>
+              <span class="speaker-tag">Man:</span> "How much would I save going annual?"<br>
+              <span class="speaker-tag">Woman:</span> "The annual plan works out at thirty-five pounds a month instead of forty-five. You'd save a hundred and twenty pounds over the year."<br>
+              <span class="speaker-tag">Man:</span> "That's quite a saving. Let me think about it and come back tomorrow."
+            </div>
+            <p class="question-text">1. What does the man decide to do?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Renew his membership on the monthly plan.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Switch immediately to the annual plan.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Wait before making his decision.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 2 — Supermarket</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "Excuse me, could you tell me where the dried herbs are?"<br>
+              <span class="speaker-tag">Staff:</span> "They used to be in aisle six, but we've just reorganised the store. They're now in aisle three, next to the cooking oils."<br>
+              <span class="speaker-tag">Woman:</span> "Oh, that's confusing! I've been coming here for years."<br>
+              <span class="speaker-tag">Staff:</span> "I know, I'm sorry. We're still putting up the new signs."
+            </div>
+            <p class="question-text">2. Why can't the woman find what she needs?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> The item is out of stock.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> The shop layout has recently changed.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> She is in the wrong supermarket.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 3 — University</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Student:</span> "I wanted to ask about the assignment deadline. I've been ill this week and I'm worried I won't finish in time."<br>
+              <span class="speaker-tag">Tutor:</span> "I'm sorry to hear that. Do you have a doctor's note?"<br>
+              <span class="speaker-tag">Student:</span> "Yes, I can get one."<br>
+              <span class="speaker-tag">Tutor:</span> "In that case, I can give you a five-day extension. Submit by next Friday."
+            </div>
+            <p class="question-text">3. What does the tutor agree to do?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Give the student more time to complete the work.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Mark the assignment without a deadline.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Cancel the assignment entirely.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 4 — Café</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Customer:</span> "Excuse me, I ordered a flat white but this looks like a cappuccino to me."<br>
+              <span class="speaker-tag">Staff:</span> "Let me check the ticket… you're absolutely right, I'm so sorry. I'll make you a fresh one straight away."<br>
+              <span class="speaker-tag">Customer:</span> "Thank you. And could I get a new pastry too? This one's gone a bit cold while I was waiting."<br>
+              <span class="speaker-tag">Staff:</span> "Of course, and the pastry is on us."
+            </div>
+            <p class="question-text">4. What went wrong with the customer's order?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> He was given the wrong table.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> His order took too long to arrive.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> He received the wrong drink.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 5 — Bus Stop</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "Does the number fourteen go to the town centre?"<br>
+              <span class="speaker-tag">Man:</span> "No, the fourteen only goes as far as the hospital. You need the twenty-two for the town centre."<br>
+              <span class="speaker-tag">Woman:</span> "And how long is the wait?"<br>
+              <span class="speaker-tag">Man:</span> "The twenty-two runs every ten minutes. There should be one in about six minutes."
+            </div>
+            <p class="question-text">5. What does the woman learn?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> She needs to take a different bus.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> The bus she wants has been cancelled.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> The town centre bus stop has moved.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 6 — Library</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Librarian:</span> "I can see you have two books that are overdue. There's a fine of twenty pence per day per book."<br>
+              <span class="speaker-tag">Man:</span> "Oh, I had no idea they were overdue. The return date was the seventh, wasn't it?"<br>
+              <span class="speaker-tag">Librarian:</span> "No, the seventh of last month. Today's the eighth of this month."<br>
+              <span class="speaker-tag">Man:</span> "A whole month? I'm terribly sorry. How much do I owe?"
+            </div>
+            <p class="question-text">6. Why does the man owe a fine?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> He damaged the library books.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> He kept the books much longer than allowed.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> He borrowed too many books at once.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 7 — Cinema</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "Two tickets for the seven-thirty showing of The Last Horizon, please."<br>
+              <span class="speaker-tag">Cashier:</span> "I'm afraid that screening is fully booked. We have seats available at five o'clock or at ten fifteen."<br>
+              <span class="speaker-tag">Woman:</span> "Ten fifteen is too late for us. Can we get two for the five o'clock?"<br>
+              <span class="speaker-tag">Cashier:</span> "Of course. That's screen two. Would you like standard or premium seats?"
+            </div>
+            <p class="question-text">7. Which showing will the woman attend?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> The seven-thirty showing.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> The five o'clock showing.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> The ten fifteen showing.</button>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkMC('p1mc', 7)">Check answers</button>
+        <div class="part-score" id="p1mc-score"></div>
+      </div>
+
+      <!-- PART 2 -->
+      <div class="quiz-part" id="part2">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Matching — Job Satisfaction</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read what six people say about their jobs. Match each speaker (A–F) to what they find most rewarding (1–7). There is one statement you will not need.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear these speakers. Here you can read the transcripts to practise.</div>
+
+        <div class="gap-options">
+          <div class="gap-option-card"><span class="go-letter">1</span> Helping people to solve problems</div>
+          <div class="gap-option-card"><span class="go-letter">2</span> Using creativity in their work every day</div>
+          <div class="gap-option-card"><span class="go-letter">3</span> Being part of a close-knit team</div>
+          <div class="gap-option-card"><span class="go-letter">4</span> Making a difference to the local community</div>
+          <div class="gap-option-card"><span class="go-letter">5</span> Learning new skills on a regular basis</div>
+          <div class="gap-option-card"><span class="go-letter">6</span> Having a different routine every day</div>
+          <div class="gap-option-card"><span class="go-letter">7</span> Earning a competitive salary</div>
+        </div>
+
+        <div class="matching-questions" id="p2-matching">
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker A — Graphic Designer</div>
+            <div class="transcript-box">"Every single project is different and I get to make real artistic choices — colour, layout, typography. I'm not just following instructions; I'm genuinely producing something original every day. That creative freedom is what keeps me coming back. I can't imagine doing a job where I wasn't expressing something."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker A finds most rewarding:</span>
+              <select class="match-select" id="sp-A" data-correct="2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker B — IT Support Technician</div>
+            <div class="transcript-box">"People come to me when things go wrong and they're often frustrated or panicking. When I fix the problem and see the relief on their faces, that's genuinely satisfying. It's not glamorous work but I know I'm being useful, and that matters to me more than anything else."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker B finds most rewarding:</span>
+              <select class="match-select" id="sp-B" data-correct="1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker C — Community Nurse</div>
+            <div class="transcript-box">"I work in the same neighbourhood where I grew up, and I see every day how what I do affects real people's lives. I helped one elderly man recover from a fall and he told me he'd have had to go into a care home without my support. That kind of impact on the community means everything to me."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker C finds most rewarding:</span>
+              <select class="match-select" id="sp-C" data-correct="4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker D — Paramedic</div>
+            <div class="transcript-box">"No two days are the same — I might be dealing with a minor injury in the morning and a serious accident in the afternoon. The unpredictability keeps me sharp. I'd find it very hard to sit at a desk doing the same thing day in, day out. The variety is what energises me."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker D finds most rewarding:</span>
+              <select class="match-select" id="sp-D" data-correct="6"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker E — Software Developer</div>
+            <div class="transcript-box">"Technology changes so fast that if you stop learning you fall behind almost immediately. I'm constantly doing courses, reading documentation, experimenting with new frameworks. I actually love that — the sense that you're never finished, that there's always something more to master. It keeps the job exciting."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker E finds most rewarding:</span>
+              <select class="match-select" id="sp-E" data-correct="5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker F — Firefighter</div>
+            <div class="transcript-box">"We train together, eat together, cover for each other when things get tough. That bond you build with your crew is unlike anything I've experienced in any other job. You have to trust each other completely, and that creates a kind of friendship that's very hard to find elsewhere. That's honestly what I live for in this job."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker F finds most rewarding:</span>
+              <select class="match-select" id="sp-F" data-correct="3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkP2Matching()">Check answers</button>
+        <div class="part-score" id="part2-score"></div>
+      </div>
+
+      <!-- PART 3 -->
+      <div class="quiz-part" id="part3">
+        <div class="part-header">
+          <span class="part-label">Part 3</span>
+          <span class="part-title">Gap-fill — Digital Detox</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a podcast interview. Then complete the sentences below. Write <strong>one or two words</strong> from the transcript for each gap.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear this. Here you can read the transcript to practise.</div>
+
+        <div class="transcript-label">Podcast transcript</div>
+        <div class="transcript-box">
+          <span class="speaker-tag">Host:</span> "Welcome to Mind Matters. Today I'm talking with wellness consultant James Ford about digital detox — switching off from technology. James, how did you first get interested in this?"<br><br>
+          <span class="speaker-tag">James:</span> "I was working sixty-hour weeks and spending every spare minute on my phone. Then one weekend I left it at home by accident and had the best Saturday I'd had in years. That was my turning point."<br><br>
+          <span class="speaker-tag">Host:</span> "And what exactly does a digital detox involve?"<br><br>
+          <span class="speaker-tag">James:</span> "At its simplest, it means choosing specific periods — anything from a few hours to several weeks — when you deliberately avoid using digital devices. No phone, no laptop, no tablet."<br><br>
+          <span class="speaker-tag">Host:</span> "What are the main benefits people report?"<br><br>
+          <span class="speaker-tag">James:</span> "Better sleep is the most common thing people mention. Many also report significant improvements in their concentration and a reduction in anxiety levels."<br><br>
+          <span class="speaker-tag">Host:</span> "Is it difficult to stick to?"<br><br>
+          <span class="speaker-tag">James:</span> "The first twenty-four hours are genuinely hard for most people — there's real withdrawal. But by day three, the majority say they feel calmer and more present."<br><br>
+          <span class="speaker-tag">Host:</span> "Any practical tips for listeners wanting to try it?"<br><br>
+          <span class="speaker-tag">James:</span> "Start small — try a single evening without your phone. Tell your friends and family in advance so they don't worry. And crucially, plan something enjoyable for the time you free up, otherwise you'll just sit there feeling restless."
+        </div>
+
+        <div class="gaptext" style="margin-top:16px">
+          <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:12px">Complete the sentences using words from the transcript above.</p>
+          <div class="gf-row">
+            <span class="gf-label">1. James first discovered digital detox when he forgot his ___ one Saturday.</span>
+            <input class="gf-input" type="text" id="gf1" data-answers="phone" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">2. A detox involves avoiding digital devices for a chosen ___ of time.</span>
+            <input class="gf-input" type="text" id="gf2" data-answers="period|periods" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">3. The most commonly reported benefit is improved ___.</span>
+            <input class="gf-input" type="text" id="gf3" data-answers="sleep" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">4. People also experience lower levels of ___.</span>
+            <input class="gf-input" type="text" id="gf4" data-answers="anxiety" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">5. By day ___, most people feel calmer and more present.</span>
+            <input class="gf-input" type="text" id="gf5" data-answers="three|3" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">6. James advises planning something ___ to fill the time you free up.</span>
+            <input class="gf-input" type="text" id="gf6" data-answers="enjoyable" placeholder="your answer">
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkGapFill()">Check answers</button>
+        <div class="part-score" id="part3-score"></div>
+      </div>
+
+      <!-- PART 4 -->
+      <div class="quiz-part" id="part4">
+        <div class="part-header">
+          <span class="part-label">Part 4</span>
+          <span class="part-title">Multiple Choice — History of the Internet</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a radio talk, then choose the correct answer for each question.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear this passage. Here you can read the transcript to practise.</div>
+
+        <div class="transcript-label">Radio talk transcript</div>
+        <div class="transcript-box">
+          <p>The internet has transformed human society more profoundly than almost any invention in history. Yet its origins were remarkably modest. In 1969, a small network called ARPANET connected just four universities in the United States. Its original purpose was not to help people communicate socially but to allow the military and academic researchers to share data efficiently and to maintain communication networks even if part of the system was destroyed.</p>
+          <p>The invention that truly opened the internet to the public was the World Wide Web, created in 1989 by British scientist Tim Berners-Lee while working in Switzerland. The Web allowed ordinary people to publish and access information using a simple system of linked pages — what we now call websites. Within five years of its launch, there were over ten thousand websites. Within a decade, that number had grown to tens of millions.</p>
+          <p>The arrival of broadband internet in the early 2000s changed everything again. For the first time, people could stream video, download music quickly, and use complex web applications. This paved the way for the modern streaming services, social media platforms, and cloud computing systems we rely on today.</p>
+          <p>Social media in particular has had a profound impact on how people communicate. Platforms such as Facebook, launched in 2004, gave individuals the ability to build large social networks online. By 2023, over five billion people worldwide were using the internet regularly — more than sixty percent of the world's population.</p>
+          <p>Critics, however, point to serious negative consequences. The spread of misinformation has accelerated dramatically. Online platforms can amplify false information far more quickly than it can be corrected. Psychologists also raise concerns about the effects of social media on young people's mental health, particularly around body image and social comparison. Governments around the world are now grappling with how to regulate an environment that no single country controls.</p>
+        </div>
+
+        <div class="questions" id="p4mc-questions">
+
+          <div class="question" data-correct="b">
+            <p class="question-text">1. What was the original purpose of ARPANET?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> To connect universities for educational purposes.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> To share data and maintain resilient communications.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> To provide the public with access to information.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">2. What did Tim Berners-Lee create in 1989?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> The first email system.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> The first internet connection between countries.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> A system of linked pages for sharing information.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <p class="question-text">3. How many websites existed within five years of the Web's launch?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> More than ten thousand.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> More than a million.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Fewer than one thousand.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">4. What did broadband internet make possible for the first time?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Sending emails with attachments.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Streaming video and downloading music quickly.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Building personal websites without technical knowledge.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">5. How many people used the internet regularly by 2023?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Around two billion.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Around four billion.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Over five billion.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <p class="question-text">6. What does the speaker say about misinformation online?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It spreads faster than it can be corrected.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Platforms are successfully filtering it out.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It only affects older internet users.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">7. What challenge do governments face regarding the internet?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Building fast enough infrastructure for all citizens.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Regulating an environment no single country controls.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Competing with private companies to provide internet access.</button>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkMC('p4mc', 7)">Check answers</button>
+        <div class="part-score" id="p4mc-score"></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+const scores = { p1mc: 0, part2: 0, part3: 0, p4mc: 0 };
+
+function updateTotal() {
+  const total = scores.p1mc + scores.part2 + scores.part3 + scores.p4mc;
+  const el = document.getElementById('totalScore');
+  el.style.display = 'block';
+  document.getElementById('scoreNum').innerHTML = total + ' <span>/ 26</span>';
+}
+
+function selectOption(btn) {
+  const qDiv = btn.closest('.question');
+  if (qDiv.dataset.checked) return;
+  qDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkMC(containerId, total) {
+  const container = document.getElementById(containerId + '-questions');
+  const questions = container.querySelectorAll('.question');
+  let score = 0;
+  questions.forEach(q => {
+    const correct = q.dataset.correct;
+    q.dataset.checked = '1';
+    const selected = q.querySelector('.option-btn.selected');
+    q.querySelectorAll('.option-btn').forEach(btn => {
+      if (btn.dataset.value === correct) btn.classList.add('correct');
+      else if (btn.classList.contains('selected')) btn.classList.add('wrong');
+      btn.disabled = true;
+    });
+    if (selected && selected.dataset.value === correct) score++;
+  });
+  scores[containerId] = score;
+  const label = containerId === 'p1mc' ? 'Part 1' : 'Part 4';
+  const el = document.getElementById(containerId + '-score');
+  el.textContent = label + ' score: ' + score + ' / ' + total;
+  el.className = 'part-score visible' + (score === total ? ' perfect' : '');
+  updateTotal();
+}
+
+function checkP2Matching() {
+  const selects = document.querySelectorAll('#p2-matching .match-select');
+  let score = 0;
+  selects.forEach(sel => {
+    if (sel.value === sel.dataset.correct) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+  });
+  scores.part2 = score;
+  const el = document.getElementById('part2-score');
+  el.textContent = 'Part 2 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+function checkGapFill() {
+  const inputs = document.querySelectorAll('.gf-input');
+  let score = 0;
+  inputs.forEach(inp => {
+    const answers = inp.dataset.answers.split('|').map(a => a.trim().toLowerCase());
+    const val = inp.value.trim().toLowerCase();
+    if (val && answers.includes(val)) { inp.classList.add('correct'); score++; }
+    else inp.classList.add('wrong');
+    inp.disabled = true;
+  });
+  scores.part3 = score;
+  const el = document.getElementById('part3-score');
+  el.textContent = 'Part 3 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+const PAGE_ID = 'listening_paper2';
+
+function collectState() {
+  return {
+    p1_sel:     [...document.querySelectorAll('#p1mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p1_checked: !!document.querySelector('#p1mc-questions .question[data-checked]'),
+    p2_sel:     [...document.querySelectorAll('#p2-matching .match-select')].map(s => s.value),
+    p2_checked: !!document.querySelector('#p2-matching .match-select[disabled]'),
+    p3_vals:    [...document.querySelectorAll('.gf-input')].map(i => i.value),
+    p3_checked: !!document.querySelector('.gf-input[disabled]'),
+    p4_sel:     [...document.querySelectorAll('#p4mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p4_checked: !!document.querySelector('#p4mc-questions .question[data-checked]'),
+  };
+}
+
+function savePage() { DB.savePage(PAGE_ID, collectState()); }
+
+function restorePage(s) {
+  if (!s) return;
+  document.querySelectorAll('#p1mc-questions .question').forEach((q, i) => {
+    const val = s.p1_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p1_checked) checkMC('p1mc', 7);
+  document.querySelectorAll('#p2-matching .match-select').forEach((sel, i) => { if (s.p2_sel?.[i]) sel.value = s.p2_sel[i]; });
+  if (s.p2_checked) checkP2Matching();
+  document.querySelectorAll('.gf-input').forEach((inp, i) => { if (s.p3_vals?.[i]) inp.value = s.p3_vals[i]; });
+  if (s.p3_checked) checkGapFill();
+  document.querySelectorAll('#p4mc-questions .question').forEach((q, i) => {
+    const val = s.p4_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p4_checked) checkMC('p4mc', 7);
+}
+
+['selectOption','checkMC','checkP2Matching','checkGapFill'].forEach(name => {
+  const orig = window[name];
+  window[name] = function(...args) { orig(...args); savePage(); };
+});
+
+(async () => { restorePage(await DB.loadPage(PAGE_ID)); })();
+</script>
+</body>
+</html>
