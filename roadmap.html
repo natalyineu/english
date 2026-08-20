@@ -966,6 +966,34 @@ body {
 </div><!-- road-wrap -->
 
 <script>
+// ── Supabase ──────────────────────────────────────────
+const SB_URL = 'https://olsxxfwvwsycwzihbmdn.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sc3h4Znd2d3N5Y3d6aWhibWRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxMzk4MzAsImV4cCI6MjA5NTcxNTgzMH0.kZrQ9Q42wt4eIBU5dtu22jqbg2_GWtPrnsqF8zswbeg';
+const SB_USER = 'natasha';
+const SB_HDR  = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
+
+async function sbLoad() {
+  try {
+    const r = await fetch(`${SB_URL}/rest/v1/b2_progress?user_id=eq.${SB_USER}`, { headers: SB_HDR });
+    const [row] = await r.json();
+    return row || null;
+  } catch { return null; }
+}
+
+let _sbTimer;
+function sbSave(tasks, examDate) {
+  clearTimeout(_sbTimer);
+  _sbTimer = setTimeout(async () => {
+    try {
+      await fetch(`${SB_URL}/rest/v1/b2_progress`, {
+        method: 'POST',
+        headers: { ...SB_HDR, Prefer: 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify({ user_id: SB_USER, tasks, exam_date: examDate || null, updated_at: new Date().toISOString() })
+      });
+    } catch {}
+  }, 800);
+}
+
 // ── Data ──────────────────────────────────────────────
 const STORAGE_KEY = 'b2_progress';
 const DATE_KEY    = 'b2_exam_date';
@@ -980,11 +1008,13 @@ const PHASES = {
 };
 const TOTAL_TASKS = Object.values(PHASES).reduce((s, p) => s + p.total, 0);
 
-function loadProgress() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
-}
+let _progress = {};
+
+function loadProgress() { return _progress; }
 function saveProgress(p) {
+  _progress = p;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+  sbSave(p, localStorage.getItem(DATE_KEY) || null);
 }
 
 // ── Toggle task ───────────────────────────────────────
@@ -1064,27 +1094,47 @@ function confettiBurst(origin) {
 
 // ── Exam date ─────────────────────────────────────────
 const dateInput = document.getElementById('examDateInput');
-const saved = localStorage.getItem(DATE_KEY);
-if (saved) dateInput.value = saved;
 
-function updateCountdown() {
+function updateCountdown(prefill) {
+  if (prefill !== undefined) { dateInput.value = prefill || ''; }
   const val = dateInput.value;
   if (!val) { document.getElementById('countdown').textContent = ''; return; }
-  localStorage.setItem(DATE_KEY, val);
   const diff = new Date(val) - new Date();
   const days  = Math.ceil(diff / 86400000);
   const cd    = document.getElementById('countdown');
-  if (days < 0)       cd.textContent = 'Already past';
+  if (days < 0)        cd.textContent = 'Already past';
   else if (days === 0) cd.textContent = 'Today! 🎉';
   else if (days === 1) cd.textContent = '1 day!';
   else                 cd.textContent = `${days} days`;
 }
-dateInput.addEventListener('change', updateCountdown);
-updateCountdown();
+
+dateInput.addEventListener('change', () => {
+  const val = dateInput.value;
+  localStorage.setItem(DATE_KEY, val);
+  sbSave(_progress, val);
+  updateCountdown();
+});
 setInterval(updateCountdown, 60000);
 
-// ── Init ──────────────────────────────────────────────
-applyState(loadProgress());
+// ── Init (localStorage first, then sync from Supabase) ─
+(async () => {
+  // Show saved state immediately
+  try { _progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { _progress = {}; }
+  applyState(_progress);
+  updateCountdown(localStorage.getItem(DATE_KEY) || '');
+
+  // Sync from Supabase in background
+  const row = await sbLoad();
+  if (row) {
+    _progress = row.tasks || {};
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(_progress));
+    applyState(_progress);
+    if (row.exam_date) {
+      localStorage.setItem(DATE_KEY, row.exam_date);
+      updateCountdown(row.exam_date);
+    }
+  }
+})();
 </script>
 </body>
 </html>
