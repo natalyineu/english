@@ -160,6 +160,25 @@ img { max-width: 100%; }
 }
 .nav-link .badge.done { background: #1a6e47; color: #fff; }
 
+/* Coming-soon nav items — clearly not clickable */
+.nav-link[href="#"] {
+  color: rgba(200,216,248,.28);
+  cursor: default;
+  pointer-events: none;
+}
+.nav-link[href="#"] .badge {
+  background: rgba(255,255,255,.06);
+  color: rgba(200,216,248,.22);
+}
+
+/* Roadmap — highlighted shortcut */
+.nav-link.nav-roadmap {
+  color: var(--sb-red);
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+.nav-link.nav-roadmap:hover { color: #fff; background: rgba(240,128,112,.12); }
+
 /* Main */
 .main { flex: 1; min-width: 0; }
 .page-header {
