@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Writing — Paper 1</title>
 <link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
 <style>
 .task-card {
   background: var(--card);
@@ -258,47 +259,23 @@ function toggleModel(id, btn) {
   }
 }
 
-// ── Supabase sync ─────────────────────────────────────
-const SB_URL  = 'https://olsxxfwvwsycwzihbmdn.supabase.co';
-const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sc3h4Znd2d3N5Y3d6aWhibWRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxMzk4MzAsImV4cCI6MjA5NTcxNTgzMH0.kZrQ9Q42wt4eIBU5dtu22jqbg2_GWtPrnsqF8zswbeg';
-const SB_HDR  = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
-const SB_USER = 'natasha';
+// ── Page sync (via db.js) ─────────────────────────────
 const PAGE_ID = 'writing_paper1';
-const LS_KEY  = 'b2_page_' + PAGE_ID;
 
-let _wTimer;
 function saveWriting() {
-  const s = {
+  DB.savePage(PAGE_ID, {
     task1: document.getElementById('task1-text').value,
     task2: document.getElementById('task2-text').value,
-  };
-  localStorage.setItem(LS_KEY, JSON.stringify(s));
-  clearTimeout(_wTimer);
-  _wTimer = setTimeout(async () => {
-    try {
-      await fetch(`${SB_URL}/rest/v1/b2_pages`, {
-        method: 'POST',
-        headers: { ...SB_HDR, Prefer: 'resolution=merge-duplicates,return=minimal' },
-        body: JSON.stringify({ user_id: SB_USER, page_id: PAGE_ID, data: s, updated_at: new Date().toISOString() })
-      });
-    } catch {}
-  }, 1500);
+  });
 }
 
 document.getElementById('task1-text').addEventListener('input', saveWriting);
 document.getElementById('task2-text').addEventListener('input', saveWriting);
 
-// Init: restore text
 (async () => {
-  let state = null;
-  try {
-    const r = await fetch(`${SB_URL}/rest/v1/b2_pages?user_id=eq.${SB_USER}&page_id=eq.${PAGE_ID}`, { headers: SB_HDR });
-    const [row] = await r.json();
-    if (row?.data) { state = row.data; localStorage.setItem(LS_KEY, JSON.stringify(state)); }
-  } catch {}
-  if (!state) { try { state = JSON.parse(localStorage.getItem(LS_KEY)); } catch {} }
-  if (state?.task1) { document.getElementById('task1-text').value = state.task1; countWords('task1-text','wc1',100,150); }
-  if (state?.task2) { document.getElementById('task2-text').value = state.task2; countWords('task2-text','wc2',150,200); }
+  const s = await DB.loadPage(PAGE_ID);
+  if (s?.task1) { document.getElementById('task1-text').value = s.task1; countWords('task1-text','wc1',100,150); }
+  if (s?.task2) { document.getElementById('task2-text').value = s.task2; countWords('task2-text','wc2',150,200); }
 })();
 </script>
 </body>
