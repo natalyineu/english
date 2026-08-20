@@ -1,0 +1,608 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listening — Paper 7</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.transcript-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  font-family: 'Lora', Georgia, serif;
+  font-size: .9rem;
+  line-height: 1.8;
+  color: var(--text);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.transcript-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.transcript-notice {
+  background: var(--sel-bg);
+  border: 1px solid var(--sel);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: .8rem;
+  color: var(--sel);
+  margin-bottom: 16px;
+}
+.speaker-tag { font-weight: 700; }
+.gf-row { margin: 12px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.gf-label { font-size: .9rem; flex: 1 1 300px; }
+.gf-input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: .9rem;
+  background: var(--bg);
+  color: var(--text);
+  width: 180px;
+}
+.gf-input.correct { border-color: #2d8a4e; background: #edf7f1; }
+.gf-input.wrong   { border-color: #c0392b; background: #fdecea; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .gf-input.correct { background: #1a3d2b; }
+  :root:not([data-theme="light"]) .gf-input.wrong   { background: #3d1a1a; }
+}
+:root[data-theme="dark"] .gf-input.correct { background: #1a3d2b; }
+:root[data-theme="dark"] .gf-input.wrong   { background: #3d1a1a; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="paper7.html" class="nav-link active">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <span>Listening</span>
+        <span>›</span>
+        Paper 7
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Listening — Practice Paper 7</h1>
+      <p class="page-subtitle">26 marks · ~30 minutes · 4 parts · Read transcript, answer questions</p>
+
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 26</span></div>
+        <div class="score-pass">Pass mark: 75/150 total (listening contributes 26 of those marks)</div>
+      </div>
+
+      <!-- PART 1 -->
+      <div class="quiz-part" id="part1">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Multiple Choice — Short Conversations</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read each transcript of a short conversation, then choose the best answer.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear these conversations. Here you can read the transcripts to practise.</div>
+
+        <div class="questions" id="p1mc-questions">
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 1 — Pharmacy</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Customer:</span> "I've had this rash on my arm for three days. Could you recommend something?"<br>
+              <span class="speaker-tag">Pharmacist:</span> "Let me take a look. It could be contact dermatitis — a reaction to something you've touched. I'd suggest a mild hydrocortisone cream."<br>
+              <span class="speaker-tag">Customer:</span> "Is that available without a prescription?"<br>
+              <span class="speaker-tag">Pharmacist:</span> "Yes, one percent strength is available over the counter. If it hasn't improved in a week, I'd see your GP."
+            </div>
+            <p class="question-text">1. What does the pharmacist recommend?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> That the customer visits their doctor immediately.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> A cream that can be bought without a prescription.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> An antibiotic course from the GP.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 2 — City Break Planning</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "I want to go somewhere interesting for my birthday. I'm thinking Prague or Lisbon."<br>
+              <span class="speaker-tag">Man:</span> "I've been to both. Lisbon is warmer and the food is amazing, but Prague has the better architecture and nightlife."<br>
+              <span class="speaker-tag">Woman:</span> "I care more about history and culture than beaches."<br>
+              <span class="speaker-tag">Man:</span> "Then Prague is your answer. Go in autumn — it's beautiful and less crowded."
+            </div>
+            <p class="question-text">2. Which destination does the man recommend for this woman?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Prague, because of its culture and architecture.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Lisbon, because of its warm weather.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Neither — he thinks she should go somewhere else.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 3 — Job Interview Preparation</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "I've got a job interview next week and I'm really nervous."<br>
+              <span class="speaker-tag">Man:</span> "Have you researched the company properly?"<br>
+              <span class="speaker-tag">Woman:</span> "I've looked at their website but I'm not sure how deep to go."<br>
+              <span class="speaker-tag">Man:</span> "Read their annual report, look at recent news articles about them, and check their social media. Knowing recent developments can really impress interviewers."
+            </div>
+            <p class="question-text">3. What does the man advise the woman to do?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Practise answering common interview questions.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Only look at the company's main website.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Research the company thoroughly using several sources.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 4 — Running Club</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Man A:</span> "Are you entering the half marathon next spring?"<br>
+              <span class="speaker-tag">Man B:</span> "I'd like to but my knee has been giving me trouble. The physio says I need eight weeks of rest before I build back up."<br>
+              <span class="speaker-tag">Man A:</span> "That's frustrating. Will you be ready in time?"<br>
+              <span class="speaker-tag">Man B:</span> "Probably — if I start a proper training plan in January I should manage it."
+            </div>
+            <p class="question-text">4. Why might the man struggle to enter the half marathon?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> He doesn't have enough time to train.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> He has a knee injury requiring rest.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> The entry deadline has already passed.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 5 — Bank</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Customer:</span> "I've noticed a transaction on my account that I don't recognise. It's for eighty-seven pounds."<br>
+              <span class="speaker-tag">Advisor:</span> "Let me bring it up. Can I take your date of birth to verify your identity first?"<br>
+              <span class="speaker-tag">Customer:</span> "Of course. It's the fourteenth of March nineteen eighty-eight."<br>
+              <span class="speaker-tag">Advisor:</span> "Thank you. I can see the transaction. I'll block your card immediately and issue a new one."
+            </div>
+            <p class="question-text">5. What does the advisor decide to do?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Cancel the customer's current card and send a replacement.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Refund the eighty-seven pounds immediately.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Ask the customer to visit the branch in person.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 6 — Cooking Class</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Teacher:</span> "Tonight we're making a classic risotto. The most important thing is patience — you have to add the stock gradually and stir almost continuously."<br>
+              <span class="speaker-tag">Student:</span> "How long does that take?"<br>
+              <span class="speaker-tag">Teacher:</span> "Around eighteen to twenty minutes of active stirring. You can't rush it or leave it alone — that's what separates a great risotto from a disappointing one."
+            </div>
+            <p class="question-text">6. What does the teacher stress about making risotto?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Using the highest quality ingredients available.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Adding all the stock at the beginning.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Giving it constant attention throughout cooking.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 7 — Relationship Advice</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman A:</span> "My flatmate keeps using my things without asking. I've dropped hints but nothing's changed."<br>
+              <span class="speaker-tag">Woman B:</span> "Hints rarely work. You need to have a direct conversation — just say calmly that you'd like her to ask first."<br>
+              <span class="speaker-tag">Woman A:</span> "I hate confrontation though."<br>
+              <span class="speaker-tag">Woman B:</span> "It's not confrontation if you're polite and specific. It's the kindest thing — for both of you."
+            </div>
+            <p class="question-text">7. What does Woman B suggest?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Looking for a new flatmate.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Talking to the flatmate directly and honestly.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Leaving more obvious hints around the flat.</button>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkMC('p1mc', 7)">Check answers</button>
+        <div class="part-score" id="p1mc-score"></div>
+      </div>
+
+      <!-- PART 2 -->
+      <div class="quiz-part" id="part2">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Matching — Experiences Abroad</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read what six people say about living or studying abroad. Match each speaker (A–F) to what surprised them most (1–7). There is one statement you will not need.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear these speakers. Here you can read the transcripts to practise.</div>
+
+        <div class="gap-options">
+          <div class="gap-option-card"><span class="go-letter">1</span> How different daily routines were</div>
+          <div class="gap-option-card"><span class="go-letter">2</span> How quickly they felt at home</div>
+          <div class="gap-option-card"><span class="go-letter">3</span> How challenging the language barrier was</div>
+          <div class="gap-option-card"><span class="go-letter">4</span> How different attitudes to work were</div>
+          <div class="gap-option-card"><span class="go-letter">5</span> How much they missed home cooking</div>
+          <div class="gap-option-card"><span class="go-letter">6</span> How welcoming strangers were</div>
+          <div class="gap-option-card"><span class="go-letter">7</span> How expensive everything was</div>
+        </div>
+
+        <div class="matching-questions" id="p2-matching">
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker A</div>
+            <div class="transcript-box">"I spent a year in Spain and what struck me most was how different the whole rhythm of the day was. Lunch at three, dinner at ten — things I'd read about but didn't fully believe until I lived it. Shopping, socialising, even work meetings happened at times I found genuinely disorienting for the first few months."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker A was most surprised by:</span>
+              <select class="match-select" id="sp-A" data-correct="1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker B</div>
+            <div class="transcript-box">"I thought I could manage fine with English, but in rural Japan almost nobody spoke it and every sign was in Japanese. Even buying a train ticket was an ordeal in the beginning. I ended up spending hours a day learning phrases just to get through basic interactions. I hadn't expected it to be so isolating."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker B was most surprised by:</span>
+              <select class="match-select" id="sp-B" data-correct="3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker C</div>
+            <div class="transcript-box">"Working in Germany, the attitude to office hours genuinely shocked me. People arrived at eight, left at five, and almost never worked late. Emails sent after six in the evening were largely ignored until morning. Coming from a culture where staying late was seen as dedication, I found it took a real mental adjustment."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker C was most surprised by:</span>
+              <select class="match-select" id="sp-C" data-correct="4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker D</div>
+            <div class="transcript-box">"I worried so much before moving to Canada about making friends and fitting in. But within two weeks people at my workplace had invited me to their homes, introduced me to their families, and made me feel completely settled. The warmth and openness of strangers genuinely moved me — I hadn't expected it at all."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker D was most surprised by:</span>
+              <select class="match-select" id="sp-D" data-correct="6"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker E</div>
+            <div class="transcript-box">"I studied in Australia for two years and I think what caught me off guard most was how quickly I felt settled. I'd braced myself for months of homesickness, but by week three it already felt like home. I think the shared language helped, but it was more than that — somehow I just slotted in immediately."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker E was most surprised by:</span>
+              <select class="match-select" id="sp-E" data-correct="2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker F</div>
+            <div class="transcript-box">"Living in Norway was wonderful in many ways, but nobody warned me about the cost of living. A simple meal out for two could cost the equivalent of eighty pounds. Groceries were double what I'd paid at home. I had to completely rethink my budget and lifestyle — it was an eye-opener I really wasn't prepared for."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker F was most surprised by:</span>
+              <select class="match-select" id="sp-F" data-correct="7"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkP2Matching()">Check answers</button>
+        <div class="part-score" id="part2-score"></div>
+      </div>
+
+      <!-- PART 3 -->
+      <div class="quiz-part" id="part3">
+        <div class="part-header">
+          <span class="part-label">Part 3</span>
+          <span class="part-title">Gap-fill — The Fashion Industry</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a radio interview. Then complete the sentences below. Write <strong>one or two words</strong> from the transcript for each gap.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear this. Here you can read the transcript to practise.</div>
+
+        <div class="transcript-label">Radio interview transcript</div>
+        <div class="transcript-box">
+          <span class="speaker-tag">Presenter:</span> "Welcome to The Bigger Picture. Today I'm speaking with fashion journalist Clara Webb about how the clothing industry is changing. Clara, what's the single biggest shift you've seen in recent years?"<br><br>
+          <span class="speaker-tag">Clara:</span> "Without question, it's the sustainability movement. Consumers — particularly younger ones — are asking much harder questions about where their clothes come from and what happens to them at the end of their life."<br><br>
+          <span class="speaker-tag">Presenter:</span> "And how are brands responding?"<br><br>
+          <span class="speaker-tag">Clara:</span> "Some are genuinely changing — using recycled materials, reducing water consumption, offering repair services. Others are simply doing what's been called 'greenwashing' — making environmental claims that don't hold up to scrutiny."<br><br>
+          <span class="speaker-tag">Presenter:</span> "How can consumers tell the difference?"<br><br>
+          <span class="speaker-tag">Clara:</span> "Look for third-party certification. There are independent bodies that audit supply chains and award recognised labels. If a brand is genuinely sustainable, they'll usually have that kind of certification to prove it."<br><br>
+          <span class="speaker-tag">Presenter:</span> "What about the rise of second-hand clothing?"<br><br>
+          <span class="speaker-tag">Clara:</span> "It's remarkable. The second-hand market is now growing four times faster than the traditional retail market. Platforms for buying and selling pre-owned clothing have millions of users and are valued at billions of pounds. It's no longer seen as a niche or budget option — it's become genuinely fashionable."<br><br>
+          <span class="speaker-tag">Presenter:</span> "Finally — do you think the industry can really change at the pace needed?"<br><br>
+          <span class="speaker-tag">Clara:</span> "Only with regulation. Voluntary action alone won't be sufficient. Governments need to set binding targets for the industry, just as they have for energy and transport."
+        </div>
+
+        <div class="gaptext" style="margin-top:16px">
+          <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:12px">Complete the sentences using words from the transcript above.</p>
+          <div class="gf-row">
+            <span class="gf-label">1. The biggest change in fashion according to Clara is the ___ movement.</span>
+            <input class="gf-input" type="text" id="gf1" data-answers="sustainability" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">2. Some brands make false environmental claims — a practice known as ___.</span>
+            <input class="gf-input" type="text" id="gf2" data-answers="greenwashing" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">3. Consumers should look for independent ___ to verify a brand's claims.</span>
+            <input class="gf-input" type="text" id="gf3" data-answers="certification" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">4. The second-hand market is growing ___ times faster than traditional retail.</span>
+            <input class="gf-input" type="text" id="gf4" data-answers="four|4" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">5. Second-hand clothing is no longer seen as a niche or ___ option.</span>
+            <input class="gf-input" type="text" id="gf5" data-answers="budget" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">6. Clara believes governments must set binding ___ for the industry.</span>
+            <input class="gf-input" type="text" id="gf6" data-answers="targets" placeholder="your answer">
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkGapFill()">Check answers</button>
+        <div class="part-score" id="part3-score"></div>
+      </div>
+
+      <!-- PART 4 -->
+      <div class="quiz-part" id="part4">
+        <div class="part-header">
+          <span class="part-label">Part 4</span>
+          <span class="part-title">Multiple Choice — Urban Planning and Future Cities</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a lecture extract, then choose the correct answer for each question.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear this passage. Here you can read the transcript to practise.</div>
+
+        <div class="transcript-label">Lecture transcript</div>
+        <div class="transcript-box">
+          <p>By 2050, it is estimated that nearly seventy percent of the world's population will live in cities. Urban planning has therefore never been a more critical discipline. The cities we build and redesign in the next two decades will shape the quality of life for billions of people and determine whether we meet our environmental targets.</p>
+          <p>One of the most significant trends in urban planning is the shift away from car-centric design. For most of the twentieth century, cities were planned around the assumption that private car ownership would grow indefinitely. Road networks expanded, suburbs spread outward, and public spaces were sacrificed for parking. The human cost of this model — in terms of air pollution, sedentary lifestyles, and social fragmentation — is now well understood.</p>
+          <p>The emerging alternative is the concept of the "fifteen-minute city" — a model in which every essential service is accessible within fifteen minutes on foot or by bicycle. The French capital Paris has been the most high-profile adopter of this idea, under Mayor Anne Hidalgo, who has removed thousands of parking spaces and invested heavily in cycling infrastructure. Critics argue that the changes have harmed small businesses and disproportionately affected residents who depend on cars.</p>
+          <p>Green infrastructure — trees, parks, green roofs, and urban wetlands — is also being prioritised in progressive city planning. Research shows that green spaces reduce urban temperatures by up to four degrees, significantly reduce flooding risk by absorbing rainwater, and have measurable positive effects on residents' mental health.</p>
+          <p>Ultimately, the challenge is political as much as technical. Different groups within a city often have conflicting visions of what their neighbourhood should look like. Planners increasingly recognise that genuine community consultation — not just token engagement — is essential for changes to succeed and endure.</p>
+        </div>
+
+        <div class="questions" id="p4mc-questions">
+
+          <div class="question" data-correct="c">
+            <p class="question-text">1. What does the speaker say about cities and the future?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Most people already prefer city life to rural living.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Population growth will slow significantly by 2050.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Around seventy percent of people will live in cities by 2050.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">2. What was wrong with twentieth-century city planning, according to the lecture?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It failed to invest in road networks.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> It prioritised cars at the expense of human wellbeing.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It encouraged people to move away from city centres.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <p class="question-text">3. What is the key idea of the "fifteen-minute city"?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> All essential services can be reached without a car.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Bus networks connect every part of the city in fifteen minutes.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> The working day is reduced to fifteen-minute commutes.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">4. What have critics said about the changes in Paris?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> The cycling infrastructure is poorly designed.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> The changes have made pollution worse.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Some residents and businesses have been negatively affected.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">5. What effect do urban green spaces have on temperature?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> They increase temperatures by trapping heat.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> They can reduce temperatures by up to four degrees.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> They have no measurable effect on urban temperature.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <p class="question-text">6. What additional benefit of green infrastructure is mentioned?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It helps reduce flooding by absorbing rainwater.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> It provides space for urban food growing.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It encourages wildlife to return to cities.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">7. What does the speaker say is essential for planning changes to succeed?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Large financial investment from national government.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Planners with experience in multiple disciplines.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Real and meaningful involvement from local communities.</button>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkMC('p4mc', 7)">Check answers</button>
+        <div class="part-score" id="p4mc-score"></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+const scores = { p1mc: 0, part2: 0, part3: 0, p4mc: 0 };
+
+function updateTotal() {
+  const total = scores.p1mc + scores.part2 + scores.part3 + scores.p4mc;
+  document.getElementById('totalScore').style.display = 'block';
+  document.getElementById('scoreNum').innerHTML = total + ' <span>/ 26</span>';
+}
+
+function selectOption(btn) {
+  const qDiv = btn.closest('.question');
+  if (qDiv.dataset.checked) return;
+  qDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkMC(containerId, total) {
+  const container = document.getElementById(containerId + '-questions');
+  const questions = container.querySelectorAll('.question');
+  let score = 0;
+  questions.forEach(q => {
+    const correct = q.dataset.correct;
+    q.dataset.checked = '1';
+    const selected = q.querySelector('.option-btn.selected');
+    q.querySelectorAll('.option-btn').forEach(btn => {
+      if (btn.dataset.value === correct) btn.classList.add('correct');
+      else if (btn.classList.contains('selected')) btn.classList.add('wrong');
+      btn.disabled = true;
+    });
+    if (selected && selected.dataset.value === correct) score++;
+  });
+  scores[containerId] = score;
+  const label = containerId === 'p1mc' ? 'Part 1' : 'Part 4';
+  const el = document.getElementById(containerId + '-score');
+  el.textContent = label + ' score: ' + score + ' / ' + total;
+  el.className = 'part-score visible' + (score === total ? ' perfect' : '');
+  updateTotal();
+}
+
+function checkP2Matching() {
+  const selects = document.querySelectorAll('#p2-matching .match-select');
+  let score = 0;
+  selects.forEach(sel => {
+    if (sel.value === sel.dataset.correct) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+  });
+  scores.part2 = score;
+  const el = document.getElementById('part2-score');
+  el.textContent = 'Part 2 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+function checkGapFill() {
+  const inputs = document.querySelectorAll('.gf-input');
+  let score = 0;
+  inputs.forEach(inp => {
+    const answers = inp.dataset.answers.split('|').map(a => a.trim().toLowerCase());
+    const val = inp.value.trim().toLowerCase();
+    if (val && answers.includes(val)) { inp.classList.add('correct'); score++; }
+    else inp.classList.add('wrong');
+    inp.disabled = true;
+  });
+  scores.part3 = score;
+  const el = document.getElementById('part3-score');
+  el.textContent = 'Part 3 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+const PAGE_ID = 'listening_paper7';
+
+function collectState() {
+  return {
+    p1_sel:     [...document.querySelectorAll('#p1mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p1_checked: !!document.querySelector('#p1mc-questions .question[data-checked]'),
+    p2_sel:     [...document.querySelectorAll('#p2-matching .match-select')].map(s => s.value),
+    p2_checked: !!document.querySelector('#p2-matching .match-select[disabled]'),
+    p3_vals:    [...document.querySelectorAll('.gf-input')].map(i => i.value),
+    p3_checked: !!document.querySelector('.gf-input[disabled]'),
+    p4_sel:     [...document.querySelectorAll('#p4mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p4_checked: !!document.querySelector('#p4mc-questions .question[data-checked]'),
+  };
+}
+
+function savePage() { DB.savePage(PAGE_ID, collectState()); }
+
+function restorePage(s) {
+  if (!s) return;
+  document.querySelectorAll('#p1mc-questions .question').forEach((q, i) => {
+    const val = s.p1_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p1_checked) checkMC('p1mc', 7);
+  document.querySelectorAll('#p2-matching .match-select').forEach((sel, i) => { if (s.p2_sel?.[i]) sel.value = s.p2_sel[i]; });
+  if (s.p2_checked) checkP2Matching();
+  document.querySelectorAll('.gf-input').forEach((inp, i) => { if (s.p3_vals?.[i]) inp.value = s.p3_vals[i]; });
+  if (s.p3_checked) checkGapFill();
+  document.querySelectorAll('#p4mc-questions .question').forEach((q, i) => {
+    const val = s.p4_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p4_checked) checkMC('p4mc', 7);
+}
+
+['selectOption','checkMC','checkP2Matching','checkGapFill'].forEach(name => {
+  const orig = window[name];
+  window[name] = function(...args) { orig(...args); savePage(); };
+});
+
+(async () => { restorePage(await DB.loadPage(PAGE_ID)); })();
+</script>
+</body>
+</html>
