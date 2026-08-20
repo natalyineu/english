@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocabulary — All Topics</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+.topic-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+  transition: transform .15s, box-shadow .15s, border-color .15s;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.topic-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(27,42,74,.14); border-color: var(--sel); text-decoration: none; }
+.topic-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; }
+.topic-name { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.topic-meta { font-size: .78rem; color: var(--muted); margin-bottom: 16px; }
+.vocab-progress-fill { height: 100%; background: var(--ok); border-radius: 99px; transition: width .4s; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Vocabulary</span>
+        <a href="index.html" class="nav-link active">📚 All Topics</a>
+        <a href="travel.html" class="nav-link">✈️ Travel</a>
+        <a href="work.html" class="nav-link">💼 Work</a>
+        <a href="health.html" class="nav-link">❤️ Health</a>
+        <a href="technology.html" class="nav-link">💻 Technology</a>
+        <a href="environment.html" class="nav-link">🌿 Environment</a>
+        <a href="culture.html" class="nav-link">🌍 Culture</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        Vocabulary
+      </div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">📚 Vocabulary Practice</h1>
+      <p class="page-subtitle">6 topic sets · 20 words each · Flashcard review with progress tracking</p>
+
+      <div class="topic-grid">
+        <a href="travel.html" class="topic-card">
+          <span class="topic-icon">✈️</span>
+          <div class="topic-name">Travel &amp; Holidays</div>
+          <div class="topic-meta">20 words · Click to practise</div>
+          <div class="progress-bar"><div class="progress-fill vocab-progress-fill" id="fill-travel" style="width:0%"></div></div>
+          <div class="progress-label" id="label-travel">0 / 20 learned</div>
+        </a>
+        <a href="work.html" class="topic-card">
+          <span class="topic-icon">💼</span>
+          <div class="topic-name">Work &amp; Career</div>
+          <div class="topic-meta">20 words · Click to practise</div>
+          <div class="progress-bar"><div class="progress-fill vocab-progress-fill" id="fill-work" style="width:0%"></div></div>
+          <div class="progress-label" id="label-work">0 / 20 learned</div>
+        </a>
+        <a href="health.html" class="topic-card">
+          <span class="topic-icon">❤️</span>
+          <div class="topic-name">Health &amp; Lifestyle</div>
+          <div class="topic-meta">20 words · Click to practise</div>
+          <div class="progress-bar"><div class="progress-fill vocab-progress-fill" id="fill-health" style="width:0%"></div></div>
+          <div class="progress-label" id="label-health">0 / 20 learned</div>
+        </a>
+        <a href="technology.html" class="topic-card">
+          <span class="topic-icon">💻</span>
+          <div class="topic-name">Technology &amp; Media</div>
+          <div class="topic-meta">20 words · Click to practise</div>
+          <div class="progress-bar"><div class="progress-fill vocab-progress-fill" id="fill-technology" style="width:0%"></div></div>
+          <div class="progress-label" id="label-technology">0 / 20 learned</div>
+        </a>
+        <a href="environment.html" class="topic-card">
+          <span class="topic-icon">🌿</span>
+          <div class="topic-name">Environment &amp; Nature</div>
+          <div class="topic-meta">20 words · Click to practise</div>
+          <div class="progress-bar"><div class="progress-fill vocab-progress-fill" id="fill-environment" style="width:0%"></div></div>
+          <div class="progress-label" id="label-environment">0 / 20 learned</div>
+        </a>
+        <a href="culture.html" class="topic-card">
+          <span class="topic-icon">🌍</span>
+          <div class="topic-name">Culture &amp; Society</div>
+          <div class="topic-meta">20 words · Click to practise</div>
+          <div class="progress-bar"><div class="progress-fill vocab-progress-fill" id="fill-culture" style="width:0%"></div></div>
+          <div class="progress-label" id="label-culture">0 / 20 learned</div>
+        </a>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const TOPICS = [
+  { id: 'travel',      key: 'vocab_travel',      total: 20 },
+  { id: 'work',        key: 'vocab_work',         total: 20 },
+  { id: 'health',      key: 'vocab_health',       total: 20 },
+  { id: 'technology',  key: 'vocab_technology',   total: 20 },
+  { id: 'environment', key: 'vocab_environment',  total: 20 },
+  { id: 'culture',     key: 'vocab_culture',      total: 20 },
+];
+
+async function loadProgress() {
+  for (const t of TOPICS) {
+    const data = await DB.loadPage(t.key);
+    const n = (data && Array.isArray(data.learned)) ? data.learned.length : 0;
+    const pct = Math.round((n / t.total) * 100);
+    const fill  = document.getElementById('fill-'  + t.id);
+    const label = document.getElementById('label-' + t.id);
+    if (fill)  fill.style.width = pct + '%';
+    if (label) label.textContent = n + ' / ' + t.total + ' learned';
+  }
+}
+
+window.addEventListener('DOMContentLoaded', loadProgress);
+</script>
+</body>
+</html>
