@@ -417,6 +417,88 @@ function revealAnswers() {
   el.textContent = 'Model answers revealed — mark yourself: each correct answer = 1 mark (7 total)';
   el.className = 'part-score visible';
 }
+
+// ── Supabase sync ─────────────────────────────────────
+const SB_URL  = 'https://olsxxfwvwsycwzihbmdn.supabase.co';
+const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9sc3h4Znd2d3N5Y3d6aWhibWRuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAxMzk4MzAsImV4cCI6MjA5NTcxNTgzMH0.kZrQ9Q42wt4eIBU5dtu22jqbg2_GWtPrnsqF8zswbeg';
+const SB_HDR  = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json' };
+const SB_USER = 'natasha';
+const PAGE_ID = 'reading_paper1';
+const LS_KEY  = 'b2_page_' + PAGE_ID;
+
+function collectState() {
+  return {
+    p1_sel:     [...document.querySelectorAll('#p1-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p1_checked: !!document.querySelector('#p1-questions .question[data-checked]'),
+    p2_sel:     [...document.querySelectorAll('.gap-select')].map(s => s.value),
+    p2_checked: !!document.querySelector('.gap-select[disabled]'),
+    p3_sel:     [...document.querySelectorAll('.match-select')].map(s => s.value),
+    p3_checked: !!document.querySelector('.match-select[disabled]'),
+    p4_revealed: !!document.getElementById('sa1')?.classList.contains('visible'),
+  };
+}
+
+let _saveTimer;
+function savePage() {
+  const s = collectState();
+  localStorage.setItem(LS_KEY, JSON.stringify(s));
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(async () => {
+    try {
+      await fetch(`${SB_URL}/rest/v1/b2_pages`, {
+        method: 'POST',
+        headers: { ...SB_HDR, Prefer: 'resolution=merge-duplicates,return=minimal' },
+        body: JSON.stringify({ user_id: SB_USER, page_id: PAGE_ID, data: s, updated_at: new Date().toISOString() })
+      });
+    } catch {}
+  }, 800);
+}
+
+function restorePage(s) {
+  if (!s) return;
+  // Part 1 MC
+  document.querySelectorAll('#p1-questions .question').forEach((q, i) => {
+    const val = s.p1_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p1_checked) checkMC('part1', 6);
+
+  // Part 2 gap-fill
+  document.querySelectorAll('.gap-select').forEach((sel, i) => {
+    if (s.p2_sel?.[i]) sel.value = s.p2_sel[i];
+  });
+  if (s.p2_checked) checkGapFill();
+
+  // Part 3 matching
+  document.querySelectorAll('.match-select').forEach((sel, i) => {
+    if (s.p3_sel?.[i]) sel.value = s.p3_sel[i];
+  });
+  if (s.p3_checked) checkMatching();
+
+  // Part 4
+  if (s.p4_revealed) revealAnswers();
+}
+
+// Patch functions to auto-save after user actions
+['selectOption','checkMC','checkGapFill','checkMatching','revealAnswers'].forEach(name => {
+  const orig = window[name];
+  window[name] = function(...args) { orig(...args); savePage(); };
+});
+
+// Init: restore from Supabase (fallback to localStorage)
+(async () => {
+  let state = null;
+  try {
+    const r = await fetch(`${SB_URL}/rest/v1/b2_pages?user_id=eq.${SB_USER}&page_id=eq.${PAGE_ID}`, { headers: SB_HDR });
+    const [row] = await r.json();
+    if (row?.data && Object.keys(row.data).length) {
+      state = row.data;
+      localStorage.setItem(LS_KEY, JSON.stringify(state));
+    }
+  } catch {}
+  if (!state) { try { state = JSON.parse(localStorage.getItem(LS_KEY)); } catch {} }
+  restorePage(state);
+})();
 </script>
 </body>
 </html>
