@@ -1,0 +1,604 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listening — Paper 6</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.transcript-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  font-family: 'Lora', Georgia, serif;
+  font-size: .9rem;
+  line-height: 1.8;
+  color: var(--text);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.transcript-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.transcript-notice {
+  background: var(--sel-bg);
+  border: 1px solid var(--sel);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: .8rem;
+  color: var(--sel);
+  margin-bottom: 16px;
+}
+.speaker-tag { font-weight: 700; }
+.gf-row { margin: 12px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.gf-label { font-size: .9rem; flex: 1 1 300px; }
+.gf-input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: .9rem;
+  background: var(--bg);
+  color: var(--text);
+  width: 180px;
+}
+.gf-input.correct { border-color: #2d8a4e; background: #edf7f1; }
+.gf-input.wrong   { border-color: #c0392b; background: #fdecea; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .gf-input.correct { background: #1a3d2b; }
+  :root:not([data-theme="light"]) .gf-input.wrong   { background: #3d1a1a; }
+}
+:root[data-theme="dark"] .gf-input.correct { background: #1a3d2b; }
+:root[data-theme="dark"] .gf-input.wrong   { background: #3d1a1a; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="paper6.html" class="nav-link active">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <span>Listening</span>
+        <span>›</span>
+        Paper 6
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Listening — Practice Paper 6</h1>
+      <p class="page-subtitle">26 marks · ~30 minutes · 4 parts · Read transcript, answer questions</p>
+
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 26</span></div>
+        <div class="score-pass">Pass mark: 75/150 total (listening contributes 26 of those marks)</div>
+      </div>
+
+      <!-- PART 1 -->
+      <div class="quiz-part" id="part1">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Multiple Choice — Short Conversations</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read each transcript of a short conversation, then choose the best answer.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear these conversations. Here you can read the transcripts to practise.</div>
+
+        <div class="questions" id="p1mc-questions">
+
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 1 — Clothes Shop</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Customer:</span> "I bought this jacket online but it doesn't fit. Can I exchange it here in store?"<br>
+              <span class="speaker-tag">Staff:</span> "Normally yes, but online purchases can only be returned by post or at our flagship store in the city centre."<br>
+              <span class="speaker-tag">Customer:</span> "Oh, that's inconvenient. Can I at least get a refund instead?"<br>
+              <span class="speaker-tag">Staff:</span> "Yes, refunds are processed online through your account. You'll need to fill in the return form on the website."
+            </div>
+            <p class="question-text">1. What is the customer's problem?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> The jacket was delivered damaged.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> She cannot get a refund for the jacket.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> She cannot exchange the jacket at this branch.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 2 — Concert Venue</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Man:</span> "I've heard great things about the jazz festival next weekend. Have you got tickets?"<br>
+              <span class="speaker-tag">Woman:</span> "I looked but the Saturday evening concert is sold out. There are still tickets for Sunday afternoon though."<br>
+              <span class="speaker-tag">Man:</span> "Sunday afternoon works. Shall we get two?"<br>
+              <span class="speaker-tag">Woman:</span> "Let's do it. I'll book them now before they go too."
+            </div>
+            <p class="question-text">2. What do the friends decide?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> To buy tickets for Sunday afternoon.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> To try to find tickets for Saturday evening.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> To skip the festival this year.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 3 — Relationship Discussion</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "I've been offered a job in Dubai. It's a brilliant opportunity but it means a two-year contract abroad."<br>
+              <span class="speaker-tag">Man:</span> "Wow. What does your partner think?"<br>
+              <span class="speaker-tag">Woman:</span> "He's actually very supportive. He said he can work remotely so he'd come with me."<br>
+              <span class="speaker-tag">Man:</span> "That's great — it makes the decision a lot easier, doesn't it?"
+            </div>
+            <p class="question-text">3. What does the woman's partner plan to do?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Stay behind and wait for her to return.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Move abroad with her and work remotely.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Look for a job in Dubai himself.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 4 — Career Advice</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Student:</span> "I'm torn between doing a master's degree and starting work straight after graduation."<br>
+              <span class="speaker-tag">Advisor:</span> "It depends on the field. In some careers, work experience is more valuable than another qualification."<br>
+              <span class="speaker-tag">Student:</span> "I want to go into marketing."<br>
+              <span class="speaker-tag">Advisor:</span> "In that case, I'd honestly recommend getting real industry experience first. You can always study later."
+            </div>
+            <p class="question-text">4. What does the advisor recommend for a career in marketing?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Studying for a master's degree immediately.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Combining work and study at the same time.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Getting work experience before studying further.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 5 — Train Station</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Passenger:</span> "Excuse me, when is the next train to Bristol?"<br>
+              <span class="speaker-tag">Staff:</span> "There was one at quarter past but it's been delayed. The next one should leave at half past four."<br>
+              <span class="speaker-tag">Passenger:</span> "Is that confirmed or might it be delayed too?"<br>
+              <span class="speaker-tag">Staff:</span> "It's showing on time at the moment but there are signal problems on the line, so I'd keep an eye on the board."
+            </div>
+            <p class="question-text">5. What does the staff member tell the passenger?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> All trains to Bristol have been cancelled.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> The next train may still be delayed due to signal problems.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> The next train to Bristol leaves at quarter past the hour.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 6 — School Parents' Evening</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Teacher:</span> "Your daughter is doing very well overall. Her written work is excellent."<br>
+              <span class="speaker-tag">Parent:</span> "That's great to hear. Are there any areas she needs to work on?"<br>
+              <span class="speaker-tag">Teacher:</span> "She's a little quiet in class discussions. Encouraging her to speak up more at home might help build her confidence."<br>
+              <span class="speaker-tag">Parent:</span> "I'll make sure we discuss things more at dinner."
+            </div>
+            <p class="question-text">6. What area does the teacher suggest the girl should develop?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Speaking and contributing to discussions.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> The quality of her written assignments.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Managing her time better in exams.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 7 — Technology Discussion</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Man:</span> "Have you seen the new AI assistant everyone's talking about?"<br>
+              <span class="speaker-tag">Woman:</span> "I've tried it. It's impressive but sometimes it gives you very confident-sounding wrong answers."<br>
+              <span class="speaker-tag">Man:</span> "That's the problem, isn't it? How do you know when to trust it?"<br>
+              <span class="speaker-tag">Woman:</span> "You have to fact-check anything important. It's a useful tool but it's not a reliable source on its own."
+            </div>
+            <p class="question-text">7. What concern does the woman raise about the AI assistant?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It is too slow to be useful in practice.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> It requires a subscription to access.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It can produce wrong answers that sound convincing.</button>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkMC('p1mc', 7)">Check answers</button>
+        <div class="part-score" id="p1mc-score"></div>
+      </div>
+
+      <!-- PART 2 -->
+      <div class="quiz-part" id="part2">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Matching — Books and Reading</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read what six people say about a book they recently read. Match each speaker (A–F) to what they liked most about it (1–7). There is one statement you will not need.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear these speakers. Here you can read the transcripts to practise.</div>
+
+        <div class="gap-options">
+          <div class="gap-option-card"><span class="go-letter">1</span> The vivid and unusual setting</div>
+          <div class="gap-option-card"><span class="go-letter">2</span> The complex and believable characters</div>
+          <div class="gap-option-card"><span class="go-letter">3</span> The surprising plot twists</div>
+          <div class="gap-option-card"><span class="go-letter">4</span> The way it made them think differently</div>
+          <div class="gap-option-card"><span class="go-letter">5</span> The beautiful and poetic writing style</div>
+          <div class="gap-option-card"><span class="go-letter">6</span> How fast-paced and exciting it was</div>
+          <div class="gap-option-card"><span class="go-letter">7</span> The interesting historical research behind it</div>
+        </div>
+
+        <div class="matching-questions" id="p2-matching">
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker A</div>
+            <div class="transcript-box">"I read a thriller last month that I genuinely couldn't put down. Every chapter ended on some new revelation and I kept thinking I'd understood what was happening, then the story would pull the rug out from under me again. I read the last hundred pages in one sitting because I simply had to know how it ended."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker A liked most:</span>
+              <select class="match-select" id="sp-A" data-correct="3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker B</div>
+            <div class="transcript-box">"The novel I read was set in a remote fishing village in Iceland during winter. The author described the darkness, the cold, the isolation so precisely that I actually felt cold reading it on a summer evening. It was unlike anything I'd read before — I'd never encountered such a powerfully evoked place in fiction."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker B liked most:</span>
+              <select class="match-select" id="sp-B" data-correct="1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker C</div>
+            <div class="transcript-box">"I read a non-fiction book about how our habits and decisions are shaped by our unconscious biases. I thought I was a fairly rational person, but by the end I realised how many assumptions I make automatically. It's changed how I approach disagreements at work and conversations with my family — quite significantly, actually."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker C liked most:</span>
+              <select class="match-select" id="sp-C" data-correct="4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker D</div>
+            <div class="transcript-box">"The prose in this novel was just extraordinary. Every sentence felt considered, and the descriptions had this rhythm to them — almost like reading poetry. I found myself slowing down deliberately, which I never normally do, just to appreciate how each paragraph was constructed. It's the kind of writing that makes you aware of what language can do."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker D liked most:</span>
+              <select class="match-select" id="sp-D" data-correct="5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker E</div>
+            <div class="transcript-box">"It was an action novel and honestly I loved just how relentless it was. There's barely a page where something isn't happening. I read it on a long train journey and the time just disappeared. Some people might say it's not deep literature, but I found it incredibly entertaining and I'd happily read the sequel."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker E liked most:</span>
+              <select class="match-select" id="sp-E" data-correct="6"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker F</div>
+            <div class="transcript-box">"The main character in the book I read was just extraordinary — deeply flawed, contradictory, occasionally infuriating. But the more I read, the more I understood why she made the choices she did. By the end I felt I knew her better than some real people in my life. That psychological depth is rare and I've been recommending it to everyone."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker F liked most:</span>
+              <select class="match-select" id="sp-F" data-correct="2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkP2Matching()">Check answers</button>
+        <div class="part-score" id="part2-score"></div>
+      </div>
+
+      <!-- PART 3 -->
+      <div class="quiz-part" id="part3">
+        <div class="part-header">
+          <span class="part-label">Part 3</span>
+          <span class="part-title">Gap-fill — Street Art</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a documentary extract. Then complete the sentences below. Write <strong>one or two words</strong> from the transcript for each gap.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear this. Here you can read the transcript to practise.</div>
+
+        <div class="transcript-label">Documentary transcript</div>
+        <div class="transcript-box">
+          <span class="speaker-tag">Narrator:</span> "Street art has undergone a remarkable transformation over the past three decades. Once dismissed as simple vandalism, it is now exhibited in major galleries and sells at auction for millions of pounds. The artist most responsible for this shift in perception is Banksy, whose identity remains unknown despite decades of international fame."<br><br>
+          <span class="speaker-tag">Art critic, Elena Marsh:</span> "What Banksy understood, and what many street artists since have learned, is that the location of a piece is as important as the image itself. A stencil placed on the wall of a bank or a prison says something that the same image hung in a gallery simply cannot."<br><br>
+          <span class="speaker-tag">Narrator:</span> "Cities around the world have responded to the street art movement in very different ways. Some municipalities have launched official programmes, commissioning artists to decorate walls in deprived neighbourhoods, with the aim of reducing crime and improving community pride."<br><br>
+          <span class="speaker-tag">Urban planner, Raj Sharma:</span> "In one district we surveyed, crime fell by twenty-two percent in the twelve months following a major street art project. Whether that's directly caused by the art or by the wider community investment, it's hard to say — but the correlation is striking."<br><br>
+          <span class="speaker-tag">Narrator:</span> "Not everyone welcomes the trend, however. Some residents feel that commissioned murals imposed from outside lack the authenticity that made street art compelling in the first place — the element of surprise, the risk, the rebellion against authority."
+        </div>
+
+        <div class="gaptext" style="margin-top:16px">
+          <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:12px">Complete the sentences using words from the transcript above.</p>
+          <div class="gf-row">
+            <span class="gf-label">1. Street art was previously dismissed as ___.</span>
+            <input class="gf-input" type="text" id="gf1" data-answers="vandalism" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">2. Banksy's ___ has never been revealed.</span>
+            <input class="gf-input" type="text" id="gf2" data-answers="identity" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">3. According to Elena Marsh, the ___ of a piece is as important as the image.</span>
+            <input class="gf-input" type="text" id="gf3" data-answers="location" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">4. Some cities commission street art to reduce ___ in poorer areas.</span>
+            <input class="gf-input" type="text" id="gf4" data-answers="crime" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">5. Crime fell by ___ percent in one area following an art project.</span>
+            <input class="gf-input" type="text" id="gf5" data-answers="twenty-two|22" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">6. Some residents feel commissioned murals lack ___.</span>
+            <input class="gf-input" type="text" id="gf6" data-answers="authenticity" placeholder="your answer">
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkGapFill()">Check answers</button>
+        <div class="part-score" id="part3-score"></div>
+      </div>
+
+      <!-- PART 4 -->
+      <div class="quiz-part" id="part4">
+        <div class="part-header">
+          <span class="part-label">Part 4</span>
+          <span class="part-title">Multiple Choice — Social Media and Society</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a podcast extract, then choose the correct answer for each question.</p>
+        <div class="transcript-notice">🎧 In the real exam, you hear this passage. Here you can read the transcript to practise.</div>
+
+        <div class="transcript-label">Podcast transcript</div>
+        <div class="transcript-box">
+          <p>Social media has fundamentally changed the way human beings relate to one another, and not always in the ways we anticipated when these platforms first emerged. Proponents argued that connecting billions of people would foster mutual understanding, reduce conflict, and give ordinary individuals a voice equal to that of traditional media. Two decades on, the picture is considerably more complicated.</p>
+          <p>One of the most discussed effects is the so-called "echo chamber" phenomenon. Social media algorithms are designed to show users content that matches their existing views and preferences, which means people are increasingly exposed only to opinions they already hold. Research suggests this has contributed to rising political polarisation in many countries, as people on different sides of debates have access to almost entirely separate information environments.</p>
+          <p>The impact on young people's mental health has attracted particularly intense scrutiny. Multiple studies have found correlations between high social media use and increased rates of anxiety and depression among teenagers, particularly girls. Psychologists point to comparison culture — the tendency to measure oneself against idealised images — as a key mechanism. However, some researchers argue that the relationship is more complex than a simple cause and effect, and that pre-existing vulnerabilities may be the more significant factor.</p>
+          <p>On the positive side, social media has democratised information and provided platforms for marginalised voices. Social movements that might previously have remained local have been able to organise globally. Charitable campaigns have raised hundreds of millions of pounds for causes that would otherwise have received no attention.</p>
+          <p>Governments are now attempting to regulate the sector, though progress is slow. The central difficulty is that the same features that enable harmful content to spread — speed, scale, algorithmic amplification — are also what makes social media effective for legitimate communication. Finding a balance remains one of the defining policy challenges of the age.</p>
+        </div>
+
+        <div class="questions" id="p4mc-questions">
+
+          <div class="question" data-correct="b">
+            <p class="question-text">1. What did early supporters of social media believe it would achieve?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It would make traditional media less powerful.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> It would increase understanding between people globally.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It would generate significant economic growth.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">2. What causes the "echo chamber" effect described in the text?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> People deliberately choose to follow only those they agree with.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Governments restrict the type of content users can see.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Algorithms show users content matching their existing views.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <p class="question-text">3. What group does research suggest is most negatively affected by social media?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Teenage girls in particular.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Elderly users new to technology.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> People who work in the media industry.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">4. What do some researchers argue about the link between social media and mental health?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> The negative effects have been greatly exaggerated.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Existing vulnerabilities may matter more than social media use itself.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Social media is beneficial for most young people's confidence.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">5. What positive effect does the speaker mention?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Social media has replaced biased traditional media.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> It has helped governments communicate more clearly.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It has enabled social movements to organise on a global scale.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <p class="question-text">6. Why is regulating social media difficult, according to the speaker?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> The features that spread harmful content also enable useful communication.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Social media companies are based in countries with no regulations.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Governments cannot agree on what counts as harmful content.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">7. How does the speaker describe the overall question of regulating social media?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> As a problem that is largely solved in developed countries.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> As one of the major policy challenges of our time.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> As something that only affects younger generations.</button>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkMC('p4mc', 7)">Check answers</button>
+        <div class="part-score" id="p4mc-score"></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+const scores = { p1mc: 0, part2: 0, part3: 0, p4mc: 0 };
+
+function updateTotal() {
+  const total = scores.p1mc + scores.part2 + scores.part3 + scores.p4mc;
+  document.getElementById('totalScore').style.display = 'block';
+  document.getElementById('scoreNum').innerHTML = total + ' <span>/ 26</span>';
+}
+
+function selectOption(btn) {
+  const qDiv = btn.closest('.question');
+  if (qDiv.dataset.checked) return;
+  qDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkMC(containerId, total) {
+  const container = document.getElementById(containerId + '-questions');
+  const questions = container.querySelectorAll('.question');
+  let score = 0;
+  questions.forEach(q => {
+    const correct = q.dataset.correct;
+    q.dataset.checked = '1';
+    const selected = q.querySelector('.option-btn.selected');
+    q.querySelectorAll('.option-btn').forEach(btn => {
+      if (btn.dataset.value === correct) btn.classList.add('correct');
+      else if (btn.classList.contains('selected')) btn.classList.add('wrong');
+      btn.disabled = true;
+    });
+    if (selected && selected.dataset.value === correct) score++;
+  });
+  scores[containerId] = score;
+  const label = containerId === 'p1mc' ? 'Part 1' : 'Part 4';
+  const el = document.getElementById(containerId + '-score');
+  el.textContent = label + ' score: ' + score + ' / ' + total;
+  el.className = 'part-score visible' + (score === total ? ' perfect' : '');
+  updateTotal();
+}
+
+function checkP2Matching() {
+  const selects = document.querySelectorAll('#p2-matching .match-select');
+  let score = 0;
+  selects.forEach(sel => {
+    if (sel.value === sel.dataset.correct) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+  });
+  scores.part2 = score;
+  const el = document.getElementById('part2-score');
+  el.textContent = 'Part 2 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+function checkGapFill() {
+  const inputs = document.querySelectorAll('.gf-input');
+  let score = 0;
+  inputs.forEach(inp => {
+    const answers = inp.dataset.answers.split('|').map(a => a.trim().toLowerCase());
+    const val = inp.value.trim().toLowerCase();
+    if (val && answers.includes(val)) { inp.classList.add('correct'); score++; }
+    else inp.classList.add('wrong');
+    inp.disabled = true;
+  });
+  scores.part3 = score;
+  const el = document.getElementById('part3-score');
+  el.textContent = 'Part 3 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+const PAGE_ID = 'listening_paper6';
+
+function collectState() {
+  return {
+    p1_sel:     [...document.querySelectorAll('#p1mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p1_checked: !!document.querySelector('#p1mc-questions .question[data-checked]'),
+    p2_sel:     [...document.querySelectorAll('#p2-matching .match-select')].map(s => s.value),
+    p2_checked: !!document.querySelector('#p2-matching .match-select[disabled]'),
+    p3_vals:    [...document.querySelectorAll('.gf-input')].map(i => i.value),
+    p3_checked: !!document.querySelector('.gf-input[disabled]'),
+    p4_sel:     [...document.querySelectorAll('#p4mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p4_checked: !!document.querySelector('#p4mc-questions .question[data-checked]'),
+  };
+}
+
+function savePage() { DB.savePage(PAGE_ID, collectState()); }
+
+function restorePage(s) {
+  if (!s) return;
+  document.querySelectorAll('#p1mc-questions .question').forEach((q, i) => {
+    const val = s.p1_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p1_checked) checkMC('p1mc', 7);
+  document.querySelectorAll('#p2-matching .match-select').forEach((sel, i) => { if (s.p2_sel?.[i]) sel.value = s.p2_sel[i]; });
+  if (s.p2_checked) checkP2Matching();
+  document.querySelectorAll('.gf-input').forEach((inp, i) => { if (s.p3_vals?.[i]) inp.value = s.p3_vals[i]; });
+  if (s.p3_checked) checkGapFill();
+  document.querySelectorAll('#p4mc-questions .question').forEach((q, i) => {
+    const val = s.p4_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p4_checked) checkMC('p4mc', 7);
+}
+
+['selectOption','checkMC','checkP2Matching','checkGapFill'].forEach(name => {
+  const orig = window[name];
+  window[name] = function(...args) { orig(...args); savePage(); };
+});
+
+(async () => { restorePage(await DB.loadPage(PAGE_ID)); })();
+</script>
+</body>
+</html>
