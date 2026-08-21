@@ -1119,10 +1119,49 @@ dateInput.addEventListener('change', () => {
 });
 setInterval(updateCountdown, 60000);
 
+// ── Auto-detect paper completion from practice pages ──
+function readLS(key) {
+  try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
+}
+function isDoneReading(s)   { return s && s.p1_checked && s.p2_checked && s.p3_checked; }
+function isDoneWriting(s)   { return s && ((s.task1 && s.task1.length > 30) || (s.task2 && s.task2.length > 30)); }
+function isDoneListening(s) { return s && s.p1_checked && s.p4_checked; }
+
+const PAPER_SYNC = {
+  'read-p1':   () => isDoneReading(readLS('b2_page_reading_paper1')),
+  'read-p2':   () => isDoneReading(readLS('b2_page_reading_paper2')),
+  'read-p3':   () => isDoneReading(readLS('b2_page_reading_paper3')),
+  'read-p6':   () => isDoneReading(readLS('b2_page_reading_paper6')),
+  'read-p7':   () => isDoneReading(readLS('b2_page_reading_paper7')),
+  'write-p1':  () => isDoneWriting(readLS('b2_page_writing_paper1')),
+  'write-p2':  () => isDoneWriting(readLS('b2_page_writing_paper2')),
+  'write-p3':  () => isDoneWriting(readLS('b2_page_writing_paper3')),
+  'write-p6':  () => isDoneWriting(readLS('b2_page_writing_paper6')),
+  'write-p7':  () => isDoneWriting(readLS('b2_page_writing_paper7')),
+  'listen-p1': () => isDoneListening(readLS('b2_page_listening_paper1')),
+  'listen-p2': () => isDoneListening(readLS('b2_page_listening_paper2')),
+  'listen-p3': () => isDoneListening(readLS('b2_page_listening_paper3')),
+  'listen-p6': () => isDoneListening(readLS('b2_page_listening_paper6')),
+  'listen-p7': () => isDoneListening(readLS('b2_page_listening_paper7')),
+};
+
+function syncFromPapers(p) {
+  let changed = false;
+  for (const [id, check] of Object.entries(PAPER_SYNC)) {
+    if (check() && !p[id]) { p[id] = true; changed = true; }
+  }
+  return changed;
+}
+
 // ── Init ──────────────────────────────────────────────
 (async () => {
   // Show localStorage immediately
   try { _progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { _progress = {}; }
+  // Merge auto-detected paper completion
+  if (syncFromPapers(_progress)) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(_progress));
+    DB.saveRoadmap(_progress);
+  }
   applyState(_progress);
   updateCountdown(localStorage.getItem(DATE_KEY) || '');
 
@@ -1130,6 +1169,7 @@ setInterval(updateCountdown, 60000);
   const saved = await DB.loadRoadmap();
   if (saved) {
     _progress = saved.tasks;
+    syncFromPapers(_progress); // also merge on cloud data
     localStorage.setItem(STORAGE_KEY, JSON.stringify(_progress));
     applyState(_progress);
     if (saved.examDate) {
