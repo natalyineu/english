@@ -317,6 +317,7 @@
         <div class="part-score" id="part4-score"></div>
       </div>
 
+      <div id="grand-slot" style="margin-top:8px"></div>
     </div><!-- page-content -->
   </main>
 </div>
@@ -331,7 +332,7 @@ function updateTotal() {
   const num = document.getElementById('scoreNum');
   el.style.display = 'block';
   num.innerHTML = total + ' <span>/ 19</span>';
-  if (window.FB) el.insertAdjacentElement('afterend', FB.grandSummary(total, 19, 13));
+  if (window.FB) { const slot = document.getElementById('grand-slot'); if (slot) { slot.innerHTML=''; slot.appendChild(FB.grandSummary(total, 19, 13)); } }
 }
 
 // ── Part 1: Multiple Choice ──
