@@ -77,6 +77,7 @@
           <span class="part-label">Part 1</span>
           <span class="part-title">Multiple Choice</span>
           <span class="part-marks">6 marks</span>
+          <button class="reset-part-btn" onclick="resetPart1()" title="Reset Part 1">↺ Reset</button>
         </div>
         <p class="part-instructions">Read the text and choose the correct answer for each question.</p>
 
@@ -158,6 +159,7 @@
           <span class="part-label">Part 2</span>
           <span class="part-title">Sentence Gap-fill</span>
           <span class="part-marks">6 marks</span>
+          <button class="reset-part-btn" onclick="resetPart2()" title="Reset Part 2">↺ Reset</button>
         </div>
         <p class="part-instructions">Read the text. Use the sentences A–G to complete the gaps. Choose one sentence per gap. There is one extra sentence you will not need.</p>
 
@@ -207,6 +209,7 @@
           <span class="part-label">Part 3</span>
           <span class="part-title">Matching</span>
           <span class="part-marks">7 marks</span>
+          <button class="reset-part-btn" onclick="resetPart3()" title="Reset Part 3">↺ Reset</button>
         </div>
         <p class="part-instructions">Read the four texts. For each question, choose which text (A, B, C or D) gives you the answer.</p>
 
@@ -274,6 +277,7 @@
           <span class="part-label">Part 4</span>
           <span class="part-title">Short Answers</span>
           <span class="part-marks">7 marks</span>
+          <button class="reset-part-btn" onclick="resetPart4()" title="Reset Part 4">↺ Reset</button>
         </div>
         <p class="part-instructions">Read the text and answer the questions. Use a maximum of <strong>five words</strong> for each answer. Type your answer, then click Reveal to see the model answer.</p>
 
@@ -380,11 +384,17 @@ function checkMC(partId, total) {
 function checkGapFill() {
   const gaps = document.querySelectorAll('.gap-select');
   let score = 0;
+  document.querySelectorAll('.gap-indicator').forEach(el => el.remove());
   gaps.forEach(sel => {
     const correct = sel.dataset.correct;
-    if (sel.value === correct) { sel.classList.add('correct'); score++; }
+    const ok = sel.value === correct;
+    if (ok) { sel.classList.add('correct'); score++; }
     else sel.classList.add('wrong');
     sel.disabled = true;
+    const ind = document.createElement('span');
+    ind.className = 'gap-indicator ' + (ok ? 'gap-ok' : 'gap-err');
+    ind.innerHTML = ok ? ' ✓' : ' ✗ <span class="gap-correct">→ ' + correct + '</span>';
+    sel.insertAdjacentElement('afterend', ind);
   });
   scores.part2 = score;
   const el = document.getElementById('part2-score');
@@ -397,11 +407,17 @@ function checkGapFill() {
 function checkMatching() {
   const selects = document.querySelectorAll('.match-select');
   let score = 0;
+  document.querySelectorAll('.match-indicator').forEach(el => el.remove());
   selects.forEach(sel => {
     const correct = sel.dataset.correct;
-    if (sel.value === correct) { sel.classList.add('correct'); score++; }
+    const ok = sel.value === correct;
+    if (ok) { sel.classList.add('correct'); score++; }
     else sel.classList.add('wrong');
     sel.disabled = true;
+    const ind = document.createElement('span');
+    ind.className = 'match-indicator ' + (ok ? 'gap-ok' : 'gap-err');
+    ind.innerHTML = ok ? ' ✓' : ' ✗ <span class="gap-correct">→ ' + correct + '</span>';
+    sel.insertAdjacentElement('afterend', ind);
   });
   scores.part3 = score;
   const el = document.getElementById('part3-score');
@@ -427,6 +443,48 @@ function revealAnswers() {
     el.className = 'part-score';
     if (btn) btn.textContent = 'Reveal model answers';
   }
+}
+
+
+// ── Reset per part ───────────────────────────────────
+function resetPart1() {
+  document.querySelectorAll('#p1-questions .question').forEach(q => {
+    q.querySelectorAll('.option-btn').forEach(b => { b.classList.remove('selected','correct','wrong'); b.disabled = false; });
+    q.removeAttribute('data-checked');
+  });
+  scores.part1 = 0;
+  const el = document.getElementById('part1-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  updateTotal(); savePage();
+}
+function resetPart2() {
+  document.querySelectorAll('.gap-select').forEach(sel => {
+    sel.value = ''; sel.classList.remove('correct','wrong'); sel.disabled = false;
+  });
+  document.querySelectorAll('.gap-indicator').forEach(el => el.remove());
+  scores.part2 = 0;
+  const el = document.getElementById('part2-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  updateTotal(); savePage();
+}
+function resetPart3() {
+  document.querySelectorAll('.match-select').forEach(sel => {
+    sel.value = ''; sel.classList.remove('correct','wrong'); sel.disabled = false;
+  });
+  document.querySelectorAll('.match-indicator').forEach(el => el.remove());
+  scores.part3 = 0;
+  const el = document.getElementById('part3-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  updateTotal(); savePage();
+}
+function resetPart4() {
+  document.querySelectorAll('.sa-input').forEach(inp => inp.value = '');
+  for (let i = 1; i <= 7; i++) document.getElementById('sa' + i)?.classList.remove('visible');
+  const el = document.getElementById('part4-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  const btn = document.getElementById('reveal-btn');
+  if (btn) btn.textContent = 'Reveal model answers';
+  savePage();
 }
 
 // ── Page sync (via db.js) ─────────────────────────────
