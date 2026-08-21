@@ -42,6 +42,8 @@ body {
   --c-write:   #c084fc;
   --c-speak:   #34d399;
   --c-listen:  #fbbf24;
+  --c-vocab:   #f472b6;
+  --c-gram:    #a78bfa;
   --c-mock:    #fb923c;
   --c-exam:    #f0c040;
 }
@@ -935,7 +937,133 @@ body {
     <div class="phase-empty"></div>
   </div>
 
-  <!-- Phase 6: Mock Exam — RIGHT -->
+  <!-- Phase 6: Vocabulary — RIGHT -->
+  <div class="phase-row right" style="--phase-color: var(--c-vocab)">
+    <div class="phase-empty"></div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="vocab" style="--phase-color:var(--c-vocab)">
+        <span class="node-emoji">📝</span>
+      </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="vocab">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-vocab)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 6</div>
+            <div class="card-title">Vocabulary — 6 Topics</div>
+            <div class="card-meta">Travel · Work · Technology · Health · Culture · Environment</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="vocab-travel" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Travel &amp; Tourism</span>
+            <a href="vocabulary/travel.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-work" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Work &amp; Careers</span>
+            <a href="vocabulary/work.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-tech" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Technology</span>
+            <a href="vocabulary/technology.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-health" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Health &amp; Wellbeing</span>
+            <a href="vocabulary/health.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-culture" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Culture &amp; Society</span>
+            <a href="vocabulary/culture.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-env" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Environment</span>
+            <a href="vocabulary/environment.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Phase 7: Grammar — LEFT -->
+  <div class="phase-row left" style="--phase-color: var(--c-gram)">
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="gram">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-gram)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 7</div>
+            <div class="card-title">Grammar — 6 Topics</div>
+            <div class="card-meta">Conditionals · Modals · Passive · Relative · Reported · Tenses</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="gram-cond" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Conditionals</span>
+            <a href="grammar/conditionals.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-modal" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Modal Verbs</span>
+            <a href="grammar/modals.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-pass" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Passive Voice</span>
+            <a href="grammar/passive.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-rel" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Relative Clauses</span>
+            <a href="grammar/relative.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-rep" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Reported Speech</span>
+            <a href="grammar/reported.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-tens" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Tenses</span>
+            <a href="grammar/tenses.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="gram" style="--phase-color:var(--c-gram)">
+        <span class="node-emoji">🔤</span>
+      </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-empty"></div>
+  </div>
+
+  <!-- Phase 8: Mock Exam — RIGHT -->
   <div class="phase-row right" style="--phase-color: var(--c-mock)">
     <div class="phase-empty"></div>
     <div class="phase-node">
@@ -957,7 +1085,7 @@ body {
             </svg>
           </div>
           <div class="card-titles">
-            <div class="card-phase-label">Phase 6</div>
+            <div class="card-phase-label">Phase 8</div>
             <div class="card-title">Mock Exam</div>
             <div class="card-meta">Full exam under real conditions</div>
           </div>
@@ -1008,6 +1136,8 @@ const PHASES = {
   write:  { total: 5 },
   speak:  { total: 6 },
   listen: { total: 5 },
+  vocab:  { total: 6 },
+  gram:   { total: 6 },
   mock:   { total: 5 },
 };
 const TOTAL_TASKS = Object.values(PHASES).reduce((s, p) => s + p.total, 0);
@@ -1143,6 +1273,18 @@ const PAPER_SYNC = {
   'listen-p3': () => isDoneListening(readLS('b2_page_listening_paper3')),
   'listen-p6': () => isDoneListening(readLS('b2_page_listening_paper6')),
   'listen-p7': () => isDoneListening(readLS('b2_page_listening_paper7')),
+  'vocab-travel':  () => { const s = readLS('b2_page_vocab_travel');   return s && s.learned && s.learned.length > 0; },
+  'vocab-work':    () => { const s = readLS('b2_page_vocab_work');     return s && s.learned && s.learned.length > 0; },
+  'vocab-tech':    () => { const s = readLS('b2_page_vocab_technology'); return s && s.learned && s.learned.length > 0; },
+  'vocab-health':  () => { const s = readLS('b2_page_vocab_health');   return s && s.learned && s.learned.length > 0; },
+  'vocab-culture': () => { const s = readLS('b2_page_vocab_culture');  return s && s.learned && s.learned.length > 0; },
+  'vocab-env':     () => { const s = readLS('b2_page_vocab_environment'); return s && s.learned && s.learned.length > 0; },
+  'gram-cond':  () => { const s = readLS('b2_page_grammar_conditionals'); return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-modal': () => { const s = readLS('b2_page_grammar_modals');      return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-pass':  () => { const s = readLS('b2_page_grammar_passive');     return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-rel':   () => { const s = readLS('b2_page_grammar_relative');    return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-rep':   () => { const s = readLS('b2_page_grammar_reported');    return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-tens':  () => { const s = readLS('b2_page_grammar_tenses');      return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
 };
 
 function syncFromPapers(p) {
