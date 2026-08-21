@@ -201,9 +201,34 @@ window.UI = (() => {
     document.body.appendChild(fab);
   }
 
+  // ── Mobile bottom nav ─────────────────────
+  function injectMobileNav() {
+    const path = location.pathname;
+    const isIndex    = path.endsWith('index.html') || path.endsWith('/english/') || path.endsWith('/english');
+    const isRoadmap  = path.includes('roadmap');
+    const isRead     = path.includes('/reading/');
+    const isListen   = path.includes('/listening/');
+    const isWrite    = path.includes('/writing/');
+    const root = path.includes('/reading/') || path.includes('/listening/') ||
+                 path.includes('/writing/') || path.includes('/speaking/') ||
+                 path.includes('/vocabulary/') || path.includes('/grammar/') ? '../' : '';
+
+    const nav = document.createElement('nav');
+    nav.className = 'mobile-nav';
+    nav.innerHTML = `<div class="mobile-nav-inner">
+      <a href="${root}index.html" class="mobile-nav-item ${isIndex?'active':''}"><span>🏠</span><span>Home</span></a>
+      <a href="${root}roadmap.html" class="mobile-nav-item ${isRoadmap?'active':''}"><span>🗺️</span><span>Roadmap</span></a>
+      <a href="${root}reading/paper1.html" class="mobile-nav-item ${isRead?'active':''}"><span>📖</span><span>Reading</span></a>
+      <a href="${root}listening/paper1.html" class="mobile-nav-item ${isListen?'active':''}"><span>🎧</span><span>Listen</span></a>
+      <a href="${root}writing/paper1.html" class="mobile-nav-item ${isWrite?'active':''}"><span>✍️</span><span>Writing</span></a>
+    </div>`;
+    document.body.appendChild(nav);
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     injectSidebar();
     injectFloatingBtn();
+    injectMobileNav();
   });
 
   return { cycleTheme, adjustFont, toggleTimer, resetTimer, startTimer, pauseTimer, toggleSidebar };

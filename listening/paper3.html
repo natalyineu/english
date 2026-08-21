@@ -60,6 +60,7 @@
 :root[data-theme="dark"] .gf-input.correct { background: #1a3d2b; }
 :root[data-theme="dark"] .gf-input.wrong   { background: #3d1a1a; }
 </style>
+<script src="../timer.js"></script>
 </head>
 <body>
 <div class="site-wrap">
@@ -127,6 +128,33 @@
     <div class="page-content">
       <h1 class="page-title">Listening — Practice Paper 3</h1>
       <p class="page-subtitle">26 marks · ~30 minutes · 4 parts · Read transcript, answer questions</p>
+      <div class="pdf-resources" id="pdf-resources">
+        <button class="pdf-btn" data-url="../materials/paper3/LanguageCert-PP3-B2-IESOL-Ls.pdf" onclick="pdfClick(this)">📄 Listening Script</button>
+        <button class="pdf-btn" data-url="../materials/paper3/LanguageCert-PP3-B2-IESOL-Ms.pdf" onclick="pdfClick(this)">✅ Mark Scheme</button>
+        <button class="pdf-btn" data-url="../materials/paper3/LanguageCert-PP3-B2-IESOL-EP.pdf" onclick="pdfClick(this)">📋 Exam Paper</button>
+      </div>
+      <script>
+      function pdfClick(btn) {
+        if (btn.dataset.ready === '1') {
+          window.open(btn.dataset.url, '_blank');
+          btn.dataset.ready = '0';
+          btn.classList.remove('confirm');
+          btn.textContent = btn.dataset.label;
+        } else {
+          btn.dataset.label = btn.textContent;
+          btn.textContent = '⚠️ Click again to open PDF';
+          btn.classList.add('confirm');
+          btn.dataset.ready = '1';
+          setTimeout(function() {
+            if (btn.dataset.ready === '1') {
+              btn.dataset.ready = '0';
+              btn.classList.remove('confirm');
+              btn.textContent = btn.dataset.label;
+            }
+          }, 3000);
+        }
+      }
+      </script>
 
       <div class="score-card" id="totalScore" style="display:none">
         <h2>Your Score</h2>
@@ -581,6 +609,7 @@ function checkGapFill() {
 }
 
 const PAGE_ID = 'listening_paper3';
+TIMER.init(30);
 
 function collectState() {
   return {

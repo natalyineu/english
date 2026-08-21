@@ -9,6 +9,7 @@
 <script src="../db.js"></script>
 <script src="../ui.js"></script>
 <script src="../feedback.js"></script>
+<script src="../timer.js"></script>
 </head>
 <body>
 <div class="site-wrap">
@@ -477,6 +478,7 @@ function resetPart4() {
 
 // ── Page sync (via db.js) ─────────────────────────────
 const PAGE_ID = 'reading_paper7';
+TIMER.init(50);
 
 function collectState() {
   return {
