@@ -220,5 +220,36 @@ window.FB = (() => {
     observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
   });
 
-  return { playCorrect, playWrong, motivate, grandSummary, confetti, retryWrong };
+  // ── Score history ─────────────────────────────────────────
+  function saveHistory(pageId, score, max) {
+    const key = 'b2_hist_' + pageId;
+    let arr = [];
+    try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
+    arr.push({ d: new Date().toISOString().slice(0,10), s: score, m: max });
+    if (arr.length > 10) arr = arr.slice(-10);
+    localStorage.setItem(key, JSON.stringify(arr));
+  }
+
+  function renderHistory(pageId, containerEl) {
+    const key = 'b2_hist_' + pageId;
+    let arr = [];
+    try { arr = JSON.parse(localStorage.getItem(key) || '[]'); } catch {}
+    if (arr.length < 2) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'score-history';
+    wrap.innerHTML = '<div class="score-history-label">📈 Your last ' + arr.length + ' attempts</div><div class="history-dots" id="hist-dots"></div>';
+    containerEl.appendChild(wrap);
+    const dots = wrap.querySelector('#hist-dots');
+    arr.forEach(function(e) {
+      const pct = Math.round(e.s / e.m * 100);
+      const h = Math.max(4, Math.round(pct * 32 / 100));
+      const d = document.createElement('div');
+      d.className = 'history-dot';
+      d.title = e.d + ': ' + e.s + '/' + e.m + ' (' + pct + '%)';
+      d.innerHTML = '<div class="history-dot-bar" style="height:' + h + 'px;opacity:' + (0.4 + pct/200) + '"></div><div class="history-dot-label">' + pct + '%</div>';
+      dots.appendChild(d);
+    });
+  }
+
+  return { playCorrect, playWrong, motivate, grandSummary, confetti, retryWrong, saveHistory, renderHistory };
 })();

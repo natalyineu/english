@@ -225,10 +225,33 @@ window.UI = (() => {
     document.body.appendChild(nav);
   }
 
+  // ── Keyboard shortcuts (reading/listening quiz pages) ─────
+  function initKeyboardShortcuts() {
+    document.addEventListener('keydown', function(e) {
+      // Ignore when typing in an input
+      if (['INPUT','TEXTAREA','SELECT'].includes(e.target.tagName)) return;
+      const key = e.key;
+
+      // 1/2/3 → select option a/b/c in the next unanswered question
+      if (['1','2','3'].includes(key)) {
+        const idx = {'1':'a','2':'b','3':'c'}[key];
+        const q = document.querySelector('.question:not([data-checked]) .option-btn[data-value="' + idx + '"]');
+        if (q) { q.click(); e.preventDefault(); }
+      }
+
+      // Enter → click the first visible "Check answers" button
+      if (key === 'Enter') {
+        const btn = document.querySelector('.check-btn:not(.retry-btn)');
+        if (btn) { btn.click(); e.preventDefault(); }
+      }
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     injectSidebar();
     injectFloatingBtn();
     injectMobileNav();
+    if (document.querySelector('.option-btn')) initKeyboardShortcuts();
   });
 
   return { cycleTheme, adjustFont, toggleTimer, resetTimer, startTimer, pauseTimer, toggleSidebar };

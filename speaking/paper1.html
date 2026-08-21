@@ -246,6 +246,11 @@
       <h1 class="page-title">Speaking — Practice Paper 1</h1>
       <p class="page-subtitle">50 marks · 13 minutes total · 4 parts · Practise with a partner or record yourself</p>
 
+      <div class="pdf-resources">
+        <button class="pdf-btn" data-url="../materials/speaking/Speaking-PP1.pdf" onclick="pdfClick(this)">📋 Speaking Paper (PDF)</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Gogo-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Gogo</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Hanna-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Hanna</button>
+      </div>
       <div class="tip-box">
         <strong>How to use this page:</strong> Practise with a partner (one plays the interlocutor, one the candidate), or record yourself speaking. Click any question to highlight it. Aim for natural, fluent responses — not memorised scripts.
       </div>
@@ -271,6 +276,12 @@
             <li class="q-item"><span class="q-bullet">▸</span>What are the advantages and disadvantages of watching TV?</li>
             <li class="q-item"><span class="q-bullet">▸</span>What responsibilities do parents have regarding their children's TV habits?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p1-tv', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p1-tv">
+            <p>I watch probably about two or three hours of TV a week, which is actually quite a lot less than I used to. I tend to prefer documentaries and drama series — I particularly enjoy programmes about history or nature. I find reality shows a bit repetitive, to be honest.</p>
+            <p>In terms of advantages, television is an incredible source of information and culture. You can learn about the world, discover new perspectives, and also simply relax after a long day. The disadvantages are that it can easily become passive — you can spend hours watching without really absorbing anything useful, and for children especially, too much screen time can affect sleep and concentration.</p>
+            <p>As for parental responsibility, I think parents need to be quite thoughtful about what their children watch and for how long. Not all content is appropriate, and the habit of using TV as a babysitter can create real problems. Ideally, parents watch with their children and discuss what they see together — that turns a passive activity into something genuinely educational.</p>
+          </div>
         </div>
 
         <div class="topic-group">
@@ -281,6 +292,12 @@
             <li class="q-item"><span class="q-bullet">▸</span>Can you tell me about ways friends have helped you?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Would you prefer a wide circle of friends or just a few close friends? (Why?)</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p1-friend', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p1-friend">
+            <p>For me, the most important quality in a friend is honesty — I really value people who tell me the truth, even when it is not what I want to hear. Beyond that, I look for loyalty and a genuine sense of humour. Life is simply more enjoyable with friends who can make you laugh.</p>
+            <p>Friends are invaluable during difficult times because they provide both practical support and emotional understanding. Sometimes you just need someone to listen without judging, and a good friend knows when to offer advice and when to simply be present. I remember when I was going through a stressful period at work, and a close friend would regularly call just to check in — it made an enormous difference.</p>
+            <p>As for the question of a wide circle versus a few close friends, I personally prefer a smaller number of deep friendships. I find it more meaningful to really know a few people well than to have a large network of acquaintances. That said, I appreciate both — close friends for real conversations, and a wider social circle for social occasions and variety.</p>
+          </div>
         </div>
 
         <div class="topic-group">
@@ -291,6 +308,12 @@
             <li class="q-item"><span class="q-bullet">▸</span>What leisure facilities are popular with older people?</li>
             <li class="q-item"><span class="q-bullet">▸</span>If you were responsible, what leisure facilities would you build in your area?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p1-leisure', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p1-leisure">
+            <p>My friends and I tend to use a mix of facilities — we go to a gym or sports centre a couple of times a week, and we also enjoy parks, particularly in summer. There are also some good cafés and cinemas in the area that we visit at weekends.</p>
+            <p>In terms of facilities for older people, I think walking paths, community centres, and swimming pools tend to be particularly popular. These offer both physical activity and social opportunities, which are both very important for wellbeing as we age. Libraries also remain valuable — they provide warmth, quiet, and access to information and social programmes.</p>
+            <p>If I were in charge, I would prioritise building more green spaces and outdoor exercise areas that are accessible to everyone, including people with disabilities. I would also invest in multi-purpose community hubs that could host classes, events, and social groups — places where people of different ages and backgrounds can genuinely connect. In my experience, it is the social dimension of leisure facilities that matters most.</p>
+          </div>
         </div>
 
         <div class="topic-group">
@@ -301,6 +324,12 @@
             <li class="q-item"><span class="q-bullet">▸</span>What's the best thing about public transport where you live?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Why do you think some people spend a lot of money to fly first class?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p1-transport', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p1-transport">
+            <p>If I had unlimited money, I think I would still use public transport for day-to-day travel — it is simply much more efficient in cities. For longer journeys, I would definitely travel business class on trains and perhaps first class on flights, just for the comfort and the ability to work or sleep properly. But I would not buy a private jet — it seems unnecessarily extravagant and very bad for the environment.</p>
+            <p>What would most improve public transport where I live is more frequent services, especially in the evenings and at weekends when trains and buses become quite infrequent. Better integration between different types of transport — so your ticket works seamlessly on the metro, bus, and train — would also make a huge difference.</p>
+            <p>As for people who pay for first class, I think the motivation is a combination of genuine comfort — more space, better service, quieter environment — and, for some people, status. When you travel frequently for work, the investment can be justified by the ability to arrive rested and productive. For leisure travellers, it is more of a luxury choice.</p>
+          </div>
         </div>
 
         <div class="topic-group">
@@ -311,6 +340,12 @@
             <li class="q-item"><span class="q-bullet">▸</span>How useful have you found speaking English when you travel?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Why do you think some people learn a language and then forget how to speak it?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p1-language', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p1-language">
+            <p>I would love to improve my Spanish — I have studied it a little but never reached a level where I can have a real conversation, and that frustrates me. I find the sound of it beautiful and it is so widely spoken. I am also quite interested in learning Japanese, partly because the culture fascinates me, and partly because it would be such a different challenge from European languages.</p>
+            <p>Speaking a foreign language is important for so many reasons. Professionally, it opens doors — employers value candidates who can communicate across cultures. Personally, it allows you to connect with people in a much more meaningful way when you travel. There is something special about being able to speak to someone in their own language, even if imperfectly — people really appreciate the effort.</p>
+            <p>As for why people forget languages — I think the main reason is lack of use. Language is a skill, and like any skill, it fades without regular practice. If you learn a language at school but never use it afterwards, it is not surprising that it disappears. The way to keep it is to actively seek out opportunities to use it — through films, books, online conversation partners, or travel.</p>
+          </div>
         </div>
       </div>
 
@@ -438,6 +473,12 @@
                 <li>Do you think people should work longer before retiring?</li>
               </ul>
             </div>
+            <button class="sample-toggle" onclick="toggleSample('sa-p1-mono-a', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p1-mono-a">
+              <p>Care for elderly people is one of the most important social challenges facing modern societies, and I believe it deserves much greater attention than it currently receives. As people live longer thanks to advances in medicine, the number of elderly people requiring care is growing rapidly — and many countries are simply not prepared for this.</p>
+              <p>First of all, I think we need to reconsider how we think about old age. In many cultures, including traditionally, the family would care for elderly relatives at home. This is becoming increasingly difficult in modern societies where both partners often work and families live far apart. Care homes can be a valuable solution, but the quality varies enormously and they can be expensive and isolating.</p>
+              <p>Another important point is the economic dimension. A larger elderly population creates pressure on pension systems and healthcare budgets. Some argue that people should work longer before retiring, and while I understand this argument, I think the answer depends heavily on the type of work — physical labour is not sustainable into old age in the way that knowledge-based work might be. To sum up, care for the elderly requires both family responsibility and strong public support — it is not a problem any one group can solve alone.</p>
+            </div>
           </div>
           <div class="mono-card">
             <div class="mono-label">Topic B</div>
@@ -451,6 +492,12 @@
                 <li>Do you think any modern invention has had a bad effect on society?</li>
               </ul>
             </div>
+            <button class="sample-toggle" onclick="toggleSample('sa-p1-mono-b', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p1-mono-b">
+              <p>Throughout human history, inventions have transformed the way we live, work, and communicate — but some stand out as truly revolutionary. If I had to choose the most important invention of the modern era, I would say the internet. It has fundamentally changed almost every aspect of human life within a single generation.</p>
+              <p>First of all, consider what the internet has done for access to information. Before it existed, finding specialist knowledge required physical books, libraries, and experts. Now, the sum of human knowledge is available to anyone with a smartphone. This has been enormously equalising — a child in a rural area can access the same educational resources as someone in the world's best cities.</p>
+              <p>However, I think it is also important to acknowledge the negative effects of some inventions. Social media, which grew from the internet, has had serious negative consequences for mental health, particularly among teenagers. Designed to be as engaging as possible, these platforms exploit psychological vulnerabilities in ways that many find genuinely harmful. To sum up, inventions are neither good nor bad in themselves — what matters is how they are designed and how we choose to use them.</p>
+            </div>
           </div>
           <div class="mono-card">
             <div class="mono-label">Topic C</div>
@@ -463,6 +510,12 @@
                 <li>Which festival would a visitor enjoy the most?</li>
                 <li>Which festivals always have traditional food?</li>
               </ul>
+            </div>
+            <button class="sample-toggle" onclick="toggleSample('sa-p1-mono-c', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p1-mono-c">
+              <p>Festivals play a fascinating role in national and cultural identity. They connect people to their history, bring communities together, and provide a shared rhythm to the year. In my country, there are several festivals that are particularly significant — both ancient traditions and more modern celebrations.</p>
+              <p>First of all, the most important festivals tend to revolve around significant dates in the religious or agricultural calendar. These celebrations have evolved enormously over the past 50 years — while the core traditions remain, they have become more commercialised and often more inclusive. Many festivals that were once purely local are now tourist attractions that draw visitors from abroad, which brings economic benefit but also changes their character.</p>
+              <p>Regarding children and tradition, I believe it is genuinely important for them to learn about the festivals of their culture — not just to preserve history, but to give them a sense of belonging and identity. Traditional food is always a wonderful entry point: learning to prepare traditional dishes connects children to their heritage in a direct, sensory way. To sum up, festivals matter because they remind us where we come from and give us reason to celebrate together as a community — something that is increasingly valuable in modern, fragmented societies.</p>
             </div>
           </div>
         </div>
@@ -480,6 +533,30 @@
 document.querySelectorAll('.q-item').forEach(item => {
   item.addEventListener('click', () => item.classList.toggle('selected'));
 });
+</script>
+<script>
+function pdfClick(btn) {
+  if (btn.dataset.ready === '1') {
+    window.open(btn.dataset.url, '_blank');
+    btn.dataset.ready = '0'; btn.classList.remove('confirm');
+    btn.textContent = btn.dataset.label;
+  } else {
+    btn.dataset.label = btn.textContent;
+    btn.textContent = '⚠️ Click again to open PDF';
+    btn.classList.add('confirm'); btn.dataset.ready = '1';
+    setTimeout(function() {
+      if (btn.dataset.ready === '1') {
+        btn.dataset.ready = '0'; btn.classList.remove('confirm');
+        btn.textContent = btn.dataset.label;
+      }
+    }, 3000);
+  }
+}
+function toggleSample(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.textContent = open ? '🙈 Hide sample answer' : '💬 Show sample answer';
+}
 </script>
 </body>
 </html>

@@ -166,6 +166,34 @@
       <p class="page-subtitle">24 marks · ~1 hour 5 minutes · 2 tasks · Write your response, then reveal the model answer</p>
 
       <!-- Assessment criteria -->
+      
+      <div class="self-assess-wrap">
+        <button class="self-assess-header" onclick="toggleAssess(this)">
+          <span>📝 Self-assessment checklist — B2 Writing Criteria</span>
+          <span style="font-size:.8rem;color:var(--muted)">▼ Expand</span>
+        </button>
+        <div class="self-assess-body">
+          <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Tick each criterion after writing. Each is worth 3 marks — total 12 per task.</p>
+          <div class="criteria-check" id="assess-checks">
+            <label><input type="checkbox" onchange="updateAssessScore()"> <span><strong>Communicative achievement</strong> — my writing achieves its purpose and would reach the intended reader</span><span class="crit-score">3 pts</span></label>
+            <label><input type="checkbox" onchange="updateAssessScore()"> <span><strong>Content</strong> — all required points are addressed fully and appropriately</span><span class="crit-score">3 pts</span></label>
+            <label><input type="checkbox" onchange="updateAssessScore()"> <span><strong>Organisation</strong> — clear paragraphs, logical flow, appropriate linking words</span><span class="crit-score">3 pts</span></label>
+            <label><input type="checkbox" onchange="updateAssessScore()"> <span><strong>Language</strong> — varied vocabulary and grammar, mostly accurate at B2 level</span><span class="crit-score">3 pts</span></label>
+          </div>
+          <div class="self-assess-total" id="assess-total">Self-assessed score: 0 / 12</div>
+        </div>
+      </div>
+      <script>
+      function toggleAssess(btn) {
+        const body = btn.nextElementSibling;
+        const open = body.classList.toggle('open');
+        btn.querySelector('span:last-child').textContent = open ? '▲ Collapse' : '▼ Expand';
+      }
+      function updateAssessScore() {
+        const checked = document.querySelectorAll('#assess-checks input:checked').length;
+        document.getElementById('assess-total').textContent = 'Self-assessed score: ' + (checked * 3) + ' / 12';
+      }
+      </script>
       <div class="task-card">
         <div class="part-header">
           <span class="part-label">Assessment</span>
