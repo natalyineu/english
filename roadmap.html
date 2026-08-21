@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>B2 Roadmap</title>
+<title>B2 Roadmap · B2 Ready 🎓</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
 <script src="db.js"></script>
@@ -78,8 +79,29 @@ body {
   font-size: .88rem;
   font-weight: 700;
   color: var(--text);
-  flex: 1;
+  white-space: nowrap;
+  padding-right: 16px;
+  border-right: 1px solid var(--border);
+  margin-right: 12px;
 }
+.topnav-skills {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  flex-wrap: wrap;
+}
+.topnav-skills a {
+  font-size: .72rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background .15s, color .15s;
+  white-space: nowrap;
+}
+.topnav-skills a:hover { background: rgba(255,255,255,.08); color: var(--text); }
 .topnav .exam-date-wrap {
   display: flex;
   align-items: center;
@@ -554,8 +576,16 @@ body {
 
 <!-- Top nav -->
 <nav class="topnav">
-  <a href="index.html" class="home">← Home</a>
-  <div class="nav-title">B2 Roadmap</div>
+  <a href="index.html" class="home">🏠 Dashboard</a>
+  <div class="nav-title">🗺️ My Roadmap</div>
+  <div class="topnav-skills">
+    <a href="reading/paper1.html">📖 Reading</a>
+    <a href="writing/paper1.html">✍️ Writing</a>
+    <a href="listening/paper1.html">👂 Listening</a>
+    <a href="speaking/paper1.html">🗣️ Speaking</a>
+    <a href="vocabulary/index.html">📝 Vocab</a>
+    <a href="grammar/index.html">🔤 Grammar</a>
+  </div>
   <div class="exam-date-wrap">
     <label for="examDateInput">📅 Exam date:</label>
     <input type="date" id="examDateInput">

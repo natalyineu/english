@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reading — Paper 2</title>
+<title>Reading — Paper 2 · B2 Ready 🎓</title>
 <link rel="stylesheet" href="../style.css">
 <script src="../db.js"></script>
 <script src="../ui.js"></script>
+<script src="../feedback.js"></script>
 </head>
 <body>
 <div class="site-wrap">
@@ -329,6 +331,7 @@ function updateTotal() {
   const num = document.getElementById('scoreNum');
   el.style.display = 'block';
   num.innerHTML = total + ' <span>/ 19</span>';
+  if (window.FB) el.insertAdjacentElement('afterend', FB.grandSummary(total, 19, 13));
 }
 
 // ── Part 1: Multiple Choice ──
@@ -359,6 +362,7 @@ function checkMC(partId, total) {
   el.textContent = 'Part 1 score: ' + score + ' / ' + total;
   el.className = 'part-score visible' + (score === total ? ' perfect' : '');
   updateTotal();
+  if (window.FB) el.insertAdjacentElement('afterend', FB.motivate(score, total, partId));
 }
 
 // ── Part 2: Gap-fill ──
@@ -382,6 +386,7 @@ function checkGapFill() {
   el.textContent = 'Part 2 score: ' + score + ' / 6';
   el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
   updateTotal();
+  if (window.FB) el.insertAdjacentElement('afterend', FB.motivate(score, 6, 'part2'));
 }
 
 // ── Part 3: Matching ──
@@ -405,6 +410,7 @@ function checkMatching() {
   el.textContent = 'Part 3 score: ' + score + ' / 7';
   el.className = 'part-score visible' + (score === 7 ? ' perfect' : '');
   updateTotal();
+  if (window.FB) el.insertAdjacentElement('afterend', FB.motivate(score, 7, 'part3'));
 }
 
 // ── Part 4: Short Answers (reveal / hide toggle) ──

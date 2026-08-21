@@ -142,6 +142,9 @@
   from { transform: scaleX(0); transform-origin: left; }
   to   { transform: scaleX(1); transform-origin: left; }
 }
+@keyframes confettiFall {
+  to { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+}
 
 /* ══════════════════════════════════════════
    RESET & BASE
