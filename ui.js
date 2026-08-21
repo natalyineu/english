@@ -1,12 +1,15 @@
-// ui.js — shared UI: theme toggle, font size, exam timer
+// ui.js — shared UI: theme toggle, font size, exam timer, sidebar collapse
 
-// Apply stored theme immediately (before DOMContentLoaded) to prevent flash
+// Apply stored theme + font immediately (prevents flash)
 (function () {
   const t = localStorage.getItem('b2_theme');
   if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
   else if (t === 'light') document.documentElement.setAttribute('data-theme', 'light');
   const f = parseInt(localStorage.getItem('b2_font') || '16');
   document.documentElement.style.fontSize = f + 'px';
+  if (localStorage.getItem('b2_sidebar') === 'collapsed') {
+    document.documentElement.classList.add('sidebar-collapsed');
+  }
 })();
 
 window.UI = (() => {
@@ -45,7 +48,26 @@ window.UI = (() => {
     if (!btn) return;
     const t = getTheme();
     btn.textContent = t === 'dark' ? '☀️ Light' : t === 'light' ? '🔄 Auto' : '🌙 Dark';
-    btn.title = t === 'dark' ? 'Switch to light mode' : t === 'light' ? 'Switch to auto (system)' : 'Switch to dark mode';
+    btn.title = t === 'dark' ? 'Switch to light' : t === 'light' ? 'Switch to auto' : 'Switch to dark';
+  }
+
+  // ── Sidebar collapse / focus mode ─────────────────────
+  function isSidebarCollapsed() {
+    return document.documentElement.classList.contains('sidebar-collapsed');
+  }
+
+  function toggleSidebar() {
+    const collapsed = isSidebarCollapsed();
+    document.documentElement.classList.toggle('sidebar-collapsed', !collapsed);
+    localStorage.setItem('b2_sidebar', !collapsed ? 'collapsed' : 'open');
+    updateCollapseBtn();
+  }
+
+  function updateCollapseBtn() {
+    const btn = document.getElementById('ui-collapse-btn');
+    if (!btn) return;
+    btn.textContent = isSidebarCollapsed() ? '→ Show menu' : '← Focus mode';
+    btn.title = isSidebarCollapsed() ? 'Show sidebar' : 'Hide sidebar for focus';
   }
 
   // ── Exam timer ────────────────────────────────────────
@@ -54,10 +76,18 @@ window.UI = (() => {
   let timerRunning = false;
   const READING_MINS = 65;
   const WRITING_MINS = 65;
+  const LISTENING_MINS = 30;
 
-  function isReadingPage() { return location.pathname.includes('/reading/'); }
-  function isWritingPage() { return location.pathname.includes('/writing/'); }
-  function isExamPage()    { return isReadingPage() || isWritingPage(); }
+  function isReadingPage()   { return location.pathname.includes('/reading/'); }
+  function isWritingPage()   { return location.pathname.includes('/writing/'); }
+  function isListeningPage() { return location.pathname.includes('/listening/'); }
+  function isExamPage()      { return isReadingPage() || isWritingPage() || isListeningPage(); }
+
+  function getTimerMins() {
+    if (isListeningPage()) return LISTENING_MINS;
+    if (isWritingPage()) return WRITING_MINS;
+    return READING_MINS;
+  }
 
   function formatTime(s) {
     const m = Math.floor(s / 60);
@@ -74,13 +104,13 @@ window.UI = (() => {
       timerRunning = false;
       updateTimerDisplay();
       playBeep();
-      if (confirm('⏰ Time is up! Would you like to reset the timer?')) resetTimer();
+      if (confirm('⏰ Time is up! Reset the timer?')) resetTimer();
     }
   }
 
   function startTimer() {
     if (timerRunning) return;
-    if (timerSeconds <= 0) timerSeconds = (isWritingPage() ? WRITING_MINS : READING_MINS) * 60;
+    if (timerSeconds <= 0) timerSeconds = getTimerMins() * 60;
     timerRunning = true;
     timerInterval = setInterval(tickTimer, 1000);
     updateTimerDisplay();
@@ -95,7 +125,7 @@ window.UI = (() => {
   function resetTimer() {
     timerRunning = false;
     clearInterval(timerInterval);
-    timerSeconds = (isWritingPage() ? WRITING_MINS : READING_MINS) * 60;
+    timerSeconds = getTimerMins() * 60;
     updateTimerDisplay();
   }
 
@@ -107,11 +137,11 @@ window.UI = (() => {
     const display = document.getElementById('ui-timer-display');
     const btn = document.getElementById('ui-timer-btn');
     if (!display || !btn) return;
-    const s = timerSeconds > 0 ? timerSeconds : (isWritingPage() ? WRITING_MINS : READING_MINS) * 60;
+    const s = timerSeconds > 0 ? timerSeconds : getTimerMins() * 60;
     display.textContent = formatTime(s);
-    const urgent = timerSeconds > 0 && timerSeconds <= 300; // last 5 min
-    display.style.color = urgent ? 'var(--err)' : 'var(--sb-text)';
-    btn.textContent = timerRunning ? '⏸ Pause' : timerSeconds > 0 && timerSeconds < (isWritingPage() ? WRITING_MINS : READING_MINS) * 60 ? '▶ Resume' : '▶ Start';
+    const urgent = timerSeconds > 0 && timerSeconds <= 300;
+    display.style.color = urgent ? '#fca5a5' : '';
+    btn.textContent = timerRunning ? '⏸ Pause' : timerSeconds > 0 && timerSeconds < getTimerMins() * 60 ? '▶ Resume' : '▶ Start';
   }
 
   function playBeep() {
@@ -130,7 +160,7 @@ window.UI = (() => {
     const nav = document.querySelector('.sidebar-nav');
     if (!nav) return;
 
-    const mins = isWritingPage() ? WRITING_MINS : READING_MINS;
+    const mins = getTimerMins();
     const timerHtml = isExamPage() ? `
       <div class="ui-timer-block">
         <div id="ui-timer-display" class="ui-timer-display">${String(mins).padStart(2,'0')}:00</div>
@@ -148,15 +178,33 @@ window.UI = (() => {
       <div class="ui-row">
         <button class="ui-btn" id="ui-theme-btn" onclick="UI.cycleTheme()" title="Toggle theme"></button>
         <div class="ui-font-group">
-          <button class="ui-btn ui-btn-ghost" onclick="UI.adjustFont(-1)" title="Decrease font size">A−</button>
-          <button class="ui-btn ui-btn-ghost" onclick="UI.adjustFont(1)" title="Increase font size">A+</button>
+          <button class="ui-btn ui-btn-ghost" onclick="UI.adjustFont(-1)" title="Smaller text">A−</button>
+          <button class="ui-btn ui-btn-ghost" onclick="UI.adjustFont(1)" title="Larger text">A+</button>
         </div>
+      </div>
+      <div style="padding: 8px 20px 4px">
+        <button class="ui-btn ui-focus-btn" id="ui-collapse-btn" onclick="UI.toggleSidebar()"></button>
       </div>`;
     nav.appendChild(section);
     updateThemeBtn();
+    updateCollapseBtn();
   }
 
-  document.addEventListener('DOMContentLoaded', injectSidebar);
+  // Floating "show menu" button when sidebar is collapsed
+  function injectFloatingBtn() {
+    const fab = document.createElement('button');
+    fab.id = 'ui-fab';
+    fab.className = 'ui-fab';
+    fab.onclick = () => UI.toggleSidebar();
+    fab.title = 'Show menu';
+    fab.textContent = '☰';
+    document.body.appendChild(fab);
+  }
 
-  return { cycleTheme, adjustFont, toggleTimer, resetTimer, startTimer, pauseTimer };
+  document.addEventListener('DOMContentLoaded', () => {
+    injectSidebar();
+    injectFloatingBtn();
+  });
+
+  return { cycleTheme, adjustFont, toggleTimer, resetTimer, startTimer, pauseTimer, toggleSidebar };
 })();
