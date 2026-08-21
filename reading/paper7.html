@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reading P7 · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<script src="../feedback.js"></script>
+<script src="../timer.js"></script>
+</head>
+<body>
+<div class="site-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="paper7.html" class="nav-link active">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="../listening/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <a href="../index.html#reading">Reading</a>
+        <span>›</span>
+        Paper 7
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Reading — Practice Paper 7</h1>
+      <p class="page-subtitle">26 marks · ~1 hour 5 minutes · 4 parts · Select your answers then click Check</p>
+
+      <!-- Total score card -->
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 19</span></div>
+        <div class="score-pass">Pass mark: 75/150 total (reading is 26 of those marks)</div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 1 — Multiple Choice
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part1">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Multiple Choice</span>
+          <span class="part-marks">6 marks</span>
+          <button class="reset-part-btn" onclick="resetPart1()" title="Reset Part 1">↺ Reset</button>
+        </div>
+        <p class="part-instructions">Read the text and choose the correct answer for each question.</p>
+
+        <div class="passage">
+          <h3>The science of sleep</h3>
+          <p>Sleep is one of the most fundamental human needs, yet it remains among the least understood aspects of our biology. Scientists have been studying sleep for decades, and while much has been learned, the precise functions it serves continue to be the subject of active research and debate.</p>
+          <p>What is clear is that sleep is far from a passive state. During the night, the brain moves through a series of distinct stages, alternating between lighter and deeper phases of sleep and a period known as rapid eye movement (REM) sleep. It is during REM sleep that most vivid dreaming occurs, and researchers believe this phase plays a crucial role in processing emotions and consolidating memories.</p>
+          <p>The amount of sleep a person needs varies with age. Newborn babies may sleep for up to eighteen hours a day, while teenagers typically need around nine hours and most adults function best with seven to eight. This variation is controlled by biological processes rather than personal preference, which is why encouraging teenagers to attend early-morning classes may not be the most productive approach.</p>
+          <p>Chronic sleep deprivation — regularly getting less sleep than the body needs — has been linked to a wide range of health problems, including obesity, diabetes, heart disease and depression. The effects on cognitive function are also significant: sleep-deprived individuals perform poorly on tests of memory, attention and decision-making, sometimes to a degree that matches the effects of alcohol intoxication.</p>
+          <p>Despite the clear importance of sleep, modern life seems designed to disrupt it. Artificial light, particularly from screens, suppresses the hormone melatonin, which signals to the body that it is time to sleep. Shift work, long commutes and the pressure of work and social commitments all cut into the hours available for rest.</p>
+        </div>
+
+        <div class="questions" id="p1-questions">
+          <!-- Q1 -->
+          <div class="question" data-correct="b">
+            <p class="question-text">1. Scientists' understanding of sleep is described as</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> complete and fully established.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> significant but still incomplete.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> limited to very basic facts.</button>
+            </div>
+          </div>
+          <!-- Q2 -->
+          <div class="question" data-correct="a">
+            <p class="question-text">2. REM sleep is said to be important for</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> processing emotions and consolidating memories.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> allowing the body to repair physical damage.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> reducing the heart rate to its lowest level.</button>
+            </div>
+          </div>
+          <!-- Q3 -->
+          <div class="question" data-correct="c">
+            <p class="question-text">3. The passage suggests that teenagers need more sleep than adults because</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> they do more physical activity during the day.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> their brains are less efficient at processing information.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> biological processes require it at their stage of development.</button>
+            </div>
+          </div>
+          <!-- Q4 -->
+          <div class="question" data-correct="b">
+            <p class="question-text">4. Chronic sleep deprivation is said to affect</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> mainly physical health, with few mental effects.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> both physical health and cognitive function.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> primarily emotional wellbeing.</button>
+            </div>
+          </div>
+          <!-- Q5 -->
+          <div class="question" data-correct="a">
+            <p class="question-text">5. According to the passage, melatonin</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> signals to the body that it is time to sleep.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> causes dreams during REM sleep.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> is produced in greater quantities under artificial light.</button>
+            </div>
+          </div>
+          <!-- Q6 -->
+          <div class="question" data-correct="c">
+            <p class="question-text">6. The main purpose of this passage is to</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> argue that people should sleep longer than they currently do.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> describe the history of scientific research into sleep.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> explain what sleep is, why it matters and what disrupts it.</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkMC('part1', 6)">Check answers</button>
+        <div class="part-score" id="part1-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 2 — Gap-fill
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part2">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Gap-fill</span>
+          <span class="part-marks">6 marks</span>
+          <button class="reset-part-btn" onclick="resetPart2()" title="Reset Part 2">↺ Reset</button>
+        </div>
+        <p class="part-instructions">Choose the correct word from the dropdown to complete each gap in the text.</p>
+
+        <div class="gaptext">
+          <p>Public parks play an important role in the health and wellbeing of urban
+            <select class="gap-select" id="gap-1" data-correct="residents"><option value="">— select —</option><option>residents</option><option>inhabitants</option><option>citizens</option><option>people</option><option>visitors</option></select>.
+            Research shows that access to green spaces
+            <select class="gap-select" id="gap-2" data-correct="reduces"><option value="">— select —</option><option>reduces</option><option>lowers</option><option>removes</option><option>limits</option><option>controls</option></select>
+            stress and encourages physical activity. Many cities are now investing in the
+            <select class="gap-select" id="gap-3" data-correct="creation"><option value="">— select —</option><option>creation</option><option>building</option><option>making</option><option>development</option><option>design</option></select>
+            of new parks to improve quality of life in densely populated areas. Parks also provide valuable
+            <select class="gap-select" id="gap-4" data-correct="habitat"><option value="">— select —</option><option>habitat</option><option>home</option><option>environment</option><option>shelter</option><option>territory</option></select>
+            for urban wildlife, including birds, insects and small mammals. Community events held in parks
+            <select class="gap-select" id="gap-5" data-correct="strengthen"><option value="">— select —</option><option>strengthen</option><option>improve</option><option>build</option><option>create</option><option>develop</option></select>
+            social connections between neighbours who might otherwise never meet. Despite their many benefits, parks are often among the first services to
+            <select class="gap-select" id="gap-6" data-correct="face"><option value="">— select —</option><option>face</option><option>suffer</option><option>receive</option><option>accept</option><option>meet</option></select>
+            cuts when local authorities need to reduce spending.
+          </p>
+        </div>
+
+        <button class="check-btn" onclick="checkGapFill()">Check answers</button>
+        <div class="part-score" id="part2-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 3 — Matching
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part3">
+        <div class="part-header">
+          <span class="part-label">Part 3</span>
+          <span class="part-title">Matching</span>
+          <span class="part-marks">7 marks</span>
+          <button class="reset-part-btn" onclick="resetPart3()" title="Reset Part 3">↺ Reset</button>
+        </div>
+        <p class="part-instructions">Read the five book descriptions. For each statement, choose which book (A–E) it refers to.</p>
+
+        <div class="text-grid">
+          <div class="text-block">
+            <div class="text-block-label">BOOK A — The Floating Market</div>
+            <div class="text-block-body">A travel memoir set in Southeast Asia, describing the author's experiences living among local communities for six months.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">BOOK B — Signals</div>
+            <div class="text-block-body">A science fiction novel set on a distant planet, following a team of scientists who discover signs of ancient civilisation.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">BOOK C — The Runner's High</div>
+            <div class="text-block-body">A self-help book combining neuroscience and personal experience to explain the physical and mental benefits of running.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">BOOK D — What We Leave Behind</div>
+            <div class="text-block-body">A literary novel about a woman who returns to her childhood home after decades away to care for her elderly mother.</div>
+          </div>
+          <div class="text-block">
+            <div class="text-block-label">BOOK E — The Forgotten Language</div>
+            <div class="text-block-body">A linguistic study of endangered languages around the world and efforts to preserve them before they disappear.</div>
+          </div>
+        </div>
+
+        <div class="matching-questions" id="p3-questions">
+          <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:4px">Which book…</p>
+          <div class="match-row">
+            <span class="match-q">1. is based on the author's personal experience of living abroad.</span>
+            <select class="match-select" id="m1" data-correct="A"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">2. deals with family relationships and the passing of time.</span>
+            <select class="match-select" id="m2" data-correct="D"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">3. The setting is not on Earth.</span>
+            <select class="match-select" id="m3" data-correct="B"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">4. combines scientific research with the writer's own story.</span>
+            <select class="match-select" id="m4" data-correct="C"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">5. is concerned with preserving something that is at risk of being lost.</span>
+            <select class="match-select" id="m5" data-correct="E"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">6. The main character returns to a place from their past.</span>
+            <select class="match-select" id="m6" data-correct="D"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+          <div class="match-row">
+            <span class="match-q">7. describes the discovery of evidence of a past society.</span>
+            <select class="match-select" id="m7" data-correct="B"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkMatching()">Check answers</button>
+        <div class="part-score" id="part3-score"></div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════
+           PART 4 — Short Answers
+      ═══════════════════════════════════════════ -->
+      <div class="quiz-part" id="part4">
+        <div class="part-header">
+          <span class="part-label">Part 4</span>
+          <span class="part-title">Short Answers</span>
+          <span class="part-marks">7 marks</span>
+          <button class="reset-part-btn" onclick="resetPart4()" title="Reset Part 4">↺ Reset</button>
+        </div>
+        <p class="part-instructions">Read the text and answer the questions. Use a maximum of <strong>five words</strong> for each answer. Type your answer, then click Reveal to see the model answer.</p>
+
+        <div class="passage">
+          <h3>The history of coffee</h3>
+          <p>Coffee is one of the most widely consumed beverages in the world, with over two billion cups drunk every day. Its origins can be traced to the highlands of Ethiopia, where, according to tradition, a goat herder named Kaldi first noticed the stimulating effects of the coffee plant when his flock became unusually energetic after eating its berries.</p>
+          <p>From Ethiopia, coffee spread to the Arabian Peninsula, where it was first cultivated on a large scale in the fifteenth century. By the sixteenth century, coffeehouses had become popular gathering places in cities across the Middle East, where people would meet to discuss business, politics and news. These establishments were sometimes called "Schools of the Wise".</p>
+          <p>Coffee reached Europe in the seventeenth century and quickly became enormously popular. London alone had over three hundred coffeehouses by 1675. These became important social institutions — places where ideas were exchanged, deals were made and newspapers were read.</p>
+          <p>The spread of coffee cultivation eventually extended to the Americas, where Brazil became, and remains, the world's largest producer. Today, coffee is grown in more than seventy countries across a tropical band known as the "coffee belt".</p>
+        </div>
+
+        <div class="sa-questions">
+          <div class="sa-row">
+            <p class="sa-q">1. Approximately how many cups of coffee are drunk every day?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa1">✓ Over two billion</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">2. Where did coffee originate?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa2">✓ The highlands of Ethiopia</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">3. What was the name of the person traditionally said to have discovered coffee?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa3">✓ Kaldi</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">4. Where was coffee first cultivated on a large scale?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa4">✓ The Arabian Peninsula</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">5. What were coffeehouses sometimes called?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa5">✓ Schools of the Wise</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">6. How many coffeehouses did London have by 1675?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa6">✓ Over three hundred</div>
+          </div>
+          <div class="sa-row">
+            <p class="sa-q">7. Which country is the world's largest coffee producer?</p>
+            <input class="sa-input" type="text" placeholder="Your answer (max 5 words)">
+            <div class="sa-answer" id="sa7">✓ Brazil</div>
+          </div>
+        </div>
+
+        <button class="check-btn reveal" id="reveal-btn" onclick="revealAnswers()">Reveal model answers</button>
+        <div class="part-score" id="part4-score"></div>
+      </div>
+
+      <div id="grand-slot" style="margin-top:8px"></div>
+    </div><!-- page-content -->
+  </main>
+</div>
+
+<script>
+// ── Scores ──
+const scores = { part1: 0, part2: 0, part3: 0, part4: 7 };
+
+function updateTotal() {
+  const total = scores.part1 + scores.part2 + scores.part3;
+  const el = document.getElementById('totalScore');
+  const num = document.getElementById('scoreNum');
+  el.style.display = 'block';
+  num.innerHTML = total + ' <span>/ 19</span>';
+  if (window.FB) { const slot = document.getElementById('grand-slot'); if (slot) { slot.innerHTML=''; slot.appendChild(FB.grandSummary(total, 19, 13)); } }
+}
+
+// ── Part 1: Multiple Choice ──
+function selectOption(btn) {
+  const qDiv = btn.closest('.question');
+  if (qDiv.dataset.checked) return;
+  qDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkMC(partId, total) {
+  const container = document.getElementById(partId + '-questions') || document.getElementById(partId).querySelector('.questions');
+  const questions = container.querySelectorAll('.question');
+  let score = 0;
+  questions.forEach(q => {
+    const correct = q.dataset.correct;
+    q.dataset.checked = '1';
+    const selected = q.querySelector('.option-btn.selected');
+    q.querySelectorAll('.option-btn').forEach(btn => {
+      if (btn.dataset.value === correct) btn.classList.add('correct');
+      else if (btn.classList.contains('selected')) btn.classList.add('wrong');
+      btn.disabled = true;
+    });
+    if (selected && selected.dataset.value === correct) score++;
+  });
+  scores[partId] = score;
+  const el = document.getElementById(partId + '-score');
+  el.textContent = 'Part 1 score: ' + score + ' / ' + total;
+  el.className = 'part-score visible' + (score === total ? ' perfect' : '');
+  updateTotal();
+  if (window.FB) el.insertAdjacentElement('afterend', FB.motivate(score, total, partId));
+}
+
+// ── Part 2: Gap-fill ──
+function checkGapFill() {
+  const gaps = document.querySelectorAll('.gap-select');
+  let score = 0;
+  document.querySelectorAll('.gap-indicator').forEach(el => el.remove());
+  gaps.forEach(sel => {
+    const correct = sel.dataset.correct;
+    const ok = sel.value === correct;
+    if (ok) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+    const ind = document.createElement('span');
+    ind.className = 'gap-indicator ' + (ok ? 'gap-ok' : 'gap-err');
+    ind.innerHTML = ok ? ' ✓' : ' ✗ <span class="gap-correct">→ ' + correct + '</span>';
+    sel.insertAdjacentElement('afterend', ind);
+  });
+  scores.part2 = score;
+  const el = document.getElementById('part2-score');
+  el.textContent = 'Part 2 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+  if (window.FB) el.insertAdjacentElement('afterend', FB.motivate(score, 6, 'part2'));
+}
+
+// ── Part 3: Matching ──
+function checkMatching() {
+  const selects = document.querySelectorAll('.match-select');
+  let score = 0;
+  document.querySelectorAll('.match-indicator').forEach(el => el.remove());
+  selects.forEach(sel => {
+    const correct = sel.dataset.correct;
+    const ok = sel.value === correct;
+    if (ok) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+    const ind = document.createElement('span');
+    ind.className = 'match-indicator ' + (ok ? 'gap-ok' : 'gap-err');
+    ind.innerHTML = ok ? ' ✓' : ' ✗ <span class="gap-correct">→ ' + correct + '</span>';
+    sel.insertAdjacentElement('afterend', ind);
+  });
+  scores.part3 = score;
+  const el = document.getElementById('part3-score');
+  el.textContent = 'Part 3 score: ' + score + ' / 7';
+  el.className = 'part-score visible' + (score === 7 ? ' perfect' : '');
+  updateTotal();
+  if (window.FB) el.insertAdjacentElement('afterend', FB.motivate(score, 7, 'part3'));
+}
+
+// ── Part 4: Short Answers (reveal / hide toggle) ──
+function revealAnswers() {
+  const btn = document.getElementById('reveal-btn');
+  const sa1 = document.getElementById('sa1');
+  const revealed = sa1?.classList.contains('visible');
+  for (let i = 1; i <= 7; i++) {
+    document.getElementById('sa' + i)?.classList.toggle('visible', !revealed);
+  }
+  const el = document.getElementById('part4-score');
+  if (!revealed) {
+    el.textContent = 'Model answers revealed — mark yourself: each correct answer = 1 mark (7 total)';
+    el.className = 'part-score visible';
+    if (btn) btn.textContent = 'Hide model answers';
+  } else {
+    el.className = 'part-score';
+    if (btn) btn.textContent = 'Reveal model answers';
+  }
+}
+
+
+// ── Reset per part ───────────────────────────────────
+function resetPart1() {
+  document.querySelectorAll('#p1-questions .question').forEach(q => {
+    q.querySelectorAll('.option-btn').forEach(b => { b.classList.remove('selected','correct','wrong'); b.disabled = false; });
+    q.removeAttribute('data-checked');
+  });
+  scores.part1 = 0;
+  const el = document.getElementById('part1-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  updateTotal(); savePage();
+}
+function resetPart2() {
+  document.querySelectorAll('.gap-select').forEach(sel => {
+    sel.value = ''; sel.classList.remove('correct','wrong'); sel.disabled = false;
+  });
+  document.querySelectorAll('.gap-indicator').forEach(el => el.remove());
+  scores.part2 = 0;
+  const el = document.getElementById('part2-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  updateTotal(); savePage();
+}
+function resetPart3() {
+  document.querySelectorAll('.match-select').forEach(sel => {
+    sel.value = ''; sel.classList.remove('correct','wrong'); sel.disabled = false;
+  });
+  document.querySelectorAll('.match-indicator').forEach(el => el.remove());
+  scores.part3 = 0;
+  const el = document.getElementById('part3-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  updateTotal(); savePage();
+}
+function resetPart4() {
+  document.querySelectorAll('.sa-input').forEach(inp => inp.value = '');
+  for (let i = 1; i <= 7; i++) document.getElementById('sa' + i)?.classList.remove('visible');
+  const el = document.getElementById('part4-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  const btn = document.getElementById('reveal-btn');
+  if (btn) btn.textContent = 'Reveal model answers';
+  savePage();
+}
+
+// ── Page sync (via db.js) ─────────────────────────────
+const PAGE_ID = 'reading_paper7';
+TIMER.init(50);
+
+function collectState() {
+  return {
+    p1_sel:      [...document.querySelectorAll('#p1-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p1_checked:  !!document.querySelector('#p1-questions .question[data-checked]'),
+    p2_sel:      [...document.querySelectorAll('.gap-select')].map(s => s.value),
+    p2_checked:  !!document.querySelector('.gap-select[disabled]'),
+    p3_sel:      [...document.querySelectorAll('.match-select')].map(s => s.value),
+    p3_checked:  !!document.querySelector('.match-select[disabled]'),
+    p4_revealed: !!document.getElementById('sa1')?.classList.contains('visible'),
+    p4_inputs:   [...document.querySelectorAll('.sa-input')].map(i => i.value),
+  };
+}
+
+function savePage() { DB.savePage(PAGE_ID, collectState()); }
+
+function restorePage(s) {
+  if (!s) return;
+  document.querySelectorAll('#p1-questions .question').forEach((q, i) => {
+    const val = s.p1_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p1_checked) checkMC('part1', 6);
+  document.querySelectorAll('.gap-select').forEach((sel, i) => { if (s.p2_sel?.[i]) sel.value = s.p2_sel[i]; });
+  if (s.p2_checked) checkGapFill();
+  document.querySelectorAll('.match-select').forEach((sel, i) => { if (s.p3_sel?.[i]) sel.value = s.p3_sel[i]; });
+  if (s.p3_checked) checkMatching();
+  if (s.p4_inputs) document.querySelectorAll('.sa-input').forEach((inp, i) => { if (s.p4_inputs[i]) inp.value = s.p4_inputs[i]; });
+  if (s.p4_revealed) revealAnswers();
+}
+
+document.querySelectorAll('.sa-input').forEach(inp => inp.addEventListener('input', savePage));
+['selectOption','checkMC','checkGapFill','checkMatching','revealAnswers'].forEach(name => {
+  const orig = window[name];
+  window[name] = function(...args) { orig(...args); savePage(); };
+});
+
+(async () => { restorePage(await DB.loadPage(PAGE_ID)); })();
+</script>
+</body>
+</html>

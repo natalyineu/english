@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Speaking P3 · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+.speak-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+.timer-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: .85rem;
+  color: var(--muted);
+}
+.timer-badge {
+  background: var(--navy);
+  color: #fff;
+  font-size: .75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.topic-group { margin-bottom: 24px; }
+.topic-name {
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+.question-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.q-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: .9rem;
+  color: var(--text);
+  background: var(--bg);
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+}
+.q-item:hover { border-color: var(--sel); background: var(--sel-bg); }
+.q-bullet { color: var(--muted); font-size: .8rem; margin-top: 2px; flex-shrink: 0; }
+
+.roleplay-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+@media (max-width: 600px) { .roleplay-grid { grid-template-columns: 1fr; } }
+.roleplay-box {
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.roleplay-label {
+  padding: 8px 16px;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.roleplay-label.a-label { background: var(--navy); color: #fff; }
+.roleplay-label.b-label { background: var(--red); color: #fff; }
+.roleplay-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+.scenario {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  font-size: .87rem;
+  color: var(--text);
+  background: var(--bg);
+}
+.scenario .starter {
+  margin-top: 6px;
+  font-style: italic;
+  font-size: .83rem;
+  color: var(--muted);
+}
+.initiator-tag {
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--sel);
+}
+
+.task-sheet {
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  max-width: 480px;
+}
+.task-sheet-header {
+  background: var(--navy);
+  color: #fff;
+  padding: 12px 20px;
+  font-size: .9rem;
+  font-weight: 700;
+  text-align: center;
+}
+.task-sheet-situation {
+  padding: 14px 18px;
+  font-size: .88rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.6;
+}
+.task-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--border);
+  font-size: .88rem;
+  color: var(--text);
+}
+.task-row:last-child { border-bottom: none; }
+.task-bullet { color: var(--red); font-weight: 700; flex-shrink: 0; }
+
+.monologue-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.mono-card {
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.mono-label {
+  background: var(--bg);
+  padding: 10px 16px;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.mono-topic {
+  padding: 14px 16px;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text);
+  background: var(--card);
+}
+.mono-followup {
+  padding: 0 16px 14px;
+  background: var(--card);
+}
+.mono-followup-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 8px; }
+.mono-followup ul { list-style: disc; padding-left: 16px; font-size: .83rem; color: var(--text); line-height: 1.7; }
+
+.tip-box {
+  background: var(--sel-bg);
+  border: 1px solid var(--sel);
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: .85rem;
+  color: var(--text);
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+.tip-box strong { color: var(--sel); }
+</style>
+<script src="../ui.js"></script>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="../listening/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="paper3.html" class="nav-link active">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a> <span>›</span>
+        <a href="../index.html">Speaking</a> <span>›</span> Paper 3
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Speaking — Practice Paper 3</h1>
+      <p class="page-subtitle">50 marks · 13 minutes total · 4 parts · Topic: Travel &amp; the Natural World</p>
+
+      <div class="tip-box">
+        <strong>How to use this page:</strong> Practise with a partner (one plays the interlocutor, one the candidate), or record yourself speaking. Click any question to highlight it. Aim for natural, fluent responses — not memorised scripts.
+      </div>
+
+      <!-- PART 1 -->
+      <div class="speak-card">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Personal Questions</span>
+          <span class="part-marks">3 minutes</span>
+        </div>
+        <div class="timer-row">
+          <span class="timer-badge">3 min</span>
+          The interlocutor asks your name, spelling, country of origin, then chooses up to 5 questions — one from each topic below.
+        </div>
+        <p class="part-instructions">The interlocutor starts: <em>"Hello. My name's [name]. Can you spell your surname for me, please?"</em> then <em>"Where are you from?"</em> — then selects one question from each topic.</p>
+
+        <div class="topic-group">
+          <div class="topic-name">Travel</div>
+          <ul class="question-list">
+            <li class="q-item"><span class="q-bullet">▸</span>Have you travelled to any other countries?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>What do you think is the best way to travel — by plane, train or car?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>What kind of holiday do you most enjoy?</li>
+          </ul>
+        </div>
+
+        <div class="topic-group">
+          <div class="topic-name">Nature</div>
+          <ul class="question-list">
+            <li class="q-item"><span class="q-bullet">▸</span>Do you spend much time outdoors?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>What is your favourite season and why?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>Are you concerned about environmental issues?</li>
+          </ul>
+        </div>
+
+        <div class="topic-group">
+          <div class="topic-name">Food</div>
+          <ul class="question-list">
+            <li class="q-item"><span class="q-bullet">▸</span>What kind of food do you enjoy most?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>Can you cook? What dishes can you make?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>Have you ever tried food from another culture that you really liked?</li>
+          </ul>
+        </div>
+
+        <div class="topic-group">
+          <div class="topic-name">Sport</div>
+          <ul class="question-list">
+            <li class="q-item"><span class="q-bullet">▸</span>Do you play any sports?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>Do you prefer watching sport or playing it?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>What do you think are the benefits of regular exercise?</li>
+          </ul>
+        </div>
+
+        <div class="topic-group">
+          <div class="topic-name">Weather</div>
+          <ul class="question-list">
+            <li class="q-item"><span class="q-bullet">▸</span>What is the weather like in your country?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>Does the weather affect your mood?</li>
+            <li class="q-item"><span class="q-bullet">▸</span>Would you prefer to live in a hot or cold climate?</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- PART 2 -->
+      <div class="speak-card">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Role-plays</span>
+          <span class="part-marks">3 minutes</span>
+        </div>
+        <div class="timer-row">
+          <span class="timer-badge">3 min</span>
+          Two role-play scenarios. In Scenario 1 Candidate A initiates; in Scenario 2 Candidate B initiates.
+        </div>
+
+        <div class="roleplay-grid">
+          <div class="roleplay-box">
+            <div class="roleplay-label a-label">Scenario 1 — A initiates</div>
+            <div class="roleplay-body">
+              <div class="scenario">
+                <strong>Planning a holiday together</strong><br>
+                Candidate A: you want to go somewhere adventurous, like hiking in the mountains.<br>
+                Candidate B: you prefer a relaxing beach holiday.
+                <div class="starter">"I've been thinking about where we should go this summer — I'd love to try something different this year."</div>
+              </div>
+            </div>
+          </div>
+          <div class="roleplay-box">
+            <div class="roleplay-label b-label">Scenario 2 — B initiates</div>
+            <div class="roleplay-body">
+              <div class="scenario">
+                <span class="initiator-tag">B starts</span>
+                <strong>Tourist information office</strong><br>
+                Candidate B: you are a tourist looking for recommendations for a 3-day visit to the city.<br>
+                Candidate A: you work at the tourist office.
+                <div class="starter">"Excuse me, I've just arrived and I have no idea where to start — can you help me?"</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PART 3 -->
+      <div class="speak-card">
+        <div class="part-header">
+          <span class="part-label">Part 3</span>
+          <span class="part-title">Discussion</span>
+          <span class="part-marks">4 minutes</span>
+        </div>
+        <div class="timer-row">
+          <span class="timer-badge">4 min</span>
+          Discuss the points on your task sheet together and reach decisions. You have 20 seconds to read before starting.
+        </div>
+
+        <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:14px">Task sheet:</p>
+        <div class="task-sheet">
+          <div class="task-sheet-header">How can our town become more environmentally friendly?</div>
+          <div class="task-sheet-situation">
+            <strong>Situation:</strong> Your town council is deciding how to improve the local environment. Discuss the options below and decide which would make the biggest difference.
+          </div>
+          <div class="task-row"><span class="task-bullet">▸</span>Creating more cycle lanes</div>
+          <div class="task-row"><span class="task-bullet">▸</span>Reducing car traffic in the town centre</div>
+          <div class="task-row"><span class="task-bullet">▸</span>Planting more trees and green spaces</div>
+          <div class="task-row"><span class="task-bullet">▸</span>Introducing recycling incentives for residents</div>
+        </div>
+
+        <div class="tip-box" style="margin-bottom:0">
+          <strong>Useful language:</strong> "I think we should…" · "What about…?" · "I'd prefer… because…" · "Could we compromise on…?" · "That's a good point, but…" · "Let's decide on…"
+        </div>
+      </div>
+
+      <!-- PART 4 -->
+      <div class="speak-card">
+        <div class="part-header">
+          <span class="part-label">Part 4</span>
+          <span class="part-title">Monologue</span>
+          <span class="part-marks">3 minutes</span>
+        </div>
+        <div class="timer-row">
+          <span class="timer-badge">3 min</span>
+          30 seconds to make notes → speak for up to 2 minutes → follow-up questions from interlocutor.
+        </div>
+        <p class="part-instructions">The interlocutor gives you one of the topic cards below. You have <strong>30 seconds</strong> to prepare, then speak for up to <strong>2 minutes</strong>. The interlocutor will then ask follow-up questions.</p>
+
+        <div class="monologue-cards">
+          <div class="mono-card">
+            <div class="mono-label">Card 1</div>
+            <div class="mono-topic">A place you would love to visit</div>
+            <div class="mono-followup">
+              <div class="mono-followup-label">Follow-up questions</div>
+              <ul>
+                <li>Where would you most like to go and why?</li>
+                <li>What would you do there?</li>
+                <li>What do you think travel teaches us about the world?</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mono-card">
+            <div class="mono-label">Card 2</div>
+            <div class="mono-topic">The importance of protecting the natural world</div>
+            <div class="mono-followup">
+              <div class="mono-followup-label">Follow-up questions</div>
+              <ul>
+                <li>What environmental problems concern you most?</li>
+                <li>What can individuals do to help?</li>
+                <li>Do you think governments do enough to protect the environment?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-box" style="margin-bottom:0">
+          <strong>Monologue tips:</strong> Organise into: introduction → 2–3 main points → conclusion. Use connectors: "First of all…", "Another important point is…", "To sum up…". Aim for 2 full minutes — don't rush. Examiners reward range and fluency, not perfection.
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+document.querySelectorAll('.q-item').forEach(item => {
+  item.addEventListener('click', () => item.classList.toggle('selected'));
+});
+</script>
+</body>
+</html>

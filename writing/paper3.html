@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Writing — Paper 1</title>
+<title>Writing P3 · B2 🎓</title>
 <link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
 <style>
 .task-card {
   background: var(--card);
@@ -112,13 +115,15 @@
       <div class="nav-section">
         <span class="nav-section-label">Overview</span>
         <a href="../index.html" class="nav-link">🏠 Dashboard</a>
-        <a href="../exam-info.md" class="nav-link">📋 Exam Info</a>
-        <a href="../roadmap.html" class="nav-link">🗺️ Roadmap</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
       </div>
       <div class="nav-section">
         <span class="nav-section-label">Reading</span>
         <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
-        <a href="#" class="nav-link">Paper 2–7 <span class="badge">Soon</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
       </div>
       <div class="nav-section">
         <span class="nav-section-label">Listening</span>
@@ -130,9 +135,9 @@
       </div>
       <div class="nav-section">
         <span class="nav-section-label">Writing</span>
-        <a href="paper1.html" class="nav-link active">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
         <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
-        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="paper3.html" class="nav-link active">Paper 3 <span class="badge done">Ready</span></a>
         <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
         <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
       </div>
@@ -152,12 +157,12 @@
     <div class="page-header">
       <div class="breadcrumb">
         <a href="../index.html">Dashboard</a> <span>›</span>
-        <a href="../index.html">Writing</a> <span>›</span> Paper 1
+        <a href="../index.html">Writing</a> <span>›</span> Paper 3
       </div>
     </div>
 
     <div class="page-content">
-      <h1 class="page-title">Writing — Practice Paper 1</h1>
+      <h1 class="page-title">Writing — Practice Paper 3</h1>
       <p class="page-subtitle">24 marks · ~1 hour 5 minutes · 2 tasks · Write your response, then reveal the model answer</p>
 
       <!-- Assessment criteria -->
@@ -196,18 +201,17 @@
           <span class="part-marks">12 marks</span>
         </div>
         <span class="word-count-badge">100–150 words</span>
-        <p class="part-instructions" style="margin-bottom:16px">Write an email to enter the competition advertised in the notice below. Mention:</p>
+        <p class="part-instructions" style="margin-bottom:16px">Write an email to tell the sports club about your experience. Mention:</p>
         <ul class="bullet-points">
-          <li>when you use the centre</li>
-          <li>why you want the membership</li>
-          <li>how to improve our facilities</li>
+          <li>which sport you enjoy most</li>
+          <li>why you enjoy it</li>
+          <li>one way to improve the facilities</li>
         </ul>
 
         <div class="notice-box">
-          <h3>Free Leisure Centre Membership: Competition</h3>
-          <p>If you sometimes use our leisure centre, but you are not a member, why not win a year's free membership? All you have to do is write to us and tell us how we can make your experience unforgettable!</p>
-          <p>We will post the name of our winner on our page and send you your free membership card!</p>
-          <p><strong>Write to:</strong> Joanneblaire@llc.com</p>
+          <h3>City Sports Club — Member Survey</h3>
+          <p>We want to hear from our members! Tell us about the sport you love and how we can improve our facilities. The most helpful response wins three months of free membership.</p>
+          <p><strong>Email your reply to:</strong> feedback@citysportsclub.com</p>
         </div>
 
         <textarea class="write-area" id="task1-text" placeholder="Write your email here (100–150 words)..." oninput="countWords('task1-text', 'wc1', 100, 150)"></textarea>
@@ -216,11 +220,11 @@
         <button class="model-toggle" onclick="toggleModel('model1', this)">Show model answer</button>
         <div class="model-answer" id="model1">
           <span class="model-label">Model answer</span>
-          <p>Dear Ms Blair,</p>
-          <p>I am writing to enter your free membership competition. I visit your leisure centre two or three times a week, mainly to use the swimming pool and the gym. I have been going there for about six months.</p>
-          <p>I would love to win the free membership because it would save me a considerable amount of money each month, which I could then spend on sports equipment.</p>
-          <p>In terms of improving the facilities, I would suggest extending the opening hours at weekends to at least ten o'clock in the evening. Many people work during the day and find it difficult to visit before closing time.</p>
-          <p>I hope you will consider my entry. I look forward to hearing from you.</p>
+          <p>Dear City Sports Club,</p>
+          <p>I am writing in response to your member survey. The sport I enjoy most at the club is swimming, which I have practised since childhood. I visit the pool at least three times a week and find it both relaxing and excellent exercise.</p>
+          <p>What I particularly enjoy about swimming is that it works every part of the body without putting pressure on the joints. I also appreciate the sense of calm it gives me after a busy working day.</p>
+          <p>With regard to improving the facilities, I would suggest extending the opening hours for the outdoor pool during the summer months. Many members work standard office hours and would benefit from being able to swim in the evenings until nine o'clock.</p>
+          <p>I hope you find my feedback useful.</p>
           <p>Yours sincerely,<br>[Your name]</p>
         </div>
       </div>
@@ -229,11 +233,11 @@
       <div class="task-card">
         <div class="part-header">
           <span class="part-label">Part 2</span>
-          <span class="part-title">Personal / Narrative / Descriptive</span>
+          <span class="part-title">Opinion Essay</span>
           <span class="part-marks">12 marks</span>
         </div>
         <span class="word-count-badge">150–200 words</span>
-        <p class="part-instructions">Write an essay for your college magazine entitled <strong>'My earliest childhood memories'</strong>. Describe your clearest memory and say why you remember it.</p>
+        <p class="part-instructions">Write an essay for your college magazine entitled <strong>'Technology in everyday life — does it always make things better?'</strong> Give your opinion with reasons and examples.</p>
 
         <textarea class="write-area" id="task2-text" placeholder="Write your essay here (150–200 words)..." oninput="countWords('task2-text', 'wc2', 150, 200)" style="min-height:260px"></textarea>
         <div class="wc-display" id="wc2">0 words</div>
@@ -241,10 +245,10 @@
         <button class="model-toggle" onclick="toggleModel('model2', this)">Show model answer</button>
         <div class="model-answer" id="model2">
           <span class="model-label">Model answer</span>
-          <p>When I think back to my earliest years, one memory stands out more vividly than any other: the day my grandfather taught me to ride a bicycle.</p>
-          <p>I must have been about five or six years old. It was a warm Saturday morning in summer, and we were in the park near my grandmother's house. My grandfather held the back of the saddle as I pedalled frantically, convinced I would fall the moment he let go. When I finally looked back and realised he had released the bike several seconds earlier, the mixture of surprise and pride I felt was unlike anything I had experienced before.</p>
-          <p>I think I remember this so clearly because it was the first time I had truly achieved something on my own. My grandfather's patience and encouragement on that morning taught me something I have carried through life: that the hardest part of learning anything is simply trusting yourself to try.</p>
-          <p>That bicycle has long since gone, but the feeling of that morning remains as sharp as ever.</p>
+          <p>There is no doubt that technology has transformed almost every aspect of our daily lives. From smartphones to smart homes, digital tools have made many tasks quicker, easier and more convenient than ever before. However, the question of whether these changes are always positive deserves careful consideration.</p>
+          <p>On the one hand, technology has brought enormous benefits. Medical advances have saved countless lives, communication tools allow us to connect with people anywhere in the world instantly, and online learning has opened education to millions who might otherwise have been unable to access it.</p>
+          <p>On the other hand, there are genuine concerns about technology's impact on human wellbeing. Many people find it increasingly difficult to disconnect from their devices, leading to sleep problems and reduced concentration. Social media, in particular, has been linked to anxiety and low self-esteem among young people.</p>
+          <p>In my opinion, technology itself is neither good nor bad — it is how we choose to use it that matters. With greater awareness and self-discipline, we can enjoy its benefits while minimising its drawbacks.</p>
         </div>
       </div>
 
@@ -273,6 +277,21 @@ function toggleModel(id, btn) {
     btn.textContent = 'Hide model answer';
   }
 }
+
+const PAGE_ID = 'writing_paper3';
+function saveWriting() {
+  DB.savePage(PAGE_ID, {
+    task1: document.getElementById('task1-text').value,
+    task2: document.getElementById('task2-text').value,
+  });
+}
+document.getElementById('task1-text').addEventListener('input', saveWriting);
+document.getElementById('task2-text').addEventListener('input', saveWriting);
+(async () => {
+  const s = await DB.loadPage(PAGE_ID);
+  if (s?.task1) { document.getElementById('task1-text').value = s.task1; countWords('task1-text','wc1',100,150); }
+  if (s?.task2) { document.getElementById('task2-text').value = s.task2; countWords('task2-text','wc2',150,200); }
+})();
 </script>
 </body>
 </html>

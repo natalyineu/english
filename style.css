@@ -590,3 +590,127 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; 
   .part-marks { margin-left: 0; }
   .gap-options { grid-template-columns: 1fr; }
 }
+
+/* ══════════════════════════════════════════
+   MOBILE BOTTOM NAV
+══════════════════════════════════════════ */
+.mobile-nav {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  background: var(--sb-bg); border-top: 1px solid rgba(255,255,255,.1);
+  padding: 6px 0 env(safe-area-inset-bottom, 6px);
+}
+.mobile-nav-inner {
+  display: flex; justify-content: space-around; align-items: center;
+}
+.mobile-nav-item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  color: rgba(255,255,255,.5); text-decoration: none;
+  font-size: .6rem; font-weight: 600; padding: 4px 8px;
+  border-radius: 8px; transition: color .15s;
+}
+.mobile-nav-item span:first-child { font-size: 1.3rem; }
+.mobile-nav-item.active, .mobile-nav-item:hover { color: #c4b5fd; }
+@media (max-width: 720px) {
+  .mobile-nav { display: block; }
+}
+
+/* ══════════════════════════════════════════
+   SPEAKING SAMPLE ANSWERS
+══════════════════════════════════════════ */
+.sample-toggle {
+  background: none; border: 1px solid var(--violet);
+  color: var(--violet); border-radius: 6px; padding: 5px 12px;
+  font-size: .75rem; font-weight: 600; cursor: pointer;
+  margin-top: 10px; transition: all .15s;
+}
+.sample-toggle:hover { background: var(--violet); color: #fff; }
+.sample-answer {
+  display: none; background: #f0fdf4; border: 1px solid #16a34a;
+  border-radius: 10px; padding: 14px 18px; margin-top: 10px;
+  font-size: .86rem; color: #14532d; line-height: 1.65;
+}
+.sample-answer.open { display: block; animation: bounceIn .3s ease; }
+.sample-answer strong { color: #15803d; }
+.sample-answer .key-phrase {
+  display: inline-block; background: #dcfce7; border-radius: 4px;
+  padding: 1px 6px; font-weight: 600; font-size: .8rem;
+}
+.monologue-sample {
+  display: none; background: #ede9fe; border: 1px solid #7c3aed;
+  border-radius: 10px; padding: 16px 20px; margin-top: 12px;
+  font-size: .86rem; color: #312e81; line-height: 1.7;
+}
+.monologue-sample.open { display: block; animation: bounceIn .3s ease; }
+.monologue-sample .mono-section { font-weight: 700; color: #6d28d9; font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; margin: 10px 0 4px; }
+
+/* ══════════════════════════════════════════
+   EXAM TIMER
+══════════════════════════════════════════ */
+.exam-timer {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 16px; margin: 10px 0 18px;
+  box-shadow: var(--shadow);
+}
+.timer-label { font-size: .75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.timer-display { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; margin-right: 4px; }
+.timer-btn {
+  background: var(--violet); color: #fff; border: none; border-radius: 7px;
+  padding: 5px 14px; font-size: .8rem; font-weight: 600; cursor: pointer;
+}
+.timer-btn:hover { background: var(--violet2); }
+.timer-btn:disabled { background: var(--muted); cursor: default; }
+.timer-reset {
+  background: none; border: 1px solid var(--border); border-radius: 7px;
+  padding: 5px 10px; font-size: .9rem; cursor: pointer; color: var(--muted);
+  line-height: 1;
+}
+.timer-reset:hover { border-color: var(--violet); color: var(--violet); }
+
+/* ══════════════════════════════════════════
+   PDF RESOURCE BUTTONS
+══════════════════════════════════════════ */
+.pdf-resources {
+  display: flex; gap: 10px; flex-wrap: wrap; margin: 14px 0;
+}
+.pdf-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 7px 14px; font-size: .8rem;
+  font-weight: 600; color: var(--violet); cursor: pointer;
+  text-decoration: none; transition: all .15s;
+}
+.pdf-btn:hover { border-color: var(--violet); background: #f5f3ff; }
+.pdf-btn.confirm {
+  background: #fef3c7; border-color: #d97706; color: #92400e;
+}
+
+/* ══════════════════════════════════════════
+   STREAK & ACHIEVEMENTS (Dashboard)
+══════════════════════════════════════════ */
+.streak-bar {
+  display: flex; align-items: center; gap: 16px;
+  background: linear-gradient(135deg,#7c3aed 0%,#4f46e5 100%);
+  color: #fff; border-radius: 14px; padding: 14px 20px; margin-bottom: 20px;
+}
+.streak-fire { font-size: 2rem; line-height: 1; }
+.streak-info { flex: 1; }
+.streak-count { font-size: 1.5rem; font-weight: 800; }
+.streak-label { font-size: .78rem; opacity: .85; }
+.streak-best { font-size: .75rem; opacity: .7; text-align: right; }
+.achievements-row {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.achievement {
+  display: flex; flex-direction: column; align-items: center;
+  background: var(--card); border: 2px solid var(--border);
+  border-radius: 12px; padding: 10px 14px; font-size: .72rem;
+  font-weight: 600; color: var(--muted); text-align: center; gap: 4px;
+  transition: all .2s;
+}
+.achievement.unlocked {
+  border-color: #f59e0b; color: var(--text);
+  box-shadow: 0 0 0 3px #fef3c7;
+}
+.achievement .ach-icon { font-size: 1.4rem; }

@@ -1,0 +1,676 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listening P3 · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.transcript-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin: 16px 0;
+  font-family: 'Lora', Georgia, serif;
+  font-size: .9rem;
+  line-height: 1.8;
+  color: var(--text);
+  max-height: 280px;
+  overflow-y: auto;
+}
+.transcript-label {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.transcript-notice {
+  background: var(--sel-bg);
+  border: 1px solid var(--sel);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: .8rem;
+  color: var(--sel);
+  margin-bottom: 16px;
+}
+.speaker-tag { font-weight: 700; }
+.gf-row { margin: 12px 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.gf-label { font-size: .9rem; flex: 1 1 300px; }
+.gf-input {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: .9rem;
+  background: var(--bg);
+  color: var(--text);
+  width: 180px;
+}
+.gf-input.correct { border-color: #2d8a4e; background: #edf7f1; }
+.gf-input.wrong   { border-color: #c0392b; background: #fdecea; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .gf-input.correct { background: #1a3d2b; }
+  :root:not([data-theme="light"]) .gf-input.wrong   { background: #3d1a1a; }
+}
+:root[data-theme="dark"] .gf-input.correct { background: #1a3d2b; }
+:root[data-theme="dark"] .gf-input.wrong   { background: #3d1a1a; }
+</style>
+<script src="../timer.js"></script>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="../listening/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="paper3.html" class="nav-link active">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <span>Listening</span>
+        <span>›</span>
+        Paper 3
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Listening — Practice Paper 3</h1>
+      <p class="page-subtitle">26 marks · ~30 minutes · 4 parts · Read transcript, answer questions</p>
+      <div class="pdf-resources" id="pdf-resources">
+        <button class="pdf-btn" data-url="../materials/paper3/LanguageCert-PP3-B2-IESOL-Ls.pdf" onclick="pdfClick(this)">📄 Listening Script</button>
+        <button class="pdf-btn" data-url="../materials/paper3/LanguageCert-PP3-B2-IESOL-Ms.pdf" onclick="pdfClick(this)">✅ Mark Scheme</button>
+        <button class="pdf-btn" data-url="../materials/paper3/LanguageCert-PP3-B2-IESOL-EP.pdf" onclick="pdfClick(this)">📋 Exam Paper</button>
+      </div>
+      <script>
+      function pdfClick(btn) {
+        if (btn.dataset.ready === '1') {
+          window.open(btn.dataset.url, '_blank');
+          btn.dataset.ready = '0';
+          btn.classList.remove('confirm');
+          btn.textContent = btn.dataset.label;
+        } else {
+          btn.dataset.label = btn.textContent;
+          btn.textContent = '⚠️ Click again to open PDF';
+          btn.classList.add('confirm');
+          btn.dataset.ready = '1';
+          setTimeout(function() {
+            if (btn.dataset.ready === '1') {
+              btn.dataset.ready = '0';
+              btn.classList.remove('confirm');
+              btn.textContent = btn.dataset.label;
+            }
+          }, 3000);
+        }
+      }
+      </script>
+
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 26</span></div>
+        <div class="score-pass">Pass mark: 75/150 total (listening contributes 26 of those marks)</div>
+      </div>
+
+      <!-- PART 1 -->
+      <div class="quiz-part" id="part1">
+        <div class="part-header">
+          <span class="part-label">Part 1</span>
+          <span class="part-title">Multiple Choice — Everyday Conversations</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Listen to each short conversation, then choose the best answer. Use the transcript button to check afterwards.</p>
+        <div class="transcript-notice">🎧 Listen to the audio, then answer the questions. Use "Show transcript" to check after.
+          <audio controls style="width:100%;margin-top:8px;border-radius:8px">
+            <source src="audio/LanguageCert-PP3-B2-IESOL-Audio-P1.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="questions" id="p1mc-questions">
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 1 — Travel Agent</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman:</span> "I'd like to book a two-week trip to Japan in April."<br>
+              <span class="speaker-tag">Agent:</span> "April is cherry blossom season — it's very popular. I'd recommend booking flights as soon as possible because prices are rising fast."<br>
+              <span class="speaker-tag">Woman:</span> "How much are we talking for a return flight?"<br>
+              <span class="speaker-tag">Agent:</span> "Right now about seven hundred pounds, but in two weeks that's likely to be over a thousand."
+            </div>
+            <p class="question-text">1. What does the agent advise the woman to do?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Travel in a different month to save money.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Book her flights without delay.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Contact a different travel agent for a better price.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 2 — Family Dinner</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Son:</span> "Mum, I've been offered a promotion at work but it means relocating to Edinburgh."<br>
+              <span class="speaker-tag">Mother:</span> "Edinburgh! That's so far. Have you thought it through?"<br>
+              <span class="speaker-tag">Son:</span> "I have. The salary increase is significant and it's a great opportunity. I've decided to accept it."<br>
+              <span class="speaker-tag">Mother:</span> "Well, I'll miss you terribly, but I'm very proud of you."
+            </div>
+            <p class="question-text">2. What has the son decided?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> To ask for a higher salary before deciding.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> To turn down the promotion to stay near family.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> To take the promotion and move to Edinburgh.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 3 — Sports Centre</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Man:</span> "I'd like to sign up for the five-a-side football league."<br>
+              <span class="speaker-tag">Staff:</span> "I'm afraid the Tuesday league is already full. We have spaces in the Thursday evening session."<br>
+              <span class="speaker-tag">Man:</span> "Thursday works for me. What equipment do I need to bring?"<br>
+              <span class="speaker-tag">Staff:</span> "Just your boots — we provide bibs and the ball."
+            </div>
+            <p class="question-text">3. What will the man need to bring to play?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Only his football boots.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> His own football and a bib.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Full kit including boots and a shirt.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 4 — Hobby Group</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Woman A:</span> "Have you been to any of the photography club sessions yet?"<br>
+              <span class="speaker-tag">Woman B:</span> "I went to the first one and it was great, but I've been too busy to go back."<br>
+              <span class="speaker-tag">Woman A:</span> "You should — they're doing a landscape photography workshop next Saturday."<br>
+              <span class="speaker-tag">Woman B:</span> "That does sound interesting. Maybe I'll make the effort this time."
+            </div>
+            <p class="question-text">4. What does Woman B say about the photography club?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> She hasn't attended any sessions yet.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> She went once but hasn't been back since.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> She attends regularly and enjoys it.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <div class="transcript-label">Conversation 5 — Workplace</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Manager:</span> "I need someone to represent the company at the conference in Berlin next month."<br>
+              <span class="speaker-tag">Employee:</span> "I'd be very interested, actually."<br>
+              <span class="speaker-tag">Manager:</span> "Good. You'd need to prepare a short presentation on our latest product launch."<br>
+              <span class="speaker-tag">Employee:</span> "That's fine. I've presented at conferences before, so I'm comfortable with that."
+            </div>
+            <p class="question-text">5. What will the employee need to do at the conference?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Meet with potential new clients.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Organise travel arrangements for the team.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Give a presentation about a new product.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <div class="transcript-label">Conversation 6 — Health Centre</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Patient:</span> "I've been getting quite bad back pain recently. It started about three weeks ago."<br>
+              <span class="speaker-tag">Doctor:</span> "Have you changed anything recently — new chair at work, different mattress?"<br>
+              <span class="speaker-tag">Patient:</span> "Actually, yes. We got a new office chair last month."<br>
+              <span class="speaker-tag">Doctor:</span> "That's very likely the cause. I'd recommend seeing a physiotherapist. I can refer you."
+            </div>
+            <p class="question-text">6. What does the doctor think is causing the patient's back pain?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> His new office chair.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> A sports injury.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Stress at work.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <div class="transcript-label">Conversation 7 — Food Market</div>
+            <div class="transcript-box">
+              <span class="speaker-tag">Stallholder:</span> "These tomatoes are from our farm, just ten miles away. Picked this morning."<br>
+              <span class="speaker-tag">Customer:</span> "They look wonderful. Are they organic?"<br>
+              <span class="speaker-tag">Stallholder:</span> "We don't have the official certification yet, but we don't use any pesticides or artificial fertilisers."<br>
+              <span class="speaker-tag">Customer:</span> "That's good enough for me. I'll take two kilos."
+            </div>
+            <p class="question-text">7. What does the stallholder say about his tomatoes?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> They are certified organic and pesticide-free.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> They are grown without chemicals but not officially certified.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> They are imported from a local organic farm.</button>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkMC('p1mc', 7)">Check answers</button>
+        <div class="part-score" id="p1mc-score"></div>
+      </div>
+
+      <!-- PART 2 -->
+      <div class="quiz-part" id="part2">
+        <div class="part-header">
+          <span class="part-label">Part 2</span>
+          <span class="part-title">Matching — Climate Actions</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read what six people say about the climate actions they take. Match each speaker (A–F) to their main reason for doing so (1–7). There is one statement you will not need.</p>
+        <div class="transcript-notice">🎧 Listen to the audio, then answer the questions. Use "Show transcript" to check after.
+          <audio controls style="width:100%;margin-top:8px;border-radius:8px">
+            <source src="audio/LanguageCert-PP3-B2-IESOL-Audio-P2.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="gap-options">
+          <div class="gap-option-card"><span class="go-letter">1</span> To save money on everyday costs</div>
+          <div class="gap-option-card"><span class="go-letter">2</span> To set a good example for their children</div>
+          <div class="gap-option-card"><span class="go-letter">3</span> Because their employer encourages it</div>
+          <div class="gap-option-card"><span class="go-letter">4</span> To reduce their personal carbon footprint</div>
+          <div class="gap-option-card"><span class="go-letter">5</span> Because it is better for their health</div>
+          <div class="gap-option-card"><span class="go-letter">6</span> Because they were inspired by a documentary</div>
+          <div class="gap-option-card"><span class="go-letter">7</span> To feel part of a wider community movement</div>
+        </div>
+
+        <div class="matching-questions" id="p2-matching">
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker A</div>
+            <div class="transcript-box">"I started cycling to work two years ago instead of driving. It's about fifty minutes each way, which is longer, but I've lost weight, my energy levels are up, and I sleep much better. The environmental angle is a bonus — honestly the main reason I do it is how much better I feel physically."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker A's main reason:</span>
+              <select class="match-select" id="sp-A" data-correct="5"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker B</div>
+            <div class="transcript-box">"We've switched to a plant-based diet, put solar panels on the house, and we never fly if we can take the train. For us it's a straightforward calculation: every tonne of CO₂ we don't emit matters. We try to account for every choice we make. It's about being honest about our own impact."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker B's main reason:</span>
+              <select class="match-select" id="sp-B" data-correct="4"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker C</div>
+            <div class="transcript-box">"My kids ask really direct questions — 'Why is the sea getting warmer?' and 'Will there be polar bears when I'm grown up?' I want to be able to look them in the eye and say I did something. If I'm asking them to care about the planet, I have to show them what that actually looks like in practice."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker C's main reason:</span>
+              <select class="match-select" id="sp-C" data-correct="2"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker D</div>
+            <div class="transcript-box">"I watched a documentary about food waste last year and it genuinely changed how I think about everything I buy. I now plan every meal for the week, buy only what I need, and compost everything. My food bills have dropped by about a third — it's been a genuinely positive change in every direction."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker D's main reason:</span>
+              <select class="match-select" id="sp-D" data-correct="6"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker E</div>
+            <div class="transcript-box">"We've insulated the house, fitted a heat pump, and switched to a green energy tariff. The upfront costs were high but we're saving nearly a hundred pounds a month on bills now. My honest motivation at the start was the money — the environmental benefit was secondary, though I'm glad it's both."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker E's main reason:</span>
+              <select class="match-select" id="sp-E" data-correct="1"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px">
+            <div class="transcript-label">Speaker F</div>
+            <div class="transcript-box">"The company I work for has a very strong sustainability programme and actively encourages us to make greener choices — they subsidise train travel, run recycling drives, and celebrate staff who contribute ideas. I've picked up a lot of habits through work that I've now taken home as well."</div>
+            <div class="match-row">
+              <span class="match-q">Speaker F's main reason:</span>
+              <select class="match-select" id="sp-F" data-correct="3"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option></select>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkP2Matching()">Check answers</button>
+        <div class="part-score" id="part2-score"></div>
+      </div>
+
+      <!-- PART 3 -->
+      <div class="quiz-part" id="part3">
+        <div class="part-header">
+          <span class="part-label">Part 3</span>
+          <span class="part-title">Gap-fill — Volunteering Abroad</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a radio programme. Then complete the sentences below. Write <strong>one or two words</strong> from the transcript for each gap.</p>
+        <div class="transcript-notice">🎧 Listen to the audio, then answer the questions. Use "Show transcript" to check after.
+          <audio controls style="width:100%;margin-top:8px;border-radius:8px">
+            <source src="audio/LanguageCert-PP3-B2-IESOL-Audio-P3.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="transcript-label">Radio programme transcript</div>
+        <div class="transcript-box">
+          <span class="speaker-tag">Presenter:</span> "This week on Global Volunteers we're talking to Sophie Harris, who spent six months working at a wildlife conservation centre in Kenya. Sophie, what made you decide to go?"<br><br>
+          <span class="speaker-tag">Sophie:</span> "I'd just finished my biology degree and I wanted real field experience before applying for jobs. The programme seemed like the perfect bridge between university and a career."<br><br>
+          <span class="speaker-tag">Presenter:</span> "What were your main responsibilities?"<br><br>
+          <span class="speaker-tag">Sophie:</span> "I monitored animal populations, helped with veterinary checks, and spent a lot of time collecting data on elephant movements in the reserve. I also taught environmental education sessions at local schools."<br><br>
+          <span class="speaker-tag">Presenter:</span> "Were there any challenges?"<br><br>
+          <span class="speaker-tag">Sophie:</span> "The heat was intense — we started work at five in the morning to avoid the worst of it. And I struggled with the language at first, though I picked up enough Swahili to manage by month two."<br><br>
+          <span class="speaker-tag">Presenter:</span> "What did you gain from the experience?"<br><br>
+          <span class="speaker-tag">Sophie:</span> "Confidence, mostly. And a much deeper understanding of conservation challenges that you simply cannot get from textbooks. I came back knowing exactly what kind of career I wanted."<br><br>
+          <span class="speaker-tag">Presenter:</span> "Any advice for anyone considering it?"<br><br>
+          <span class="speaker-tag">Sophie:</span> "Research your programme carefully — there are organisations that do it well and some that don't. And go with an open mind. The experience will almost certainly surprise you."
+        </div>
+
+        <div class="gaptext" style="margin-top:16px">
+          <p style="font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:12px">Complete the sentences using words from the transcript above.</p>
+          <div class="gf-row">
+            <span class="gf-label">1. Sophie had recently finished her ___ degree before volunteering.</span>
+            <input class="gf-input" type="text" id="gf1" data-answers="biology" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">2. Sophie spent time tracking ___ movements in the reserve.</span>
+            <input class="gf-input" type="text" id="gf2" data-answers="elephant" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">3. She also ran environmental ___ sessions at local schools.</span>
+            <input class="gf-input" type="text" id="gf3" data-answers="education" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">4. Work began at ___ in the morning to avoid the heat.</span>
+            <input class="gf-input" type="text" id="gf4" data-answers="five|5" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">5. Sophie says the main thing she gained was ___.</span>
+            <input class="gf-input" type="text" id="gf5" data-answers="confidence" placeholder="your answer">
+          </div>
+          <div class="gf-row">
+            <span class="gf-label">6. She advises volunteers to keep an open ___.</span>
+            <input class="gf-input" type="text" id="gf6" data-answers="mind" placeholder="your answer">
+          </div>
+        </div>
+
+        <button class="check-btn" onclick="checkGapFill()">Check answers</button>
+        <div class="part-score" id="part3-score"></div>
+      </div>
+
+      <!-- PART 4 -->
+      <div class="quiz-part" id="part4">
+        <div class="part-header">
+          <span class="part-label">Part 4</span>
+          <span class="part-title">Multiple Choice — Memory and Learning</span>
+          <span class="part-marks">7 marks</span>
+        </div>
+        <p class="part-instructions">Read the transcript of a university lecture extract, then choose the correct answer for each question.</p>
+        <div class="transcript-notice">🎧 Listen to the audio, then answer the questions. Use "Show transcript" to check after.
+          <audio controls style="width:100%;margin-top:8px;border-radius:8px">
+            <source src="audio/LanguageCert-PP3-B2-IESOL-Audio-P4.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="transcript-label">Lecture transcript</div>
+        <div class="transcript-box">
+          <p>Memory is not a single unified system but a collection of distinct processes. Psychologists distinguish between short-term memory, which can hold a small amount of information for a brief period, and long-term memory, which can store vast quantities of information for a lifetime. However, simply encountering information does not guarantee it will transfer from one system to the other. Most of what we experience each day is forgotten within hours.</p>
+          <p>The most reliable technique for moving information into long-term memory is called spaced repetition — reviewing material at increasing intervals over time. Research consistently shows that students who study a topic once for three hours perform significantly worse on tests a week later than students who study the same material for one hour on three separate occasions. The spacing effect, as it is known, is one of the most replicated findings in all of cognitive psychology.</p>
+          <p>A second powerful technique is retrieval practice — testing yourself on material rather than simply re-reading it. When you attempt to recall information, you strengthen the memory trace in a way that passive review cannot match. Students who use flashcards or take practice tests consistently outperform those who highlight and re-read their notes, despite spending the same amount of time studying.</p>
+          <p>Sleep also plays a critical role in memory consolidation. During sleep, the brain replays and strengthens the neural connections formed during learning. Studies have shown that students who sleep for eight hours after studying retain significantly more information the following day than those who sleep for less than six hours. Caffeine can help maintain alertness but does not replicate the memory benefits of adequate rest.</p>
+          <p>Finally, the physical environment in which you study matters more than most people realise. Studying in the same location repeatedly creates contextual cues that assist retrieval. However, research suggests that varying your study location can actually broaden the retrieval pathways associated with a memory, making it easier to recall in unfamiliar settings such as an exam room.</p>
+        </div>
+
+        <div class="questions" id="p4mc-questions">
+
+          <div class="question" data-correct="a">
+            <p class="question-text">1. What does the speaker say about most daily experiences?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> They are forgotten within a short time.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> They are automatically stored in long-term memory.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> They are processed during sleep each night.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">2. What is the key principle behind spaced repetition?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Studying for as many hours as possible in one session.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Reading material aloud to improve retention.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Reviewing material several times over increasing intervals.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">3. In the study comparing different approaches, which students performed better?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Those who studied intensively for one long session.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Those who spread their studying across three shorter sessions.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Those who combined reading and note-taking.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">4. How does retrieval practice differ from passive review?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It requires more time per session.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> It actively strengthens the memory trace.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It is better suited to factual subjects.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="c">
+            <p class="question-text">5. What does the research say about sleep and memory?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> Dreaming during sleep transfers memories to long-term storage.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> Caffeine before sleep improves memory consolidation.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> Eight hours of sleep after studying improves next-day retention.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="a">
+            <p class="question-text">6. What is the benefit of always studying in the same place?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It creates contextual cues that support recall.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> It reduces distractions and improves concentration.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It makes it easier to form study habits.</button>
+            </div>
+          </div>
+
+          <div class="question" data-correct="b">
+            <p class="question-text">7. What surprising finding does the speaker mention about varying study locations?</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> It reduces overall study time needed.</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">b)</span> It can make memories easier to retrieve in new settings.</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">c)</span> It helps students focus better than a fixed location.</button>
+            </div>
+          </div>
+
+        </div>
+        <button class="check-btn" onclick="checkMC('p4mc', 7)">Check answers</button>
+        <div class="part-score" id="p4mc-score"></div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+const scores = { p1mc: 0, part2: 0, part3: 0, p4mc: 0 };
+
+function updateTotal() {
+  const total = scores.p1mc + scores.part2 + scores.part3 + scores.p4mc;
+  document.getElementById('totalScore').style.display = 'block';
+  document.getElementById('scoreNum').innerHTML = total + ' <span>/ 26</span>';
+}
+
+function selectOption(btn) {
+  const qDiv = btn.closest('.question');
+  if (qDiv.dataset.checked) return;
+  qDiv.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkMC(containerId, total) {
+  const container = document.getElementById(containerId + '-questions');
+  const questions = container.querySelectorAll('.question');
+  let score = 0;
+  questions.forEach(q => {
+    const correct = q.dataset.correct;
+    q.dataset.checked = '1';
+    const selected = q.querySelector('.option-btn.selected');
+    q.querySelectorAll('.option-btn').forEach(btn => {
+      if (btn.dataset.value === correct) btn.classList.add('correct');
+      else if (btn.classList.contains('selected')) btn.classList.add('wrong');
+      btn.disabled = true;
+    });
+    if (selected && selected.dataset.value === correct) score++;
+  });
+  scores[containerId] = score;
+  const label = containerId === 'p1mc' ? 'Part 1' : 'Part 4';
+  const el = document.getElementById(containerId + '-score');
+  el.textContent = label + ' score: ' + score + ' / ' + total;
+  el.className = 'part-score visible' + (score === total ? ' perfect' : '');
+  updateTotal();
+}
+
+function checkP2Matching() {
+  const selects = document.querySelectorAll('#p2-matching .match-select');
+  let score = 0;
+  selects.forEach(sel => {
+    if (sel.value === sel.dataset.correct) { sel.classList.add('correct'); score++; }
+    else sel.classList.add('wrong');
+    sel.disabled = true;
+  });
+  scores.part2 = score;
+  const el = document.getElementById('part2-score');
+  el.textContent = 'Part 2 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+function checkGapFill() {
+  const inputs = document.querySelectorAll('.gf-input');
+  let score = 0;
+  inputs.forEach(inp => {
+    const answers = inp.dataset.answers.split('|').map(a => a.trim().toLowerCase());
+    const val = inp.value.trim().toLowerCase();
+    if (val && answers.includes(val)) { inp.classList.add('correct'); score++; }
+    else inp.classList.add('wrong');
+    inp.disabled = true;
+  });
+  scores.part3 = score;
+  const el = document.getElementById('part3-score');
+  el.textContent = 'Part 3 score: ' + score + ' / 6';
+  el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
+  updateTotal();
+}
+
+const PAGE_ID = 'listening_paper3';
+TIMER.init(30);
+
+function collectState() {
+  return {
+    p1_sel:     [...document.querySelectorAll('#p1mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p1_checked: !!document.querySelector('#p1mc-questions .question[data-checked]'),
+    p2_sel:     [...document.querySelectorAll('#p2-matching .match-select')].map(s => s.value),
+    p2_checked: !!document.querySelector('#p2-matching .match-select[disabled]'),
+    p3_vals:    [...document.querySelectorAll('.gf-input')].map(i => i.value),
+    p3_checked: !!document.querySelector('.gf-input[disabled]'),
+    p4_sel:     [...document.querySelectorAll('#p4mc-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p4_checked: !!document.querySelector('#p4mc-questions .question[data-checked]'),
+  };
+}
+
+function savePage() { DB.savePage(PAGE_ID, collectState()); }
+
+function restorePage(s) {
+  if (!s) return;
+  document.querySelectorAll('#p1mc-questions .question').forEach((q, i) => {
+    const val = s.p1_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p1_checked) checkMC('p1mc', 7);
+  document.querySelectorAll('#p2-matching .match-select').forEach((sel, i) => { if (s.p2_sel?.[i]) sel.value = s.p2_sel[i]; });
+  if (s.p2_checked) checkP2Matching();
+  document.querySelectorAll('.gf-input').forEach((inp, i) => { if (s.p3_vals?.[i]) inp.value = s.p3_vals[i]; });
+  if (s.p3_checked) checkGapFill();
+  document.querySelectorAll('#p4mc-questions .question').forEach((q, i) => {
+    const val = s.p4_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p4_checked) checkMC('p4mc', 7);
+}
+
+['selectOption','checkMC','checkP2Matching','checkGapFill'].forEach(name => {
+  const orig = window[name];
+  window[name] = function(...args) { orig(...args); savePage(); };
+});
+
+(async () => { restorePage(await DB.loadPage(PAGE_ID)); })();
+</script>
+
+<script>
+// Auto-hide transcripts — show only on demand
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.transcript-box').forEach(function(box) {
+    box.style.display = 'none';
+    var btn = document.createElement('button');
+    btn.className = 'transcript-toggle-btn';
+    btn.textContent = '📜 Show transcript';
+    btn.style.cssText = 'background:none;border:1px solid var(--muted);color:var(--muted);border-radius:6px;padding:4px 10px;font-size:.75rem;cursor:pointer;margin-bottom:8px;display:block';
+    btn.onclick = function() {
+      var open = box.style.display !== 'none';
+      box.style.display = open ? 'none' : 'block';
+      btn.textContent = open ? '📜 Show transcript' : '🙈 Hide transcript';
+      btn.style.color = open ? 'var(--muted)' : 'var(--violet)';
+      btn.style.borderColor = open ? 'var(--muted)' : 'var(--violet)';
+    };
+    box.parentNode.insertBefore(btn, box);
+  });
+});
+</script>
+</body>
+</html>
