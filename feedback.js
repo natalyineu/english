@@ -135,5 +135,90 @@ window.FB = (() => {
     return div;
   }
 
-  return { playCorrect, playWrong, motivate, grandSummary, confetti };
+  // ── Retry wrong answers ───────────────────────────────────
+  function retryWrong(partEl) {
+    let count = 0;
+    // MC questions
+    partEl.querySelectorAll('.question[data-checked]').forEach(q => {
+      const hasWrong = q.querySelector('.option-btn.wrong');
+      if (hasWrong) {
+        delete q.dataset.checked;
+        q.querySelectorAll('.option-btn').forEach(btn => {
+          btn.classList.remove('selected','correct','wrong');
+          btn.disabled = false;
+        });
+        count++;
+      }
+    });
+    // Gap-fill selects
+    partEl.querySelectorAll('.gap-select.wrong, select.wrong').forEach(sel => {
+      sel.classList.remove('correct','wrong');
+      sel.value = '';
+      count++;
+    });
+    // Gap inputs
+    partEl.querySelectorAll('.gf-input.wrong').forEach(inp => {
+      inp.classList.remove('correct','wrong');
+      inp.value = '';
+      count++;
+    });
+    // Matching selects
+    partEl.querySelectorAll('select.wrong, .match-select.wrong').forEach(sel => {
+      sel.classList.remove('correct','wrong');
+      sel.value = '';
+      count++;
+    });
+    if (count === 0) {
+      tone(880, 0.1);
+    } else {
+      tone(660, 0.12);
+      setTimeout(() => tone(880, 0.1), 100);
+    }
+    return count;
+  }
+
+  // Auto-inject retry button when a part-score becomes visible
+  document.addEventListener('DOMContentLoaded', () => {
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(m => {
+        m.addedNodes.forEach(node => {
+          if (node.nodeType !== 1) return;
+          const score = node.classList && node.classList.contains('part-score') && node.classList.contains('visible')
+            ? node : node.querySelector && node.querySelector('.part-score.visible');
+          if (!score) return;
+          const partEl = score.closest('.quiz-part');
+          if (!partEl || partEl.querySelector('.retry-btn')) return;
+          const btn = document.createElement('button');
+          btn.className = 'retry-btn check-btn';
+          btn.style.cssText = 'background:#f59e0b;border-color:#d97706;margin-top:6px;font-size:.8rem;padding:7px 14px';
+          btn.textContent = '🔁 Retry wrong answers';
+          btn.onclick = () => {
+            const n = retryWrong(partEl);
+            btn.textContent = n > 0 ? `🔁 Reset ${n} wrong — try again!` : '✅ No wrong answers to reset';
+            setTimeout(() => { btn.textContent = '🔁 Retry wrong answers'; }, 2000);
+          };
+          score.after(btn);
+        });
+        // Also catch class changes on existing elements
+        if (m.type === 'attributes' && m.target.classList.contains('part-score') && m.target.classList.contains('visible')) {
+          const partEl = m.target.closest('.quiz-part');
+          if (partEl && !partEl.querySelector('.retry-btn')) {
+            const btn = document.createElement('button');
+            btn.className = 'retry-btn check-btn';
+            btn.style.cssText = 'background:#f59e0b;border-color:#d97706;margin-top:6px;font-size:.8rem;padding:7px 14px';
+            btn.textContent = '🔁 Retry wrong answers';
+            btn.onclick = () => {
+              const n = retryWrong(partEl);
+              btn.textContent = n > 0 ? `🔁 Reset ${n} wrong — try again!` : '✅ No wrong answers to reset';
+              setTimeout(() => { btn.textContent = '🔁 Retry wrong answers'; }, 2000);
+            };
+            m.target.after(btn);
+          }
+        }
+      });
+    });
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+  });
+
+  return { playCorrect, playWrong, motivate, grandSummary, confetti, retryWrong };
 })();

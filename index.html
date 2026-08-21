@@ -127,6 +127,12 @@
         </a>
       </div>
 
+      <!-- Progress stats chart -->
+      <div id="stats-section" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:24px;box-shadow:var(--shadow)">
+        <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">📊 Your Progress</div>
+        <div id="stats-bars" style="display:flex;flex-direction:column;gap:10px"></div>
+      </div>
+
       <!-- Scoring reminder -->
       <div style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 24px;margin-bottom:32px;display:flex;gap:32px;flex-wrap:wrap;box-shadow:var(--shadow)">
         <div>
@@ -352,6 +358,30 @@
     updateSkillCards();
   }
 
+  // ── Progress Stats Chart ──────────────────
+  function renderStats() {
+    const container = document.getElementById('stats-bars');
+    if (!container) return;
+    const skills = [
+      { label:'📖 Reading',    keys:['reading_paper1','reading_paper2','reading_paper3','reading_paper6','reading_paper7'], color:'#7c3aed' },
+      { label:'✍️ Writing',    keys:['writing_paper1','writing_paper2','writing_paper3','writing_paper6','writing_paper7'], color:'#2563eb' },
+      { label:'🎧 Listening',  keys:['listening_paper1','listening_paper2','listening_paper3','listening_paper6','listening_paper7'], color:'#059669' },
+      { label:'📚 Vocabulary', keys:['vocab_travel','vocab_work','vocab_technology','vocab_health','vocab_culture','vocab_environment'], color:'#ec4899' },
+      { label:'📐 Grammar',    keys:['grammar_conditionals','grammar_modals','grammar_passive','grammar_relative','grammar_reported','grammar_tenses'], color:'#8b5cf6' },
+    ];
+    container.innerHTML = skills.map(s => {
+      const done = s.keys.filter(k => localStorage.getItem('b2_page_' + k)).length;
+      const pct = Math.round(done / s.keys.length * 100);
+      return `<div style="display:flex;align-items:center;gap:12px">
+        <div style="width:110px;font-size:.78rem;font-weight:600;color:var(--text);flex-shrink:0">${s.label}</div>
+        <div style="flex:1;background:var(--border);border-radius:99px;height:10px;overflow:hidden">
+          <div style="width:${pct}%;background:${s.color};height:100%;border-radius:99px;transition:width .6s ease"></div>
+        </div>
+        <div style="width:48px;font-size:.75rem;font-weight:700;color:${s.color};text-align:right">${done}/${s.keys.length}</div>
+      </div>`;
+    }).join('');
+  }
+
   // ── Streak ────────────────────────────────
   function updateStreak() {
     const key = 'b2_streak';
@@ -409,6 +439,7 @@
     updateBadges();
     updateSkillCards();
     updateFromCloud();
+    renderStats();
     const streakData = updateStreak();
     renderAchievements(streakData);
   });
