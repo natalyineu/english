@@ -7,6 +7,8 @@ window.AI = (() => {
   let   modelIdx  = 0;
 
   function getKey() {
+    const buildKey = '__GROQ_KEY__';
+    if (buildKey && !buildKey.startsWith('__')) return buildKey;
     return localStorage.getItem(KEY_STORE) || '';
   }
 
