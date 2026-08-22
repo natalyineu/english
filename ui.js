@@ -44,11 +44,14 @@ window.UI = (() => {
   }
 
   function updateThemeBtn() {
-    const btn = document.getElementById('ui-theme-btn');
-    if (!btn) return;
     const t = getTheme();
-    btn.textContent = t === 'dark' ? '☀️ Light' : t === 'light' ? '🔄 Auto' : '🌙 Dark';
-    btn.title = t === 'dark' ? 'Switch to light' : t === 'light' ? 'Switch to auto' : 'Switch to dark';
+    const label = t === 'dark' ? '☀️ Light' : t === 'light' ? '🔄 Auto' : '🌙 Dark';
+    const title  = t === 'dark' ? 'Switch to light' : t === 'light' ? 'Switch to auto' : 'Switch to dark';
+    const icon   = t === 'dark' ? '☀️' : t === 'light' ? '🔄' : '🌙';
+    const btn    = document.getElementById('ui-theme-btn');
+    const fabBtn = document.getElementById('ui-fab-theme');
+    if (btn)    { btn.textContent = label; btn.title = title; }
+    if (fabBtn) { fabBtn.textContent = icon; fabBtn.title = title; }
   }
 
   // ── Sidebar collapse / focus mode ─────────────────────
@@ -244,15 +247,17 @@ window.UI = (() => {
     updateCollapseBtn();
   }
 
-  // Floating "show menu" button when sidebar is collapsed
+  // Floating toolbar when sidebar is collapsed
   function injectFloatingBtn() {
-    const fab = document.createElement('button');
-    fab.id = 'ui-fab';
-    fab.className = 'ui-fab';
-    fab.onclick = () => UI.toggleSidebar();
-    fab.title = 'Show menu';
-    fab.textContent = '☰';
-    document.body.appendChild(fab);
+    const group = document.createElement('div');
+    group.id = 'ui-fab-group';
+    group.className = 'ui-fab-group';
+    group.innerHTML = `
+      <button id="ui-fab" class="ui-fab-btn" onclick="UI.toggleSidebar()" title="Show menu">☰</button>
+      <button id="ui-fab-theme" class="ui-fab-btn ui-fab-sm" onclick="UI.cycleTheme()" title="Toggle theme"></button>
+      <button class="ui-fab-btn ui-fab-sm" onclick="UI.adjustFont(-1)" title="Smaller text">A−</button>
+      <button class="ui-fab-btn ui-fab-sm" onclick="UI.adjustFont(1)" title="Larger text">A+</button>`;
+    document.body.appendChild(group);
   }
 
   // ── Mobile bottom nav ─────────────────────

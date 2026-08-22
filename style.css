@@ -840,12 +840,19 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; 
 .ui-focus-btn:hover { background: rgba(255,255,255,.07); color: var(--sb-text); }
 
 /* Floating ☰ button when collapsed */
-.ui-fab {
+/* Floating toolbar (focus mode) */
+.ui-fab-group {
   display: none;
   position: fixed;
   top: 16px;
   left: 16px;
   z-index: 999;
+  flex-direction: column;
+  gap: 6px;
+}
+html.sidebar-collapsed .ui-fab-group { display: flex; }
+
+.ui-fab-btn {
   width: 40px;
   height: 40px;
   background: linear-gradient(135deg, var(--indigo), var(--violet));
@@ -854,11 +861,15 @@ hr.divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; 
   border-radius: 10px;
   font-size: 1.1rem;
   cursor: pointer;
-  box-shadow: 0 3px 14px rgba(124,58,237,.35);
+  box-shadow: 0 3px 14px rgba(124,58,237,.32);
   transition: transform .15s, box-shadow .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.ui-fab:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(124,58,237,.45); }
-html.sidebar-collapsed .ui-fab { display: flex; align-items: center; justify-content: center; }
+.ui-fab-btn:hover { transform: scale(1.08); box-shadow: 0 5px 20px rgba(124,58,237,.45); }
+.ui-fab-btn.ui-fab-sm { font-size: .78rem; font-weight: 700; opacity: .88; }
+.ui-fab-btn.ui-fab-sm:hover { opacity: 1; }
 
 /* Sidebar collapse */
 html.sidebar-collapsed .sidebar { width: 0; overflow: hidden; }
