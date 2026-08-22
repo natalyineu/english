@@ -1290,3 +1290,20 @@ html.sidebar-collapsed .sidebar { width: 0; overflow: hidden; }
   box-shadow: 0 0 0 3px #fef3c7;
 }
 .achievement .ach-icon { font-size: 1.4rem; }
+
+/* ── AI Writing Checker ──────────────────────────────── */
+.ai-check-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #7c3aed; color: #fff; border: none; border-radius: 8px;
+  padding: 8px 18px; font-size: .84rem; font-weight: 600; cursor: pointer;
+  margin-top: 10px; transition: background .15s;
+}
+.ai-check-btn:hover { background: #6d28d9; }
+.ai-result-box {
+  margin-top: 12px; border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--border); background: var(--card);
+}
+.ai-result { padding: 16px 18px; }
+.ai-loading { padding: 16px 18px; font-size: .88rem; color: var(--muted); }
+.ai-error   { padding: 16px 18px; font-size: .88rem; color: #dc2626; }
+.ai-checker-body.open { display: block !important; }

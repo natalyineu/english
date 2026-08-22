@@ -245,6 +245,8 @@
 
         <textarea class="write-area" id="task1-text" placeholder="Write your email here (100–150 words)..." oninput="countWords('task1-text', 'wc1', 100, 150)"></textarea>
         <div class="wc-display" id="wc1">0 words</div>
+        <button class="ai-check-btn" onclick="AI.checkById('task1-text','ai-res-1')">🤖 AI Check</button>
+        <div id="ai-res-1" class="ai-result-box" style="display:none"></div>
 
         <button class="model-toggle" onclick="toggleModel('model1', this)">Show model answer</button>
         <div class="model-answer" id="model1">
@@ -270,6 +272,8 @@
 
         <textarea class="write-area" id="task2-text" placeholder="Write your essay here (150–200 words)..." oninput="countWords('task2-text', 'wc2', 150, 200)" style="min-height:260px"></textarea>
         <div class="wc-display" id="wc2">0 words</div>
+        <button class="ai-check-btn" onclick="AI.checkById('task2-text','ai-res-2')">🤖 AI Check</button>
+        <div id="ai-res-2" class="ai-result-box" style="display:none"></div>
 
         <button class="model-toggle" onclick="toggleModel('model2', this)">Show model answer</button>
         <div class="model-answer" id="model2">
@@ -326,5 +330,6 @@ document.getElementById('task2-text').addEventListener('input', saveWriting);
   if (s?.task2) { document.getElementById('task2-text').value = s.task2; countWords('task2-text','wc2',150,200); }
 })();
 </script>
+<script src="../ai.js"></script>
 </body>
 </html>
