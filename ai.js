@@ -1,9 +1,9 @@
-// ai.js — AI writing feedback via Cerebras (free tier)
+// ai.js — AI writing feedback via Groq (free tier)
 
 window.AI = (() => {
-  const API_URL  = 'https://api.cerebras.ai/v1/chat/completions';
-  const API_KEY  = 'csk-p6vvjn9fvckykvwhy3k5wt8xeyecpj4383knwywtc25p4k99';
-  const MODELS   = ['llama-3.3-70b', 'llama3.3-70b', 'llama3.1-70b', 'llama3.1-8b'];
+  const API_URL  = 'https://api.groq.com/openai/v1/chat/completions';
+  const API_KEY  = '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';
+  const MODELS   = ['llama-3.3-70b-versatile', 'llama3-70b-8192', 'llama-3.1-70b-versatile'];
   let   modelIdx = 0;
 
   const SYSTEM_PROMPT = `You are an experienced LanguageCert B2 Communicator examiner.
@@ -177,7 +177,7 @@ Reply in this exact JSON format:
               style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:.88rem;font-weight:600;cursor:pointer">
               ✅ Check my writing
             </button>
-            <span style="font-size:.76rem;color:var(--muted)">Powered by Cerebras · Llama 3.3 70B · Free</span>
+            <span style="font-size:.76rem;color:var(--muted)">Powered by Groq · Llama 3.3 70B · Free</span>
           </div>
           <div id="${id}-result" style="display:none;margin-top:14px"></div>
         </div>
