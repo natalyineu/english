@@ -3,7 +3,7 @@
 window.AI = (() => {
   const API_URL = 'https://api.cerebras.ai/v1/chat/completions';
   const API_KEY = 'csk-p6vvjn9fvckykvwhy3k5wt8xeyecpj4383knwywtc25p4k99';
-  const MODEL   = 'llama-3.3-70b';
+  const MODEL   = 'llama3.3-70b';
 
   const SYSTEM_PROMPT = `You are an experienced LanguageCert B2 Communicator examiner.
 You assess writing tasks against the official B2 criteria:
