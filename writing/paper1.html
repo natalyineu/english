@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Writing — Paper 1</title>
+<title>Writing P1 · B2 🎓</title>
 <link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
 <style>
 .task-card {
   background: var(--card);
@@ -112,13 +115,15 @@
       <div class="nav-section">
         <span class="nav-section-label">Overview</span>
         <a href="../index.html" class="nav-link">🏠 Dashboard</a>
-        <a href="../exam-info.md" class="nav-link">📋 Exam Info</a>
-        <a href="../roadmap.html" class="nav-link">🗺️ Roadmap</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
       </div>
       <div class="nav-section">
         <span class="nav-section-label">Reading</span>
         <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
-        <a href="#" class="nav-link">Paper 2–7 <span class="badge">Soon</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
       </div>
       <div class="nav-section">
         <span class="nav-section-label">Listening</span>
@@ -161,6 +166,34 @@
       <p class="page-subtitle">24 marks · ~1 hour 5 minutes · 2 tasks · Write your response, then reveal the model answer</p>
 
       <!-- Assessment criteria -->
+      
+      <div class="self-assess-wrap">
+        <button class="self-assess-header" onclick="toggleAssess(this)">
+          <span>📝 Self-assessment checklist — B2 Writing Criteria</span>
+          <span style="font-size:.8rem;color:var(--muted)">▼ Expand</span>
+        </button>
+        <div class="self-assess-body">
+          <p style="font-size:.82rem;color:var(--muted);margin-bottom:14px">Tick each criterion after writing. Each is worth 3 marks — total 12 per task.</p>
+          <div class="criteria-check" id="assess-checks">
+            <label><input type="checkbox" onchange="updateAssessScore()"> <span><strong>Communicative achievement</strong> — my writing achieves its purpose and would reach the intended reader</span><span class="crit-score">3 pts</span></label>
+            <label><input type="checkbox" onchange="updateAssessScore()"> <span><strong>Content</strong> — all required points are addressed fully and appropriately</span><span class="crit-score">3 pts</span></label>
+            <label><input type="checkbox" onchange="updateAssessScore()"> <span><strong>Organisation</strong> — clear paragraphs, logical flow, appropriate linking words</span><span class="crit-score">3 pts</span></label>
+            <label><input type="checkbox" onchange="updateAssessScore()"> <span><strong>Language</strong> — varied vocabulary and grammar, mostly accurate at B2 level</span><span class="crit-score">3 pts</span></label>
+          </div>
+          <div class="self-assess-total" id="assess-total">Self-assessed score: 0 / 12</div>
+        </div>
+      </div>
+      <script>
+      function toggleAssess(btn) {
+        const body = btn.nextElementSibling;
+        const open = body.classList.toggle('open');
+        btn.querySelector('span:last-child').textContent = open ? '▲ Collapse' : '▼ Expand';
+      }
+      function updateAssessScore() {
+        const checked = document.querySelectorAll('#assess-checks input:checked').length;
+        document.getElementById('assess-total').textContent = 'Self-assessed score: ' + (checked * 3) + ' / 12';
+      }
+      </script>
       <div class="task-card">
         <div class="part-header">
           <span class="part-label">Assessment</span>
@@ -273,6 +306,25 @@ function toggleModel(id, btn) {
     btn.textContent = 'Hide model answer';
   }
 }
+
+// ── Page sync (via db.js) ─────────────────────────────
+const PAGE_ID = 'writing_paper1';
+
+function saveWriting() {
+  DB.savePage(PAGE_ID, {
+    task1: document.getElementById('task1-text').value,
+    task2: document.getElementById('task2-text').value,
+  });
+}
+
+document.getElementById('task1-text').addEventListener('input', saveWriting);
+document.getElementById('task2-text').addEventListener('input', saveWriting);
+
+(async () => {
+  const s = await DB.loadPage(PAGE_ID);
+  if (s?.task1) { document.getElementById('task1-text').value = s.task1; countWords('task1-text','wc1',100,150); }
+  if (s?.task2) { document.getElementById('task2-text').value = s.task2; countWords('task2-text','wc2',150,200); }
+})();
 </script>
 </body>
 </html>

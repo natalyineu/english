@@ -2,131 +2,578 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Roadmap — B2 Communicator Practice</title>
+<title>My Roadmap · B2 🎓</title>
 <link rel="stylesheet" href="style.css">
+<script src="db.js"></script>
+<script src="ui.js"></script>
 <style>
-/* ── Roadmap-specific ── */
-.live-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 16px;
-  margin-bottom: 40px;
-}
-.live-card {
-  display: block;
-  background: var(--card);
-  border: 1.5px solid var(--sel);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  box-shadow: var(--shadow);
-  transition: transform .15s, box-shadow .15s;
-  color: inherit;
-  text-decoration: none;
-}
-.live-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 24px rgba(27,42,74,.16);
-  text-decoration: none;
-}
-.live-card .lc-icon { font-size: 1.6rem; display: block; margin-bottom: 10px; }
-.live-card .lc-label {
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--sel);
-  margin-bottom: 2px;
-}
-.live-card .lc-name { font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
-.live-card .lc-meta { font-size: .74rem; color: var(--muted); }
+/* ── Ground ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
 
-/* Track table */
-.track-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-bottom: 40px;
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #0d1117;
+  color: #c9d1d9;
+  min-height: 100vh;
+  line-height: 1.5;
 }
-.track-table th {
-  font-size: .72rem;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+
+/* ── Tokens ── */
+:root {
+  --bg:      #0d1117;
+  --card:    #161b22;
+  --surf:    #161b22;
+  --surf2:   #21262d;
+  --border:  #30363d;
+  --text:    #c9d1d9;
+  --muted:   #8b949e;
+  --violet:  #a78bfa;
+  --sel:     #a78bfa;
+  --sel-bg:  rgba(167,139,250,.15);
+  --gold:    #f0c040;
+  --gold2:   #d4a017;
+  --road:    #1c2333;
+  --road2:   #263347;
+  --radius:  12px;
+
+  --c-start:   #a78bfa;
+  --c-know:    #818cf8;
+  --c-read:    #60a5fa;
+  --c-write:   #c084fc;
+  --c-speak:   #34d399;
+  --c-listen:  #fbbf24;
+  --c-vocab:   #f472b6;
+  --c-gram:    #a78bfa;
+  --c-mock:    #fb923c;
+  --c-exam:    #f0c040;
+}
+
+/* ── Top nav ── */
+.topnav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13,17,23,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 0 24px;
+  height: 56px;
+}
+.topnav a.home {
+  font-size: .8rem;
+  font-weight: 600;
   color: var(--muted);
-  padding: 8px 14px;
-  text-align: left;
-  background: var(--bg);
-  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  letter-spacing: .04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px 0 0;
+  border-right: 1px solid var(--border);
+  margin-right: 16px;
+  transition: color .15s;
 }
-.track-table th:first-child { border-radius: 8px 0 0 0; }
-.track-table th:last-child  { border-radius: 0 8px 0 0; }
-.track-table td {
-  padding: 14px 14px;
-  border-bottom: 1px solid var(--border);
-  background: var(--card);
-  font-size: .87rem;
-  vertical-align: middle;
-}
-.track-table tr:last-child td:first-child { border-radius: 0 0 0 8px; }
-.track-table tr:last-child td:last-child  { border-radius: 0 0 8px 0; }
-.track-table tr:last-child td { border-bottom: none; }
-.track-table td.paper-col {
+.topnav a.home:hover { color: var(--text); }
+.topnav .nav-title {
+  font-size: .88rem;
   font-weight: 700;
   color: var(--text);
-  width: 56px;
+  white-space: nowrap;
+  padding-right: 16px;
+  border-right: 1px solid var(--border);
+  margin-right: 12px;
 }
-.track-row-live td { background: var(--sel-bg); }
-.track-link {
-  color: var(--sel);
-  font-weight: 600;
-  font-size: .85rem;
-  text-decoration: none;
-  display: inline-flex;
+.topnav-skills {
+  display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
+  flex: 1;
+  flex-wrap: wrap;
 }
-.track-link:hover { text-decoration: underline; }
-.track-link::after { content: "→"; font-size: .8rem; }
-.track-soon {
-  font-size: .78rem;
+.topnav-skills a {
+  font-size: .72rem;
+  font-weight: 600;
   color: var(--muted);
-  font-style: italic;
-}
-.track-desc { color: var(--text); }
-.track-desc small { display: block; color: var(--muted); font-size: .75rem; margin-top: 2px; }
-
-/* Status chip */
-.chip {
-  display: inline-block;
-  font-size: .67rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  padding: 2px 9px;
-  border-radius: 20px;
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: background .15s, color .15s;
   white-space: nowrap;
 }
-.chip-live { background: var(--sel-bg); color: var(--sel); }
-.chip-content { background: var(--ok-bg); color: var(--ok); }
-.chip-soon  { background: var(--border); color: var(--muted); }
-
-/* Legend */
-.legend {
+.topnav-skills a:hover { background: rgba(255,255,255,.08); color: var(--text); }
+.topnav .exam-date-wrap {
   display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 32px;
-  font-size: .8rem;
+  align-items: center;
+  gap: 8px;
+  font-size: .78rem;
   color: var(--muted);
+}
+.topnav .exam-date-wrap label { font-weight: 600; white-space: nowrap; }
+#examDateInput {
+  background: var(--surf2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: .78rem;
+  font-family: 'Inter', sans-serif;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+#examDateInput:focus { outline: none; border-color: var(--c-exam); }
+#countdown {
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 90px;
+  text-align: right;
+}
+
+/* ── Profile banner ── */
+.profile-banner {
+  background: linear-gradient(135deg, #161b22 0%, #1c2333 50%, #0d1117 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 32px 36px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.profile-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(96,165,250,.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+.avatar-ring {
+  flex-shrink: 0;
+  position: relative;
+}
+.avatar-ring svg { display: block; }
+.avatar-inner {
+  position: absolute;
+  inset: 8px;
+  background: linear-gradient(135deg, #a78bfa, #60a5fa);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -.02em;
+}
+.profile-info { flex: 1; min-width: 0; }
+.profile-name {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.profile-tagline {
+  font-size: .9rem;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+.xp-bar-wrap { display: flex; align-items: center; gap: 14px; }
+.xp-bar {
+  flex: 1;
+  max-width: 360px;
+  height: 8px;
+  background: var(--surf2);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #a78bfa, #60a5fa);
+  border-radius: 99px;
+  transition: width .6s cubic-bezier(.4,0,.2,1);
+}
+.xp-label {
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.stars-row {
+  display: flex;
+  gap: 4px;
+  margin-top: 10px;
+}
+.star {
+  font-size: 1.2rem;
+  transition: transform .2s;
+  filter: grayscale(1) opacity(.3);
+}
+.star.earned { filter: none; transform: scale(1.1); }
+
+.profile-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+}
+.stat-chip {
+  background: var(--surf2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 20px;
+  text-align: center;
+  min-width: 100px;
+}
+.stat-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+.stat-lbl {
+  font-size: .68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── Road wrapper ── */
+.road-wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 60px 24px 100px;
+  position: relative;
+}
+
+/* ── Center spine ── */
+.spine {
+  position: absolute;
+  left: 50%;
+  top: 60px;
+  bottom: 100px;
+  transform: translateX(-50%);
+  width: 48px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
 }
-.legend-item { display: flex; align-items: center; gap: 7px; }
+.spine-line {
+  flex: 1;
+  width: 4px;
+  background: var(--road2);
+  position: relative;
+}
+.spine-line::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 1px;
+  background: repeating-linear-gradient(to bottom, var(--road) 0, var(--road) 6px, transparent 6px, transparent 14px);
+}
 
-@media (max-width: 720px) {
-  .live-grid { grid-template-columns: 1fr 1fr; }
-  .track-table th, .track-table td { padding: 10px 10px; }
-  .track-table td.paper-col { width: 40px; }
+/* ── Phase row ── */
+.phase-row {
+  display: grid;
+  grid-template-columns: 1fr 80px 1fr;
+  align-items: flex-start;
+  gap: 0;
+  margin-bottom: 0;
+  position: relative;
+  min-height: 180px;
+}
+
+/* Left/right card placement */
+.phase-row.left .phase-card  { grid-column: 1; grid-row: 1; justify-self: end; }
+.phase-row.left .phase-node  { grid-column: 2; grid-row: 1; justify-self: center; }
+.phase-row.left .phase-empty { grid-column: 3; grid-row: 1; }
+
+.phase-row.right .phase-empty { grid-column: 1; grid-row: 1; }
+.phase-row.right .phase-node  { grid-column: 2; grid-row: 1; justify-self: center; }
+.phase-row.right .phase-card  { grid-column: 3; grid-row: 1; justify-self: start; }
+
+/* Connector arm from card to node */
+.phase-card { position: relative; width: 100%; max-width: 380px; }
+.phase-row.left  .phase-card::after {
+  content: '';
+  position: absolute;
+  top: 28px;
+  right: -28px;
+  width: 28px;
+  height: 2px;
+  background: var(--phase-color, #60a5fa);
+  opacity: .5;
+}
+.phase-row.right .phase-card::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: -28px;
+  width: 28px;
+  height: 2px;
+  background: var(--phase-color, #60a5fa);
+  opacity: .5;
+}
+
+/* ── Phase node (circle on spine) ── */
+.phase-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+  position: relative;
+  z-index: 2;
+}
+.node-circle {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--surf);
+  border: 3px solid var(--phase-color, #60a5fa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 0 0 4px rgba(0,0,0,.6), 0 0 20px var(--phase-color, #60a5fa)20;
+  transition: box-shadow .3s, transform .3s;
+  position: relative;
+}
+.node-circle.phase-complete {
+  background: var(--phase-color, #60a5fa);
+  box-shadow: 0 0 0 4px rgba(0,0,0,.6), 0 0 28px var(--phase-color, #60a5fa);
+}
+.node-circle.phase-complete::after {
+  content: '✓';
+  position: absolute;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #fff;
+}
+.node-circle.phase-complete .node-emoji { opacity: 0; }
+.node-arm {
+  width: 2px;
+  flex: 1;
+  background: var(--road2);
+  min-height: 40px;
+}
+
+/* ── Phase card ── */
+.phase-card-inner {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  margin: 0 0 24px 0;
+  transition: border-color .2s, box-shadow .2s;
+  position: relative;
+  overflow: hidden;
+}
+.phase-card-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--phase-color, #60a5fa);
+}
+.phase-card-inner:hover {
+  border-color: var(--phase-color, #60a5fa);
+  box-shadow: 0 0 0 1px var(--phase-color, #60a5fa)40, 0 8px 24px rgba(0,0,0,.3);
+}
+
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.card-ring { flex-shrink: 0; }
+.card-ring svg { display: block; }
+.card-titles { flex: 1; min-width: 0; }
+.card-phase-label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--phase-color, #60a5fa);
+  margin-bottom: 2px;
+}
+.card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+.card-meta {
+  font-size: .75rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.card-progress-text {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--phase-color, #60a5fa);
+  text-align: center;
+  line-height: 1;
+}
+.card-progress-lbl {
+  font-size: .6rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Task list */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 7px;
+  background: var(--surf2);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color .15s, background .15s;
+  font-size: .83rem;
+  color: var(--text);
+  user-select: none;
+}
+.task-item:hover { border-color: var(--phase-color, #60a5fa); background: var(--surf); }
+.task-item.done {
+  background: transparent;
+  border-color: var(--phase-color, #60a5fa)30;
+}
+.task-item.done .task-label {
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--phase-color, #60a5fa)80;
+}
+.task-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 2px solid var(--border);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s, border-color .15s;
+}
+.task-item.done .task-check {
+  background: var(--phase-color, #60a5fa);
+  border-color: var(--phase-color, #60a5fa);
+}
+.task-item.done .task-check::after {
+  content: '';
+  width: 10px;
+  height: 6px;
+  border-left: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(-45deg) translate(1px, -1px);
+}
+.task-label { flex: 1; line-height: 1.3; }
+.task-link {
+  font-size: .7rem;
+  color: var(--phase-color, #60a5fa);
+  opacity: .7;
+  flex-shrink: 0;
+  font-weight: 600;
+}
+.task-locked {
+  opacity: .4;
+  cursor: default;
+}
+.task-locked:hover { border-color: transparent; background: var(--surf2); }
+
+/* ── Start / End nodes ── */
+.finish-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 24px;
+  position: relative;
+}
+.finish-node {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f0c040, #fb923c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  box-shadow: 0 0 0 6px rgba(240,192,64,.15), 0 0 40px rgba(240,192,64,.3);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 6px rgba(240,192,64,.15), 0 0 40px rgba(240,192,64,.3); }
+  50%       { box-shadow: 0 0 0 10px rgba(240,192,64,.1), 0 0 60px rgba(240,192,64,.4); }
+}
+.finish-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: -.02em;
+  text-align: center;
+}
+.finish-sub { font-size: .85rem; color: var(--muted); text-align: center; }
+
+/* ── Confetti ── */
+.confetti-piece {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  pointer-events: none;
+  animation: confetti-fall var(--dur, 1.2s) ease-in forwards;
+  z-index: 9999;
+}
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(80vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .phase-row {
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: auto;
+  }
+  .phase-row.left .phase-card,
+  .phase-row.right .phase-card  { grid-column: 2; grid-row: 1; justify-self: start; max-width: 100%; }
+  .phase-row.left .phase-node,
+  .phase-row.right .phase-node  { grid-column: 1; grid-row: 1; justify-self: center; }
+  .phase-row.left .phase-empty,
+  .phase-row.right .phase-empty { display: none; }
+  .phase-row.left .phase-card::after,
+  .phase-row.right .phase-card::before { display: none; }
+  .node-circle { width: 36px; height: 36px; font-size: 1rem; }
+  .profile-banner { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .profile-stats { flex-direction: row; align-self: stretch; }
+  .stat-chip { flex: 1; }
 }
 </style>
 </head>
@@ -145,48 +592,40 @@
       <div class="nav-section">
         <span class="nav-section-label">Overview</span>
         <a href="index.html" class="nav-link">🏠 Dashboard</a>
-        <a href="exam-info.md" class="nav-link">📋 Exam Info</a>
-        <a href="roadmap.html" class="nav-link active">🗺️ Roadmap</a>
+        <a href="roadmap.html" class="nav-link active nav-roadmap">🗺️ My Roadmap</a>
       </div>
       <div class="nav-section">
         <span class="nav-section-label">Reading</span>
         <a href="reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
-        <a href="#" class="nav-link">Paper 2 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 3 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 6 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 7 <span class="badge">Soon</span></a>
+        <a href="reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="listening/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="listening/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="listening/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="listening/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="listening/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
       </div>
       <div class="nav-section">
         <span class="nav-section-label">Writing</span>
         <a href="writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
-        <a href="#" class="nav-link">Paper 2 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 3 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 6 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 7 <span class="badge">Soon</span></a>
+        <a href="writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
       </div>
       <div class="nav-section">
         <span class="nav-section-label">Speaking</span>
         <a href="speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
-        <a href="#" class="nav-link">Paper 2 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 3 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 6 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 7 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 8 <span class="badge">Soon</span></a>
-      </div>
-      <div class="nav-section">
-        <span class="nav-section-label">Listening</span>
-        <a href="#" class="nav-link">Paper 1 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 2 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 3 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 6 <span class="badge">Soon</span></a>
-        <a href="#" class="nav-link">Paper 7 <span class="badge">Soon</span></a>
-      </div>
-      <div class="nav-section">
-        <span class="nav-section-label">Reference</span>
-        <a href="vocabulary/b2-topics.md" class="nav-link">📚 Vocabulary</a>
-        <a href="grammar/b2-grammar.md" class="nav-link">📐 Grammar</a>
-        <a href="speaking/criteria.md" class="nav-link">🎯 Speaking Criteria</a>
-        <a href="writing/criteria.md" class="nav-link">✍️ Writing Criteria</a>
+        <a href="speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
       </div>
     </nav>
   </aside>
@@ -194,271 +633,743 @@
   <!-- Main -->
   <main class="main">
     <div class="page-header">
-      <div class="breadcrumb">
-        <a href="index.html">Dashboard</a>
-        <span>›</span>
-        Roadmap
+      <div class="breadcrumb">My Roadmap</div>
+      <div class="exam-date-wrap" style="display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--muted)">
+        <label for="examDateInput">📅 Exam date:</label>
+        <input type="date" id="examDateInput" style="border:1px solid var(--border);border-radius:6px;padding:4px 8px;background:var(--card);color:var(--text);font-size:.82rem">
+        <span id="countdown" style="font-weight:600;color:var(--violet)"></span>
       </div>
     </div>
 
-    <div class="page-content">
-      <h1 class="page-title">Roadmap</h1>
-      <p class="page-subtitle">What's live, what's next, and where to go right now.</p>
+<!-- Profile banner -->
+<div class="profile-banner">
+  <div class="avatar-ring">
+    <svg width="80" height="80" viewBox="0 0 80 80">
+      <circle cx="40" cy="40" r="36" fill="none" stroke="#30363d" stroke-width="4"/>
+      <circle cx="40" cy="40" r="36" fill="none"
+        stroke="url(#avatarGrad)" stroke-width="4"
+        stroke-dasharray="226" stroke-dashoffset="226"
+        id="avatarProgressCircle"
+        stroke-linecap="round" transform="rotate(-90 40 40)"
+        style="transition: stroke-dashoffset .8s cubic-bezier(.4,0,.2,1)"/>
+      <defs>
+        <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#a78bfa"/>
+          <stop offset="100%" stop-color="#60a5fa"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <div class="avatar-inner">N</div>
+  </div>
 
-      <!-- Live now -->
-      <h2 class="section-title">Live now</h2>
-      <div class="live-grid">
+  <div class="profile-info">
+    <div class="profile-name">Natasha</div>
+    <div class="profile-tagline">LanguageCert B2 Communicator · CEFR B2</div>
+    <div class="xp-bar-wrap">
+      <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+      <div class="xp-label" id="xpLabel">0 XP</div>
+    </div>
+    <div class="stars-row" id="starsRow">
+      <span class="star" data-at="10">⭐</span>
+      <span class="star" data-at="20">⭐</span>
+      <span class="star" data-at="30">⭐</span>
+      <span class="star" data-at="40">⭐</span>
+      <span class="star" data-at="55">⭐</span>
+      <span class="star" data-at="70">⭐</span>
+      <span class="star" data-at="85">⭐</span>
+      <span class="star" data-at="100">🏆</span>
+    </div>
+  </div>
 
-        <a href="index.html" class="live-card">
-          <span class="lc-icon">🏠</span>
-          <div class="lc-label">Overview</div>
-          <div class="lc-name">Dashboard</div>
-          <div class="lc-meta">Progress overview · All skills</div>
-        </a>
+  <div class="profile-stats">
+    <div class="stat-chip">
+      <div class="stat-num" id="statDone">0</div>
+      <div class="stat-lbl">Completed</div>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-num" id="statTotal">—</div>
+      <div class="stat-lbl">Total tasks</div>
+    </div>
+  </div>
+</div>
 
-        <a href="exam-info.md" class="live-card">
-          <span class="lc-icon">📋</span>
-          <div class="lc-label">Reference</div>
-          <div class="lc-name">Exam Info</div>
-          <div class="lc-meta">Structure · Scoring · Timeline</div>
-        </a>
+<!-- Road -->
+<div class="road-wrap">
 
-        <a href="reading/paper1.html" class="live-card">
-          <span class="lc-icon">📖</span>
-          <div class="lc-label">Reading</div>
-          <div class="lc-name">Paper 1</div>
-          <div class="lc-meta">26 marks · Interactive quiz</div>
-        </a>
-
-        <a href="writing/paper1.html" class="live-card">
-          <span class="lc-icon">✍️</span>
-          <div class="lc-label">Writing</div>
-          <div class="lc-name">Paper 1</div>
-          <div class="lc-meta">24 marks · Model answers</div>
-        </a>
-
-        <a href="speaking/paper1.html" class="live-card">
-          <span class="lc-icon">🗣️</span>
-          <div class="lc-label">Speaking</div>
-          <div class="lc-name">Paper 1</div>
-          <div class="lc-meta">50 marks · 4 parts · Scripts</div>
-        </a>
-
+  <!-- Phase 1: Know your exam — LEFT -->
+  <div class="phase-row left" style="--phase-color: var(--c-know)">
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="know">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-know)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 1</div>
+            <div class="card-title">Know Your Exam</div>
+            <div class="card-meta">Understand the rules before you play</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="know-structure" data-phase="know" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Study the exam structure</span>
+            <a href="exam-info.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="know-scoring" data-phase="know" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Understand the scoring system (75/150)</span>
+            <a href="exam-info.html#scoring" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="know-writing-criteria" data-phase="know" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Writing criteria — Content, Organisation, Language</span>
+            <a href="exam-info.html#writing" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="know-speaking-criteria" data-phase="know" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Speaking criteria — Grammar, Fluency, Pronunciation</span>
+            <a href="exam-info.html#speaking" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+        </div>
       </div>
-
-      <!-- Legend -->
-      <div class="legend">
-        <span style="font-weight:600;color:var(--text)">Key:</span>
-        <span class="legend-item"><span class="chip chip-live">Live</span> Interactive page, full answer key</span>
-        <span class="legend-item"><span class="chip chip-soon">Coming soon</span> Not yet built</span>
+    </div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="know" style="--phase-color:var(--c-know)">
+        <span class="node-emoji">📚</span>
       </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-empty"></div>
+  </div>
 
-      <!-- Reading track -->
-      <h2 class="section-title">📖 Reading — 5 papers</h2>
-      <table class="track-table" style="margin-bottom:32px">
-        <thead>
-          <tr>
-            <th>Paper</th>
-            <th>Topics</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="track-row-live">
-            <td class="paper-col">P1</td>
-            <td class="track-desc">Computer games · Playing &amp; learning · Sailing · Panama Canal<small>26 questions · 4 parts</small></td>
-            <td><a href="reading/paper1.html" class="track-link">Open</a></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P2</td>
-            <td class="track-desc">4 parts · 26 questions</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P3</td>
-            <td class="track-desc">4 parts · 26 questions</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P6</td>
-            <td class="track-desc">4 parts · 26 questions</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P7</td>
-            <td class="track-desc">4 parts · 26 questions</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- Phase 2: Reading — RIGHT -->
+  <div class="phase-row right" style="--phase-color: var(--c-read)">
+    <div class="phase-empty"></div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="read" style="--phase-color:var(--c-read)">
+        <span class="node-emoji">📖</span>
+      </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="read">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-read)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 2</div>
+            <div class="card-title">Reading — 5 Papers</div>
+            <div class="card-meta">26 marks · 4 parts · ~1h 5min</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="read-p1" data-phase="read" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Reading Practice Paper 1</span>
+            <a href="reading/paper1.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="read-p2" data-phase="read" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Reading Practice Paper 2</span>
+            <a href="reading/paper2.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="read-p3" data-phase="read" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Reading Practice Paper 3</span>
+            <a href="reading/paper3.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="read-p6" data-phase="read" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Reading Practice Paper 6</span>
+            <a href="reading/paper6.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="read-p7" data-phase="read" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Reading Practice Paper 7</span>
+            <a href="reading/paper7.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <!-- Writing track -->
-      <h2 class="section-title">✍️ Writing — 5 papers</h2>
-      <table class="track-table" style="margin-bottom:32px">
-        <thead>
-          <tr>
-            <th>Paper</th>
-            <th>Topics</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="track-row-live">
-            <td class="paper-col">P1</td>
-            <td class="track-desc">Leisure centre email (100–150w) · Childhood memories essay (150–200w)<small>2 tasks · Model answers + examiner comments</small></td>
-            <td><a href="writing/paper1.html" class="track-link">Open</a></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P2</td>
-            <td class="track-desc">2 writing tasks</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P3</td>
-            <td class="track-desc">2 writing tasks</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P6</td>
-            <td class="track-desc">2 writing tasks</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P7</td>
-            <td class="track-desc">2 writing tasks</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- Phase 3: Writing — LEFT -->
+  <div class="phase-row left" style="--phase-color: var(--c-write)">
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="write">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-write)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 3</div>
+            <div class="card-title">Writing — 5 Papers</div>
+            <div class="card-meta">24 marks · 2 tasks · ~1h 5min</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="write-p1" data-phase="write" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Writing Practice Paper 1</span>
+            <a href="writing/paper1.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="write-p2" data-phase="write" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Writing Practice Paper 2</span>
+            <a href="writing/paper2.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="write-p3" data-phase="write" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Writing Practice Paper 3</span>
+            <a href="writing/paper3.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="write-p6" data-phase="write" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Writing Practice Paper 6</span>
+            <a href="writing/paper6.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="write-p7" data-phase="write" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Writing Practice Paper 7</span>
+            <a href="writing/paper7.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="write" style="--phase-color:var(--c-write)">
+        <span class="node-emoji">✍️</span>
+      </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-empty"></div>
+  </div>
 
-      <!-- Speaking track -->
-      <h2 class="section-title">🗣️ Speaking — 6 papers</h2>
-      <table class="track-table" style="margin-bottom:32px">
-        <thead>
-          <tr>
-            <th>Paper</th>
-            <th>Topics</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="track-row-live">
-            <td class="paper-col">P1</td>
-            <td class="track-desc">Personal questions · Role-plays · Holiday discussion · Monologue<small>4 parts · 13 minutes · Sample examiner prompts</small></td>
-            <td><a href="speaking/paper1.html" class="track-link">Open</a></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P2</td>
-            <td class="track-desc">4 parts · 13 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P3</td>
-            <td class="track-desc">4 parts · 13 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P6</td>
-            <td class="track-desc">4 parts · 13 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P7</td>
-            <td class="track-desc">4 parts · 13 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P8</td>
-            <td class="track-desc">4 parts · 13 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- Phase 4: Speaking — RIGHT -->
+  <div class="phase-row right" style="--phase-color: var(--c-speak)">
+    <div class="phase-empty"></div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="speak" style="--phase-color:var(--c-speak)">
+        <span class="node-emoji">🗣️</span>
+      </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="speak">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-speak)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 4</div>
+            <div class="card-title">Speaking — 6 Papers</div>
+            <div class="card-meta">50 marks · 4 parts · 13 min</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="speak-p1" data-phase="speak" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Speaking Practice Paper 1</span>
+            <a href="speaking/paper1.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="speak-p2" data-phase="speak" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Speaking Practice Paper 2</span>
+            <a href="speaking/paper2.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="speak-p3" data-phase="speak" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Speaking Practice Paper 3</span>
+            <a href="speaking/paper3.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="speak-p6" data-phase="speak" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Speaking Practice Paper 6</span>
+            <a href="speaking/paper6.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="speak-p7" data-phase="speak" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Speaking Practice Paper 7</span>
+            <a href="speaking/paper7.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="speak-p8" data-phase="speak" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Speaking Practice Paper 8</span>
+            <a href="speaking/paper8.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <!-- Listening track -->
-      <h2 class="section-title">🎧 Listening — 5 papers</h2>
-      <table class="track-table" style="margin-bottom:32px">
-        <thead>
-          <tr>
-            <th>Paper</th>
-            <th>Topics</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="paper-col">P1</td>
-            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P2</td>
-            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P3</td>
-            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P6</td>
-            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col">P7</td>
-            <td class="track-desc">26 questions · 4 parts · ~30 minutes</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- Phase 5: Listening — LEFT -->
+  <div class="phase-row left" style="--phase-color: var(--c-listen)">
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="listen">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-listen)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 5</div>
+            <div class="card-title">Listening — 5 Papers</div>
+            <div class="card-meta">26 marks · 4 parts · ~30 min</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="listen-p1" data-phase="listen" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Listening Practice Paper 1</span>
+            <a href="listening/paper1.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="listen-p2" data-phase="listen" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Listening Practice Paper 2</span>
+            <a href="listening/paper2.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="listen-p3" data-phase="listen" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Listening Practice Paper 3</span>
+            <a href="listening/paper3.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="listen-p6" data-phase="listen" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Listening Practice Paper 6</span>
+            <a href="listening/paper6.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="listen-p7" data-phase="listen" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Listening Practice Paper 7</span>
+            <a href="listening/paper7.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="listen" style="--phase-color:var(--c-listen)">
+        <span class="node-emoji">🎧</span>
+      </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-empty"></div>
+  </div>
 
-      <!-- Reference -->
-      <h2 class="section-title">📚 Reference</h2>
-      <table class="track-table">
-        <thead>
-          <tr>
-            <th>Resource</th>
-            <th>Contents</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="track-row-live">
-            <td class="paper-col" style="width:auto;font-size:.82rem">Exam Info</td>
-            <td class="track-desc">Exam structure · All 4 skills · Scoring bands · Results timeline<small>Sourced from the official LanguageCert page</small></td>
-            <td><a href="exam-info.md" class="track-link">Open</a></td>
-          </tr>
-          <tr>
-            <td class="paper-col" style="width:auto;font-size:.82rem">Grammar</td>
-            <td class="track-desc">B2-level grammar reference — from Handbook section 2.7</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col" style="width:auto;font-size:.82rem">Vocabulary</td>
-            <td class="track-desc">B2 topic vocabulary — from Handbook section 2.4</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col" style="width:auto;font-size:.82rem">Speaking Criteria</td>
-            <td class="track-desc">Assessment bands — from the Qualification Handbook Speaking</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col" style="width:auto;font-size:.82rem">Writing Criteria</td>
-            <td class="track-desc">Assessment bands — from the Qualification Handbook LRW</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-          <tr>
-            <td class="paper-col" style="width:auto;font-size:.82rem">Sample Feedback</td>
-            <td class="track-desc">Examiner comments on real candidate performances</td>
-            <td><span class="chip chip-soon">Coming soon</span></td>
-          </tr>
-        </tbody>
-      </table>
+  <!-- Phase 6: Vocabulary — RIGHT -->
+  <div class="phase-row right" style="--phase-color: var(--c-vocab)">
+    <div class="phase-empty"></div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="vocab" style="--phase-color:var(--c-vocab)">
+        <span class="node-emoji">📝</span>
+      </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="vocab">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-vocab)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 6</div>
+            <div class="card-title">Vocabulary — 6 Topics</div>
+            <div class="card-meta">Travel · Work · Technology · Health · Culture · Environment</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="vocab-travel" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Travel &amp; Tourism</span>
+            <a href="vocabulary/travel.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-work" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Work &amp; Careers</span>
+            <a href="vocabulary/work.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-tech" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Technology</span>
+            <a href="vocabulary/technology.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-health" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Health &amp; Wellbeing</span>
+            <a href="vocabulary/health.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-culture" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Culture &amp; Society</span>
+            <a href="vocabulary/culture.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="vocab-env" data-phase="vocab" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Environment</span>
+            <a href="vocabulary/environment.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    </div><!-- page-content -->
+  <!-- Phase 7: Grammar — LEFT -->
+  <div class="phase-row left" style="--phase-color: var(--c-gram)">
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="gram">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-gram)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 7</div>
+            <div class="card-title">Grammar — 6 Topics</div>
+            <div class="card-meta">Conditionals · Modals · Passive · Relative · Reported · Tenses</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="gram-cond" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Conditionals</span>
+            <a href="grammar/conditionals.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-modal" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Modal Verbs</span>
+            <a href="grammar/modals.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-pass" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Passive Voice</span>
+            <a href="grammar/passive.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-rel" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Relative Clauses</span>
+            <a href="grammar/relative.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-rep" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Reported Speech</span>
+            <a href="grammar/reported.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+          <div class="task-item" data-id="gram-tens" data-phase="gram" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Tenses</span>
+            <a href="grammar/tenses.html" class="task-link" onclick="event.stopPropagation()">→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="gram" style="--phase-color:var(--c-gram)">
+        <span class="node-emoji">🔤</span>
+      </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-empty"></div>
+  </div>
+
+  <!-- Phase 8: Mock Exam — RIGHT -->
+  <div class="phase-row right" style="--phase-color: var(--c-mock)">
+    <div class="phase-empty"></div>
+    <div class="phase-node">
+      <div class="node-circle" data-phase-node="mock" style="--phase-color:var(--c-mock)">
+        <span class="node-emoji">🎯</span>
+      </div>
+      <div class="node-arm"></div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-card-inner">
+        <div class="card-head">
+          <div class="card-ring">
+            <svg width="52" height="52" viewBox="0 0 52 52" class="progress-ring" data-phase="mock">
+              <circle cx="26" cy="26" r="22" fill="none" stroke="#21262d" stroke-width="4"/>
+              <circle cx="26" cy="26" r="22" fill="none" stroke="var(--c-mock)" stroke-width="4"
+                stroke-dasharray="138.2" stroke-dashoffset="138.2"
+                stroke-linecap="round" transform="rotate(-90 26 26)"
+                class="ring-fill" style="transition:stroke-dashoffset .5s"/>
+            </svg>
+          </div>
+          <div class="card-titles">
+            <div class="card-phase-label">Phase 8</div>
+            <div class="card-title">Mock Exam</div>
+            <div class="card-meta">Full exam under real conditions</div>
+          </div>
+        </div>
+        <div class="task-list">
+          <div class="task-item" data-id="mock-reading" data-phase="mock" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Timed reading practice</span>
+          </div>
+          <div class="task-item" data-id="mock-writing" data-phase="mock" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Timed writing practice</span>
+          </div>
+          <div class="task-item" data-id="mock-speaking" data-phase="mock" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Speaking practice with a partner</span>
+          </div>
+          <div class="task-item" data-id="mock-listening" data-phase="mock" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Timed listening practice</span>
+          </div>
+          <div class="task-item" data-id="mock-review" data-phase="mock" onclick="toggleTask(this)">
+            <div class="task-check"></div>
+            <span class="task-label">Review errors and weak areas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Finish node -->
+  <div class="finish-row">
+    <div class="finish-node">🏆</div>
+    <div class="finish-title">Exam Day!</div>
+    <div class="finish-sub" id="finishSub">You're ready. Go for it! ✨</div>
+  </div>
+
+</div><!-- road-wrap -->
+
+<script>
+// ── Data ──────────────────────────────────────────────
+const STORAGE_KEY = 'b2_progress';
+const DATE_KEY    = 'b2_exam_date';
+
+const PHASES = {
+  know:   { total: 4 },
+  read:   { total: 5 },
+  write:  { total: 5 },
+  speak:  { total: 6 },
+  listen: { total: 5 },
+  vocab:  { total: 6 },
+  gram:   { total: 6 },
+  mock:   { total: 5 },
+};
+const TOTAL_TASKS = Object.values(PHASES).reduce((s, p) => s + p.total, 0);
+
+let _progress = {};
+
+function loadProgress() { return _progress; }
+function saveProgress(p) {
+  _progress = p;
+  DB.saveRoadmap(p);
+}
+
+// ── Toggle task ───────────────────────────────────────
+function toggleTask(el) {
+  if (el.classList.contains('task-locked')) return;
+  const id = el.dataset.id;
+  const p  = loadProgress();
+  p[id]    = !p[id];
+  saveProgress(p);
+  applyState(p);
+  if (p[id]) confettiBurst(el);
+}
+
+// ── Apply full UI state ───────────────────────────────
+function applyState(p) {
+  // Task items
+  document.querySelectorAll('.task-item[data-id]').forEach(el => {
+    const done = !!p[el.dataset.id];
+    el.classList.toggle('done', done);
+  });
+
+  // Per-phase rings & nodes
+  let totalDone = 0;
+  Object.entries(PHASES).forEach(([phase, { total }]) => {
+    const tasks = document.querySelectorAll(`.task-item[data-phase="${phase}"]`);
+    const done  = [...tasks].filter(t => !!p[t.dataset.id]).length;
+    totalDone  += done;
+    const pct   = total ? done / total : 0;
+
+    // Ring
+    const ring = document.querySelector(`.progress-ring[data-phase="${phase}"] .ring-fill`);
+    if (ring) {
+      const circ = 138.2;
+      ring.style.strokeDashoffset = circ * (1 - pct);
+    }
+
+    // Node circle
+    const node = document.querySelector(`[data-phase-node="${phase}"]`);
+    if (node) node.classList.toggle('phase-complete', done === total && total > 0);
+  });
+
+  // Overall
+  const pct = Math.round(totalDone / TOTAL_TASKS * 100);
+  document.getElementById('xpFill').style.width = pct + '%';
+  document.getElementById('xpLabel').textContent = (totalDone * 10) + ' XP';
+  document.getElementById('statDone').textContent  = totalDone;
+  document.getElementById('statTotal').textContent = TOTAL_TASKS;
+
+  // Avatar ring
+  const arc = document.getElementById('avatarProgressCircle');
+  if (arc) arc.style.strokeDashoffset = 226 * (1 - totalDone / TOTAL_TASKS);
+
+  // Stars
+  document.querySelectorAll('.star').forEach(s => {
+    s.classList.toggle('earned', pct >= +s.dataset.at);
+  });
+}
+
+// ── Confetti ──────────────────────────────────────────
+function confettiBurst(origin) {
+  const colors = ['#a78bfa','#60a5fa','#34d399','#fbbf24','#f87171','#c084fc'];
+  const rect   = origin.getBoundingClientRect();
+  for (let i = 0; i < 22; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    el.style.cssText = [
+      `left:${rect.left + rect.width/2 + (Math.random()-0.5)*60}px`,
+      `top:${rect.top}px`,
+      `background:${colors[Math.floor(Math.random()*colors.length)]}`,
+      `--dur:${0.8 + Math.random()*.7}s`,
+      `transform:rotate(${Math.random()*360}deg)`,
+    ].join(';');
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1600);
+  }
+}
+
+// ── Exam date ─────────────────────────────────────────
+const dateInput = document.getElementById('examDateInput');
+
+function updateCountdown(prefill) {
+  if (prefill !== undefined) { dateInput.value = prefill || ''; }
+  const val = dateInput.value;
+  if (!val) { document.getElementById('countdown').textContent = ''; return; }
+  const diff = new Date(val) - new Date();
+  const days  = Math.ceil(diff / 86400000);
+  const cd    = document.getElementById('countdown');
+  if (days < 0)        cd.textContent = 'Already past';
+  else if (days === 0) cd.textContent = 'Today! 🎉';
+  else if (days === 1) cd.textContent = '1 day!';
+  else                 cd.textContent = `${days} days`;
+}
+
+dateInput.addEventListener('change', () => {
+  const val = dateInput.value;
+  localStorage.setItem(DATE_KEY, val);
+  DB.saveRoadmap(_progress, val);
+  updateCountdown();
+});
+setInterval(updateCountdown, 60000);
+
+// ── Auto-detect paper completion from practice pages ──
+function readLS(key) {
+  try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
+}
+function isDoneReading(s)   { return s && s.p1_checked && s.p2_checked && s.p3_checked; }
+function isDoneWriting(s)   { return s && ((s.task1 && s.task1.length > 30) || (s.task2 && s.task2.length > 30)); }
+function isDoneListening(s) { return s && s.p1_checked && s.p4_checked; }
+
+const PAPER_SYNC = {
+  'read-p1':   () => isDoneReading(readLS('b2_page_reading_paper1')),
+  'read-p2':   () => isDoneReading(readLS('b2_page_reading_paper2')),
+  'read-p3':   () => isDoneReading(readLS('b2_page_reading_paper3')),
+  'read-p6':   () => isDoneReading(readLS('b2_page_reading_paper6')),
+  'read-p7':   () => isDoneReading(readLS('b2_page_reading_paper7')),
+  'write-p1':  () => isDoneWriting(readLS('b2_page_writing_paper1')),
+  'write-p2':  () => isDoneWriting(readLS('b2_page_writing_paper2')),
+  'write-p3':  () => isDoneWriting(readLS('b2_page_writing_paper3')),
+  'write-p6':  () => isDoneWriting(readLS('b2_page_writing_paper6')),
+  'write-p7':  () => isDoneWriting(readLS('b2_page_writing_paper7')),
+  'listen-p1': () => isDoneListening(readLS('b2_page_listening_paper1')),
+  'listen-p2': () => isDoneListening(readLS('b2_page_listening_paper2')),
+  'listen-p3': () => isDoneListening(readLS('b2_page_listening_paper3')),
+  'listen-p6': () => isDoneListening(readLS('b2_page_listening_paper6')),
+  'listen-p7': () => isDoneListening(readLS('b2_page_listening_paper7')),
+  'vocab-travel':  () => { const s = readLS('b2_page_vocab_travel');   return s && s.learned && s.learned.length > 0; },
+  'vocab-work':    () => { const s = readLS('b2_page_vocab_work');     return s && s.learned && s.learned.length > 0; },
+  'vocab-tech':    () => { const s = readLS('b2_page_vocab_technology'); return s && s.learned && s.learned.length > 0; },
+  'vocab-health':  () => { const s = readLS('b2_page_vocab_health');   return s && s.learned && s.learned.length > 0; },
+  'vocab-culture': () => { const s = readLS('b2_page_vocab_culture');  return s && s.learned && s.learned.length > 0; },
+  'vocab-env':     () => { const s = readLS('b2_page_vocab_environment'); return s && s.learned && s.learned.length > 0; },
+  'gram-cond':  () => { const s = readLS('b2_page_grammar_conditionals'); return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-modal': () => { const s = readLS('b2_page_grammar_modals');      return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-pass':  () => { const s = readLS('b2_page_grammar_passive');     return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-rel':   () => { const s = readLS('b2_page_grammar_relative');    return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-rep':   () => { const s = readLS('b2_page_grammar_reported');    return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+  'gram-tens':  () => { const s = readLS('b2_page_grammar_tenses');      return s && s.ex1Checked && s.ex2Checked && s.ex3Checked; },
+};
+
+function syncFromPapers(p) {
+  let changed = false;
+  for (const [id, check] of Object.entries(PAPER_SYNC)) {
+    if (check() && !p[id]) { p[id] = true; changed = true; }
+  }
+  return changed;
+}
+
+// ── Init ──────────────────────────────────────────────
+(async () => {
+  // Show localStorage immediately
+  try { _progress = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { _progress = {}; }
+  // Merge auto-detected paper completion
+  if (syncFromPapers(_progress)) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(_progress));
+    DB.saveRoadmap(_progress);
+  }
+  applyState(_progress);
+  updateCountdown(localStorage.getItem(DATE_KEY) || '');
+
+  // Sync from Supabase
+  const saved = await DB.loadRoadmap();
+  if (saved) {
+    _progress = saved.tasks;
+    syncFromPapers(_progress); // also merge on cloud data
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(_progress));
+    applyState(_progress);
+    if (saved.examDate) {
+      localStorage.setItem(DATE_KEY, saved.examDate);
+      updateCountdown(saved.examDate);
+    }
+  }
+})();
+</script>
   </main>
 </div>
 </body>

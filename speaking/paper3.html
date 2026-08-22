@@ -252,6 +252,11 @@
       <h1 class="page-title">Speaking — Practice Paper 3</h1>
       <p class="page-subtitle">50 marks · 13 minutes total · 4 parts · Topic: Travel &amp; the Natural World</p>
 
+      <div class="pdf-resources">
+        <button class="pdf-btn" data-url="../materials/speaking/Speaking-PP3.pdf" onclick="pdfClick(this)">📋 Speaking Paper (PDF)</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Gogo-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Gogo</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Hanna-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Hanna</button>
+      </div>
       <div class="tip-box">
         <strong>How to use this page:</strong> Practise with a partner (one plays the interlocutor, one the candidate), or record yourself speaking. Click any question to highlight it. Aim for natural, fluent responses — not memorised scripts.
       </div>
@@ -276,6 +281,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>What do you think is the best way to travel — by plane, train or car?</li>
             <li class="q-item"><span class="q-bullet">▸</span>What kind of holiday do you most enjoy?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p3-travel', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p3-travel">
+            <strong>Q: Have you travelled to any other countries?</strong><br><br>
+"Yes, I've been lucky enough to visit several. <span class="key-phrase">One trip that really stands out</span> was to Portugal — I was struck by how different the everyday pace of life felt there. <span class="key-phrase">I genuinely believe</span> that travelling is one of the best ways to broaden your perspective and challenge assumptions you didn't even know you had. <span class="key-phrase">That said</span>, I also think you don't need to go far — exploring your own country properly can be just as eye-opening."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -285,6 +295,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>What is your favourite season and why?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Are you concerned about environmental issues?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p3-nature', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p3-nature">
+            <strong>Q: Do you spend much time outdoors?</strong><br><br>
+"I try to, yes — <span class="key-phrase">I find that</span> even a short walk in a park makes a noticeable difference to how I feel. There's something about being in natural surroundings that gives you a sense of perspective which is hard to get indoors. <span class="key-phrase">What I've been doing lately</span> is cycling to places rather than driving, which is a small change but it means I'm outdoors far more than before."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -294,6 +309,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>Can you cook? What dishes can you make?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Have you ever tried food from another culture that you really liked?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p3-food', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p3-food">
+            <strong>Q: What kind of food do you enjoy most?</strong><br><br>
+"<span class="key-phrase">My tastes are fairly eclectic</span>, to be honest. I love food that's fresh and full of flavour — Mediterranean cooking is probably my favourite, particularly anything with good olive oil and herbs. <span class="key-phrase">What I've come to appreciate more recently</span> is how food connects people — a shared meal is one of the most straightforward ways to bring people together, and I think that social aspect is just as important as the taste."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -303,6 +323,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>Do you prefer watching sport or playing it?</li>
             <li class="q-item"><span class="q-bullet">▸</span>What do you think are the benefits of regular exercise?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p3-sport', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p3-sport">
+            <strong>Q: Do you play any sports?</strong><br><br>
+"I play tennis fairly regularly — I started when I was young and I've kept it up because it's a great combination of fitness and social activity. <span class="key-phrase">What I particularly enjoy</span> about a racket sport is the competitive element — it genuinely pushes you to improve each time. <span class="key-phrase">I think sport teaches you</span> a lot about handling both success and disappointment, which are skills that transfer to many other areas of life."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -312,6 +337,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>Does the weather affect your mood?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Would you prefer to live in a hot or cold climate?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p3-weather', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p3-weather">
+            <strong>Q: What is the weather like in your country?</strong><br><br>
+"The seasons are quite pronounced — cold winters and warm summers, so there's a real contrast throughout the year. <span class="key-phrase">I actually quite like that contrast</span>, though winters can be challenging. <span class="key-phrase">What I find is that</span> people here have adapted well — you develop a kind of resilience to the cold and genuinely appreciate the first warm spring day in a way that people in warmer climates perhaps don't."
+          </div>
         </div>
       </div>
 
@@ -408,6 +438,11 @@
                 <li>What do you think travel teaches us about the world?</li>
               </ul>
             </div>
+          
+            <button class="sample-toggle" onclick="toggleSample('sa-p3-mono1', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p3-mono1">
+              <p>There are many places I dream of visiting, but if I had to choose one, it would be Japan. The contrast between ancient tradition and cutting-edge modernity fascinates me enormously. On one hand, you have centuries-old temples, tea ceremonies, and carefully preserved cultural practices; on the other, you have Tokyo — one of the most technologically advanced cities on earth.</p><p>What draws me most is the concept of "wabi-sabi" — the Japanese aesthetic of finding beauty in imperfection and transience. I would love to experience the cherry blossom season, walk through bamboo forests in Kyoto, and simply observe how Japanese society functions with such remarkable efficiency and courtesy.</p><p>Another reason is the food. Japanese cuisine is extraordinarily diverse — from the simplicity of soba noodles to the precision of sushi — and experiencing it in its home context would be something truly special. To sum up, Japan represents for me the ideal travel destination because it would challenge my assumptions, expand my cultural understanding, and offer beauty at every turn.</p>
+            </div>
           </div>
           <div class="mono-card">
             <div class="mono-label">Card 2</div>
@@ -419,6 +454,11 @@
                 <li>What can individuals do to help?</li>
                 <li>Do you think governments do enough to protect the environment?</li>
               </ul>
+            </div>
+          
+            <button class="sample-toggle" onclick="toggleSample('sa-p3-mono2', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p3-mono2">
+              <p>Protecting the natural world is not simply a matter of preserving beautiful landscapes — it is a question of survival. Ecosystems provide services that human life depends on entirely: clean air, fresh water, stable climate, and food production. When we destroy habitats, we do not just lose biodiversity; we undermine the very systems that sustain us.</p><p>First of all, consider the scale of what we are losing. Scientists estimate that species are becoming extinct at a rate one thousand times higher than the natural background rate. Many of these species have not even been discovered, let alone studied for their potential medical or scientific value. Once they are gone, they are gone forever.</p><p>Secondly, protecting nature is also an economic argument. Tourism, agriculture, fisheries — these are trillion-dollar industries that depend on healthy ecosystems. Short-term profits from deforestation or overfishing are vastly outweighed by the long-term costs. To sum up, I believe protecting the natural world should be treated not as an optional luxury, but as the most urgent priority of our time — because without a functioning biosphere, nothing else we value is possible.</p>
             </div>
           </div>
         </div>
@@ -436,6 +476,30 @@
 document.querySelectorAll('.q-item').forEach(item => {
   item.addEventListener('click', () => item.classList.toggle('selected'));
 });
+</script>
+<script>
+function pdfClick(btn) {
+  if (btn.dataset.ready === '1') {
+    window.open(btn.dataset.url, '_blank');
+    btn.dataset.ready = '0'; btn.classList.remove('confirm');
+    btn.textContent = btn.dataset.label;
+  } else {
+    btn.dataset.label = btn.textContent;
+    btn.textContent = '⚠️ Click again to open PDF';
+    btn.classList.add('confirm'); btn.dataset.ready = '1';
+    setTimeout(function() {
+      if (btn.dataset.ready === '1') {
+        btn.dataset.ready = '0'; btn.classList.remove('confirm');
+        btn.textContent = btn.dataset.label;
+      }
+    }, 3000);
+  }
+}
+function toggleSample(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.textContent = open ? '🙈 Hide sample answer' : '💬 Show sample answer';
+}
 </script>
 </body>
 </html>

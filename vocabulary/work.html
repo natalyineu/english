@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocab: Work · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.flashcard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 0;
+}
+.flashcard {
+  width: 100%;
+  max-width: 540px;
+  min-height: 220px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+  margin-bottom: 20px;
+  position: relative;
+  user-select: none;
+}
+.flashcard:hover { border-color: var(--sel); box-shadow: 0 4px 24px rgba(26,95,180,.15); }
+.flashcard.learned-card { border-color: var(--ok); }
+.fc-learned-badge {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: .72rem;
+  font-weight: 700;
+  background: var(--ok-bg);
+  color: var(--ok);
+  border-radius: 20px;
+  padding: 2px 10px;
+  display: none;
+}
+.fc-counter {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  font-size: .72rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.fc-word { font-size: 1.6rem; font-weight: 700; color: var(--text); margin-bottom: 8px; font-family: 'Lora', Georgia, serif; }
+.fc-pos { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+.fc-reveal { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); width: 100%; display: none; }
+.fc-reveal.shown { display: block; }
+.fc-def { font-size: 1rem; color: var(--text); line-height: 1.6; margin-bottom: 8px; font-family: 'Lora', Georgia, serif; }
+.fc-example { font-size: .88rem; color: var(--muted); font-style: italic; line-height: 1.6; }
+.fc-hint { font-size: .78rem; color: var(--muted); margin-top: 12px; }
+.fc-actions { display: flex; gap: 12px; margin-top: 4px; }
+.fc-btn { padding: 10px 28px; border-radius: 8px; border: none; font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; cursor: pointer; transition: opacity .15s; }
+.fc-btn:hover { opacity: .85; }
+.fc-btn-ok { background: var(--ok); color: #fff; }
+.fc-btn-retry { background: var(--border); color: var(--text); }
+.fc-progress { font-size: .82rem; color: var(--muted); margin-bottom: 24px; }
+.fc-progress-bar { width: 100%; max-width: 540px; height: 6px; background: var(--border); border-radius: 3px; margin-bottom: 8px; }
+.fc-progress-fill { height: 100%; background: var(--ok); border-radius: 3px; transition: width .3s; }
+.fc-done { text-align: center; padding: 40px 20px; max-width: 540px; width: 100%; background: var(--card); border: 2px solid var(--ok); border-radius: 16px; }
+.fc-done h2 { font-size: 1.4rem; margin-bottom: 8px; color: var(--text); }
+.fc-done p { color: var(--muted); margin-bottom: 24px; font-size: .9rem; }
+.fc-done-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.fc-reset-btn { padding: 10px 20px; border-radius: 8px; border: none; font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 600; cursor: pointer; background: var(--border); color: var(--muted); transition: opacity .15s; }
+.fc-reset-btn:hover { opacity: .75; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Vocabulary</span>
+        <a href="index.html" class="nav-link">📚 All Topics</a>
+        <a href="travel.html" class="nav-link">✈️ Travel</a>
+        <a href="work.html" class="nav-link active">💼 Work</a>
+        <a href="health.html" class="nav-link">❤️ Health</a>
+        <a href="technology.html" class="nav-link">💻 Technology</a>
+        <a href="environment.html" class="nav-link">🌿 Environment</a>
+        <a href="culture.html" class="nav-link">🌍 Culture</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <a href="index.html">Vocabulary</a>
+        <span>›</span>
+        Work &amp; Career
+      </div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">💼 Work &amp; Career</h1>
+      <p class="page-subtitle">20 essential B2 words for the workplace and professional life · Click a card to reveal its definition</p>
+
+      <div class="flashcard-container">
+        <div class="fc-progress-bar">
+          <div class="fc-progress-fill" id="fc-progress-fill" style="width:0%"></div>
+        </div>
+        <div class="fc-progress" id="fc-progress-text">0 / 20 words learned</div>
+
+        <div class="flashcard" id="flashcard" onclick="reveal()">
+          <span class="fc-counter" id="fc-counter">1 / 20</span>
+          <span class="fc-learned-badge" id="fc-learned-badge">Already learned ✓</span>
+          <div class="fc-pos" id="fc-pos"></div>
+          <div class="fc-word" id="fc-word"></div>
+          <div class="fc-hint" id="fc-hint">Click to see the definition</div>
+          <div class="fc-reveal" id="fc-reveal">
+            <div class="fc-def" id="fc-def"></div>
+            <div class="fc-example" id="fc-example"></div>
+          </div>
+        </div>
+
+        <div class="fc-actions" id="fc-actions" style="display:none">
+          <button class="fc-btn fc-btn-retry" onclick="retry()">Practice again ↩</button>
+          <button class="fc-btn fc-btn-ok" onclick="gotIt()">Got it ✓</button>
+        </div>
+
+        <div class="fc-done" id="fc-done" style="display:none">
+          <div style="font-size:2.5rem;margin-bottom:12px">🎉</div>
+          <h2>Session complete!</h2>
+          <p id="fc-done-msg">You've been through all the cards. Keep reviewing to strengthen your memory.</p>
+          <div class="fc-done-btns">
+            <button class="fc-btn fc-btn-retry" onclick="restart()">Restart session ↩</button>
+            <button class="fc-reset-btn" onclick="resetLearned()">Reset progress</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const PAGE_ID = 'vocab_work';
+const WORDS = [
+  { word: 'apprenticeship', pos: 'noun', def: 'A period of working under an experienced person to learn a trade or profession.', ex: 'He completed a two-year apprenticeship as an electrician before working independently.' },
+  { word: 'negotiate', pos: 'verb', def: 'To discuss something in order to reach a mutually acceptable agreement.', ex: 'She managed to negotiate a higher salary and an extra week of annual leave.' },
+  { word: 'redundant', pos: 'adjective', def: '(Of a worker) no longer required and therefore dismissed from a job.', ex: 'Fifty members of staff were made redundant when the factory closed down last year.' },
+  { word: 'promotion', pos: 'noun', def: 'Advancement to a higher position or rank within an organisation.', ex: 'After five years of hard work, she finally received a promotion to senior manager.' },
+  { word: 'commission', pos: 'noun', def: 'A payment made to an employee for each sale or deal they successfully complete.', ex: 'She earns a basic salary plus a ten percent commission on every sale she makes.' },
+  { word: 'entrepreneur', pos: 'noun', def: 'A person who sets up and runs a business, taking financial risks to do so.', ex: 'The young entrepreneur launched her first tech company at the age of twenty-two.' },
+  { word: 'freelance', pos: 'adjective / verb', def: 'Working independently for different employers rather than being employed by one company.', ex: 'After leaving her full-time job, she decided to go freelance and work from home.' },
+  { word: 'resignation', pos: 'noun', def: 'The act of formally giving up or leaving a job or position.', ex: 'He handed in his resignation after ten years with the company and moved abroad.' },
+  { word: 'maternity leave', pos: 'noun', def: 'An authorised period of absence from work for a mother before and after the birth of her child.', ex: 'She took six months of maternity leave after her baby was born.' },
+  { word: 'internship', pos: 'noun', def: 'A temporary period of practical work experience offered by an employer, often to students.', ex: 'He completed a summer internship at a marketing firm, which led to a full-time job offer.' },
+  { word: 'productivity', pos: 'noun', def: 'The effectiveness of work measured by the amount of output produced per unit of time.', ex: 'Working from home improved her productivity significantly by eliminating daily commuting.' },
+  { word: 'colleague', pos: 'noun', def: 'A person one works with in the same organisation or profession.', ex: 'She got along well with her colleagues and often had lunch with them in the office.' },
+  { word: 'deadline', pos: 'noun', def: 'The latest time or date by which something must be completed or submitted.', ex: 'He stayed in the office until midnight to meet the project deadline.' },
+  { word: 'recruitment', pos: 'noun', def: 'The process of finding, attracting, and hiring new employees for an organisation.', ex: 'The company\'s recruitment process involves three stages: a written test, and two interviews.' },
+  { word: 'appraisal', pos: 'noun', def: 'A formal assessment of an employee\'s work performance, usually conducted annually.', ex: 'His annual appraisal highlighted his leadership skills and areas for further development.' },
+  { word: 'overtime', pos: 'noun', def: 'Time worked beyond one\'s regular working hours, often paid at a higher rate.', ex: 'She worked overtime every evening for a week to finish the report before the deadline.' },
+  { word: 'payroll', pos: 'noun', def: 'The list of employees in an organisation and the amount of money each one is paid.', ex: 'The new member of staff was added to the company payroll from her first day.' },
+  { word: 'probation', pos: 'noun', def: 'A trial period at the beginning of a new job during which performance is assessed.', ex: 'He was on three months\' probation before being confirmed as a permanent employee.' },
+  { word: 'benefits', pos: 'noun', def: 'Additional advantages provided to employees beyond their basic salary.', ex: 'The job offers excellent benefits, including a pension scheme, private healthcare, and gym membership.' },
+  { word: 'shift', pos: 'noun', def: 'A scheduled period of work, especially one of several periods covering a 24-hour day.', ex: 'She worked the night shift at the hospital, finishing at seven o\'clock in the morning.' },
+];
+
+let deck = [], current = 0, learned = new Set(), revealed = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+async function init() {
+  const data = await DB.loadPage(PAGE_ID);
+  if (data && Array.isArray(data.learned)) learned = new Set(data.learned);
+  deck = shuffle(WORDS); current = 0;
+  renderCard(); renderProgress();
+}
+
+function saveState() { DB.savePage(PAGE_ID, { learned: [...learned] }); }
+
+function renderCard() {
+  const cardEl = document.getElementById('flashcard');
+  const doneEl = document.getElementById('fc-done');
+  const actEl  = document.getElementById('fc-actions');
+  if (current >= deck.length) {
+    cardEl.style.display = 'none'; actEl.style.display = 'none'; doneEl.style.display = 'block';
+    document.getElementById('fc-done-msg').textContent = learned.size + ' of ' + WORDS.length + ' words marked as learned. Keep it up!';
+    return;
+  }
+  cardEl.style.display = 'flex'; doneEl.style.display = 'none'; revealed = false;
+  const w = deck[current];
+  document.getElementById('fc-word').textContent    = w.word;
+  document.getElementById('fc-pos').textContent     = w.pos;
+  document.getElementById('fc-def').textContent     = w.def;
+  document.getElementById('fc-example').textContent = '"' + w.ex + '"';
+  document.getElementById('fc-counter').textContent = (current + 1) + ' / ' + deck.length;
+  document.getElementById('fc-reveal').classList.remove('shown');
+  document.getElementById('fc-hint').style.display  = 'block';
+  actEl.style.display = 'none';
+  const badge = document.getElementById('fc-learned-badge');
+  if (learned.has(w.word)) { cardEl.classList.add('learned-card'); badge.style.display = 'block'; }
+  else { cardEl.classList.remove('learned-card'); badge.style.display = 'none'; }
+}
+
+function reveal() {
+  if (revealed) return; revealed = true;
+  document.getElementById('fc-reveal').classList.add('shown');
+  document.getElementById('fc-hint').style.display = 'none';
+  document.getElementById('fc-actions').style.display = 'flex';
+}
+
+function gotIt() { learned.add(deck[current].word); saveState(); current++; renderCard(); renderProgress(); }
+
+function retry() {
+  const card = deck.splice(current, 1)[0];
+  const insertAt = current + 1 + Math.floor(Math.random() * Math.max(1, deck.length - current));
+  deck.splice(Math.min(insertAt, deck.length), 0, card);
+  renderCard();
+}
+
+function renderProgress() {
+  const n = learned.size, tot = WORDS.length, pct = Math.round((n / tot) * 100);
+  document.getElementById('fc-progress-text').textContent = n + ' / ' + tot + ' words learned';
+  document.getElementById('fc-progress-fill').style.width = pct + '%';
+}
+
+function restart() {
+  deck = shuffle(WORDS); current = 0;
+  document.getElementById('fc-done').style.display  = 'none';
+  document.getElementById('flashcard').style.display = 'flex';
+  renderCard();
+}
+
+function resetLearned() {
+  if (!confirm('Reset all progress for Work & Career? This cannot be undone.')) return;
+  learned = new Set(); saveState(); restart(); renderProgress();
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

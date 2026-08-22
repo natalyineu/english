@@ -252,6 +252,11 @@
       <h1 class="page-title">Speaking — Practice Paper 2</h1>
       <p class="page-subtitle">50 marks · 13 minutes total · 4 parts · Topic: Work &amp; Education</p>
 
+      <div class="pdf-resources">
+        <button class="pdf-btn" data-url="../materials/speaking/Speaking-PP2.pdf" onclick="pdfClick(this)">📋 Speaking Paper (PDF)</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Gogo-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Gogo</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Hanna-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Hanna</button>
+      </div>
       <div class="tip-box">
         <strong>How to use this page:</strong> Practise with a partner (one plays the interlocutor, one the candidate), or record yourself speaking. Click any question to highlight it. Aim for natural, fluent responses — not memorised scripts.
       </div>
@@ -276,6 +281,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>What kind of work would you like to do in the future?</li>
             <li class="q-item"><span class="q-bullet">▸</span>What do you think makes a good workplace?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p2-work', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p2-work">
+            <strong>Q: What do you think makes a good workplace?</strong><br><br>
+"<span class="key-phrase">For me</span>, a good workplace comes down to two things: clarity and respect. You need to know what's expected of you, and you need to feel that your contribution is valued. <span class="key-phrase">I also think</span> the physical environment matters — a space where people feel comfortable is more productive than one driven by pressure. <span class="key-phrase">What I've noticed</span> is that the best workplaces tend to trust their employees rather than micromanage them. That trust makes a real difference to motivation."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -285,6 +295,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>What subjects did you enjoy most at school?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Do you think university education is important for everyone?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p2-edu', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p2-edu">
+            <strong>Q: Do you think university education is important for everyone?</strong><br><br>
+"<span class="key-phrase">Personally, I don't think</span> it's essential for everyone — it depends entirely on what someone wants to do. University gives you deep specialist knowledge and certain career doors, <span class="key-phrase">but on the other hand</span> many skilled professions value practical training far more. <span class="key-phrase">What I believe</span> is that the most important thing is that people find a path that genuinely suits them, rather than going to university simply because it's expected."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -294,6 +309,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>How do you usually spend your evenings?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Do you prefer busy or quiet days?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p2-routine', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p2-routine">
+            <strong>Q: How do you usually spend your evenings?</strong><br><br>
+"Generally I try to wind down after a busy day. I might cook something — I find that quite relaxing, actually — then catch up on news or watch something. <span class="key-phrase">What I've found</span> is that having a consistent evening routine makes a real difference to how well I sleep. <span class="key-phrase">That said</span>, I do enjoy socialising during the week occasionally, whether that's meeting a friend for dinner or going to a class of some kind."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -303,6 +323,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>Have you taken up any new hobbies recently?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Is there a hobby you would like to try?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p2-hobbies', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p2-hobbies">
+            <strong>Q: Have you taken up any new hobbies recently?</strong><br><br>
+"Yes, actually — I started photography about six months ago. <span class="key-phrase">I'd always been interested in it</span> but never found the time. What I really enjoy is that it forces you to slow down and really look at the world around you rather than rushing through it. <span class="key-phrase">Unexpectedly</span>, I've also met some interesting people through it, which has been a bonus."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -312,6 +337,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>Do you prefer shopping online or in a store?</li>
             <li class="q-item"><span class="q-bullet">▸</span>What was the last thing you bought that you were really pleased with?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p2-shopping', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p2-shopping">
+            <strong>Q: Do you prefer shopping online or in a store?</strong><br><br>
+"<span class="key-phrase">It depends on what I'm buying.</span> For clothes, I much prefer physical shops — I want to try things on and get the fit right. But for books, electronics, or household items, online shopping is simply more convenient. <span class="key-phrase">The main downside</span> of online shopping, I find, is that things sometimes look quite different from the photos, so you end up returning a lot. I think a balance of both is ideal."
+          </div>
         </div>
       </div>
 
@@ -408,6 +438,11 @@
                 <li>What advice would you give to someone starting to learn a new language?</li>
               </ul>
             </div>
+          
+            <button class="sample-toggle" onclick="toggleSample('sa-p2-mono1', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p2-mono1">
+              <p>Learning a foreign language is, in my view, one of the most valuable things a person can do. First of all, it opens doors professionally — employers increasingly look for candidates who can communicate across cultures. In my own experience, knowing English has given me access to opportunities that would simply not exist otherwise.</p><p>Another important point is the cognitive benefit. Research shows that bilingual people develop stronger problem-solving skills and can even delay the onset of dementia. Beyond that, learning a language forces you to think differently — you start to understand how other cultures organise ideas and express the world around them.</p><p>Perhaps most importantly, language learning builds empathy. When you struggle to express yourself in another language, you gain a deeper respect for people who communicate in a second or third language every day. To sum up, I believe every person who has the chance to learn a foreign language should take it — the rewards go far beyond communication.</p>
+            </div>
           </div>
           <div class="mono-card">
             <div class="mono-label">Card 2</div>
@@ -419,6 +454,11 @@
                 <li>How important is salary compared to job satisfaction?</li>
                 <li>How do you imagine your working life in ten years?</li>
               </ul>
+            </div>
+          
+            <button class="sample-toggle" onclick="toggleSample('sa-p2-mono2', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p2-mono2">
+              <p>My ideal job would combine creativity, independence, and the opportunity to make a positive difference. If I could design my perfect career, it would involve working on meaningful projects — perhaps in education, design, or environmental sustainability — where I can see the real-world impact of my work.</p><p>First of all, I think flexibility is crucial. I am most productive when I can organise my own schedule and work environment. That said, I also value being part of a team — collaboration sparks ideas that I could never generate alone. So ideally, I would have the autonomy of an individual contributor but with a supportive team around me.</p><p>As for salary, while financial security matters, I genuinely believe that job satisfaction is the greater motivator. Studies consistently show that once basic needs are met, additional income does little to increase happiness. What keeps people engaged long-term is a sense of purpose and growth. To sum up, my ideal job would offer meaningful work, flexibility, and human connection — that combination would make getting up in the morning something I actually look forward to.</p>
             </div>
           </div>
         </div>
@@ -436,6 +476,30 @@
 document.querySelectorAll('.q-item').forEach(item => {
   item.addEventListener('click', () => item.classList.toggle('selected'));
 });
+</script>
+<script>
+function pdfClick(btn) {
+  if (btn.dataset.ready === '1') {
+    window.open(btn.dataset.url, '_blank');
+    btn.dataset.ready = '0'; btn.classList.remove('confirm');
+    btn.textContent = btn.dataset.label;
+  } else {
+    btn.dataset.label = btn.textContent;
+    btn.textContent = '⚠️ Click again to open PDF';
+    btn.classList.add('confirm'); btn.dataset.ready = '1';
+    setTimeout(function() {
+      if (btn.dataset.ready === '1') {
+        btn.dataset.ready = '0'; btn.classList.remove('confirm');
+        btn.textContent = btn.dataset.label;
+      }
+    }, 3000);
+  }
+}
+function toggleSample(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.textContent = open ? '🙈 Hide sample answer' : '💬 Show sample answer';
+}
 </script>
 </body>
 </html>

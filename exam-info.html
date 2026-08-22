@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exam Info · B2 🎓</title>
+<link rel="stylesheet" href="style.css">
+<script src="ui.js"></script>
+<style>
+.info-hero { background:linear-gradient(135deg,var(--violet) 0%,var(--indigo) 100%); color:#fff; border-radius:var(--radius); padding:28px 32px; margin-bottom:32px; box-shadow:0 4px 24px rgba(124,58,237,.28); }
+.info-hero h1 { font-size:1.5rem; margin-bottom:6px; }
+.info-hero p  { opacity:.8; font-size:.92rem; margin-bottom:20px; }
+.hero-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; }
+.hero-card { background:rgba(255,255,255,.12); border-radius:10px; padding:14px 16px; }
+.hero-card .hc-label { font-size:.68rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; opacity:.65; margin-bottom:6px; }
+.hero-card .hc-val   { font-size:1.25rem; font-weight:800; }
+.hero-card .hc-sub   { font-size:.78rem; opacity:.7; margin-top:2px; }
+
+.pass-band { display:flex; gap:0; border-radius:10px; overflow:hidden; margin:20px 0; font-size:.85rem; }
+.pass-band > div { flex:1; padding:12px 14px; text-align:center; }
+.pass-fail  { background:#fee2e2; color:#991b1b; }
+.pass-ok    { background:#dbeafe; color:#1e40af; }
+.pass-high  { background:#d1fae5; color:#065f46; }
+.pass-band strong { display:block; font-size:1.1rem; }
+
+.skill-section { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:24px 28px; margin-bottom:24px; box-shadow:var(--shadow); }
+.skill-section h2 { font-size:1.1rem; font-weight:700; color:var(--text); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+.skill-section h2 .marks-badge { font-size:.75rem; font-weight:700; background:var(--sel-bg); color:var(--violet); border-radius:20px; padding:3px 10px; margin-left:auto; }
+
+.part-row { display:flex; gap:12px; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--border); }
+.part-row:last-child { border-bottom:none; }
+.part-num { flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--violet); color:#fff; font-size:.78rem; font-weight:700; display:flex; align-items:center; justify-content:center; }
+.part-body { flex:1; }
+.part-name { font-weight:600; color:var(--text); font-size:.9rem; }
+.part-desc { font-size:.82rem; color:var(--muted); margin-top:3px; line-height:1.5; }
+.part-marks { flex-shrink:0; font-weight:700; color:var(--violet); font-size:.9rem; }
+
+.tips-box { background:var(--sel-bg); border-left:3px solid var(--violet); border-radius:0 8px 8px 0; padding:14px 18px; margin-top:16px; }
+.tips-box .tips-title { font-size:.72rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--violet); margin-bottom:8px; }
+.tips-box ul { list-style:none; display:flex; flex-direction:column; gap:5px; }
+.tips-box li { font-size:.85rem; color:var(--text); padding-left:16px; position:relative; }
+.tips-box li::before { content:'→'; position:absolute; left:0; color:var(--violet); font-weight:700; }
+
+.criteria-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:10px; margin-top:14px; }
+.criteria-card { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:12px 14px; }
+.criteria-card .cc-label { font-size:.72rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin-bottom:4px; }
+.criteria-card .cc-marks { font-size:1.2rem; font-weight:800; color:var(--violet); }
+.criteria-card .cc-desc  { font-size:.78rem; color:var(--muted); margin-top:4px; line-height:1.4; }
+
+.info-table { width:100%; border-collapse:collapse; font-size:.88rem; }
+.info-table th { text-align:left; padding:8px 12px; color:var(--muted); font-weight:600; font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; border-bottom:2px solid var(--border); }
+.info-table td { padding:10px 12px; border-bottom:1px solid var(--border); color:var(--text); }
+.info-table td:first-child { font-weight:700; color:var(--violet); }
+.info-table tr:last-child td { border-bottom:none; }
+
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px; }
+@media(max-width:600px) { .two-col { grid-template-columns:1fr; } }
+
+.checklist { list-style:none; display:flex; flex-direction:column; gap:8px; }
+.checklist li { display:flex; gap:10px; align-items:flex-start; font-size:.88rem; color:var(--text); }
+.checklist li .ck-icon { flex-shrink:0; font-size:1rem; }
+
+.section-divider { font-size:.68rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); padding:24px 0 10px; border-top:1px solid var(--border); margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+        <a href="exam-info.html" class="nav-link active">📋 Exam Info</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="listening/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="listening/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="listening/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="listening/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="listening/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Vocabulary</span>
+        <a href="vocabulary/index.html" class="nav-link">📚 All Topics</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Grammar</span>
+        <a href="grammar/index.html" class="nav-link">📐 All Topics</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb"><a href="index.html">Dashboard</a> / Exam Info</div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- Hero -->
+      <div class="info-hero">
+        <h1>LanguageCert B2 Communicator — Complete Guide</h1>
+        <p>Everything you need to know about the exam: structure, timing, marking, and tips.</p>
+        <div class="hero-grid">
+          <div class="hero-card">
+            <div class="hc-label">Written exam</div>
+            <div class="hc-val">150 marks</div>
+            <div class="hc-sub">2 h 40 min total</div>
+          </div>
+          <div class="hero-card">
+            <div class="hc-label">Speaking exam</div>
+            <div class="hc-val">50 marks</div>
+            <div class="hc-sub">~13 min · live examiner</div>
+          </div>
+          <div class="hero-card">
+            <div class="hc-label">Pass mark</div>
+            <div class="hc-val">50%</div>
+            <div class="hc-sub">Each exam separately</div>
+          </div>
+          <div class="hero-card">
+            <div class="hc-label">High Pass</div>
+            <div class="hc-val">≥ 67%</div>
+            <div class="hc-sub">Written ≥ 101 · Speaking ≥ 38</div>
+          </div>
+          <div class="hero-card">
+            <div class="hc-label">Certificate</div>
+            <div class="hc-val">€194</div>
+            <div class="hc-sub">Written €97 + Speaking €97</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How to pass -->
+      <div id="scoring" class="skill-section" style="border-color:var(--violet)">
+        <h2>🎯 How to Pass at a Glance</h2>
+        <p style="font-size:.88rem;color:var(--muted);margin-bottom:16px">Written and Speaking are marked independently. You can pass one and fail the other.</p>
+        <div class="two-col" style="margin-bottom:16px">
+          <div>
+            <div style="font-weight:700;font-size:.95rem;margin-bottom:10px;color:var(--text)">Written — 150 marks</div>
+            <div class="pass-band">
+              <div class="pass-fail"><strong>0–74</strong>Fail</div>
+              <div class="pass-ok"><strong>75–100</strong>Pass</div>
+              <div class="pass-high"><strong>101–150</strong>High Pass</div>
+            </div>
+            <table class="info-table" style="margin-top:10px">
+              <tr><td>Listening</td><td style="font-weight:normal;color:var(--muted)">26 marks (~30 min)</td></tr>
+              <tr><td>Reading</td><td style="font-weight:normal;color:var(--muted)">26 marks (~1h 5min)</td></tr>
+              <tr><td>Writing</td><td style="font-weight:normal;color:var(--muted)">24 marks (~1h 5min)</td></tr>
+            </table>
+            <div style="margin-top:10px;font-size:.82rem;color:var(--muted)">No minimum per section — your total across L+R+W must reach 75.</div>
+          </div>
+          <div>
+            <div style="font-weight:700;font-size:.95rem;margin-bottom:10px;color:var(--text)">Speaking — 50 marks</div>
+            <div class="pass-band">
+              <div class="pass-fail"><strong>0–24</strong>Fail</div>
+              <div class="pass-ok"><strong>25–37</strong>Pass</div>
+              <div class="pass-high"><strong>38–50</strong>High Pass</div>
+            </div>
+            <table class="info-table" style="margin-top:10px">
+              <tr><td>Part 1</td><td style="font-weight:normal;color:var(--muted)">~2 min · intro questions</td></tr>
+              <tr><td>Parts 2–3</td><td style="font-weight:normal;color:var(--muted)">~6 min · interaction tasks</td></tr>
+              <tr><td>Part 4</td><td style="font-weight:normal;color:var(--muted)">~5 min · monologue + Q&amp;A</td></tr>
+            </table>
+            <div style="margin-top:10px;font-size:.82rem;color:var(--muted)">Assessed across 4 criteria throughout all parts.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-divider">Written Paper — Skill by Skill</div>
+
+      <!-- LISTENING -->
+      <div class="skill-section">
+        <h2>🎧 Listening <span class="marks-badge">26 marks · ~30 min</span></h2>
+        <div class="part-row">
+          <div class="part-num">1</div>
+          <div class="part-body">
+            <div class="part-name">Multiple Choice — 7 short conversations</div>
+            <div class="part-desc">Listen to seven short dialogues (including one formal situation). For each, choose the best answer from 3 options. Tested: gist, purpose, attitude, context.</div>
+          </div>
+          <div class="part-marks">7 marks</div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">2</div>
+          <div class="part-body">
+            <div class="part-name">Multiple Choice — longer recordings</div>
+            <div class="part-desc">Two or three longer recordings. Questions test topic, speaker relationships, opinions, and implied meaning.</div>
+          </div>
+          <div class="part-marks">6 marks</div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">3</div>
+          <div class="part-body">
+            <div class="part-name">Note-taking — write in 1–5 words</div>
+            <div class="part-desc">Listen and fill in a form or notes with specific information. Answers must be <strong>1–5 words</strong>. Spelling counts. Numbers can be written as digits.</div>
+          </div>
+          <div class="part-marks">7 marks</div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">4</div>
+          <div class="part-body">
+            <div class="part-name">Multiple Choice — discussion or interview</div>
+            <div class="part-desc">A longer discussion. Questions focus on gist, opinions, cause and effect, and the speakers' views.</div>
+          </div>
+          <div class="part-marks">6 marks</div>
+        </div>
+        <div class="tips-box">
+          <div class="tips-title">Exam Tips — Listening</div>
+          <ul>
+            <li>Read each question <strong>before</strong> the recording starts — you get preview time.</li>
+            <li>Part 3 answers are often paraphrased — the exact word from the recording is usually correct.</li>
+            <li>Recordings are played <strong>twice</strong> — use the first listen for the gist, second for answers.</li>
+            <li>Wrong options often include words you heard — focus on meaning, not keywords.</li>
+          </ul>
+        </div>
+        <div style="margin-top:14px">
+          <a href="listening/paper1.html" class="check-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px">Practise Listening →</a>
+        </div>
+      </div>
+
+      <!-- READING -->
+      <div class="skill-section">
+        <h2>📖 Reading <span class="marks-badge">26 marks · ~1h 5min</span></h2>
+        <div class="part-row">
+          <div class="part-num">1</div>
+          <div class="part-body">
+            <div class="part-name">Multiple Choice — long text</div>
+            <div class="part-desc">A long text (news article, review, report, or proposal). Six 4-option questions. Tests detailed comprehension, writer's attitude, implied meaning.</div>
+          </div>
+          <div class="part-marks">6 marks</div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">2</div>
+          <div class="part-body">
+            <div class="part-name">Gap-fill — choose from sentences A–G</div>
+            <div class="part-desc">A text with 6 gaps. Seven sentences (A–G) to choose from — one is a distractor you won't use. Tests text cohesion, reference words, logical flow.</div>
+          </div>
+          <div class="part-marks">6 marks</div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">3</div>
+          <div class="part-body">
+            <div class="part-name">Matching — 4 short texts</div>
+            <div class="part-desc">Four short texts (A–D) + 7 statements. Match each statement to the correct text. The same text can be used more than once.</div>
+          </div>
+          <div class="part-marks">7 marks</div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">4</div>
+          <div class="part-body">
+            <div class="part-name">Short answers — write up to 5 words</div>
+            <div class="part-desc">A narrative or informational text. Answer 7 questions in <strong>up to 5 words each</strong>. You mark this yourself — model answers are provided.</div>
+          </div>
+          <div class="part-marks">7 marks</div>
+        </div>
+        <div class="tips-box">
+          <div class="tips-title">Exam Tips — Reading</div>
+          <ul>
+            <li>Part 1: Read the whole text first for gist, then return to questions.</li>
+            <li>Part 2: Look at the words just before and after each gap — reference words (it, this, they, however) are key clues.</li>
+            <li>Part 3: Skim all four texts first. Underline the key idea of each. Then match carefully — wording will be paraphrased.</li>
+            <li>Part 4: Copy words directly from the text when possible. Stay within 5 words — longer answers get no marks.</li>
+          </ul>
+        </div>
+        <div style="margin-top:14px">
+          <a href="reading/paper1.html" class="check-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px">Practise Reading →</a>
+        </div>
+      </div>
+
+      <!-- WRITING -->
+      <div id="writing" class="skill-section">
+        <h2>✍️ Writing <span class="marks-badge">24 marks · ~1h 5min</span></h2>
+        <div class="part-row">
+          <div class="part-num">1</div>
+          <div class="part-body">
+            <div class="part-name">Formal email or letter — 100–150 words</div>
+            <div class="part-desc">Respond to a prompt intended for a public or professional audience. For example: a letter to a magazine, a reply to a job advertisement, a formal email to an organisation.</div>
+          </div>
+          <div class="part-marks">12 marks</div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">2</div>
+          <div class="part-body">
+            <div class="part-name">Personal letter, narrative, or descriptive text — 150–200 words</div>
+            <div class="part-desc">A more personal piece of writing. Could be a letter to a friend, a story, a description of a place or event. Register is semi-formal or informal.</div>
+          </div>
+          <div class="part-marks">12 marks</div>
+        </div>
+
+        <div style="margin-top:20px;margin-bottom:8px;font-weight:700;font-size:.92rem;color:var(--text)">How each task is marked (12 marks each)</div>
+        <div class="criteria-grid">
+          <div class="criteria-card">
+            <div class="cc-label">Content</div>
+            <div class="cc-marks">4 marks</div>
+            <div class="cc-desc">Did you cover all the required points? Is everything relevant to the task?</div>
+          </div>
+          <div class="criteria-card">
+            <div class="cc-label">Organisation</div>
+            <div class="cc-marks">4 marks</div>
+            <div class="cc-desc">Is the text well-structured? Are paragraphs logical? Does it read naturally?</div>
+          </div>
+          <div class="criteria-card">
+            <div class="cc-label">Language</div>
+            <div class="cc-marks">4 marks</div>
+            <div class="cc-desc">Range and accuracy of vocabulary and grammar. Appropriate register for the task.</div>
+          </div>
+        </div>
+
+        <div class="tips-box" style="margin-top:16px">
+          <div class="tips-title">Exam Tips — Writing</div>
+          <ul>
+            <li>Check the word count: under 100 / under 150 = automatic mark deductions.</li>
+            <li>Task 1 register: formal — no contractions, use Dear Sir/Madam, Yours faithfully.</li>
+            <li>Task 2 register: match the prompt — a letter to a friend = informal language is fine.</li>
+            <li>Aim for <strong>variety</strong> in vocabulary — don't repeat the same word twice in one paragraph.</li>
+            <li>Leave 3–5 min at the end to proofread each task for missing words and spelling.</li>
+            <li>Use discourse markers: <em>However, Furthermore, As a result, In conclusion</em> — they boost Organisation marks.</li>
+          </ul>
+        </div>
+        <div style="margin-top:14px">
+          <a href="writing/paper1.html" class="check-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px">Practise Writing →</a>
+        </div>
+      </div>
+
+      <div class="section-divider">Speaking Exam — Separate Appointment</div>
+
+      <!-- SPEAKING -->
+      <div id="speaking" class="skill-section">
+        <h2>🗣️ Speaking <span class="marks-badge">50 marks · ~13 min</span></h2>
+        <p style="font-size:.88rem;color:var(--muted);margin-bottom:16px">Face-to-face or online with a live examiner. Parts are consecutive — no breaks.</p>
+        <div class="part-row">
+          <div class="part-num">1</div>
+          <div class="part-body">
+            <div class="part-name">Introduction — ~2 min</div>
+            <div class="part-desc">Give your name and spell it. State your country of origin. Answer 5 general questions about yourself (work, studies, hobbies, future plans).</div>
+          </div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">2</div>
+          <div class="part-body">
+            <div class="part-name">Interaction — respond to situations — ~3 min</div>
+            <div class="part-desc">The examiner describes 2–3 situations. You must respond naturally — ask for information, make suggestions, agree/disagree, give opinions.</div>
+          </div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">3</div>
+          <div class="part-body">
+            <div class="part-name">Collaborative task — ~3 min</div>
+            <div class="part-desc">You and the examiner discuss a topic using written prompts (e.g. plan a community event). Make decisions, justify choices, reach an agreement.</div>
+          </div>
+        </div>
+        <div class="part-row">
+          <div class="part-num">4</div>
+          <div class="part-body">
+            <div class="part-name">Extended monologue — ~5 min</div>
+            <div class="part-desc"><strong>30 seconds to prepare</strong> → 2-minute talk on a given topic → follow-up questions from the examiner. Show your ability to structure and develop ideas independently.</div>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;margin-bottom:8px;font-weight:700;font-size:.92rem;color:var(--text)">How speaking is assessed (50 marks total)</div>
+        <div class="criteria-grid">
+          <div class="criteria-card">
+            <div class="cc-label">Grammar &amp; Vocabulary</div>
+            <div class="cc-marks">Range &amp; accuracy</div>
+            <div class="cc-desc">Variety of structures. Correct use. Appropriate word choices. B2-level language throughout.</div>
+          </div>
+          <div class="criteria-card">
+            <div class="cc-label">Discourse Management</div>
+            <div class="cc-marks">Coherence &amp; fluency</div>
+            <div class="cc-desc">Connected ideas. Appropriate length of turns. Natural use of fillers, linking words, and discourse markers.</div>
+          </div>
+          <div class="criteria-card">
+            <div class="cc-label">Pronunciation</div>
+            <div class="cc-marks">Clarity &amp; stress</div>
+            <div class="cc-desc">Intelligible to a listener. Correct word and sentence stress. Accent doesn't need to be native.</div>
+          </div>
+          <div class="criteria-card">
+            <div class="cc-label">Interactive Communication</div>
+            <div class="cc-marks">Responsiveness</div>
+            <div class="cc-desc">Initiating, maintaining, and closing interactions. Responding appropriately. Asking for clarification when needed.</div>
+          </div>
+        </div>
+
+        <div class="tips-box" style="margin-top:16px">
+          <div class="tips-title">Exam Tips — Speaking</div>
+          <ul>
+            <li>Part 1: Don't give one-word answers — expand every answer with a reason or example.</li>
+            <li>Part 2: If you don't understand the situation, ask: "Could you repeat that, please?"</li>
+            <li>Part 3: The examiner wants discussion — disagree politely, offer alternatives, don't just agree with everything.</li>
+            <li>Part 4: Use your 30s preparation to note 3–4 key points. Structure it: introduction → 2–3 points → conclusion.</li>
+            <li>Silence = lost marks. If stuck, use fillers: "That's an interesting question…", "Let me think about that…"</li>
+            <li>Pronunciation tip: stress the most important word in each sentence — it sounds more natural and confident.</li>
+          </ul>
+        </div>
+        <div style="margin-top:14px">
+          <a href="speaking/paper1.html" class="check-btn" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px">Practise Speaking →</a>
+        </div>
+      </div>
+
+      <div class="section-divider">Practical Information</div>
+
+      <!-- Exam Day -->
+      <div class="two-col">
+        <div class="skill-section" style="margin-bottom:0">
+          <h2 style="font-size:1rem">📅 Exam Day Checklist</h2>
+          <ul class="checklist">
+            <li><span class="ck-icon">✅</span>Valid photo ID (passport or national ID card)</li>
+            <li><span class="ck-icon">✅</span>Arrive 15–20 min early</li>
+            <li><span class="ck-icon">✅</span>Pencils and pens (for paper-based)</li>
+            <li><span class="ck-icon">✅</span>Water — but no food during the exam</li>
+            <li><span class="ck-icon">✅</span>For online: stable internet, quiet room, working microphone and camera</li>
+            <li><span class="ck-icon">❌</span>No phones, dictionaries, or notes allowed</li>
+          </ul>
+        </div>
+        <div class="skill-section" style="margin-bottom:0">
+          <h2 style="font-size:1rem">📬 Results &amp; Certificate</h2>
+          <table class="info-table">
+            <tr><td>Online exam</td><td style="color:var(--muted);font-weight:normal">~3 business days</td></tr>
+            <tr><td>Computer-based</td><td style="color:var(--muted);font-weight:normal">~5 business days</td></tr>
+            <tr><td>Paper-based</td><td style="color:var(--muted);font-weight:normal">~10 business days</td></tr>
+          </table>
+          <div style="margin-top:14px;font-size:.83rem;color:var(--muted);line-height:1.6">
+            You receive: <strong style="color:var(--text)">Statement of Result</strong> · <strong style="color:var(--text)">e-certificate</strong> · <strong style="color:var(--text)">digital badge</strong> · hard-copy certificate by post.
+          </div>
+          <div style="margin-top:10px;background:var(--sel-bg);border-radius:8px;padding:10px 12px;font-size:.82rem;color:var(--text)">
+            <strong>🔄 Take2:</strong> When booking online with live invigilation, you can buy a re-sit up to 15 min before the exam starts — at a lower fee.
+          </div>
+        </div>
+      </div>
+
+      <!-- Delivery options -->
+      <div class="skill-section" style="margin-top:24px">
+        <h2 style="font-size:1rem">💻 Delivery Options</h2>
+        <table class="info-table">
+          <thead><tr><th>Format</th><th>Where</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Paper-based</td><td style="color:var(--muted)">Test centre</td><td style="color:var(--muted)">Traditional exam booklets · pencil for Listening/Reading</td></tr>
+            <tr><td>Computer-based</td><td style="color:var(--muted)">Test centre</td><td style="color:var(--muted)">Type answers · faster results</td></tr>
+            <tr><td>Online (live proctored)</td><td style="color:var(--muted)">Your home</td><td style="color:var(--muted)">Webcam + mic required · invigilator watches via screen share</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Official materials -->
+      <div class="skill-section" style="margin-top:0">
+        <h2 style="font-size:1rem">📥 Free Official Materials (languagecert.org)</h2>
+        <ul class="checklist" style="margin-bottom:0">
+          <li><span class="ck-icon">📄</span>Practice Papers 1, 2, 3, 6, 7 — full papers with answer sheets and audio</li>
+          <li><span class="ck-icon">📖</span>Qualification Handbooks — detailed mark schemes and assessment criteria</li>
+          <li><span class="ck-icon">🎙️</span>Speaking Performance Guide — example recordings at different grades</li>
+          <li><span class="ck-icon">💻</span>Smart Practice Platform — online practice questions with instant feedback</li>
+        </ul>
+      </div>
+
+    </div><!-- page-content -->
+  </main>
+</div>
+</body>
+</html>

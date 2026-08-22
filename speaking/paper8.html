@@ -252,6 +252,11 @@
       <h1 class="page-title">Speaking — Practice Paper 8</h1>
       <p class="page-subtitle">50 marks · 13 minutes total · 4 parts · Topic: The Modern World</p>
 
+      <div class="pdf-resources">
+        <button class="pdf-btn" data-url="../materials/speaking/Speaking-PP8.pdf" onclick="pdfClick(this)">📋 Speaking Paper (PDF)</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Gogo-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Gogo</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Hanna-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Hanna</button>
+      </div>
       <div class="tip-box">
         <strong>How to use this page:</strong> Practise with a partner (one plays the interlocutor, one the candidate), or record yourself speaking. Click any question to highlight it. Aim for natural, fluent responses — not memorised scripts.
       </div>
@@ -276,6 +281,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>What do you think has been the most important technological development of the last twenty years?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Are there any technologies you find difficult or annoying to use?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p8-tech', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p8-tech">
+            <strong>Q: How important is technology in your daily life?</strong><br><br>
+"<span class="key-phrase">Very important</span>, I'd say — perhaps more than I'd like. I use technology for work, communication, entertainment, and navigation, so it's woven into almost everything I do. <span class="key-phrase">What concerns me sometimes</span> is the dependency it creates — I've noticed how uncomfortable I feel without my phone, which I think is worth reflecting on. <span class="key-phrase">That said</span>, the benefits are undeniable, and I wouldn't want to go back."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -285,6 +295,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>Are you generally optimistic or pessimistic about the future?</li>
             <li class="q-item"><span class="q-bullet">▸</span>What do you think will be the biggest challenge facing your generation?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p8-future', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p8-future">
+            <strong>Q: What do you think the world will be like in fifty years?</strong><br><br>
+"<span class="key-phrase">I'm cautiously optimistic.</span> I think technology will have transformed daily life significantly — automation will have changed many jobs, and renewable energy will hopefully have replaced most fossil fuels. <span class="key-phrase">What I'm less certain about</span> is whether society will have kept pace with these changes — the gap between what technology can do and what regulation and social norms allow tends to create real tension."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -294,6 +309,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>What do you think are the advantages of living in a big city?</li>
             <li class="q-item"><span class="q-bullet">▸</span>How do you think cities will change in the next few decades?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p8-cities', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p8-cities">
+            <strong>Q: Do you live in a city or the countryside? Which do you prefer?</strong><br><br>
+"I live in a city, and overall I prefer it — <span class="key-phrase">I appreciate the convenience</span>, the variety of things to do, and the energy. <span class="key-phrase">But I do find</span> that I need to escape occasionally. What I think makes a city genuinely liveable is good green space — parks and rivers within the urban environment. <span class="key-phrase">The ideal for me</span> would be a medium-sized city with easy access to countryside."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -303,6 +323,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>Do you prefer to call people or send messages?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Do you think people communicate more or less effectively than they did before the internet?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p8-comm', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p8-comm">
+            <strong>Q: How has communication changed during your lifetime?</strong><br><br>
+"<span class="key-phrase">Dramatically.</span> When I was younger, you'd call someone on a landline or write a letter. Now we're in constant contact through messages, video calls, and social media. <span class="key-phrase">The speed and convenience are remarkable</span> — I can speak to someone on the other side of the world as if they're next door. <span class="key-phrase">But I think something has been lost too</span> — the thoughtfulness that came with slower communication, where you had to choose your words more carefully."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -312,6 +337,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>Do you think you are good at managing money?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Do you think it is better to save money or spend it on experiences?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p8-money', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p8-money">
+            <strong>Q: How important is money to you?</strong><br><br>
+"<span class="key-phrase">Important enough</span> that I want to live comfortably and not be stressed about basics, but beyond that point, I genuinely don't think more money makes you meaningfully happier — the research on this is quite consistent. <span class="key-phrase">What I value more</span> is having time and freedom to do things I find meaningful. <span class="key-phrase">I suppose the honest answer is</span> money matters most when you don't have enough of it, and its importance diminishes once your basic needs are secure."
+          </div>
         </div>
       </div>
 
@@ -408,6 +438,11 @@
                 <li>What skills do you think will be most important in the future workplace?</li>
               </ul>
             </div>
+          
+            <button class="sample-toggle" onclick="toggleSample('sa-p8-mono1', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p8-mono1">
+              <p>Technology is transforming the world of work at a pace that is genuinely unprecedented in human history. While previous industrial revolutions automated physical tasks, the current wave of artificial intelligence and automation is beginning to affect cognitive and creative work as well — the jobs we thought were safe.</p><p>First of all, the changes create enormous opportunities. Remote work technology has given millions of people flexibility that was previously impossible, allowing them to live where they choose and structure their days around their most productive hours. New industries and entirely new types of jobs are emerging constantly, many of which could not have been imagined a decade ago.</p><p>However, the disruption is also real and painful for many workers, particularly those in routine-based occupations that are most vulnerable to automation. I think the key challenge for societies is ensuring that the gains from technological change are distributed fairly — that workers displaced by automation receive the support and retraining they need. To sum up, technology is neither inherently good nor bad for workers — what matters is the policy choices societies make about how to manage this transition and who bears the costs.</p>
+            </div>
           </div>
           <div class="mono-card">
             <div class="mono-label">Card 2</div>
@@ -419,6 +454,11 @@
                 <li>Are there any disadvantages?</li>
                 <li>Do you think cultural differences are being lost as the world becomes more connected?</li>
               </ul>
+            </div>
+          
+            <button class="sample-toggle" onclick="toggleSample('sa-p8-mono2', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p8-mono2">
+              <p>Globalisation has reshaped human society in ways that are both genuinely beneficial and deeply challenging. At its best, it has lifted hundreds of millions of people out of poverty, connected cultures, and made possible scientific and technological collaborations that would have been unimaginable to previous generations.</p><p>First of all, the economic benefits are real. Global trade allows countries to specialise in what they do best, making goods more affordable and creating economic growth across borders. The flow of ideas across cultures has accelerated innovation in medicine, technology, and the arts. Many of the things we value most in daily life — from the food we eat to the devices we use — exist because of global supply chains.</p><p>At the same time, globalisation has created serious challenges. Economic gains have not been distributed evenly, and many communities have experienced real losses as manufacturing moved to lower-cost countries. Cultural homogenisation is another concern — as global brands and media platforms spread, distinctive local cultures face pressure to survive. To sum up, I think globalisation is neither something to celebrate uncritically nor to reverse — the challenge is to design the international rules and institutions that maximise its benefits while protecting those most vulnerable to its disruptions.</p>
             </div>
           </div>
         </div>
@@ -436,6 +476,30 @@
 document.querySelectorAll('.q-item').forEach(item => {
   item.addEventListener('click', () => item.classList.toggle('selected'));
 });
+</script>
+<script>
+function pdfClick(btn) {
+  if (btn.dataset.ready === '1') {
+    window.open(btn.dataset.url, '_blank');
+    btn.dataset.ready = '0'; btn.classList.remove('confirm');
+    btn.textContent = btn.dataset.label;
+  } else {
+    btn.dataset.label = btn.textContent;
+    btn.textContent = '⚠️ Click again to open PDF';
+    btn.classList.add('confirm'); btn.dataset.ready = '1';
+    setTimeout(function() {
+      if (btn.dataset.ready === '1') {
+        btn.dataset.ready = '0'; btn.classList.remove('confirm');
+        btn.textContent = btn.dataset.label;
+      }
+    }, 3000);
+  }
+}
+function toggleSample(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.textContent = open ? '🙈 Hide sample answer' : '💬 Show sample answer';
+}
 </script>
 </body>
 </html>

@@ -252,6 +252,11 @@
       <h1 class="page-title">Speaking — Practice Paper 6</h1>
       <p class="page-subtitle">50 marks · 13 minutes total · 4 parts · Topic: Culture &amp; Society</p>
 
+      <div class="pdf-resources">
+        <button class="pdf-btn" data-url="../materials/speaking/Speaking-PP6.pdf" onclick="pdfClick(this)">📋 Speaking Paper (PDF)</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Gogo-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Gogo</button>
+        <button class="pdf-btn" data-url="../materials/speaking/Sample-Interview-Hanna-Feedback.pdf" onclick="pdfClick(this)">🎤 Sample Interview — Hanna</button>
+      </div>
       <div class="tip-box">
         <strong>How to use this page:</strong> Practise with a partner (one plays the interlocutor, one the candidate), or record yourself speaking. Click any question to highlight it. Aim for natural, fluent responses — not memorised scripts.
       </div>
@@ -276,6 +281,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>Can you play a musical instrument?</li>
             <li class="q-item"><span class="q-bullet">▸</span>How important is music in your life?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p6-music', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p6-music">
+            <strong>Q: What kind of music do you listen to?</strong><br><br>
+"<span class="key-phrase">My tastes are fairly varied</span>, depending on my mood. I listen to a lot of indie and acoustic music when I want to focus, and something more upbeat when I'm exercising. <span class="key-phrase">What I find remarkable</span> is the effect music has on your state of mind — it can lift you when you're tired or completely change the atmosphere of a space. I also love live music; there's something about a live performance that recordings simply cannot replicate."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -285,6 +295,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>What kinds of books do you prefer?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Do you think reading is becoming less popular? Why?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p6-reading', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p6-reading">
+            <strong>Q: How often do you read for pleasure?</strong><br><br>
+"I try to read every day — even twenty minutes before bed makes a difference. <span class="key-phrase">I personally prefer</span> literary fiction, though I read non-fiction too when a topic captures me. <span class="key-phrase">What I've noticed</span> is that reading regularly improves your writing and communication skills almost without you realising it — you absorb vocabulary and rhythm through exposure rather than effort."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -294,6 +309,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>What is your favourite type of film?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Has a film ever made you think differently about something?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p6-cinema', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p6-cinema">
+            <strong>Q: How often do you go to the cinema?</strong><br><br>
+"About once a month, I'd say — though I'd like it to be more often. <span class="key-phrase">I think there's something irreplaceable</span> about watching a film on the big screen — the sound, the scale, and particularly the shared experience when an entire audience reacts to something simultaneously. <span class="key-phrase">I tend to prefer</span> thought-provoking films over purely entertaining ones, though I don't have anything against a good comedy."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -303,6 +323,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>How do you keep in touch with family members who live far away?</li>
             <li class="q-item"><span class="q-bullet">▸</span>How do you think family life has changed in recent decades?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p6-family', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p6-family">
+            <strong>Q: How important is family to you?</strong><br><br>
+"Extremely important. <span class="key-phrase">I think the foundation of trust</span> and unconditional support that family provides is very difficult to find elsewhere. <span class="key-phrase">That said</span>, I also think family relationships take real effort — you have to invest time to keep those connections strong, especially as people get busier and sometimes live further apart. <span class="key-phrase">I'm lucky that</span> my family is quite close and we stay in regular contact."
+          </div>
         </div>
 
         <div class="topic-group">
@@ -312,6 +337,11 @@
             <li class="q-item"><span class="q-bullet">▸</span>How do you usually celebrate your birthday?</li>
             <li class="q-item"><span class="q-bullet">▸</span>Are there any traditions in your family that are important to you?</li>
           </ul>
+          <button class="sample-toggle" onclick="toggleSample('sa-p6-celebrations', this)">💬 Show sample answer</button>
+          <div class="sample-answer" id="sa-p6-celebrations">
+            <strong>Q: What is your favourite celebration or festival?</strong><br><br>
+"<span class="key-phrase">I'd say New Year</span> — there's a warmth and sense of shared tradition about it that I really value. <span class="key-phrase">What I love most</span> is that it brings together people who might not see each other at other points in the year. The food, the rituals, the sense of marking a moment in time — it all feels genuinely meaningful rather than just routine."
+          </div>
         </div>
       </div>
 
@@ -408,6 +438,11 @@
                 <li>What kind of art do you find most interesting?</li>
               </ul>
             </div>
+          
+            <button class="sample-toggle" onclick="toggleSample('sa-p6-mono1', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p6-mono1">
+              <p>Art and culture play a fundamental role in shaping who we are as individuals and as societies. At the most basic level, they give us a shared vocabulary of meaning — through music, literature, film, and visual art, communities develop a sense of identity and collective memory.</p><p>First of all, art challenges us. Great works of literature or cinema force us to inhabit perspectives different from our own, developing empathy and critical thinking in ways that straightforward information cannot. A novel about poverty can change attitudes more effectively than any statistic.</p><p>Secondly, culture has significant economic value. The creative industries generate enormous revenues globally and attract tourism, investment, and talent to cities. But I think the deeper value is harder to quantify — art gives people a reason to feel proud of where they come from, and it provides meaning during difficult times. Think of how music sustained people during periods of hardship throughout history. To sum up, I believe a society without investment in art and culture is impoverished in ways that go far beyond the economic — it loses its soul.</p>
+            </div>
           </div>
           <div class="mono-card">
             <div class="mono-label">Card 2</div>
@@ -419,6 +454,11 @@
                 <li>What do you think are the benefits and drawbacks?</li>
                 <li>Do you think people communicate better now than in the past?</li>
               </ul>
+            </div>
+          
+            <button class="sample-toggle" onclick="toggleSample('sa-p6-mono2', this)" style="margin-top:12px">💬 Show sample answer</button>
+            <div class="sample-answer" id="sa-p6-mono2">
+              <p>Social media has transformed human communication in ways both remarkable and deeply concerning. On the positive side, it has connected people across continents, given voice to communities that were previously ignored, and enabled social movements to organise with unprecedented speed.</p><p>However, I think the negative consequences deserve serious attention. First of all, the business model of most social media platforms is built on engagement, and the content that generates most engagement is often outrage, fear, or division. This has had a measurable effect on political polarisation and mental health, particularly among young people.</p><p>Another important point is the impact on attention. When we are constantly moving between short pieces of content, we lose the ability to sustain focus on complex problems — and complex problems are exactly what our world needs us to solve. That said, I do not think the answer is to abandon social media, but to use it more intentionally and to hold platforms accountable for the effects their algorithms create. To sum up, social media is a powerful tool — like all powerful tools, its value depends entirely on how wisely it is used.</p>
             </div>
           </div>
         </div>
@@ -436,6 +476,30 @@
 document.querySelectorAll('.q-item').forEach(item => {
   item.addEventListener('click', () => item.classList.toggle('selected'));
 });
+</script>
+<script>
+function pdfClick(btn) {
+  if (btn.dataset.ready === '1') {
+    window.open(btn.dataset.url, '_blank');
+    btn.dataset.ready = '0'; btn.classList.remove('confirm');
+    btn.textContent = btn.dataset.label;
+  } else {
+    btn.dataset.label = btn.textContent;
+    btn.textContent = '⚠️ Click again to open PDF';
+    btn.classList.add('confirm'); btn.dataset.ready = '1';
+    setTimeout(function() {
+      if (btn.dataset.ready === '1') {
+        btn.dataset.ready = '0'; btn.classList.remove('confirm');
+        btn.textContent = btn.dataset.label;
+      }
+    }, 3000);
+  }
+}
+function toggleSample(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.textContent = open ? '🙈 Hide sample answer' : '💬 Show sample answer';
+}
 </script>
 </body>
 </html>

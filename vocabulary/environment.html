@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocab: Env · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.flashcard-container { display: flex; flex-direction: column; align-items: center; padding: 32px 0; }
+.flashcard { width: 100%; max-width: 540px; min-height: 220px; background: var(--card); border: 2px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 36px 32px; text-align: center; cursor: pointer; transition: border-color .2s, box-shadow .2s; margin-bottom: 20px; position: relative; user-select: none; }
+.flashcard:hover { border-color: var(--sel); box-shadow: 0 4px 24px rgba(26,95,180,.15); }
+.flashcard.learned-card { border-color: var(--ok); }
+.fc-learned-badge { position: absolute; top: 14px; right: 16px; font-size: .72rem; font-weight: 700; background: var(--ok-bg); color: var(--ok); border-radius: 20px; padding: 2px 10px; display: none; }
+.fc-counter { position: absolute; top: 14px; left: 16px; font-size: .72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.fc-word { font-size: 1.6rem; font-weight: 700; color: var(--text); margin-bottom: 8px; font-family: 'Lora', Georgia, serif; }
+.fc-pos { font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+.fc-reveal { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); width: 100%; display: none; }
+.fc-reveal.shown { display: block; }
+.fc-def { font-size: 1rem; color: var(--text); line-height: 1.6; margin-bottom: 8px; font-family: 'Lora', Georgia, serif; }
+.fc-example { font-size: .88rem; color: var(--muted); font-style: italic; line-height: 1.6; }
+.fc-hint { font-size: .78rem; color: var(--muted); margin-top: 12px; }
+.fc-actions { display: flex; gap: 12px; margin-top: 4px; }
+.fc-btn { padding: 10px 28px; border-radius: 8px; border: none; font-family: 'Inter', sans-serif; font-size: .9rem; font-weight: 600; cursor: pointer; transition: opacity .15s; }
+.fc-btn:hover { opacity: .85; }
+.fc-btn-ok { background: var(--ok); color: #fff; }
+.fc-btn-retry { background: var(--border); color: var(--text); }
+.fc-progress { font-size: .82rem; color: var(--muted); margin-bottom: 24px; }
+.fc-progress-bar { width: 100%; max-width: 540px; height: 6px; background: var(--border); border-radius: 3px; margin-bottom: 8px; }
+.fc-progress-fill { height: 100%; background: var(--ok); border-radius: 3px; transition: width .3s; }
+.fc-done { text-align: center; padding: 40px 20px; max-width: 540px; width: 100%; background: var(--card); border: 2px solid var(--ok); border-radius: 16px; }
+.fc-done h2 { font-size: 1.4rem; margin-bottom: 8px; color: var(--text); }
+.fc-done p { color: var(--muted); margin-bottom: 24px; font-size: .9rem; }
+.fc-done-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.fc-reset-btn { padding: 10px 20px; border-radius: 8px; border: none; font-family: 'Inter', sans-serif; font-size: .85rem; font-weight: 600; cursor: pointer; background: var(--border); color: var(--muted); transition: opacity .15s; }
+.fc-reset-btn:hover { opacity: .75; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Vocabulary</span>
+        <a href="index.html" class="nav-link">📚 All Topics</a>
+        <a href="travel.html" class="nav-link">✈️ Travel</a>
+        <a href="work.html" class="nav-link">💼 Work</a>
+        <a href="health.html" class="nav-link">❤️ Health</a>
+        <a href="technology.html" class="nav-link">💻 Technology</a>
+        <a href="environment.html" class="nav-link active">🌿 Environment</a>
+        <a href="culture.html" class="nav-link">🌍 Culture</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <a href="index.html">Vocabulary</a>
+        <span>›</span>
+        Environment &amp; Nature
+      </div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">🌿 Environment &amp; Nature</h1>
+      <p class="page-subtitle">20 essential B2 words for environment and nature topics · Click a card to reveal its definition</p>
+
+      <div class="flashcard-container">
+        <div class="fc-progress-bar"><div class="fc-progress-fill" id="fc-progress-fill" style="width:0%"></div></div>
+        <div class="fc-progress" id="fc-progress-text">0 / 20 words learned</div>
+
+        <div class="flashcard" id="flashcard" onclick="reveal()">
+          <span class="fc-counter" id="fc-counter">1 / 20</span>
+          <span class="fc-learned-badge" id="fc-learned-badge">Already learned ✓</span>
+          <div class="fc-pos" id="fc-pos"></div>
+          <div class="fc-word" id="fc-word"></div>
+          <div class="fc-hint" id="fc-hint">Click to see the definition</div>
+          <div class="fc-reveal" id="fc-reveal">
+            <div class="fc-def" id="fc-def"></div>
+            <div class="fc-example" id="fc-example"></div>
+          </div>
+        </div>
+
+        <div class="fc-actions" id="fc-actions" style="display:none">
+          <button class="fc-btn fc-btn-retry" onclick="retry()">Practice again ↩</button>
+          <button class="fc-btn fc-btn-ok" onclick="gotIt()">Got it ✓</button>
+        </div>
+
+        <div class="fc-done" id="fc-done" style="display:none">
+          <div style="font-size:2.5rem;margin-bottom:12px">🎉</div>
+          <h2>Session complete!</h2>
+          <p id="fc-done-msg">You've been through all the cards. Keep reviewing to strengthen your memory.</p>
+          <div class="fc-done-btns">
+            <button class="fc-btn fc-btn-retry" onclick="restart()">Restart session ↩</button>
+            <button class="fc-reset-btn" onclick="resetLearned()">Reset progress</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const PAGE_ID = 'vocab_environment';
+const WORDS = [
+  { word: 'sustainability', pos: 'noun', def: 'The ability to be maintained over the long term without causing damage to the natural environment.', ex: 'The company has committed to sustainability in all its operations and supply chains.' },
+  { word: 'biodiversity', pos: 'noun', def: 'The variety of plant, animal, and other living organisms found within a particular habitat or on Earth.', ex: 'Deforestation is one of the greatest threats to biodiversity in tropical rainforests.' },
+  { word: 'deforestation', pos: 'noun', def: 'The clearing of forests on a large scale, often for agriculture, logging, or urban development.', ex: 'Deforestation in the Amazon Basin continues at an alarming rate, destroying vital ecosystems.' },
+  { word: 'carbon footprint', pos: 'noun', def: 'The total amount of greenhouse gases, especially carbon dioxide, produced by an individual or activity.', ex: 'Reducing your carbon footprint by using public transport can make a real difference.' },
+  { word: 'renewable energy', pos: 'noun', def: 'Energy from a naturally replenishing source, such as solar, wind, or water, that does not run out.', ex: 'Solar power is currently the fastest-growing form of renewable energy in the world.' },
+  { word: 'ecosystem', pos: 'noun', def: 'A biological community of interacting organisms and their physical environment forming a system.', ex: 'The oil spill caused catastrophic damage to the delicate marine ecosystem.' },
+  { word: 'emissions', pos: 'noun', def: 'The production and discharge of gases, especially greenhouse gases, into the atmosphere.', ex: 'Many countries have pledged to reduce their carbon emissions to net zero by 2050.' },
+  { word: 'conservation', pos: 'noun', def: 'The careful protection of the natural environment, wildlife, and natural resources.', ex: 'Wildlife conservation is essential to protect endangered species from extinction.' },
+  { word: 'habitat', pos: 'noun', def: 'The natural environment in which a particular species of animal or plant normally lives and grows.', ex: 'The polar bear\'s habitat is shrinking rapidly as sea ice melts due to rising temperatures.' },
+  { word: 'drought', pos: 'noun', def: 'A prolonged period of abnormally low rainfall, leading to a shortage of water.', ex: 'The region has suffered from severe drought for three consecutive years, affecting crops.' },
+  { word: 'pollution', pos: 'noun', def: 'The introduction of harmful or poisonous substances into the natural environment.', ex: 'Air pollution in the city centre has reached dangerously high levels during rush hour.' },
+  { word: 'recycling', pos: 'noun', def: 'The process of converting waste materials into new products to reduce consumption of natural resources.', ex: 'Recycling aluminium cans uses significantly less energy than producing them from raw materials.' },
+  { word: 'endangered', pos: 'adjective', def: '(Of a species) seriously at risk of becoming extinct due to a very small remaining population.', ex: 'The mountain gorilla is classified as an endangered species, with fewer than 1,000 remaining.' },
+  { word: 'climate change', pos: 'noun', def: 'Long-term shifts in global temperatures and weather patterns, largely driven by human activities.', ex: 'Climate change is causing more frequent and intense extreme weather events worldwide.' },
+  { word: 'fossil fuels', pos: 'noun', def: 'Natural fuels such as coal, oil, and natural gas, formed from the remains of ancient organisms.', ex: 'Burning fossil fuels releases large quantities of carbon dioxide, accelerating climate change.' },
+  { word: 'greenhouse effect', pos: 'noun', def: 'The trapping of the sun\'s warmth in the lower atmosphere by gases such as carbon dioxide.', ex: 'The greenhouse effect is intensifying due to the increasing volume of gases released by industry.' },
+  { word: 'erosion', pos: 'noun', def: 'The gradual wearing away of rock or soil by the action of water, wind, or other natural forces.', ex: 'Coastal erosion is threatening many homes and roads built close to the shoreline.' },
+  { word: 'landfill', pos: 'noun', def: 'A site where waste material is buried in the ground, often the least environmentally friendly disposal method.', ex: 'Sending food waste to landfill produces methane, a potent greenhouse gas.' },
+  { word: 'organic', pos: 'adjective', def: 'Produced or involving production without the use of chemical fertilisers, pesticides, or other artificial substances.', ex: 'She prefers to buy organic fruit and vegetables to avoid consuming artificial pesticides.' },
+  { word: 'reforestation', pos: 'noun', def: 'The process of replanting trees in areas that have previously been deforested or degraded.', ex: 'Large-scale reforestation projects are helping to restore destroyed ecosystems around the world.' },
+];
+
+let deck = [], current = 0, learned = new Set(), revealed = false;
+
+function shuffle(arr) { const a = [...arr]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+async function init() {
+  const data = await DB.loadPage(PAGE_ID);
+  if (data && Array.isArray(data.learned)) learned = new Set(data.learned);
+  deck = shuffle(WORDS); current = 0; renderCard(); renderProgress();
+}
+
+function saveState() { DB.savePage(PAGE_ID, { learned: [...learned] }); }
+
+function renderCard() {
+  const cardEl = document.getElementById('flashcard'), doneEl = document.getElementById('fc-done'), actEl = document.getElementById('fc-actions');
+  if (current >= deck.length) { cardEl.style.display = 'none'; actEl.style.display = 'none'; doneEl.style.display = 'block'; document.getElementById('fc-done-msg').textContent = learned.size + ' of ' + WORDS.length + ' words marked as learned. Keep it up!'; return; }
+  cardEl.style.display = 'flex'; doneEl.style.display = 'none'; revealed = false;
+  const w = deck[current];
+  document.getElementById('fc-word').textContent = w.word;
+  document.getElementById('fc-pos').textContent = w.pos;
+  document.getElementById('fc-def').textContent = w.def;
+  document.getElementById('fc-example').textContent = '"' + w.ex + '"';
+  document.getElementById('fc-counter').textContent = (current + 1) + ' / ' + deck.length;
+  document.getElementById('fc-reveal').classList.remove('shown');
+  document.getElementById('fc-hint').style.display = 'block';
+  actEl.style.display = 'none';
+  const badge = document.getElementById('fc-learned-badge');
+  if (learned.has(w.word)) { cardEl.classList.add('learned-card'); badge.style.display = 'block'; } else { cardEl.classList.remove('learned-card'); badge.style.display = 'none'; }
+}
+
+function reveal() { if (revealed) return; revealed = true; document.getElementById('fc-reveal').classList.add('shown'); document.getElementById('fc-hint').style.display = 'none'; document.getElementById('fc-actions').style.display = 'flex'; }
+function gotIt() { learned.add(deck[current].word); saveState(); current++; renderCard(); renderProgress(); }
+function retry() { const card = deck.splice(current, 1)[0]; const insertAt = current + 1 + Math.floor(Math.random() * Math.max(1, deck.length - current)); deck.splice(Math.min(insertAt, deck.length), 0, card); renderCard(); }
+function renderProgress() { const n = learned.size, tot = WORDS.length, pct = Math.round((n / tot) * 100); document.getElementById('fc-progress-text').textContent = n + ' / ' + tot + ' words learned'; document.getElementById('fc-progress-fill').style.width = pct + '%'; }
+function restart() { deck = shuffle(WORDS); current = 0; document.getElementById('fc-done').style.display = 'none'; document.getElementById('flashcard').style.display = 'flex'; renderCard(); }
+function resetLearned() { if (!confirm('Reset all progress for Environment & Nature? This cannot be undone.')) return; learned = new Set(); saveState(); restart(); renderProgress(); }
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

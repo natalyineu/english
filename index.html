@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>B2 Communicator Practice</title>
+<title>B2 Ready 🎓</title>
 <link rel="stylesheet" href="style.css">
+<script src="ui.js"></script>
 </head>
 <body>
 <div class="site-wrap">
@@ -20,7 +22,7 @@
     <nav class="sidebar-nav">
       <div class="nav-section">
         <span class="nav-section-label">Overview</span>
-        <a href="index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="index.html" class="nav-link active">🏠 Dashboard</a>
         <a href="roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
       </div>
       <div class="nav-section">
@@ -66,27 +68,49 @@
     </div>
 
     <div class="page-content">
-      <h1 class="page-title">B2 Communicator Practice</h1>
-      <p class="page-subtitle">LanguageCert International ESOL · 5 written papers · 6 speaking papers · Full answer keys</p>
+      <h1 class="page-title">Your B2 Practice Hub</h1>
+      <p class="page-subtitle">LanguageCert B2 Communicator · All 4 skills · 27 practice papers · Model answers included · Progress saved automatically</p>
+
+      <!-- Streak & Achievements -->
+      <div class="streak-bar" id="streak-bar">
+        <div class="streak-fire">🔥</div>
+        <div class="streak-info">
+          <div class="streak-count" id="streak-count">0</div>
+          <div class="streak-label">day streak — keep it up!</div>
+        </div>
+        <div class="streak-best" id="streak-best">Best: 0 days</div>
+      </div>
+      <div class="achievements-row" id="achievements-row"></div>
+
+      <!-- Roadmap CTA -->
+      <a href="roadmap.html" style="display:flex;align-items:center;gap:20px;background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;border-radius:14px;padding:22px 28px;margin-bottom:32px;text-decoration:none;transition:transform .18s,box-shadow .18s;box-shadow:0 4px 18px rgba(27,42,74,.25)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 28px rgba(27,42,74,.3)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 18px rgba(27,42,74,.25)'">
+        <span style="font-size:2.2rem">🗺️</span>
+        <div style="flex:1">
+          <div style="font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px">Start here</div>
+          <div style="font-size:1.05rem;font-weight:700">My Study Roadmap</div>
+          <div style="font-size:.82rem;color:rgba(255,255,255,.55);margin-top:3px">6 phases · track tasks · see your exam date countdown</div>
+        </div>
+        <span style="font-size:1.5rem;opacity:.4">→</span>
+      </a>
 
       <!-- Skill overview cards -->
       <div class="skill-grid">
-        <a href="reading/paper1.html" class="skill-card">
+        <a href="reading/paper1.html" class="skill-card" data-skill="reading">
           <span class="skill-icon">📖</span>
           <div class="skill-name">Reading</div>
           <div class="skill-meta">26 marks · ~1h 5min · 4 parts</div>
           <div class="skill-progress">
-            <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
-            <div class="progress-label">1 of 5 papers ready</div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-reading" style="width:0%"></div></div>
+            <div class="progress-label" id="label-reading">5 of 5 papers ready</div>
           </div>
         </a>
-        <a href="writing/paper1.html" class="skill-card">
+        <a href="writing/paper1.html" class="skill-card" data-skill="writing">
           <span class="skill-icon">✍️</span>
           <div class="skill-name">Writing</div>
           <div class="skill-meta">24 marks · ~1h 5min · 2 tasks</div>
           <div class="skill-progress">
-            <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
-            <div class="progress-label">1 of 5 papers ready</div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-writing" style="width:0%"></div></div>
+            <div class="progress-label" id="label-writing">5 of 5 papers ready</div>
           </div>
         </a>
         <a href="speaking/paper1.html" class="skill-card">
@@ -94,19 +118,42 @@
           <div class="skill-name">Speaking</div>
           <div class="skill-meta">50 marks · 13 min · 4 parts</div>
           <div class="skill-progress">
-            <div class="progress-bar"><div class="progress-fill" style="width:17%"></div></div>
-            <div class="progress-label">1 of 6 papers ready</div>
+            <div class="progress-label" style="color:var(--muted)">6 papers · practice with a partner</div>
           </div>
         </a>
-        <a href="#" class="skill-card">
+        <a href="listening/paper1.html" class="skill-card" data-skill="listening">
           <span class="skill-icon">🎧</span>
           <div class="skill-name">Listening</div>
-          <div class="skill-meta">26 marks · ~30 min · 4 parts</div>
+          <div class="skill-meta">26 marks · ~30 min · 4 parts · transcript</div>
           <div class="skill-progress">
-            <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
-            <div class="progress-label">Coming soon</div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-listening" style="width:0%"></div></div>
+            <div class="progress-label" id="label-listening">5 of 5 papers ready</div>
           </div>
         </a>
+        <a href="vocabulary/index.html" class="skill-card" data-skill="vocabulary">
+          <span class="skill-icon">📚</span>
+          <div class="skill-name">Vocabulary</div>
+          <div class="skill-meta">120 words · 6 topics · flashcards</div>
+          <div class="skill-progress">
+            <div class="progress-bar"><div class="progress-fill" id="prog-vocabulary" style="width:0%"></div></div>
+            <div class="progress-label" id="label-vocabulary">6 of 6 topic sets ready</div>
+          </div>
+        </a>
+        <a href="grammar/index.html" class="skill-card" data-skill="grammar">
+          <span class="skill-icon">📐</span>
+          <div class="skill-name">Grammar</div>
+          <div class="skill-meta">6 topics · gap-fill · MC · error correction</div>
+          <div class="skill-progress">
+            <div class="progress-bar"><div class="progress-fill" id="prog-grammar" style="width:0%"></div></div>
+            <div class="progress-label" id="label-grammar">6 of 6 topics ready</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- Progress stats chart -->
+      <div id="stats-section" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px 24px;margin-bottom:24px;box-shadow:var(--shadow)">
+        <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px">📊 Your Progress</div>
+        <div id="stats-bars" style="display:flex;flex-direction:column;gap:10px"></div>
       </div>
 
       <!-- Scoring reminder -->
@@ -132,7 +179,7 @@
       <!-- Reading papers -->
       <h2 class="section-title">📖 Reading — 5 Practice Papers</h2>
       <ul class="paper-list" style="margin-bottom:32px">
-        <a href="reading/paper1.html" class="paper-item">
+        <a href="reading/paper1.html" class="paper-item" data-page-id="reading_paper1">
           <div class="paper-num">P1</div>
           <div class="paper-info">
             <div class="paper-title">Practice Paper 1</div>
@@ -140,44 +187,44 @@
           </div>
           <div class="paper-status ready">Ready</div>
         </a>
-        <div class="paper-item" style="opacity:.55">
+        <a href="reading/paper2.html" class="paper-item" data-page-id="reading_paper2">
           <div class="paper-num">P2</div>
           <div class="paper-info">
             <div class="paper-title">Practice Paper 2</div>
-            <div class="paper-parts">4 parts · 26 questions</div>
+            <div class="paper-parts">Learning music · History of the bicycle · Gap-fill · Matching</div>
           </div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="reading/paper3.html" class="paper-item" data-page-id="reading_paper3">
           <div class="paper-num">P3</div>
           <div class="paper-info">
             <div class="paper-title">Practice Paper 3</div>
-            <div class="paper-parts">4 parts · 26 questions</div>
+            <div class="paper-parts">Working from home · The Great Wall of China · Gap-fill · Matching</div>
           </div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="reading/paper6.html" class="paper-item" data-page-id="reading_paper6">
           <div class="paper-num">P6</div>
           <div class="paper-info">
             <div class="paper-title">Practice Paper 6</div>
-            <div class="paper-parts">4 parts · 26 questions</div>
+            <div class="paper-parts">The slow food movement · Sign language · Gap-fill · Matching</div>
           </div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="reading/paper7.html" class="paper-item" data-page-id="reading_paper7">
           <div class="paper-num">P7</div>
           <div class="paper-info">
             <div class="paper-title">Practice Paper 7</div>
-            <div class="paper-parts">4 parts · 26 questions</div>
+            <div class="paper-parts">The science of sleep · History of coffee · Gap-fill · Matching</div>
           </div>
-          <div class="paper-status">Coming soon</div>
-        </div>
+          <div class="paper-status ready">Ready</div>
+        </a>
       </ul>
 
       <!-- Writing papers -->
       <h2 class="section-title">✍️ Writing — 5 Practice Papers</h2>
       <ul class="paper-list" style="margin-bottom:32px">
-        <a href="writing/paper1.html" class="paper-item">
+        <a href="writing/paper1.html" class="paper-item" data-page-id="writing_paper1">
           <div class="paper-num">P1</div>
           <div class="paper-info">
             <div class="paper-title">Practice Paper 1</div>
@@ -185,26 +232,26 @@
           </div>
           <div class="paper-status ready">Ready</div>
         </a>
-        <div class="paper-item" style="opacity:.55">
+        <a href="writing/paper2.html" class="paper-item" data-page-id="writing_paper2">
           <div class="paper-num">P2</div>
-          <div class="paper-info"><div class="paper-title">Practice Paper 2</div><div class="paper-parts">2 writing tasks</div></div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-info"><div class="paper-title">Practice Paper 2</div><div class="paper-parts">Photo competition email · "A time I felt very proud" essay</div></div>
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="writing/paper3.html" class="paper-item" data-page-id="writing_paper3">
           <div class="paper-num">P3</div>
-          <div class="paper-info"><div class="paper-title">Practice Paper 3</div><div class="paper-parts">2 writing tasks</div></div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-info"><div class="paper-title">Practice Paper 3</div><div class="paper-parts">Sports club survey email · Technology in everyday life essay</div></div>
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="writing/paper6.html" class="paper-item" data-page-id="writing_paper6">
           <div class="paper-num">P6</div>
-          <div class="paper-info"><div class="paper-title">Practice Paper 6</div><div class="paper-parts">2 writing tasks</div></div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-info"><div class="paper-title">Practice Paper 6</div><div class="paper-parts">Hotel feedback letter · What travelling has taught me essay</div></div>
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="writing/paper7.html" class="paper-item" data-page-id="writing_paper7">
           <div class="paper-num">P7</div>
-          <div class="paper-info"><div class="paper-title">Practice Paper 7</div><div class="paper-parts">2 writing tasks</div></div>
-          <div class="paper-status">Coming soon</div>
-        </div>
+          <div class="paper-info"><div class="paper-title">Practice Paper 7</div><div class="paper-parts">Language course email · A place that holds special memories essay</div></div>
+          <div class="paper-status ready">Ready</div>
+        </a>
       </ul>
 
       <!-- Speaking papers -->
@@ -218,35 +265,208 @@
           </div>
           <div class="paper-status ready">Ready</div>
         </a>
-        <div class="paper-item" style="opacity:.55">
+        <a href="speaking/paper2.html" class="paper-item">
           <div class="paper-num">P2</div>
-          <div class="paper-info"><div class="paper-title">Practice Paper 2</div><div class="paper-parts">4 parts · 13 minutes</div></div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-info"><div class="paper-title">Practice Paper 2</div><div class="paper-parts">Work &amp; Education · Role-plays · Discussion · Monologue</div></div>
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="speaking/paper3.html" class="paper-item">
           <div class="paper-num">P3</div>
-          <div class="paper-info"><div class="paper-title">Practice Paper 3</div><div class="paper-parts">4 parts · 13 minutes</div></div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-info"><div class="paper-title">Practice Paper 3</div><div class="paper-parts">Travel &amp; Natural World · Role-plays · Discussion · Monologue</div></div>
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="speaking/paper6.html" class="paper-item">
           <div class="paper-num">P6</div>
-          <div class="paper-info"><div class="paper-title">Practice Paper 6</div><div class="paper-parts">4 parts · 13 minutes</div></div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-info"><div class="paper-title">Practice Paper 6</div><div class="paper-parts">Culture &amp; Society · Role-plays · Discussion · Monologue</div></div>
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="speaking/paper7.html" class="paper-item">
           <div class="paper-num">P7</div>
-          <div class="paper-info"><div class="paper-title">Practice Paper 7</div><div class="paper-parts">4 parts · 13 minutes</div></div>
-          <div class="paper-status">Coming soon</div>
-        </div>
-        <div class="paper-item" style="opacity:.55">
+          <div class="paper-info"><div class="paper-title">Practice Paper 7</div><div class="paper-parts">Health &amp; Lifestyle · Role-plays · Discussion · Monologue</div></div>
+          <div class="paper-status ready">Ready</div>
+        </a>
+        <a href="speaking/paper8.html" class="paper-item">
           <div class="paper-num">P8</div>
-          <div class="paper-info"><div class="paper-title">Practice Paper 8</div><div class="paper-parts">4 parts · 13 minutes</div></div>
-          <div class="paper-status">Coming soon</div>
-        </div>
+          <div class="paper-info"><div class="paper-title">Practice Paper 8</div><div class="paper-parts">The Modern World · Role-plays · Discussion · Monologue</div></div>
+          <div class="paper-status ready">Ready</div>
+        </a>
       </ul>
 
     </div><!-- page-content -->
   </main>
 </div>
+
+<style>
+.paper-status.in-progress { background: #fef3c7; color: #92400e; border: 1px solid #fcd34d; }
+.paper-status.done-user   { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+</style>
+
+<script src="db.js"></script>
+<script>
+(function () {
+  const SKILLS = {
+    reading:    ['reading_paper1','reading_paper2','reading_paper3','reading_paper6','reading_paper7'],
+    writing:    ['writing_paper1','writing_paper2','writing_paper3','writing_paper6','writing_paper7'],
+    listening:  ['listening_paper1','listening_paper2','listening_paper3','listening_paper6','listening_paper7'],
+    vocabulary: ['vocab_travel','vocab_work','vocab_health','vocab_technology','vocab_environment','vocab_culture'],
+    grammar:    ['grammar_conditionals','grammar_passive','grammar_reported','grammar_modals','grammar_relative','grammar_tenses'],
+  };
+
+  function getLocal(pageId) {
+    try { return JSON.parse(localStorage.getItem('b2_page_' + pageId)); } catch { return null; }
+  }
+
+  function isStarted(d) { return !!d && Object.keys(d).length > 0; }
+
+  function isDone(pageId, d) {
+    if (!d) return false;
+    if (pageId.startsWith('reading_'))   return !!(d.p1_checked && d.p2_checked && d.p3_checked);
+    if (pageId.startsWith('listening_')) return !!(d.p1_checked && d.p4_checked);
+    if (pageId.startsWith('writing_'))   return (d.task1?.length > 30) || (d.task2?.length > 30);
+    if (pageId.startsWith('vocab_'))     return Array.isArray(d.learned) && d.learned.length > 0;
+    if (pageId.startsWith('grammar_'))   return !!(d.ex1Checked && d.ex2Checked && d.ex3Checked);
+    return false;
+  }
+
+  function updateBadges() {
+    document.querySelectorAll('.paper-item[data-page-id]').forEach(item => {
+      const id = item.dataset.pageId;
+      const d = getLocal(id);
+      const badge = item.querySelector('.paper-status');
+      if (!badge) return;
+      if (isDone(id, d)) {
+        badge.textContent = '✓ Done';
+        badge.className = 'paper-status done-user';
+      } else if (isStarted(d)) {
+        badge.textContent = '⟳ Started';
+        badge.className = 'paper-status in-progress';
+      }
+    });
+  }
+
+  function updateSkillCards() {
+    Object.entries(SKILLS).forEach(([skill, pages]) => {
+      const total = pages.length;
+      const allData = pages.map(p => ({ id: p, d: getLocal(p) }));
+      const started = allData.filter(x => isStarted(x.d)).length;
+      const done    = allData.filter(x => isDone(x.id, x.d)).length;
+      const fill  = document.getElementById('prog-' + skill);
+      const label = document.getElementById('label-' + skill);
+      if (!fill || !label) return;
+      if (done === 0 && started === 0) {
+        fill.style.width = '0%';
+        label.textContent = total + ' of ' + total + ' papers ready';
+        return;
+      }
+      const pct = Math.round((done / total) * 100);
+      fill.style.width = Math.max(pct, started > 0 ? 8 : 0) + '%';
+      if (done === total) {
+        label.textContent = 'All ' + total + ' completed ✓';
+      } else if (done > 0 && started > done) {
+        label.textContent = done + ' done · ' + (started - done) + ' in progress';
+      } else if (done > 0) {
+        label.textContent = done + ' of ' + total + ' completed';
+      } else {
+        label.textContent = started + ' of ' + total + ' started';
+      }
+    });
+  }
+
+  async function updateFromCloud() {
+    const ids = Object.values(SKILLS).flat();
+    for (const id of ids) {
+      await DB.loadPage(id);
+    }
+    updateBadges();
+    updateSkillCards();
+  }
+
+  // ── Progress Stats Chart ──────────────────
+  function renderStats() {
+    const container = document.getElementById('stats-bars');
+    if (!container) return;
+    const skills = [
+      { label:'📖 Reading',    keys:['reading_paper1','reading_paper2','reading_paper3','reading_paper6','reading_paper7'], color:'#7c3aed' },
+      { label:'✍️ Writing',    keys:['writing_paper1','writing_paper2','writing_paper3','writing_paper6','writing_paper7'], color:'#2563eb' },
+      { label:'🎧 Listening',  keys:['listening_paper1','listening_paper2','listening_paper3','listening_paper6','listening_paper7'], color:'#059669' },
+      { label:'📚 Vocabulary', keys:['vocab_travel','vocab_work','vocab_technology','vocab_health','vocab_culture','vocab_environment'], color:'#ec4899' },
+      { label:'📐 Grammar',    keys:['grammar_conditionals','grammar_modals','grammar_passive','grammar_relative','grammar_reported','grammar_tenses'], color:'#8b5cf6' },
+    ];
+    container.innerHTML = skills.map(s => {
+      const done = s.keys.filter(k => localStorage.getItem('b2_page_' + k)).length;
+      const pct = Math.round(done / s.keys.length * 100);
+      return `<div style="display:flex;align-items:center;gap:12px">
+        <div style="width:110px;font-size:.78rem;font-weight:600;color:var(--text);flex-shrink:0">${s.label}</div>
+        <div style="flex:1;background:var(--border);border-radius:99px;height:10px;overflow:hidden">
+          <div style="width:${pct}%;background:${s.color};height:100%;border-radius:99px;transition:width .6s ease"></div>
+        </div>
+        <div style="width:48px;font-size:.75rem;font-weight:700;color:${s.color};text-align:right">${done}/${s.keys.length}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ── Streak ────────────────────────────────
+  function updateStreak() {
+    const key = 'b2_streak';
+    let d;
+    try { d = JSON.parse(localStorage.getItem(key)) || {}; } catch { d = {}; }
+    const today = new Date().toISOString().slice(0,10);
+    const last  = d.lastVisit || '';
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
+    if (last === today) {
+      // already visited today, no change
+    } else if (last === yesterday) {
+      d.streak = (d.streak || 0) + 1;
+      d.lastVisit = today;
+    } else {
+      d.streak = 1;
+      d.lastVisit = today;
+    }
+    d.best = Math.max(d.best || 0, d.streak || 0);
+    try { localStorage.setItem(key, JSON.stringify(d)); } catch {}
+    document.getElementById('streak-count').textContent = d.streak || 1;
+    document.getElementById('streak-best').textContent  = 'Best: ' + (d.best || 1) + ' days';
+    return d;
+  }
+
+  // ── Achievements ──────────────────────────
+  const ACHIEVEMENTS = [
+    { id:'first_visit',  icon:'🎓', label:'First Visit',      check: ()=>true },
+    { id:'streak3',      icon:'🔥', label:'3-Day Streak',     check: (d)=>(d.streak||0)>=3 },
+    { id:'streak7',      icon:'🏆', label:'7-Day Streak',     check: (d)=>(d.streak||0)>=7 },
+    { id:'read1',        icon:'📖', label:'First Reading',    check: ()=>!!localStorage.getItem('b2_page_reading_paper1') },
+    { id:'listen1',      icon:'🎧', label:'First Listening',  check: ()=>!!localStorage.getItem('b2_page_listening_paper1') },
+    { id:'write1',       icon:'✍️', label:'First Writing',    check: ()=>!!localStorage.getItem('b2_page_writing_paper1') },
+    { id:'vocab1',       icon:'📚', label:'Vocab Started',    check: ()=>!!localStorage.getItem('b2_page_vocab_travel') },
+    { id:'allread',      icon:'⭐', label:'All Reading',
+      check: ()=>['reading_paper1','reading_paper2','reading_paper3','reading_paper6','reading_paper7']
+                 .every(k=>localStorage.getItem('b2_page_'+k)) },
+    { id:'alllisten',    icon:'💫', label:'All Listening',
+      check: ()=>['listening_paper1','listening_paper2','listening_paper3','listening_paper6','listening_paper7']
+                 .every(k=>localStorage.getItem('b2_page_'+k)) },
+  ];
+
+  function renderAchievements(streakData) {
+    const row = document.getElementById('achievements-row');
+    if (!row) return;
+    row.innerHTML = ACHIEVEMENTS.map(a => {
+      const unlocked = a.check(streakData);
+      return `<div class="achievement ${unlocked?'unlocked':''}">
+        <span class="ach-icon">${a.icon}</span>
+        <span>${a.label}</span>
+      </div>`;
+    }).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    updateBadges();
+    updateSkillCards();
+    updateFromCloud();
+    renderStats();
+    const streakData = updateStreak();
+    renderAchievements(streakData);
+  });
+})();
+</script>
 </body>
 </html>

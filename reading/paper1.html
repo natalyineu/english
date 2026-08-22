@@ -2,9 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reading — Paper 1</title>
+<title>Reading P1 · B2 🎓</title>
 <link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<script src="../feedback.js"></script>
+<script src="../timer.js"></script>
 </head>
 <body>
 <div class="site-wrap">
@@ -21,8 +26,7 @@
       <div class="nav-section">
         <span class="nav-section-label">Overview</span>
         <a href="../index.html" class="nav-link">🏠 Dashboard</a>
-        <a href="../exam-info.md" class="nav-link">📋 Exam Info</a>
-        <a href="../roadmap.html" class="nav-link">🗺️ Roadmap</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
       </div>
       <div class="nav-section">
         <span class="nav-section-label">Reading</span>
@@ -91,6 +95,7 @@
           <span class="part-label">Part 1</span>
           <span class="part-title">Multiple Choice</span>
           <span class="part-marks">6 marks</span>
+          <button class="reset-part-btn" onclick="resetPart1()" title="Reset Part 1">↺ Reset</button>
         </div>
         <p class="part-instructions">Read the text and choose the correct answer for each question.</p>
 
@@ -172,6 +177,7 @@
           <span class="part-label">Part 2</span>
           <span class="part-title">Sentence Gap-fill</span>
           <span class="part-marks">6 marks</span>
+          <button class="reset-part-btn" onclick="resetPart2()" title="Reset Part 2">↺ Reset</button>
         </div>
         <p class="part-instructions">Read the text. Use the sentences A–G to complete the gaps. Choose one sentence per gap. There is one extra sentence you will not need.</p>
 
@@ -221,6 +227,7 @@
           <span class="part-label">Part 3</span>
           <span class="part-title">Matching</span>
           <span class="part-marks">7 marks</span>
+          <button class="reset-part-btn" onclick="resetPart3()" title="Reset Part 3">↺ Reset</button>
         </div>
         <p class="part-instructions">Read the four texts. For each question, choose which text (A, B, C or D) gives you the answer.</p>
 
@@ -288,6 +295,7 @@
           <span class="part-label">Part 4</span>
           <span class="part-title">Short Answers</span>
           <span class="part-marks">7 marks</span>
+          <button class="reset-part-btn" onclick="resetPart4()" title="Reset Part 4">↺ Reset</button>
         </div>
         <p class="part-instructions">Read the text and answer the questions. Use a maximum of <strong>five words</strong> for each answer. Type your answer, then click Reveal to see the model answer.</p>
 
@@ -340,10 +348,11 @@
           </div>
         </div>
 
-        <button class="check-btn reveal" onclick="revealAnswers()">Reveal model answers</button>
+        <button class="check-btn reveal" id="reveal-btn" onclick="revealAnswers()">Reveal model answers</button>
         <div class="part-score" id="part4-score"></div>
       </div>
 
+      <div id="grand-slot" style="margin-top:8px"></div>
     </div><!-- page-content -->
   </main>
 </div>
@@ -358,6 +367,7 @@ function updateTotal() {
   const num = document.getElementById('scoreNum');
   el.style.display = 'block';
   num.innerHTML = total + ' <span>/ 19</span>';
+  if (window.FB) { const slot = document.getElementById('grand-slot'); if (slot) { slot.innerHTML=''; slot.appendChild(FB.grandSummary(total, 19, 13)); } }
 }
 
 // ── Part 1: Multiple Choice ──
@@ -388,51 +398,159 @@ function checkMC(partId, total) {
   el.textContent = 'Part 1 score: ' + score + ' / ' + total;
   el.className = 'part-score visible' + (score === total ? ' perfect' : '');
   updateTotal();
+  if (window.FB) el.insertAdjacentElement('afterend', FB.motivate(score, total, partId));
 }
 
 // ── Part 2: Gap-fill ──
 function checkGapFill() {
   const gaps = document.querySelectorAll('.gap-select');
   let score = 0;
+  document.querySelectorAll('.gap-indicator').forEach(el => el.remove());
   gaps.forEach(sel => {
     const correct = sel.dataset.correct;
-    if (sel.value === correct) { sel.classList.add('correct'); score++; }
+    const ok = sel.value === correct;
+    if (ok) { sel.classList.add('correct'); score++; }
     else sel.classList.add('wrong');
     sel.disabled = true;
+    const ind = document.createElement('span');
+    ind.className = 'gap-indicator ' + (ok ? 'gap-ok' : 'gap-err');
+    ind.innerHTML = ok ? ' ✓' : ' ✗ <span class="gap-correct">→ ' + correct + '</span>';
+    sel.insertAdjacentElement('afterend', ind);
   });
   scores.part2 = score;
   const el = document.getElementById('part2-score');
   el.textContent = 'Part 2 score: ' + score + ' / 6';
   el.className = 'part-score visible' + (score === 6 ? ' perfect' : '');
   updateTotal();
+  if (window.FB) el.insertAdjacentElement('afterend', FB.motivate(score, 6, 'part2'));
 }
 
 // ── Part 3: Matching ──
 function checkMatching() {
   const selects = document.querySelectorAll('.match-select');
   let score = 0;
+  document.querySelectorAll('.match-indicator').forEach(el => el.remove());
   selects.forEach(sel => {
     const correct = sel.dataset.correct;
-    if (sel.value === correct) { sel.classList.add('correct'); score++; }
+    const ok = sel.value === correct;
+    if (ok) { sel.classList.add('correct'); score++; }
     else sel.classList.add('wrong');
     sel.disabled = true;
+    const ind = document.createElement('span');
+    ind.className = 'match-indicator ' + (ok ? 'gap-ok' : 'gap-err');
+    ind.innerHTML = ok ? ' ✓' : ' ✗ <span class="gap-correct">→ ' + correct + '</span>';
+    sel.insertAdjacentElement('afterend', ind);
   });
   scores.part3 = score;
   const el = document.getElementById('part3-score');
   el.textContent = 'Part 3 score: ' + score + ' / 7';
   el.className = 'part-score visible' + (score === 7 ? ' perfect' : '');
   updateTotal();
+  if (window.FB) el.insertAdjacentElement('afterend', FB.motivate(score, 7, 'part3'));
 }
 
-// ── Part 4: Short Answers (reveal only) ──
+// ── Part 4: Short Answers (reveal / hide toggle) ──
 function revealAnswers() {
+  const btn = document.getElementById('reveal-btn');
+  const sa1 = document.getElementById('sa1');
+  const revealed = sa1?.classList.contains('visible');
   for (let i = 1; i <= 7; i++) {
-    document.getElementById('sa' + i).classList.add('visible');
+    document.getElementById('sa' + i)?.classList.toggle('visible', !revealed);
   }
   const el = document.getElementById('part4-score');
-  el.textContent = 'Model answers revealed — mark yourself: each correct answer = 1 mark (7 total)';
-  el.className = 'part-score visible';
+  if (!revealed) {
+    el.textContent = 'Model answers revealed — mark yourself: each correct answer = 1 mark (7 total)';
+    el.className = 'part-score visible';
+    if (btn) btn.textContent = 'Hide model answers';
+  } else {
+    el.className = 'part-score';
+    if (btn) btn.textContent = 'Reveal model answers';
+  }
 }
+
+
+// ── Reset per part ───────────────────────────────────
+function resetPart1() {
+  document.querySelectorAll('#p1-questions .question').forEach(q => {
+    q.querySelectorAll('.option-btn').forEach(b => { b.classList.remove('selected','correct','wrong'); b.disabled = false; });
+    q.removeAttribute('data-checked');
+  });
+  scores.part1 = 0;
+  const el = document.getElementById('part1-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  updateTotal(); savePage();
+}
+function resetPart2() {
+  document.querySelectorAll('.gap-select').forEach(sel => {
+    sel.value = ''; sel.classList.remove('correct','wrong'); sel.disabled = false;
+  });
+  document.querySelectorAll('.gap-indicator').forEach(el => el.remove());
+  scores.part2 = 0;
+  const el = document.getElementById('part2-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  updateTotal(); savePage();
+}
+function resetPart3() {
+  document.querySelectorAll('.match-select').forEach(sel => {
+    sel.value = ''; sel.classList.remove('correct','wrong'); sel.disabled = false;
+  });
+  document.querySelectorAll('.match-indicator').forEach(el => el.remove());
+  scores.part3 = 0;
+  const el = document.getElementById('part3-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  updateTotal(); savePage();
+}
+function resetPart4() {
+  document.querySelectorAll('.sa-input').forEach(inp => inp.value = '');
+  for (let i = 1; i <= 7; i++) document.getElementById('sa' + i)?.classList.remove('visible');
+  const el = document.getElementById('part4-score');
+  if (el) { el.textContent = ''; el.className = 'part-score'; }
+  const btn = document.getElementById('reveal-btn');
+  if (btn) btn.textContent = 'Reveal model answers';
+  savePage();
+}
+
+// ── Page sync (via db.js) ─────────────────────────────
+const PAGE_ID = 'reading_paper1';
+TIMER.init(50);
+
+function collectState() {
+  return {
+    p1_sel:      [...document.querySelectorAll('#p1-questions .question')].map(q => q.querySelector('.option-btn.selected')?.dataset.value || ''),
+    p1_checked:  !!document.querySelector('#p1-questions .question[data-checked]'),
+    p2_sel:      [...document.querySelectorAll('.gap-select')].map(s => s.value),
+    p2_checked:  !!document.querySelector('.gap-select[disabled]'),
+    p3_sel:      [...document.querySelectorAll('.match-select')].map(s => s.value),
+    p3_checked:  !!document.querySelector('.match-select[disabled]'),
+    p4_revealed: !!document.getElementById('sa1')?.classList.contains('visible'),
+    p4_inputs:   [...document.querySelectorAll('.sa-input')].map(i => i.value),
+  };
+}
+
+function savePage() { DB.savePage(PAGE_ID, collectState()); }
+
+function restorePage(s) {
+  if (!s) return;
+  document.querySelectorAll('#p1-questions .question').forEach((q, i) => {
+    const val = s.p1_sel?.[i];
+    if (val) q.querySelector(`.option-btn[data-value="${val}"]`)?.classList.add('selected');
+  });
+  if (s.p1_checked) checkMC('part1', 6);
+  document.querySelectorAll('.gap-select').forEach((sel, i) => { if (s.p2_sel?.[i]) sel.value = s.p2_sel[i]; });
+  if (s.p2_checked) checkGapFill();
+  document.querySelectorAll('.match-select').forEach((sel, i) => { if (s.p3_sel?.[i]) sel.value = s.p3_sel[i]; });
+  if (s.p3_checked) checkMatching();
+  if (s.p4_inputs) document.querySelectorAll('.sa-input').forEach((inp, i) => { if (s.p4_inputs[i]) inp.value = s.p4_inputs[i]; });
+  if (s.p4_revealed) revealAnswers();
+}
+
+document.querySelectorAll('.sa-input').forEach(inp => inp.addEventListener('input', savePage));
+['selectOption','checkMC','checkGapFill','checkMatching','revealAnswers'].forEach(name => {
+  const orig = window[name];
+  window[name] = function(...args) { orig(...args); savePage(); };
+});
+
+(async () => { restorePage(await DB.loadPage(PAGE_ID)); })();
 </script>
 </body>
 </html>

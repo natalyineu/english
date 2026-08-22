@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grammar: Tenses · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+details.explanation-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0;margin-bottom:28px;box-shadow:var(--shadow)}
+details.explanation-panel summary{padding:18px 24px;font-weight:700;font-size:.95rem;cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;color:var(--text)}
+details.explanation-panel summary::after{content:'▸';margin-left:auto;font-size:.8rem;color:var(--muted);transition:transform .2s}
+details[open].explanation-panel summary::after{transform:rotate(90deg)}
+.explanation-body{padding:0 24px 24px;border-top:1px solid var(--border)}
+.rule-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem}
+.rule-table th{background:var(--bg);padding:8px 12px;text-align:left;font-weight:700;color:var(--muted);border:1px solid var(--border)}
+.rule-table td{padding:8px 12px;border:1px solid var(--border);color:var(--text)}
+.rule-table tr:nth-child(even) td{background:var(--bg)}
+.example{font-style:italic;color:var(--muted);font-size:.85rem;margin:4px 0 4px 12px}
+.gf-questions{display:flex;flex-direction:column;gap:18px}
+.gf-row{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.gf-num{font-weight:700;min-width:22px;color:var(--muted);font-size:.88rem}
+.gf-sentence{font-size:.9rem;color:var(--text);line-height:1.7}
+.gf-input{font-family:'Inter',sans-serif;font-size:.88rem;border:1.5px solid var(--sel);border-radius:6px;padding:5px 10px;background:var(--sel-bg);color:var(--sel);min-width:200px;transition:border-color .15s,background .15s}
+.gf-input:focus{outline:none;border-color:var(--navy)}
+.gf-input.correct{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.gf-input.wrong{border-color:var(--err);background:var(--err-bg);color:var(--err)}
+.gf-reveal{display:none;font-size:.8rem;color:var(--ok);font-weight:600;margin-top:2px}
+.gf-reveal.visible{display:block}
+.ec-questions{display:flex;flex-direction:column;gap:22px}
+.ec-num-label{font-weight:700;font-size:.82rem;color:var(--muted);margin-bottom:4px}
+.ec-sentence{font-size:.92rem;font-style:italic;color:var(--text);background:var(--bg);border-left:3px solid var(--border);padding:8px 14px;border-radius:4px;margin-bottom:10px;line-height:1.6}
+.ec-input{font-family:'Inter',sans-serif;font-size:.88rem;border:1.5px solid var(--border);border-radius:7px;padding:8px 14px;width:100%;background:var(--card);color:var(--text);transition:border-color .15s}
+.ec-input:focus{outline:none;border-color:var(--sel)}
+.ec-input.correct{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.ec-input.wrong{border-color:var(--err);background:var(--err-bg)}
+.ec-answer{display:none;margin-top:6px;font-size:.82rem;color:var(--ok);font-weight:600}
+.ec-answer.visible{display:block}
+</style>
+</head>
+<body>
+<div class="site-wrap">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Grammar</span>
+        <a href="index.html" class="nav-link">📐 All Topics</a>
+        <a href="conditionals.html" class="nav-link">If clauses</a>
+        <a href="passive.html" class="nav-link">Passive voice</a>
+        <a href="reported.html" class="nav-link">Reported speech</a>
+        <a href="modals.html" class="nav-link">Modal verbs</a>
+        <a href="relative.html" class="nav-link">Relative clauses</a>
+        <a href="tenses.html" class="nav-link active">Perfect tenses</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a><span>›</span>
+        <a href="index.html">Grammar</a><span>›</span>
+        Perfect Tenses
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Perfect Tenses</h1>
+      <p class="page-subtitle">26 marks · present perfect, past perfect, future perfect · gap-fill, MC, error correction</p>
+
+      <div class="score-card" id="totalScore" style="display:none">
+        <h2>Your Score</h2>
+        <div class="score-total" id="scoreNum">0 <span>/ 26</span></div>
+        <div class="score-pass">Complete all three exercises to see your total</div>
+      </div>
+
+      <details class="explanation-panel">
+        <summary>📖 Key Rules — Perfect Tenses (click to expand)</summary>
+        <div class="explanation-body">
+          <table class="rule-table">
+            <tr><th>Tense</th><th>Structure</th><th>Key words / uses</th></tr>
+            <tr><td><strong>Present perfect</strong></td><td>have / has + past participle</td><td>just, already, yet, ever, never, since, for, recently, so far · life experiences · past action with present result</td></tr>
+            <tr><td><strong>Present perfect continuous</strong></td><td>have / has been + -ing</td><td>Emphasises duration or ongoing activity: <em>I've been waiting for an hour.</em></td></tr>
+            <tr><td><strong>Past perfect</strong></td><td>had + past participle</td><td>Event completed before another past event: <em>by the time, before, after, when, already, just</em></td></tr>
+            <tr><td><strong>Future perfect</strong></td><td>will have + past participle</td><td>Action completed before a future point: <em>by tomorrow, by the time, by 2030</em></td></tr>
+          </table>
+          <p class="example">Present perfect: I have <em>just</em> finished. / She hasn't arrived <em>yet</em>. / We've lived here <em>since</em> 2010 / <em>for</em> ten years.</p>
+          <p class="example">Past perfect: When he arrived, everyone had <em>already</em> left. / By the time she called, I had eaten.</p>
+          <p class="example">Future perfect: By next June, she will have graduated. / I will have finished by 5 p.m.</p>
+          <p style="font-size:.85rem;color:var(--muted);margin-top:8px;">⚠️ Use <em>for</em> with a period of time (for three years), <em>since</em> with a point in time (since 2010).</p>
+        </div>
+      </details>
+
+      <!-- Exercise 1 -->
+      <div class="quiz-part" id="ex1">
+        <div class="part-header">
+          <span class="part-label">Exercise 1</span>
+          <span class="part-title">Gap-fill</span>
+          <span class="part-marks">10 marks</span>
+        </div>
+        <p class="part-instructions">Type the correct perfect tense form of the verb in brackets.</p>
+
+        <div class="gf-questions" id="ex1-gf">
+          <div class="gf-row"><span class="gf-num">1.</span><div>
+            <div class="gf-sentence">I <input class="gf-input" data-answers="have never visited|'ve never visited" placeholder="visit"> New York, but I'd love to go one day. (never visit)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">2.</span><div>
+            <div class="gf-sentence">By the time she arrived at the party, we <input class="gf-input" data-answers="had already eaten" placeholder="already eat"> all the food. (already eat)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">3.</span><div>
+            <div class="gf-sentence">By next summer, they <input class="gf-input" data-answers="will have lived" placeholder="live"> in this house for exactly ten years. (live)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">4.</span><div>
+            <div class="gf-sentence">She <input class="gf-input" data-answers="had just finished" placeholder="just finish"> her essay when the power went out. (just finish)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">5.</span><div>
+            <div class="gf-sentence">He <input class="gf-input" data-answers="has worked|has been working" placeholder="work"> for this company since 2015. (work)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">6.</span><div>
+            <div class="gf-sentence">We <input class="gf-input" data-answers="have not yet received|haven't yet received" placeholder="not yet receive"> the results of the test. (not yet receive)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">7.</span><div>
+            <div class="gf-sentence">By the time you read this message, I <input class="gf-input" data-answers="will have left" placeholder="leave"> the country. (leave)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">8.</span><div>
+            <div class="gf-sentence">They <input class="gf-input" data-answers="had never met" placeholder="never meet"> before the conference last year. (never meet)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">9.</span><div>
+            <div class="gf-sentence">She <input class="gf-input" data-answers="has already seen" placeholder="already see"> that film three times this month. (already see)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+          <div class="gf-row"><span class="gf-num">10.</span><div>
+            <div class="gf-sentence">We <input class="gf-input" data-answers="will have finished" placeholder="finish"> the project by the end of next week. (finish)</div>
+            <div class="gf-reveal"></div>
+          </div></div>
+        </div>
+
+        <button class="check-btn" id="ex1-btn" onclick="checkGapInputs('ex1', 10)">Check answers</button>
+        <div class="part-score" id="ex1-score"></div>
+      </div>
+
+      <!-- Exercise 2 -->
+      <div class="quiz-part" id="ex2">
+        <div class="part-header">
+          <span class="part-label">Exercise 2</span>
+          <span class="part-title">Multiple Choice</span>
+          <span class="part-marks">10 marks</span>
+        </div>
+        <p class="part-instructions">Choose the correct option (A, B or C) to complete each sentence.</p>
+
+        <div class="questions" id="ex2-questions">
+          <div class="question" data-correct="b">
+            <p class="question-text">1. Oh no! I ___ my keys again. I can't find them anywhere.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> lost</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> have lost</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> had lost</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">2. By the time the ambulance arrived, he ___ consciousness.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> already lost</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> already had lost</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> had already lost</button>
+            </div>
+          </div>
+          <div class="question" data-correct="a">
+            <p class="question-text">3. ___ you ever tried sushi? I think you would love it.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> Have</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> Did</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> Had</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">4. She ___ for the same company for twenty years when she finally retired.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> works</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> has worked</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> had worked</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">5. Don't worry – by tomorrow evening, everything ___ back to normal.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> will be</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> is going to be</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> will have gone</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">6. I ___ just ___ my homework when you called me on my phone.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> have … done</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> had … done</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> have … doing</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">7. He told us he ___ never visited that country before the trip.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> has</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> had</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> was</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">8. When we arrived at the buffet, they ___ nearly all the food.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> ate</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> have eaten</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> had eaten</button>
+            </div>
+          </div>
+          <div class="question" data-correct="c">
+            <p class="question-text">9. By 2030, scientists ___ a cure for several forms of cancer.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> find</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> found</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> will have found</button>
+            </div>
+          </div>
+          <div class="question" data-correct="b">
+            <p class="question-text">10. She ___ in this city since she was born and has no plans to leave.</p>
+            <div class="options">
+              <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">A)</span> lives</button>
+              <button class="option-btn" data-value="b" onclick="selectOption(this)"><span class="option-letter">B)</span> has lived</button>
+              <button class="option-btn" data-value="c" onclick="selectOption(this)"><span class="option-letter">C)</span> had lived</button>
+            </div>
+          </div>
+        </div>
+
+        <button class="check-btn" id="ex2-btn" onclick="checkMC('ex2', 10)">Check answers</button>
+        <div class="part-score" id="ex2-score"></div>
+      </div>
+
+      <!-- Exercise 3 -->
+      <div class="quiz-part" id="ex3">
+        <div class="part-header">
+          <span class="part-label">Exercise 3</span>
+          <span class="part-title">Error Correction</span>
+          <span class="part-marks">6 marks</span>
+        </div>
+        <p class="part-instructions">Each sentence contains one mistake with a perfect tense. Type the corrected sentence in full.</p>
+
+        <div class="ec-questions" id="ex3-ec">
+          <div class="ec-row">
+            <div class="ec-num-label">1.</div>
+            <div class="ec-sentence">I have saw that film before so I don't want to watch it again.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="I have seen that film before so I don't want to watch it again.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">2.</div>
+            <div class="ec-sentence">She has went to the shops but she'll be back soon.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="She has gone to the shops but she'll be back soon.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">3.</div>
+            <div class="ec-sentence">By the time he arrived, we waited for over two hours.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="By the time he arrived, we had waited for over two hours.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">4.</div>
+            <div class="ec-sentence">Have you ever went to Japan? I heard it's beautiful.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="Have you ever been to Japan? I heard it's beautiful.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">5.</div>
+            <div class="ec-sentence">They will finished building the new stadium by the end of next year.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="They will have finished building the new stadium by the end of next year.">
+            <div class="ec-answer"></div>
+          </div>
+          <div class="ec-row">
+            <div class="ec-num-label">6.</div>
+            <div class="ec-sentence">He has lived in this town since ten years and knows everyone.</div>
+            <input class="ec-input" type="text" placeholder="Type the corrected sentence…" data-answer="He has lived in this town for ten years and knows everyone.">
+            <div class="ec-answer"></div>
+          </div>
+        </div>
+
+        <button class="check-btn" id="ex3-btn" onclick="checkErrors('ex3')">Check answers</button>
+        <div class="part-score" id="ex3-score"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const PAGE_ID = 'grammar_tenses';
+const scores = { ex1: 0, ex2: 0, ex3: 0 };
+function updateTotal(){const t=scores.ex1+scores.ex2+scores.ex3;document.getElementById('totalScore').style.display='block';document.getElementById('scoreNum').innerHTML=t+' <span>/ 26</span>';}
+function checkGapInputs(exId,total){const rows=document.querySelectorAll('#'+exId+'-gf .gf-row');let s=0;rows.forEach(row=>{const inp=row.querySelector('.gf-input');const rev=row.querySelector('.gf-reveal');if(!inp)return;const acc=inp.dataset.answers.split('|').map(a=>a.trim().toLowerCase());const val=inp.value.trim().toLowerCase();if(acc.includes(val)){inp.classList.add('correct');s++;}else{inp.classList.add('wrong');rev.textContent='✓ '+inp.dataset.answers.split('|')[0];rev.classList.add('visible');}inp.disabled=true;});scores[exId]=s;const el=document.getElementById(exId+'-score');el.textContent='Exercise 1 score: '+s+' / '+total;el.className='part-score visible'+(s===total?' perfect':'');document.getElementById(exId+'-btn').disabled=true;updateTotal();savePage();}
+function selectOption(btn){const qDiv=btn.closest('.question');if(qDiv.dataset.checked)return;qDiv.querySelectorAll('.option-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');savePage();}
+function checkMC(partId,total){const container=document.getElementById(partId+'-questions');const questions=container.querySelectorAll('.question');let s=0;questions.forEach(q=>{const correct=q.dataset.correct;q.dataset.checked='1';const sel=q.querySelector('.option-btn.selected');q.querySelectorAll('.option-btn').forEach(btn=>{if(btn.dataset.value===correct)btn.classList.add('correct');else if(btn.classList.contains('selected'))btn.classList.add('wrong');btn.disabled=true;});if(sel&&sel.dataset.value===correct)s++;});scores[partId]=s;const el=document.getElementById(partId+'-score');el.textContent='Exercise 2 score: '+s+' / '+total;el.className='part-score visible'+(s===total?' perfect':'');document.getElementById(partId+'-btn').disabled=true;updateTotal();savePage();}
+function checkErrors(exId){const rows=document.querySelectorAll('#'+exId+'-ec .ec-row');let s=0;rows.forEach(row=>{const inp=row.querySelector('.ec-input');const ansEl=row.querySelector('.ec-answer');const correct=inp.dataset.answer.trim().toLowerCase();const val=inp.value.trim().toLowerCase();if(val===correct){inp.classList.add('correct');s++;}else{inp.classList.add('wrong');}ansEl.textContent='✓ '+inp.dataset.answer;ansEl.classList.add('visible');inp.disabled=true;});scores[exId]=s;const el=document.getElementById(exId+'-score');el.textContent='Exercise 3 score: '+s+' / 6';el.className='part-score visible'+(s===6?' perfect':'');document.getElementById(exId+'-btn').disabled=true;updateTotal();savePage();}
+function collectState(){return{gfInputs:[...document.querySelectorAll('#ex1-gf .gf-input')].map(i=>i.value),ex1Checked:!!document.querySelector('#ex1-gf .gf-input.correct, #ex1-gf .gf-input.wrong'),mcSel:[...document.querySelectorAll('#ex2-questions .question')].map(q=>q.querySelector('.option-btn.selected')?.dataset.value||''),ex2Checked:!!document.querySelector('#ex2-questions .question[data-checked]'),ecInputs:[...document.querySelectorAll('#ex3-ec .ec-input')].map(i=>i.value),ex3Checked:!!document.querySelector('#ex3-ec .ec-input.correct, #ex3-ec .ec-input.wrong')};}
+function savePage(){DB.savePage(PAGE_ID,collectState());}
+function restorePage(s){if(!s)return;if(s.gfInputs)document.querySelectorAll('#ex1-gf .gf-input').forEach((inp,i)=>{if(s.gfInputs[i])inp.value=s.gfInputs[i];});if(s.ex1Checked)checkGapInputs('ex1',10);if(s.mcSel)document.querySelectorAll('#ex2-questions .question').forEach((q,i)=>{if(s.mcSel[i])q.querySelector(`.option-btn[data-value="${s.mcSel[i]}"]`)?.classList.add('selected');});if(s.ex2Checked)checkMC('ex2',10);if(s.ecInputs)document.querySelectorAll('#ex3-ec .ec-input').forEach((inp,i)=>{if(s.ecInputs[i])inp.value=s.ecInputs[i];});if(s.ex3Checked)checkErrors('ex3');}
+document.querySelectorAll('.gf-input,.ec-input').forEach(inp=>inp.addEventListener('input',savePage));
+(async()=>{restorePage(await DB.loadPage(PAGE_ID));})();
+</script>
+</body>
+</html>
