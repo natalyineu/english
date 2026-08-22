@@ -16,7 +16,8 @@ window.AI = (() => {
 
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({ error: resp.statusText }));
-        throw new Error(err.error || 'Server error ' + resp.status);
+        const detail = err.details ? '\n' + err.details.join('\n') : '';
+        throw new Error((err.error || 'Server error ' + resp.status) + detail);
       }
 
       const data = await resp.json();
