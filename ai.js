@@ -1,134 +1,32 @@
-// ai.js — AI writing feedback via Groq (free tier, user-supplied key)
+// ai.js — AI writing feedback via Supabase Edge Function proxy
 
 window.AI = (() => {
-  const API_URL   = 'https://api.groq.com/openai/v1/chat/completions';
-  const KEY_STORE = 'b2_groq_key';
-  const MODELS    = ['llama-3.3-70b-versatile', 'llama3-70b-8192', 'llama-3.1-8b-instant'];
-  let   modelIdx  = 0;
-
-  function getKey() {
-    const buildKey = '__GROQ_KEY__';
-    if (buildKey && !buildKey.startsWith('__')) return buildKey;
-    return localStorage.getItem(KEY_STORE) || '';
-  }
-
-  function saveKey(k) {
-    localStorage.setItem(KEY_STORE, k.trim());
-  }
-
-  function clearKey() {
-    localStorage.removeItem(KEY_STORE);
-    modelIdx = 0;
-  }
-
-  const SYSTEM_PROMPT = `You are an experienced LanguageCert B2 Communicator examiner.
-You assess writing tasks against the official B2 criteria:
-1. Communicative Achievement (0-5): Does the text achieve its purpose? Appropriate register and format?
-2. Content (0-5): Is the task fully addressed? Relevant ideas developed?
-3. Organisation (0-5): Logical structure, cohesion, paragraphing?
-4. Language (0-5): Range and accuracy of vocabulary and grammar?
-
-For each criterion give a score out of 5, a one-sentence justification, and one specific improvement tip.
-Then give a total out of 20 and an overall band descriptor (Below B2 / B2 / Above B2).
-End with 2-3 specific sentences the candidate could rewrite to improve.
-
-Reply in this exact JSON format:
-{
-  "criteria": {
-    "communicative": {"score": 4, "comment": "...", "tip": "..."},
-    "content":       {"score": 3, "comment": "...", "tip": "..."},
-    "organisation":  {"score": 4, "comment": "...", "tip": "..."},
-    "language":      {"score": 3, "comment": "...", "tip": "..."}
-  },
-  "total": 14,
-  "band": "B2",
-  "rewrites": ["original sentence → improved version", "original → improved"]
-}`;
+  const PROXY_URL = 'https://olsxxfwvwsycwzihbmdn.supabase.co/functions/v1/groq-proxy';
 
   async function checkEssay(taskText, essayText, resultEl) {
-    const apiKey = getKey();
-    if (!apiKey) {
-      renderKeyPrompt(resultEl, () => checkEssay(taskText, essayText, resultEl));
-      return;
-    }
-
     resultEl.innerHTML = '<div class="ai-loading">⏳ Checking your writing…</div>';
     resultEl.style.display = 'block';
 
-    const userMsg = `WRITING TASK:\n${taskText}\n\nCANDIDATE'S RESPONSE:\n${essayText}`;
+    try {
+      const resp = await fetch(PROXY_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ taskText, essayText }),
+      });
 
-    // Try each model in order until one works
-    for (let i = modelIdx; i < MODELS.length; i++) {
-      try {
-        const resp = await fetch(API_URL, {
-          method: 'POST',
-          headers: {
-            'Authorization': 'Bearer ' + apiKey,
-            'Content-Type':  'application/json',
-          },
-          body: JSON.stringify({
-            model: MODELS[i],
-            messages: [
-              { role: 'system', content: SYSTEM_PROMPT },
-              { role: 'user',   content: userMsg },
-            ],
-            max_tokens: 800,
-            temperature: 0.3,
-          }),
-        });
-
-        if (resp.status === 401) {
-          clearKey();
-          renderKeyPrompt(resultEl, () => checkEssay(taskText, essayText, resultEl), 'Invalid API key. Please enter a valid Groq key.');
-          return;
-        }
-        if (resp.status === 404) { modelIdx = i + 1; continue; } // try next model
-        if (!resp.ok) {
-          const err = await resp.text();
-          throw new Error('API error ' + resp.status + ': ' + err.slice(0, 200));
-        }
-
-        modelIdx = i; // remember the working model
-        const data = await resp.json();
-        const raw  = data.choices[0].message.content.trim();
-        const jsonMatch = raw.match(/\{[\s\S]*\}/);
-        if (!jsonMatch) throw new Error('Could not parse AI response');
-        renderResult(JSON.parse(jsonMatch[0]), resultEl);
-        return;
-      } catch (e) {
-        if (i === MODELS.length - 1) {
-          resultEl.innerHTML = `<div class="ai-error">❌ ${e.message}</div>`;
-        }
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({ error: resp.statusText }));
+        throw new Error(err.error || 'Server error ' + resp.status);
       }
-    }
-    if (modelIdx >= MODELS.length) {
-      resultEl.innerHTML = '<div class="ai-error">❌ No available model found. Please try again later.</div>';
-    }
-  }
 
-  function renderKeyPrompt(el, onSuccess, msg) {
-    el.style.display = 'block';
-    el.innerHTML = `
-      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:20px 22px">
-        <div style="font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:6px">🔑 Groq API Key required</div>
-        <div style="font-size:.78rem;color:var(--muted);margin-bottom:12px;line-height:1.6">
-          ${msg || 'This checker uses the <a href="https://console.groq.com/keys" target="_blank" style="color:var(--indigo)">Groq free API</a> — add your key once and it stays in your browser only (never sent to any server except Groq).'}
-        </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <input id="ai-key-input" type="password" placeholder="gsk_…"
-            style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-family:monospace;font-size:.85rem"
-            onkeydown="if(event.key==='Enter')AI._saveKey(this,arguments[0])">
-          <button onclick="AI._saveKey(document.getElementById('ai-key-input'))"
-            style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap">
-            Save &amp; check
-          </button>
-        </div>
-        <div style="font-size:.72rem;color:var(--muted);margin-top:8px">
-          Get a free key at <a href="https://console.groq.com/keys" target="_blank" style="color:var(--indigo)">console.groq.com/keys</a> · stored only in your browser
-        </div>
-      </div>`;
-    // Store callback so the save handler can call it
-    el._onSuccess = onSuccess;
+      const data = await resp.json();
+      const raw  = data.choices[0].message.content.trim();
+      const jsonMatch = raw.match(/\{[\s\S]*\}/);
+      if (!jsonMatch) throw new Error('Could not parse AI response');
+      renderResult(JSON.parse(jsonMatch[0]), resultEl);
+    } catch (e) {
+      resultEl.innerHTML = `<div class="ai-error">❌ ${e.message}</div>`;
+    }
   }
 
   function renderResult(r, el) {
@@ -192,12 +90,10 @@ Reply in this exact JSON format:
     const isWriting = location.pathname.includes('/writing/');
     if (!isWriting) return;
 
-    // Find all writing task blocks and add a checker after each
     document.querySelectorAll('.writing-task, .task-box, .task-card').forEach((taskEl, i) => {
       injectChecker(taskEl, i);
     });
 
-    // Fallback: if page has no .writing-task, inject once after page-content h1
     if (!document.querySelector('.writing-task, .task-box, .task-card')) {
       const content = document.querySelector('.page-content');
       if (content) injectChecker(content, 0);
@@ -211,7 +107,7 @@ Reply in this exact JSON format:
     wrap.style.cssText = 'margin-top:20px;margin-bottom:8px';
     wrap.innerHTML = `
       <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden">
-        <button class="ai-checker-toggle" onclick="this.nextElementSibling.classList.toggle('open')"
+        <button class="ai-checker-toggle"
           style="width:100%;background:none;border:none;padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:700;color:var(--text);text-align:left">
           <span style="font-size:1.1rem">🤖</span> AI Writing Checker
           <span style="margin-left:auto;font-size:.75rem;color:var(--muted);font-weight:400">Paste your answer · get B2 feedback</span>
@@ -234,7 +130,6 @@ Reply in this exact JSON format:
         </div>
       </div>`;
 
-    // Toggle open class
     const body = wrap.querySelector('.ai-checker-body');
     wrap.querySelector('.ai-checker-toggle').onclick = () => {
       const open = body.style.display !== 'none';
@@ -245,7 +140,7 @@ Reply in this exact JSON format:
   }
 
   function check(id) {
-    const essayEl = document.getElementById(id + '-essay');
+    const essayEl  = document.getElementById(id + '-essay');
     const resultEl = document.getElementById(id + '-result');
     if (!essayEl || !resultEl) return;
 
@@ -256,10 +151,8 @@ Reply in this exact JSON format:
       return;
     }
 
-    // Extract task text from the page (first .task-box or .writing-task above)
-    const taskEl = document.querySelector('.writing-task, .task-box, .task-card, .instructions');
+    const taskEl  = document.querySelector('.writing-task, .task-box, .task-card, .instructions');
     const taskText = taskEl ? taskEl.innerText.slice(0, 600) : 'B2 writing task';
-
     checkEssay(taskText, essay, resultEl);
   }
 
@@ -280,21 +173,5 @@ Reply in this exact JSON format:
     checkEssay(taskText, essay, resultEl);
   }
 
-  function _saveKey(inputEl) {
-    const k = inputEl ? inputEl.value.trim() : '';
-    if (!k.startsWith('gsk_') || k.length < 20) {
-      inputEl.style.borderColor = '#dc2626';
-      inputEl.placeholder = 'Must start with gsk_…';
-      return;
-    }
-    saveKey(k);
-    // Find the nearest result container and trigger the stored callback
-    const resultEl = inputEl.closest('[id$="-result"]') ||
-                     document.querySelector('[id$="-result"]');
-    if (resultEl && typeof resultEl._onSuccess === 'function') {
-      resultEl._onSuccess();
-    }
-  }
-
-  return { check, checkById, _saveKey };
+  return { check, checkById };
 })();
