@@ -110,7 +110,7 @@
 
         <div class="questions" id="p1-questions">
           <!-- Q1 -->
-          <div class="question" data-correct="b">
+          <div class="question" data-correct="b" data-why="The text says the engineers designed the game &quot;in their idle hours&quot; — i.e. spare time. Option a is wrong (it was recreational, not serious). Option c is wrong (space travel is never mentioned).">
             <p class="question-text">1. <em>SpaceWar</em> was developed</p>
             <div class="options">
               <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> as part of a serious computer project.</button>
@@ -119,7 +119,7 @@
             </div>
           </div>
           <!-- Q2 -->
-          <div class="question" data-correct="c">
+          <div class="question" data-correct="c" data-why="The text says &quot;SpaceWar was well received by geniuses and many others as well, which motivated the geniuses to design some more fun stuff.&quot; People enjoying it (c) was the motivation. Computer design (a) and lack of excitement (b) are not mentioned as the reason.">
             <p class="question-text">2. After <em>SpaceWar</em>, more games appeared because</p>
             <div class="options">
               <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> computer design improved.</button>
@@ -128,7 +128,7 @@
             </div>
           </div>
           <!-- Q3 -->
-          <div class="question" data-correct="a">
+          <div class="question" data-correct="a" data-why="The text says Sim City &quot;allowed the user to create amazing cities and even worlds&quot; — giving players creative power (a). Option b (showing future cities) is not stated. Option c (advanced computers) describes modern games, not Sim City specifically.">
             <p class="question-text">3. <em>Sim City</em> was different because it</p>
             <div class="options">
               <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> gave players more power.</button>
@@ -137,7 +137,7 @@
             </div>
           </div>
           <!-- Q4 -->
-          <div class="question" data-correct="a">
+          <div class="question" data-correct="a" data-why="The text says the figures &quot;were stick people&quot; — very simply drawn (a). Option b is wrong (they had no faces so couldn't be told apart). Option c is wrong (they could move to music).">
             <p class="question-text">4. The first moving figures</p>
             <div class="options">
               <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> were very simply drawn.</button>
@@ -146,7 +146,7 @@
             </div>
           </div>
           <!-- Q5 -->
-          <div class="question" data-correct="b">
+          <div class="question" data-correct="b" data-why="The text says modern games &quot;offer an interactive experience&quot; — players are part of the game (b). Option a (movie themes) is not mentioned. Option c (online only) is directly contradicted by &quot;hundreds of options, numerous consoles&quot;.">
             <p class="question-text">5. According to the writer, many modern computer games</p>
             <div class="options">
               <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> take their themes from movies.</button>
@@ -155,7 +155,7 @@
             </div>
           </div>
           <!-- Q6 -->
-          <div class="question" data-correct="c">
+          <div class="question" data-correct="c" data-why="The text says &quot;You can really develop some hand-eye coordination&quot; — a physical ability (c). Option a (learning to design games) is not mentioned. Option b is wrong: consoles are mentioned as necessary equipment.">
             <p class="question-text">6. One of the benefits of computer games is that</p>
             <div class="options">
               <button class="option-btn" data-value="a" onclick="selectOption(this)"><span class="option-letter">a)</span> players learn to develop games themselves.</button>
@@ -392,6 +392,23 @@ function checkMC(partId, total) {
       btn.disabled = true;
     });
     if (selected && selected.dataset.value === correct) score++;
+    // Add Why? button if data-why is present and not already added
+    if (q.dataset.why && !q.querySelector('.why-btn')) {
+      const why = q.dataset.why;
+      const btn = document.createElement('button');
+      btn.className = 'why-btn';
+      btn.textContent = '💡 Why?';
+      const panel = document.createElement('div');
+      panel.className = 'why-panel';
+      panel.textContent = why;
+      btn.onclick = () => {
+        const open = panel.classList.contains('open');
+        panel.classList.toggle('open', !open);
+        btn.textContent = open ? '💡 Why?' : '💡 Hide';
+      };
+      q.appendChild(btn);
+      q.appendChild(panel);
+    }
   });
   scores[partId] = score;
   const el = document.getElementById(partId + '-score');

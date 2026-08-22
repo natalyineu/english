@@ -1310,3 +1310,21 @@ html.sidebar-collapsed .sidebar { width: 0; overflow: hidden; }
 .ai-loading { padding: 16px 18px; font-size: .88rem; color: var(--muted); }
 .ai-error   { padding: 16px 18px; font-size: .88rem; color: #dc2626; }
 .ai-checker-body.open { display: block !important; }
+
+/* Why? explanation buttons (reading MC) */
+.why-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: transparent; border: 1px solid var(--violet);
+  color: var(--violet); border-radius: 6px;
+  padding: 4px 10px; font-size: .78rem; font-weight: 600;
+  cursor: pointer; margin-top: 8px; transition: background .15s, color .15s;
+}
+.why-btn:hover { background: var(--violet); color: #fff; }
+.why-panel {
+  display: none; background: rgba(124,58,237,.08);
+  border-left: 3px solid var(--violet);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px; margin-top: 6px;
+  font-size: .84rem; color: var(--text); line-height: 1.6;
+}
+.why-panel.open { display: block; }

@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎯</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exam Strategy · B2 🎓</title>
+<link rel="stylesheet" href="style.css">
+<script src="db.js"></script>
+<script src="ui.js"></script>
+<style>
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+.strategy-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.strategy-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+  border-bottom: 1px solid var(--border);
+  transition: background .15s;
+}
+.strategy-card-header:hover { background: rgba(124,58,237,.07); }
+.strategy-card-icon { font-size: 1.5rem; }
+.strategy-card-title { font-weight: 700; font-size: 1rem; flex: 1; color: var(--text); }
+.strategy-card-arrow { font-size: .75rem; opacity: .5; transition: transform .2s; }
+.strategy-card-arrow.open { transform: rotate(90deg); }
+.strategy-card-body {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease, padding .3s ease;
+}
+.strategy-card-body.open {
+  padding: 16px 20px 20px;
+  max-height: 600px;
+}
+.strategy-tip {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .87rem;
+  color: var(--text);
+  line-height: 1.55;
+}
+.strategy-tip:last-child { border-bottom: none; }
+.strategy-tip-icon { font-size: 1rem; margin-top: 1px; flex-shrink: 0; }
+.strategy-tip strong { color: var(--text); }
+
+.timing-table { width: 100%; border-collapse: collapse; font-size: .86rem; margin-top: 8px; }
+.timing-table th, .timing-table td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--border); }
+.timing-table th { color: var(--muted); font-weight: 600; }
+.timing-table tr:last-child td { border-bottom: none; }
+
+.section-intro { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 24px; font-size: .9rem; color: var(--text); line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+        <a href="strategy.html" class="nav-link active">🎯 Exam Strategy</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="reading/paper1.html" class="nav-link">Paper 1 <span class="badge">—</span></a>
+        <a href="reading/paper2.html" class="nav-link">Paper 2 <span class="badge">—</span></a>
+        <a href="reading/paper3.html" class="nav-link">Paper 3 <span class="badge">—</span></a>
+        <a href="reading/paper6.html" class="nav-link">Paper 6 <span class="badge">—</span></a>
+        <a href="reading/paper7.html" class="nav-link">Paper 7 <span class="badge">—</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="listening/paper1.html" class="nav-link">Paper 1 <span class="badge">—</span></a>
+        <a href="listening/paper2.html" class="nav-link">Paper 2 <span class="badge">—</span></a>
+        <a href="listening/paper3.html" class="nav-link">Paper 3 <span class="badge">—</span></a>
+        <a href="listening/paper6.html" class="nav-link">Paper 6 <span class="badge">—</span></a>
+        <a href="listening/paper7.html" class="nav-link">Paper 7 <span class="badge">—</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="writing/paper1.html" class="nav-link">Paper 1 <span class="badge">—</span></a>
+        <a href="writing/paper2.html" class="nav-link">Paper 2 <span class="badge">—</span></a>
+        <a href="writing/paper3.html" class="nav-link">Paper 3 <span class="badge">—</span></a>
+        <a href="writing/paper6.html" class="nav-link">Paper 6 <span class="badge">—</span></a>
+        <a href="writing/paper7.html" class="nav-link">Paper 7 <span class="badge">—</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="speaking/paper1.html" class="nav-link">Paper 1 <span class="badge">—</span></a>
+        <a href="speaking/paper2.html" class="nav-link">Paper 2 <span class="badge">—</span></a>
+        <a href="speaking/paper3.html" class="nav-link">Paper 3 <span class="badge">—</span></a>
+        <a href="speaking/paper6.html" class="nav-link">Paper 6 <span class="badge">—</span></a>
+        <a href="speaking/paper7.html" class="nav-link">Paper 7 <span class="badge">—</span></a>
+        <a href="speaking/paper8.html" class="nav-link">Paper 8 <span class="badge">—</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Grammar</span>
+        <a href="grammar/index.html" class="nav-link">📐 All Topics</a>
+        <a href="grammar/transformations.html" class="nav-link">🔁 Transformations</a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="index.html">Dashboard</a>
+        <span>›</span>
+        Exam Strategy
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">🎯 Exam Strategy Cards</h1>
+      <p class="page-subtitle">LanguageCert B2 Communicator — click any card to expand the tips</p>
+
+      <div class="section-intro">
+        <strong>How to use this page:</strong> Read the strategy for each paper section <em>before</em> you practice. Return here after a practice paper to check which strategies you forgot to apply. The most common reason for losing marks is rushing and not following the approach — not lack of language.
+      </div>
+
+      <!-- ── Timing Overview ── -->
+      <h2 class="section-title">⏱️ Timing Overview</h2>
+      <div class="strategy-card" style="margin-bottom:28px">
+        <div class="strategy-card-header" onclick="toggleCard(this)">
+          <span class="strategy-card-icon">📋</span>
+          <span class="strategy-card-title">Paper Timings at a Glance</span>
+          <span class="strategy-card-arrow">▶</span>
+        </div>
+        <div class="strategy-card-body">
+          <table class="timing-table">
+            <thead><tr><th>Paper</th><th>Duration</th><th>Marks</th><th>Tip</th></tr></thead>
+            <tbody>
+              <tr><td>Reading &amp; Writing</td><td>2 h 10 min</td><td>80</td><td>65 min Reading + 65 min Writing</td></tr>
+              <tr><td>— Reading Part 1</td><td>~15 min</td><td>6</td><td>Multiple choice — 2.5 min/question</td></tr>
+              <tr><td>— Reading Part 2</td><td>~15 min</td><td>6</td><td>Gap-fill — match sentences carefully</td></tr>
+              <tr><td>— Reading Part 3</td><td>~20 min</td><td>7</td><td>Matching — skim all texts first</td></tr>
+              <tr><td>— Reading Part 4</td><td>~15 min</td><td>7</td><td>True/False — justify every answer</td></tr>
+              <tr><td>— Writing Task 1</td><td>~25 min</td><td>20</td><td>Email/letter — 150–200 words</td></tr>
+              <tr><td>— Writing Task 2</td><td>~40 min</td><td>20</td><td>Essay/report — 180–220 words</td></tr>
+              <tr><td>Listening</td><td>~30 min</td><td>25</td><td>Recordings played once — read ahead</td></tr>
+              <tr><td>Speaking</td><td>~12 min</td><td>25</td><td>Pairs/groups — structured turns</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Reading Strategies ── -->
+      <h2 class="section-title">📖 Reading Strategies</h2>
+      <div class="strategy-grid">
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">🔍</span>
+            <span class="strategy-card-title">Part 1 — Multiple Choice</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">1️⃣</span><span><strong>Read the questions first</strong> (not the options), then read the passage. Questions guide your focus.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">✂️</span><span><strong>Eliminate distractors.</strong> Two options are usually plausible — the correct one is always directly supported by the text.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔗</span><span><strong>Locate the evidence.</strong> Underline the exact line in the passage that proves your answer. Never guess.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">⚠️</span><span><strong>Watch for paraphrasing.</strong> The text rarely uses the same words as the question — look for synonyms and re-worded ideas.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🚫</span><span><strong>Avoid "sounds right" traps.</strong> Options that include vocabulary from the text are often wrong — check the meaning, not the words.</span></div>
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">🧩</span>
+            <span class="strategy-card-title">Part 2 — Sentence Gap-fill</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">👀</span><span><strong>Read the whole text first</strong> without filling any gaps to understand the overall meaning.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔄</span><span><strong>Read all sentence options</strong> (A–G) before choosing. The extra sentence is a deliberate distractor.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔗</span><span><strong>Check cohesion:</strong> pronouns (this/that/they), linkers (however/therefore), and topic continuity must all match around the gap.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">✏️</span><span><strong>Fill easiest gaps first.</strong> Cross out used options as you go — this simplifies later choices.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">✅</span><span><strong>Re-read when done</strong> with all gaps filled to check the text flows logically.</span></div>
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">🗂️</span>
+            <span class="strategy-card-title">Part 3 — Matching</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">⚡</span><span><strong>Skim all short texts first</strong> (30 seconds each) to grasp the main subject of each section.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🎯</span><span><strong>Read each question</strong> and identify 1–2 key concepts to locate in a text — paraphrase in your head.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔢</span><span><strong>Note text letters.</strong> If a text matches multiple questions, that is allowed — each text can be used more than once.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🚫</span><span><strong>Avoid topic matching.</strong> Match meaning, not just the same vocabulary — closely related synonyms signal the right text.</span></div>
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">✔️</span>
+            <span class="strategy-card-title">Part 4 — True / False / Not Given</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">📌</span><span><strong>True</strong> = the text directly confirms the statement. <strong>False</strong> = the text directly contradicts it. <strong>Not Given</strong> = the text doesn't mention it at all.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔍</span><span><strong>Locate before you judge.</strong> Find the relevant sentence in the text; don't decide from memory.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">⚠️</span><span><strong>"Not Given" does NOT mean False.</strong> If the text is simply silent on the point, it's Not Given — even if the statement seems unlikely.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🧠</span><span><strong>Don't use outside knowledge.</strong> Base every answer only on what the text says, even if you know otherwise.</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Writing Strategies ── -->
+      <h2 class="section-title">✍️ Writing Strategies</h2>
+      <div class="strategy-grid">
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">📧</span>
+            <span class="strategy-card-title">Task 1 — Email / Letter (150–200 words)</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">📋</span><span><strong>Identify all bullet points</strong> in the task. Each must be addressed — missing one loses marks.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">👤</span><span><strong>Match register to audience.</strong> A formal email to a company director ≠ an informal email to a friend. Check the task instruction.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">📐</span><span><strong>Structure:</strong> Opening greeting → reason for writing → body (one paragraph per bullet) → closing → sign-off.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🎨</span><span><strong>Add a personal touch.</strong> Examiners reward relevant detail — don't just list; explain, react, or give a reason.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">✂️</span><span><strong>Count words</strong> before submitting. Under 130 = automatic mark penalty. Over 230 = time wasted and coherence often drops.</span></div>
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">📝</span>
+            <span class="strategy-card-title">Task 2 — Essay / Article / Report (180–220 words)</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">⏱️</span><span><strong>Spend 5 minutes planning.</strong> Write a brief outline (intro, 2–3 body points, conclusion) before you start — it prevents mid-essay panic.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">📐</span><span><strong>Essay structure:</strong> Introduction (restate the topic) → Point 1 with example → Point 2 with example → Conclusion (summary + opinion).</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔗</span><span><strong>Use discourse markers:</strong> Firstly / Furthermore / On the other hand / In conclusion. These lift your coherence score.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🎓</span><span><strong>Aim for B2 vocabulary:</strong> Show range — avoid repeating the same words. Use collocations (make a decision, have an impact).</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔍</span><span><strong>Proofread for grammar.</strong> Tense consistency, subject-verb agreement, and article use (a/an/the) are the top error sources at B2.</span></div>
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">💡</span>
+            <span class="strategy-card-title">Writing Assessment Criteria</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">📊</span><span><strong>Content (40%):</strong> All task requirements addressed, relevant ideas, appropriate level of detail.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">📊</span><span><strong>Organisation (20%):</strong> Clear paragraphing, logical flow, appropriate opening and closing.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">📊</span><span><strong>Language (40%):</strong> Range of vocabulary and grammar, accuracy, register consistency.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">💬</span><span><strong>Safe vs. ambitious:</strong> A sentence with complex grammar and a small error is usually better than a simple sentence with no errors — examiners reward range.</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Listening Strategies ── -->
+      <h2 class="section-title">🎧 Listening Strategies</h2>
+      <div class="strategy-grid">
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">👂</span>
+            <span class="strategy-card-title">Before &amp; During the Recording</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">⚡</span><span><strong>Use preview time.</strong> Read questions before the audio starts — underline key words so you know what to listen for.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🎯</span><span><strong>Listen for the answer concept,</strong> not exact words. Speakers often paraphrase — the answer idea comes in different words.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">✏️</span><span><strong>Note key words as you listen</strong> (numbers, names, opinions). You won't remember everything — jot it down.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔄</span><span><strong>If you miss an answer, move on.</strong> Don't dwell — staying on a missed question causes you to miss the next one too.</span></div>
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">🧩</span>
+            <span class="strategy-card-title">Question Types</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔢</span><span><strong>Part 1 (Monologue MC):</strong> Predict the topic from questions. The answer is stated explicitly, not implied.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">📝</span><span><strong>Part 2 (Gap-fill):</strong> Answers are often single words or short phrases. Spelling must be correct.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🗣️</span><span><strong>Part 3 (Dialogue MC):</strong> Listen for agreement/disagreement, opinions, and attitudes — not just facts.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">✔️</span><span><strong>Part 4 (True/False):</strong> The recording will confirm or contradict each statement directly — wait for clear evidence.</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Speaking Strategies ── -->
+      <h2 class="section-title">🗣️ Speaking Strategies</h2>
+      <div class="strategy-grid">
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">🗨️</span>
+            <span class="strategy-card-title">General Speaking Tips</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">🎯</span><span><strong>Keep talking.</strong> Silence loses marks. If you don't know a word, describe it: "the thing you use to…", "a kind of…".</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔗</span><span><strong>Link your ideas</strong> with connectors: and, but, however, because, which means that. This shows fluency.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔄</span><span><strong>Self-correct out loud.</strong> Correcting yourself mid-sentence is fine — it shows grammatical awareness.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🎓</span><span><strong>Use B2 vocabulary.</strong> Instead of "good", say "beneficial / effective / significant". Examiners notice lexical range.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">👂</span><span><strong>React to your partner.</strong> In paired tasks, ask a follow-up or acknowledge their point — "That's a good point. I also think…"</span></div>
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">📊</span>
+            <span class="strategy-card-title">Speaking Assessment Criteria</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">🎤</span><span><strong>Fluency &amp; Coherence:</strong> Speak without long pauses; connect ideas logically. Hesitations with "um/well" are natural — silence is not.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">📚</span><span><strong>Lexical Resource:</strong> Use precise, varied vocabulary. Paraphrase when you don't know a word.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🏗️</span><span><strong>Grammatical Range &amp; Accuracy:</strong> Mix simple and complex sentences. Occasional errors are acceptable if communication is clear.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔊</span><span><strong>Pronunciation:</strong> Be clear and intelligible — perfect accent is not required, but word stress and sentence rhythm matter.</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🤝</span><span><strong>Interactive Communication:</strong> Listen to your partner, build on their ideas, manage turns politely.</span></div>
+          </div>
+        </div>
+
+        <div class="strategy-card">
+          <div class="strategy-card-header" onclick="toggleCard(this)">
+            <span class="strategy-card-icon">🛠️</span>
+            <span class="strategy-card-title">Useful Phrases</span>
+            <span class="strategy-card-arrow">▶</span>
+          </div>
+          <div class="strategy-card-body">
+            <div class="strategy-tip"><span class="strategy-tip-icon">🎯</span><span><strong>Giving opinions:</strong> From my perspective… / In my view… / I strongly believe that… / It seems to me that…</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">🔄</span><span><strong>Agreeing:</strong> That's a very valid point. / I couldn't agree more. / Absolutely — and I'd add that…</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">↔️</span><span><strong>Disagreeing politely:</strong> I see your point, but… / I'm not entirely convinced because… / With respect, I think…</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">⏸️</span><span><strong>Buying time:</strong> That's an interesting question. Let me think for a moment… / Well, it depends on…</span></div>
+            <div class="strategy-tip"><span class="strategy-tip-icon">📝</span><span><strong>Summarising:</strong> So to sum up… / All things considered… / Ultimately, I think…</span></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── Exam Day Checklist ── -->
+      <h2 class="section-title">✅ Exam Day Checklist</h2>
+      <div class="strategy-card" style="margin-bottom:40px">
+        <div class="strategy-card-header" onclick="toggleCard(this)">
+          <span class="strategy-card-icon">📅</span>
+          <span class="strategy-card-title">What to do on Exam Day</span>
+          <span class="strategy-card-arrow">▶</span>
+        </div>
+        <div class="strategy-card-body">
+          <div class="strategy-tip"><span class="strategy-tip-icon">🌅</span><span><strong>Day before:</strong> No cramming. Light review of your weakest topic for 30 minutes max, then rest.</span></div>
+          <div class="strategy-tip"><span class="strategy-tip-icon">🍳</span><span><strong>Morning of:</strong> Eat well, arrive 20 minutes early. Nerves are normal — shallow breathing raises them; slow breathing lowers them.</span></div>
+          <div class="strategy-tip"><span class="strategy-tip-icon">📖</span><span><strong>Reading &amp; Writing paper:</strong> Allocate 65 min per section; move on when your time is up even if you're not satisfied.</span></div>
+          <div class="strategy-tip"><span class="strategy-tip-icon">🎧</span><span><strong>Listening paper:</strong> Read questions in every pause. Don't panic over a missed answer — leave it and keep listening.</span></div>
+          <div class="strategy-tip"><span class="strategy-tip-icon">🗣️</span><span><strong>Speaking exam:</strong> Warm up by speaking English for 5 minutes beforehand (to a friend, or out loud to yourself).</span></div>
+          <div class="strategy-tip"><span class="strategy-tip-icon">🚫</span><span><strong>Never leave blanks.</strong> A guess scores 25–33% on multiple choice. A blank scores 0%.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+function toggleCard(header) {
+  const body = header.nextElementSibling;
+  const arrow = header.querySelector('.strategy-card-arrow');
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  arrow.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
+</html>

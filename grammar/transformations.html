@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sentence Transformations · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.topic-block { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; margin-bottom: 28px; box-shadow: var(--shadow); }
+.topic-title { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--violet); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+.topic-score { margin-left: auto; font-size: .78rem; color: var(--muted); font-weight: 400; letter-spacing: 0; text-transform: none; }
+
+.tx-item { margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+.tx-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.tx-num { font-size: .7rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.tx-original { font-family: 'Lora', Georgia, serif; font-size: .93rem; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
+.tx-keyword { display: inline-block; background: var(--sel-bg); color: var(--sel); border: 1px solid var(--sel); border-radius: 5px; padding: 2px 10px; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin: 0 4px; }
+
+.tx-input-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tx-prefix { font-family: 'Lora', Georgia, serif; font-size: .93rem; color: var(--text); }
+.tx-input {
+  flex: 1; min-width: 200px; border: 1.5px solid var(--border); border-radius: 7px;
+  padding: 8px 12px; font-family: 'Lora', Georgia, serif; font-size: .93rem;
+  background: var(--bg); color: var(--text); transition: border-color .15s;
+}
+.tx-input:focus { outline: none; border-color: var(--sel); }
+.tx-input.correct { border-color: #16a34a; background: #f0fdf4; color: #15803d; }
+.tx-input.wrong   { border-color: #dc2626; background: #fef2f2; color: #991b1b; }
+.tx-suffix { font-family: 'Lora', Georgia, serif; font-size: .93rem; color: var(--text); }
+
+.tx-feedback { font-size: .82rem; margin-top: 8px; padding: 8px 12px; border-radius: 7px; display: none; }
+.tx-feedback.show-correct { display: block; background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+.tx-feedback.show-wrong   { display: block; background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+
+.tx-check-btn { background: var(--sel); color: #fff; border: none; border-radius: 7px; padding: 7px 16px; font-size: .82rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.tx-check-btn:hover { opacity: .88; }
+.tx-show-btn { background: none; border: 1px solid var(--border); border-radius: 7px; padding: 7px 12px; font-size: .78rem; color: var(--muted); cursor: pointer; white-space: nowrap; }
+.tx-show-btn:hover { border-color: var(--sel); color: var(--sel); }
+
+.score-bar { height: 8px; background: var(--border); border-radius: 99px; margin-bottom: 20px; overflow: hidden; }
+.score-fill { height: 100%; background: var(--sel); border-radius: 99px; transition: width .4s ease; }
+
+.top-score { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 24px; margin-bottom: 24px; display: flex; align-items: center; gap: 24px; box-shadow: var(--shadow); }
+.top-score-num { font-size: 2rem; font-weight: 800; color: var(--sel); }
+.top-score-label { font-size: .82rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Grammar</span>
+        <a href="index.html" class="nav-link">📐 All Topics</a>
+        <a href="transformations.html" class="nav-link active">🔄 Transformations</a>
+        <a href="conditionals.html" class="nav-link">If clauses</a>
+        <a href="passive.html" class="nav-link">Passive voice</a>
+        <a href="reported.html" class="nav-link">Reported speech</a>
+        <a href="modals.html" class="nav-link">Modal verbs</a>
+        <a href="relative.html" class="nav-link">Relative clauses</a>
+        <a href="tenses.html" class="nav-link">Perfect tenses</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="../listening/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../listening/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="../speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="../speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a> <span>›</span>
+        <a href="index.html">Grammar</a> <span>›</span> Sentence Transformations
+      </div>
+    </div>
+
+    <div class="page-content">
+      <h1 class="page-title">Sentence Transformations</h1>
+      <p class="page-subtitle">40 exercises · 8 grammar topics · B2 level · Complete the second sentence using the key word — use 2–5 words</p>
+
+      <div class="top-score">
+        <div>
+          <div class="top-score-num" id="total-score">0/40</div>
+          <div class="top-score-label">correct answers</div>
+        </div>
+        <div style="flex:1">
+          <div class="score-bar"><div class="score-fill" id="total-fill" style="width:0%"></div></div>
+          <div style="font-size:.78rem;color:var(--muted)">Keep going — aim for 32/40 (80%) to feel confident at B2 level</div>
+        </div>
+        <button onclick="resetAll()" style="background:none;border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:.8rem;color:var(--muted);cursor:pointer">↺ Reset all</button>
+      </div>
+
+      <!-- PASSIVE VOICE -->
+      <div class="topic-block" id="block-passive">
+        <div class="topic-title">🔄 Passive Voice <span class="topic-score" id="score-passive">0/8</span></div>
+        <div class="score-bar"><div class="score-fill" id="fill-passive" style="width:0%"></div></div>
+
+        <div class="tx-item" data-id="p1" data-answer="was stolen" data-topic="passive">
+          <div class="tx-num">1</div>
+          <div class="tx-original">Someone stole my wallet yesterday.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">My wallet</span>
+            <span class="tx-keyword">STOLEN</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">yesterday.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="p2" data-answer="is being built" data-topic="passive">
+          <div class="tx-num">2</div>
+          <div class="tx-original">They are building a new hospital in the city centre.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">A new hospital</span>
+            <span class="tx-keyword">BEING</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">in the city centre.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="p3" data-answer="is believed to be" data-topic="passive">
+          <div class="tx-num">3</div>
+          <div class="tx-original">People believe that he is completely honest.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">He</span>
+            <span class="tx-keyword">BELIEVED</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">completely honest.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="p4" data-answer="has been cancelled" data-topic="passive">
+          <div class="tx-num">4</div>
+          <div class="tx-original">They have cancelled the flight due to bad weather.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">The flight</span>
+            <span class="tx-keyword">BEEN</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">due to bad weather.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="p5" data-answer="had not been informed|hadn't been informed" data-topic="passive">
+          <div class="tx-num">5</div>
+          <div class="tx-original">Nobody had informed us about the changes.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">We</span>
+            <span class="tx-keyword">BEEN</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">about the changes.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="p6" data-answer="will be announced" data-topic="passive">
+          <div class="tx-num">6</div>
+          <div class="tx-original">They will announce the results tomorrow morning.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">The results</span>
+            <span class="tx-keyword">ANNOUNCED</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">tomorrow morning.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="p7" data-answer="is said to work" data-topic="passive">
+          <div class="tx-num">7</div>
+          <div class="tx-original">It is said that she works extremely hard.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">She</span>
+            <span class="tx-keyword">SAID</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">extremely hard.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="p8" data-answer="must have been taken" data-topic="passive">
+          <div class="tx-num">8</div>
+          <div class="tx-original">Someone must have taken my bag by mistake.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">My bag</span>
+            <span class="tx-keyword">BEEN</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">by mistake.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+      </div>
+
+      <!-- REPORTED SPEECH -->
+      <div class="topic-block" id="block-reported">
+        <div class="topic-title">💬 Reported Speech <span class="topic-score" id="score-reported">0/6</span></div>
+        <div class="score-bar"><div class="score-fill" id="fill-reported" style="width:0%"></div></div>
+
+        <div class="tx-item" data-id="r1" data-answer="that she would call me" data-topic="reported">
+          <div class="tx-num">9</div>
+          <div class="tx-original">"I will call you tomorrow," she said.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">She said</span>
+            <span class="tx-keyword">THAT</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">the next day.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="r2" data-answer="not to touch anything" data-topic="reported">
+          <div class="tx-num">10</div>
+          <div class="tx-original">"Don't touch anything," he told us.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">He told us</span>
+            <span class="tx-keyword">NOT</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="r3" data-answer="whether I had finished|if I had finished" data-topic="reported">
+          <div class="tx-num">11</div>
+          <div class="tx-original">"Have you finished your homework?" she asked me.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">She asked me</span>
+            <span class="tx-keyword">WHETHER</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">my homework.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="r4" data-answer="what time the train left" data-topic="reported">
+          <div class="tx-num">12</div>
+          <div class="tx-original">"What time does the train leave?" she asked.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">She asked</span>
+            <span class="tx-keyword">WHAT</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="r5" data-answer="to help her" data-topic="reported">
+          <div class="tx-num">13</div>
+          <div class="tx-original">"Please help me," he said to her.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">He asked her</span>
+            <span class="tx-keyword">TO</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="r6" data-answer="had been watching TV when" data-topic="reported">
+          <div class="tx-num">14</div>
+          <div class="tx-original">"I was watching TV when the phone rang," he said.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">He said he</span>
+            <span class="tx-keyword">HAD</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">the phone rang.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+      </div>
+
+      <!-- CONDITIONALS -->
+      <div class="topic-block" id="block-conditionals">
+        <div class="topic-title">🔀 Conditionals &amp; Wishes <span class="topic-score" id="score-conditionals">0/6</span></div>
+        <div class="score-bar"><div class="score-fill" id="fill-conditionals" style="width:0%"></div></div>
+
+        <div class="tx-item" data-id="c1" data-answer="had enough money, I could|had the money, I could" data-topic="conditionals">
+          <div class="tx-num">15</div>
+          <div class="tx-original">I don't have enough money, so I can't buy the car.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">If I</span>
+            <span class="tx-keyword">IF</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">buy the car.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="c2" data-answer="had studied, you wouldn't have failed|had studied, you would not have failed" data-topic="conditionals">
+          <div class="tx-num">16</div>
+          <div class="tx-original">You didn't study, so you failed the exam.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">If you</span>
+            <span class="tx-keyword">HAD</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">the exam.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="c3" data-answer="wish I had gone to|wish I'd gone to" data-topic="conditionals">
+          <div class="tx-num">17</div>
+          <div class="tx-original">I regret not going to university.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">I</span>
+            <span class="tx-keyword">WISH</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">university.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="c4" data-answer="only we had visited|only we'd visited" data-topic="conditionals">
+          <div class="tx-num">18</div>
+          <div class="tx-original">It's a pity we didn't visit the museum.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">If</span>
+            <span class="tx-keyword">ONLY</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">the museum.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="c5" data-answer="you don't hurry, you will|you don't hurry, you'll" data-topic="conditionals">
+          <div class="tx-num">19</div>
+          <div class="tx-original">Unless you hurry, you'll miss the bus.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">If</span>
+            <span class="tx-keyword">IF</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">miss the bus.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="c6" data-answer="wish he would stop|wish he'd stop" data-topic="conditionals">
+          <div class="tx-num">20</div>
+          <div class="tx-original">I'm annoyed because he keeps interrupting me.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">I</span>
+            <span class="tx-keyword">WISH</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">interrupting me.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+      </div>
+
+      <!-- MODAL VERBS -->
+      <div class="topic-block" id="block-modals">
+        <div class="topic-title">⚙️ Modal Verbs <span class="topic-score" id="score-modals">0/6</span></div>
+        <div class="score-bar"><div class="score-fill" id="fill-modals" style="width:0%"></div></div>
+
+        <div class="tx-item" data-id="m1" data-answer="needn't have come|need not have come" data-topic="modals">
+          <div class="tx-num">21</div>
+          <div class="tx-original">It wasn't necessary for you to come — we managed fine.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">You</span>
+            <span class="tx-keyword">NEEDN'T</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">— we managed fine.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="m2" data-answer="can't have stolen it" data-topic="modals">
+          <div class="tx-num">22</div>
+          <div class="tx-original">I'm sure he didn't steal it.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">He</span>
+            <span class="tx-keyword">CAN'T</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="m3" data-answer="may have forgotten about|might have forgotten about" data-topic="modals">
+          <div class="tx-num">23</div>
+          <div class="tx-original">It's possible that she forgot about the meeting.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">She</span>
+            <span class="tx-keyword">MAY</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">the meeting.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="m4" data-answer="must have left early" data-topic="modals">
+          <div class="tx-num">24</div>
+          <div class="tx-original">I'm sure they left early — the lights are all off.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">They</span>
+            <span class="tx-keyword">MUST</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">— the lights are all off.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="m5" data-answer="must not park here|mustn't park here" data-topic="modals">
+          <div class="tx-num">25</div>
+          <div class="tx-original">You are not allowed to park here.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">You</span>
+            <span class="tx-keyword">MUST</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">here.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="m6" data-answer="should have told me|ought to have told" data-topic="modals">
+          <div class="tx-num">26</div>
+          <div class="tx-original">It was a mistake not to tell me about the problem.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">You</span>
+            <span class="tx-keyword">SHOULD</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">about the problem.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+      </div>
+
+      <!-- CAUSATIVE / HAVE SOMETHING DONE -->
+      <div class="topic-block" id="block-causative">
+        <div class="topic-title">🛠️ Causative (have/get) <span class="topic-score" id="score-causative">0/4</span></div>
+        <div class="score-bar"><div class="score-fill" id="fill-causative" style="width:0%"></div></div>
+
+        <div class="tx-item" data-id="h1" data-answer="had her hair cut" data-topic="causative">
+          <div class="tx-num">27</div>
+          <div class="tx-original">The hairdresser cut her hair last week.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">She</span>
+            <span class="tx-keyword">HAD</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">last week.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="h2" data-answer="getting the roof repaired|having the roof repaired" data-topic="causative">
+          <div class="tx-num">28</div>
+          <div class="tx-original">A builder is repairing their roof at the moment.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">They are</span>
+            <span class="tx-keyword">GETTING</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">at the moment.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="h3" data-answer="have his eyes tested|get his eyes tested" data-topic="causative">
+          <div class="tx-num">29</div>
+          <div class="tx-original">The optician is going to test his eyes on Friday.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">He is going to</span>
+            <span class="tx-keyword">HAVE</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">on Friday.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="h4" data-answer="had her phone stolen" data-topic="causative">
+          <div class="tx-num">30</div>
+          <div class="tx-original">Someone stole her phone on the bus.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">She</span>
+            <span class="tx-keyword">HAD</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">on the bus.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+      </div>
+
+      <!-- CONCESSION / CONTRAST -->
+      <div class="topic-block" id="block-concession">
+        <div class="topic-title">↔️ Concession &amp; Contrast <span class="topic-score" id="score-concession">0/5</span></div>
+        <div class="score-bar"><div class="score-fill" id="fill-concession" style="width:0%"></div></div>
+
+        <div class="tx-item" data-id="co1" data-answer="despite feeling tired, she|despite being tired, she" data-topic="concession">
+          <div class="tx-num">31</div>
+          <div class="tx-original">Although she felt tired, she continued working.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix"></span>
+            <span class="tx-keyword">DESPITE</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">continued working.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="co2" data-answer="in spite of the rain|despite the rain" data-topic="concession">
+          <div class="tx-num">32</div>
+          <div class="tx-original">Even though it was raining, they went for a walk.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix"></span>
+            <span class="tx-keyword">SPITE</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">, they went for a walk.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="co3" data-answer="as long as you study|provided that you study|providing that you study" data-topic="concession">
+          <div class="tx-num">33</div>
+          <div class="tx-original">You can pass the exam if you study regularly.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">You can pass the exam</span>
+            <span class="tx-keyword">LONG</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">regularly.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="co4" data-answer="however hard he tried|no matter how hard" data-topic="concession">
+          <div class="tx-num">34</div>
+          <div class="tx-original">He tried very hard but he couldn't solve the puzzle.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix"></span>
+            <span class="tx-keyword">HOWEVER</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">he tried, he couldn't solve the puzzle.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="co5" data-answer="unless you have a ticket" data-topic="concession">
+          <div class="tx-num">35</div>
+          <div class="tx-original">You can't enter the concert if you don't have a ticket.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">You can't enter the concert</span>
+            <span class="tx-keyword">UNLESS</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+      </div>
+
+      <!-- SO / SUCH / TOO / ENOUGH -->
+      <div class="topic-block" id="block-degree">
+        <div class="topic-title">📏 Degree: so / such / too / enough <span class="topic-score" id="score-degree">0/5</span></div>
+        <div class="score-bar"><div class="score-fill" id="fill-degree" style="width:0%"></div></div>
+
+        <div class="tx-item" data-id="d1" data-answer="such a good film that" data-topic="degree">
+          <div class="tx-num">36</div>
+          <div class="tx-original">The film was so good that everyone applauded at the end.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">It was</span>
+            <span class="tx-keyword">SUCH</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">everyone applauded at the end.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="d2" data-answer="too tired to finish" data-topic="degree">
+          <div class="tx-num">37</div>
+          <div class="tx-original">He was so tired that he couldn't finish the report.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">He was</span>
+            <span class="tx-keyword">TOO</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">the report.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="d3" data-answer="old enough to travel" data-topic="degree">
+          <div class="tx-num">38</div>
+          <div class="tx-original">She is eighteen, so she can travel alone.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">She is</span>
+            <span class="tx-keyword">ENOUGH</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">alone.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="d4" data-answer="so nervous that she" data-topic="degree">
+          <div class="tx-num">39</div>
+          <div class="tx-original">She was such a nervous speaker that she forgot her lines.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">She was</span>
+            <span class="tx-keyword">SO</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">forgot her lines.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+
+        <div class="tx-item" data-id="d5" data-answer="such bad weather that we" data-topic="degree">
+          <div class="tx-num">40</div>
+          <div class="tx-original">The weather was so bad that we cancelled the trip.</div>
+          <div class="tx-input-row">
+            <span class="tx-prefix">It was</span>
+            <span class="tx-keyword">SUCH</span>
+            <input class="tx-input" type="text" placeholder="2–5 words" autocomplete="off" spellcheck="false">
+            <span class="tx-suffix">cancelled the trip.</span>
+            <button class="tx-check-btn" onclick="checkItem(this)">Check</button>
+            <button class="tx-show-btn" onclick="showAnswer(this)">Answer</button>
+          </div>
+          <div class="tx-feedback"></div>
+        </div>
+      </div>
+
+    </div><!-- page-content -->
+  </main>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────
+const state = {};
+try { Object.assign(state, JSON.parse(localStorage.getItem('b2_transformations') || '{}')); } catch {}
+
+const TOPICS = {
+  passive: 8, reported: 6, conditionals: 6, modals: 6, causative: 4, concession: 5, degree: 5
+};
+
+function normalise(s) {
+  return s.trim().toLowerCase()
+    .replace(/['']/g, "'")
+    .replace(/\s+/g, ' ')
+    .replace(/[.,!?;]$/g, '');
+}
+
+function matchAnswer(input, accepted) {
+  const n = normalise(input);
+  return accepted.split('|').some(a => normalise(a) === n);
+}
+
+function checkItem(btn) {
+  const item   = btn.closest('.tx-item');
+  const input  = item.querySelector('.tx-input');
+  const fb     = item.querySelector('.tx-feedback');
+  const answer = item.dataset.answer;
+  const id     = item.dataset.id;
+
+  if (!input.value.trim()) return;
+
+  const correct = matchAnswer(input.value, answer);
+  const canonical = answer.split('|')[0];
+
+  input.classList.toggle('correct', correct);
+  input.classList.toggle('wrong', !correct);
+
+  fb.className = 'tx-feedback ' + (correct ? 'show-correct' : 'show-wrong');
+  fb.innerHTML = correct
+    ? '✓ Correct!'
+    : `✗ Correct answer: <strong>${canonical}</strong>`;
+
+  state[id] = correct;
+  save();
+  updateScores();
+}
+
+function showAnswer(btn) {
+  const item   = btn.closest('.tx-item');
+  const fb     = item.querySelector('.tx-feedback');
+  const input  = item.querySelector('.tx-input');
+  const answer = item.dataset.answer.split('|')[0];
+  fb.className = 'tx-feedback show-correct';
+  fb.innerHTML = `Answer: <strong>${answer}</strong>`;
+  input.value = answer;
+  input.classList.remove('wrong');
+  input.classList.add('correct');
+  state[item.dataset.id] = true;
+  save();
+  updateScores();
+}
+
+function updateScores() {
+  let totalCorrect = 0;
+  Object.entries(TOPICS).forEach(([topic, count]) => {
+    const items = document.querySelectorAll(`.tx-item[data-topic="${topic}"]`);
+    let correct = 0;
+    items.forEach(it => { if (state[it.dataset.id]) correct++; });
+    totalCorrect += correct;
+    document.getElementById('score-' + topic).textContent = `${correct}/${count}`;
+    document.getElementById('fill-' + topic).style.width = (correct / count * 100) + '%';
+  });
+  const total = Object.values(TOPICS).reduce((a, b) => a + b, 0);
+  document.getElementById('total-score').textContent = `${totalCorrect}/${total}`;
+  document.getElementById('total-fill').style.width = (totalCorrect / total * 100) + '%';
+}
+
+function resetAll() {
+  if (!confirm('Reset all answers?')) return;
+  Object.keys(state).forEach(k => delete state[k]);
+  document.querySelectorAll('.tx-input').forEach(el => {
+    el.value = ''; el.classList.remove('correct', 'wrong');
+  });
+  document.querySelectorAll('.tx-feedback').forEach(el => { el.className = 'tx-feedback'; el.innerHTML = ''; });
+  save();
+  updateScores();
+}
+
+function save() {
+  try { localStorage.setItem('b2_transformations', JSON.stringify(state)); } catch {}
+}
+
+// Restore saved answers
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.tx-item').forEach(item => {
+    const id = item.dataset.id;
+    if (state[id]) {
+      const input  = item.querySelector('.tx-input');
+      const answer = item.dataset.answer.split('|')[0];
+      input.value  = answer;
+      input.classList.add('correct');
+      const fb = item.querySelector('.tx-feedback');
+      fb.className = 'tx-feedback show-correct';
+      fb.innerHTML = '✓ Correct!';
+    }
+  });
+  updateScores();
+
+  // Enter key → check
+  document.querySelectorAll('.tx-input').forEach(input => {
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const btn = input.closest('.tx-item').querySelector('.tx-check-btn');
+        if (btn) btn.click();
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>
