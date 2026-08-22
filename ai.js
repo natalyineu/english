@@ -3,7 +3,7 @@
 window.AI = (() => {
   const API_URL  = 'https://api.groq.com/openai/v1/chat/completions';
   const API_KEY  = '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';
-  const MODELS   = ['llama-3.3-70b-versatile', 'llama3-70b-8192', 'llama-3.1-70b-versatile'];
+  const MODELS   = ['openai/gpt-oss-120b', 'qwen/qwen3.6-27b', 'groq/compound', 'llama-3.3-70b-versatile', 'llama3-70b-8192'];
   let   modelIdx = 0;
 
   const SYSTEM_PROMPT = `You are an experienced LanguageCert B2 Communicator examiner.
