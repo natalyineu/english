@@ -1,9 +1,10 @@
-// ai.js — AI writing feedback via Cerebras (Llama-3.3-70b, free tier)
+// ai.js — AI writing feedback via Cerebras (free tier)
 
 window.AI = (() => {
-  const API_URL = 'https://api.cerebras.ai/v1/chat/completions';
-  const API_KEY = 'csk-p6vvjn9fvckykvwhy3k5wt8xeyecpj4383knwywtc25p4k99';
-  const MODEL   = 'llama3.3-70b';
+  const API_URL  = 'https://api.cerebras.ai/v1/chat/completions';
+  const API_KEY  = 'csk-p6vvjn9fvckykvwhy3k5wt8xeyecpj4383knwywtc25p4k99';
+  const MODELS   = ['llama-3.3-70b', 'llama3.3-70b', 'llama3.1-70b', 'llama3.1-8b'];
+  let   modelIdx = 0;
 
   const SYSTEM_PROMPT = `You are an experienced LanguageCert B2 Communicator examiner.
 You assess writing tasks against the official B2 criteria:
@@ -35,40 +36,47 @@ Reply in this exact JSON format:
 
     const userMsg = `WRITING TASK:\n${taskText}\n\nCANDIDATE'S RESPONSE:\n${essayText}`;
 
-    try {
-      const resp = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + API_KEY,
-          'Content-Type':  'application/json',
-        },
-        body: JSON.stringify({
-          model: MODEL,
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            { role: 'user',   content: userMsg },
-          ],
-          max_tokens: 800,
-          temperature: 0.3,
-        }),
-      });
+    // Try each model in order until one works
+    for (let i = modelIdx; i < MODELS.length; i++) {
+      try {
+        const resp = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + API_KEY,
+            'Content-Type':  'application/json',
+          },
+          body: JSON.stringify({
+            model: MODELS[i],
+            messages: [
+              { role: 'system', content: SYSTEM_PROMPT },
+              { role: 'user',   content: userMsg },
+            ],
+            max_tokens: 800,
+            temperature: 0.3,
+          }),
+        });
 
-      if (!resp.ok) {
-        const err = await resp.text();
-        throw new Error('API error ' + resp.status + ': ' + err.slice(0, 200));
+        if (resp.status === 404) { modelIdx = i + 1; continue; } // try next model
+        if (!resp.ok) {
+          const err = await resp.text();
+          throw new Error('API error ' + resp.status + ': ' + err.slice(0, 200));
+        }
+
+        modelIdx = i; // remember the working model
+        const data = await resp.json();
+        const raw  = data.choices[0].message.content.trim();
+        const jsonMatch = raw.match(/\{[\s\S]*\}/);
+        if (!jsonMatch) throw new Error('Could not parse AI response');
+        renderResult(JSON.parse(jsonMatch[0]), resultEl);
+        return;
+      } catch (e) {
+        if (i === MODELS.length - 1) {
+          resultEl.innerHTML = `<div class="ai-error">❌ ${e.message}</div>`;
+        }
       }
-
-      const data = await resp.json();
-      const raw  = data.choices[0].message.content.trim();
-
-      // Extract JSON from response (model sometimes adds markdown)
-      const jsonMatch = raw.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) throw new Error('Could not parse AI response');
-      const result = JSON.parse(jsonMatch[0]);
-
-      renderResult(result, resultEl);
-    } catch (e) {
-      resultEl.innerHTML = `<div class="ai-error">❌ ${e.message}</div>`;
+    }
+    if (modelIdx >= MODELS.length) {
+      resultEl.innerHTML = '<div class="ai-error">❌ No available model found. Please try again later.</div>';
     }
   }
 
