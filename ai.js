@@ -1,72 +1,29 @@
-// ai.js — AI writing feedback via Cerebras (Llama-3.3-70b, free tier)
+// ai.js — AI writing feedback via Supabase Edge Function proxy
 
 window.AI = (() => {
-  const API_URL = 'https://api.cerebras.ai/v1/chat/completions';
-  const API_KEY = 'csk-p6vvjn9fvckykvwhy3k5wt8xeyecpj4383knwywtc25p4k99';
-  const MODEL   = 'llama-3.3-70b';
-
-  const SYSTEM_PROMPT = `You are an experienced LanguageCert B2 Communicator examiner.
-You assess writing tasks against the official B2 criteria:
-1. Communicative Achievement (0-5): Does the text achieve its purpose? Appropriate register and format?
-2. Content (0-5): Is the task fully addressed? Relevant ideas developed?
-3. Organisation (0-5): Logical structure, cohesion, paragraphing?
-4. Language (0-5): Range and accuracy of vocabulary and grammar?
-
-For each criterion give a score out of 5, a one-sentence justification, and one specific improvement tip.
-Then give a total out of 20 and an overall band descriptor (Below B2 / B2 / Above B2).
-End with 2-3 specific sentences the candidate could rewrite to improve.
-
-Reply in this exact JSON format:
-{
-  "criteria": {
-    "communicative": {"score": 4, "comment": "...", "tip": "..."},
-    "content":       {"score": 3, "comment": "...", "tip": "..."},
-    "organisation":  {"score": 4, "comment": "...", "tip": "..."},
-    "language":      {"score": 3, "comment": "...", "tip": "..."}
-  },
-  "total": 14,
-  "band": "B2",
-  "rewrites": ["original sentence → improved version", "original → improved"]
-}`;
+  const PROXY_URL = 'https://olsxxfwvwsycwzihbmdn.supabase.co/functions/v1/groq-proxy';
 
   async function checkEssay(taskText, essayText, resultEl) {
     resultEl.innerHTML = '<div class="ai-loading">⏳ Checking your writing…</div>';
     resultEl.style.display = 'block';
 
-    const userMsg = `WRITING TASK:\n${taskText}\n\nCANDIDATE'S RESPONSE:\n${essayText}`;
-
     try {
-      const resp = await fetch(API_URL, {
+      const resp = await fetch(PROXY_URL, {
         method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + API_KEY,
-          'Content-Type':  'application/json',
-        },
-        body: JSON.stringify({
-          model: MODEL,
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            { role: 'user',   content: userMsg },
-          ],
-          max_tokens: 800,
-          temperature: 0.3,
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ taskText, essayText }),
       });
 
       if (!resp.ok) {
-        const err = await resp.text();
-        throw new Error('API error ' + resp.status + ': ' + err.slice(0, 200));
+        const err = await resp.json().catch(() => ({ error: resp.statusText }));
+        throw new Error(err.error || 'Server error ' + resp.status);
       }
 
       const data = await resp.json();
       const raw  = data.choices[0].message.content.trim();
-
-      // Extract JSON from response (model sometimes adds markdown)
       const jsonMatch = raw.match(/\{[\s\S]*\}/);
       if (!jsonMatch) throw new Error('Could not parse AI response');
-      const result = JSON.parse(jsonMatch[0]);
-
-      renderResult(result, resultEl);
+      renderResult(JSON.parse(jsonMatch[0]), resultEl);
     } catch (e) {
       resultEl.innerHTML = `<div class="ai-error">❌ ${e.message}</div>`;
     }
@@ -133,12 +90,10 @@ Reply in this exact JSON format:
     const isWriting = location.pathname.includes('/writing/');
     if (!isWriting) return;
 
-    // Find all writing task blocks and add a checker after each
     document.querySelectorAll('.writing-task, .task-box, .task-card').forEach((taskEl, i) => {
       injectChecker(taskEl, i);
     });
 
-    // Fallback: if page has no .writing-task, inject once after page-content h1
     if (!document.querySelector('.writing-task, .task-box, .task-card')) {
       const content = document.querySelector('.page-content');
       if (content) injectChecker(content, 0);
@@ -152,7 +107,7 @@ Reply in this exact JSON format:
     wrap.style.cssText = 'margin-top:20px;margin-bottom:8px';
     wrap.innerHTML = `
       <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden">
-        <button class="ai-checker-toggle" onclick="this.nextElementSibling.classList.toggle('open')"
+        <button class="ai-checker-toggle"
           style="width:100%;background:none;border:none;padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:700;color:var(--text);text-align:left">
           <span style="font-size:1.1rem">🤖</span> AI Writing Checker
           <span style="margin-left:auto;font-size:.75rem;color:var(--muted);font-weight:400">Paste your answer · get B2 feedback</span>
@@ -169,13 +124,12 @@ Reply in this exact JSON format:
               style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:.88rem;font-weight:600;cursor:pointer">
               ✅ Check my writing
             </button>
-            <span style="font-size:.76rem;color:var(--muted)">Powered by Cerebras · Llama 3.3 70B · Free</span>
+            <span style="font-size:.76rem;color:var(--muted)">Powered by Groq · Llama 3.3 70B · Free</span>
           </div>
           <div id="${id}-result" style="display:none;margin-top:14px"></div>
         </div>
       </div>`;
 
-    // Toggle open class
     const body = wrap.querySelector('.ai-checker-body');
     wrap.querySelector('.ai-checker-toggle').onclick = () => {
       const open = body.style.display !== 'none';
@@ -186,7 +140,7 @@ Reply in this exact JSON format:
   }
 
   function check(id) {
-    const essayEl = document.getElementById(id + '-essay');
+    const essayEl  = document.getElementById(id + '-essay');
     const resultEl = document.getElementById(id + '-result');
     if (!essayEl || !resultEl) return;
 
@@ -197,10 +151,8 @@ Reply in this exact JSON format:
       return;
     }
 
-    // Extract task text from the page (first .task-box or .writing-task above)
-    const taskEl = document.querySelector('.writing-task, .task-box, .task-card, .instructions');
+    const taskEl  = document.querySelector('.writing-task, .task-box, .task-card, .instructions');
     const taskText = taskEl ? taskEl.innerText.slice(0, 600) : 'B2 writing task';
-
     checkEssay(taskText, essay, resultEl);
   }
 
