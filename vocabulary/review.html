@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔁</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Smart Review · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.srs-overview {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+  margin-bottom: 28px;
+}
+.srs-stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 12px;
+  text-align: center;
+}
+.srs-stat-num  { font-size: 1.8rem; font-weight: 800; }
+.srs-stat-label { font-size: .72rem; color: var(--muted); margin-top: 2px; }
+
+.srs-card-wrap { display: flex; flex-direction: column; align-items: center; padding: 20px 0; }
+.srs-card {
+  width: 100%;
+  max-width: 560px;
+  min-height: 220px;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+  margin-bottom: 20px;
+  user-select: none;
+  position: relative;
+}
+.srs-card:hover { border-color: var(--sel); box-shadow: 0 4px 24px rgba(26,95,180,.15); }
+.srs-card-meta {
+  position: absolute; top: 14px; left: 16px;
+  font-size: .7rem; color: var(--muted);
+}
+.srs-card-box {
+  position: absolute; top: 14px; right: 16px;
+  font-size: .7rem; font-weight: 700;
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--border); color: var(--muted);
+}
+.srs-card-box.box-1 { background: rgba(220,38,38,.1); color:#dc2626; }
+.srs-card-box.box-2 { background: rgba(234,88,12,.1); color:#ea580c; }
+.srs-card-box.box-3 { background: rgba(202,138,4,.1); color:#ca8a04; }
+.srs-card-box.box-4 { background: rgba(22,163,74,.1); color:#16a34a; }
+.srs-card-box.box-5 { background: rgba(37,99,235,.1); color:#2563eb; }
+
+.srs-pos  { font-size: .72rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+.srs-word { font-size: 1.8rem; font-weight: 700; color: var(--text); font-family: 'Lora', Georgia, serif; margin-bottom: 6px; }
+.srs-topic { font-size: .72rem; color: var(--muted); }
+.srs-hint  { font-size: .8rem; color: var(--muted); margin-top: 16px; }
+.srs-reveal {
+  margin-top: 20px; padding-top: 20px;
+  border-top: 1px solid var(--border);
+  width: 100%; display: none;
+}
+.srs-card.revealed .srs-reveal { display: block; }
+.srs-card.revealed .srs-hint   { display: none; }
+.srs-def { font-size: .95rem; color: var(--text); line-height: 1.6; margin-bottom: 8px; font-family: 'Lora', Georgia, serif; }
+.srs-ex  { font-size: .82rem; color: var(--muted); font-style: italic; line-height: 1.6; }
+
+.srs-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+.srs-btn {
+  padding: 12px 28px; border-radius: 10px; border: none;
+  font-family: inherit; font-size: .9rem; font-weight: 600;
+  cursor: pointer; transition: opacity .15s;
+}
+.srs-btn:hover { opacity: .85; }
+.srs-btn-again { background: #dc2626; color: #fff; }
+.srs-btn-hard  { background: #ea580c; color: #fff; }
+.srs-btn-good  { background: #2563eb; color: #fff; }
+.srs-btn-easy  { background: #059669; color: #fff; }
+
+.srs-progress-bar {
+  width: 100%; max-width: 560px;
+  height: 6px; background: var(--border);
+  border-radius: 3px; margin-bottom: 12px;
+}
+.srs-progress-fill {
+  height: 100%; background: var(--indigo);
+  border-radius: 3px; transition: width .4s;
+}
+.srs-progress-txt { font-size: .78rem; color: var(--muted); margin-bottom: 20px; }
+
+.srs-done {
+  max-width: 560px; width: 100%;
+  background: var(--card);
+  border: 2px solid var(--ok);
+  border-radius: 18px;
+  padding: 40px 32px;
+  text-align: center;
+}
+.srs-done h2 { font-size: 1.5rem; margin-bottom: 10px; color: var(--text); }
+.srs-done p  { font-size: .9rem; color: var(--muted); margin-bottom: 24px; line-height: 1.6; }
+
+.srs-empty {
+  max-width: 560px; width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 40px 32px;
+  text-align: center;
+}
+.srs-empty h2 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text); }
+.srs-empty p  { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+
+.legend {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  justify-content: center; margin-bottom: 28px;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 5px;
+  font-size: .72rem; color: var(--muted);
+}
+.legend-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+}
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Vocabulary</span>
+        <a href="index.html" class="nav-link">📚 All Topics</a>
+        <a href="travel.html" class="nav-link">✈️ Travel</a>
+        <a href="work.html" class="nav-link">💼 Work</a>
+        <a href="health.html" class="nav-link">❤️ Health</a>
+        <a href="technology.html" class="nav-link">💻 Technology</a>
+        <a href="environment.html" class="nav-link">🌿 Environment</a>
+        <a href="culture.html" class="nav-link">🌍 Culture</a>
+        <a href="collocations.html" class="nav-link">🔗 Collocations</a>
+        <a href="review.html" class="nav-link active">🔁 Smart Review</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1</a>
+        <a href="../writing/errors.html" class="nav-link">📝 Error Log</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <a href="index.html">Vocabulary</a>
+        <span>›</span>
+        Smart Review
+      </div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">🔁 Smart Vocabulary Review</h1>
+      <p class="page-subtitle">Spaced repetition across all 6 topics · 120 words · Review what you need, when you need it</p>
+
+      <div class="srs-overview" id="srs-overview"></div>
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#dc2626"></div> New / Again</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ea580c"></div> Learning</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#ca8a04"></div> Review soon</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#16a34a"></div> Known</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#2563eb"></div> Mastered</div>
+      </div>
+
+      <div class="srs-card-wrap" id="srs-card-wrap"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+// ── Word bank (all 6 topics, 20 words each) ──────────────────────────────
+const ALL_WORDS = [
+  // Travel (20)
+  { id:'travel_accommodation',  topic:'Travel',      word:'accommodation',  pos:'noun', def:'A place to stay, such as a hotel, hostel, or rented room.',               ex:'We booked accommodation near the city centre for the whole week.' },
+  { id:'travel_itinerary',      topic:'Travel',      word:'itinerary',      pos:'noun', def:'A detailed plan or schedule for a journey.',                              ex:'The tour guide handed out the itinerary so we knew exactly what to expect.' },
+  { id:'travel_embarkation',    topic:'Travel',      word:'embarkation',    pos:'noun', def:'The process of boarding a ship or aircraft at the start of a journey.',   ex:'Passengers were directed to the embarkation deck thirty minutes before departure.' },
+  { id:'travel_excursion',      topic:'Travel',      word:'excursion',      pos:'noun', def:'A short journey or trip, especially one taken for pleasure.',              ex:'We went on a day excursion to the nearby mountains.' },
+  { id:'travel_destination',    topic:'Travel',      word:'destination',    pos:'noun', def:'The place to which someone is travelling or being sent.',                 ex:'Paris was our final destination after stops in Brussels and Amsterdam.' },
+  { id:'travel_currency',       topic:'Travel',      word:'currency',       pos:'noun', def:'The system of money used in a particular country.',                       ex:'Make sure you exchange your currency before you travel.' },
+  { id:'travel_immigration',    topic:'Travel',      word:'immigration',    pos:'noun', def:'The official process of entering a country at the border.',               ex:'We had to pass through immigration and show our passports.' },
+  { id:'travel_luggage',        topic:'Travel',      word:'luggage',        pos:'noun', def:'Suitcases and bags taken by a traveller on a journey.',                   ex:'Please ensure your luggage does not exceed the 20 kg weight limit.' },
+  { id:'travel_boarding_pass',  topic:'Travel',      word:'boarding pass',  pos:'noun', def:'A document giving permission to board a flight.',                         ex:'You must present your boarding pass at the gate.' },
+  { id:'travel_transit',        topic:'Travel',      word:'transit',        pos:'noun', def:'Passing through a place on the way to a final destination.',              ex:'We had a two-hour transit in Amsterdam before our connecting flight.' },
+  { id:'travel_sightseeing',    topic:'Travel',      word:'sightseeing',    pos:'noun', def:'The activity of visiting places of interest as a tourist.',               ex:'We spent the afternoon sightseeing in the old town.' },
+  { id:'travel_souvenir',       topic:'Travel',      word:'souvenir',       pos:'noun', def:'An object bought as a reminder of a place or event.',                     ex:'She bought a small souvenir from every country she visited.' },
+  { id:'travel_expedition',     topic:'Travel',      word:'expedition',     pos:'noun', def:'A journey for a particular purpose, often in a remote area.',             ex:'They set off on an expedition to explore the remote rainforest.' },
+  { id:'travel_resort',         topic:'Travel',      word:'resort',         pos:'noun', def:'A place visited for holidays, often by the sea or mountains.',            ex:'We stayed at a luxury resort in the Canary Islands.' },
+  { id:'travel_backpacker',     topic:'Travel',      word:'backpacker',     pos:'noun', def:'A traveller who travels cheaply with belongings in a backpack.',          ex:'As a backpacker, she stayed in youth hostels to save money.' },
+  { id:'travel_jet_lag',        topic:'Travel',      word:'jet lag',        pos:'noun', def:'Tiredness felt after a long flight across several time zones.',           ex:'It took her three days to recover from jet lag.' },
+  { id:'travel_cruise',         topic:'Travel',      word:'cruise',         pos:'noun', def:'A holiday on a large ship that calls at several ports.',                  ex:'They went on a Mediterranean cruise for their anniversary.' },
+  { id:'travel_layover',        topic:'Travel',      word:'layover',        pos:'noun', def:'A period waiting at an airport between two flights.',                     ex:'We had a six-hour layover in Dubai, so we explored the city.' },
+  { id:'travel_customs',        topic:'Travel',      word:'customs',        pos:'noun', def:'The official process of inspecting goods at a country\'s border.',        ex:'At customs, they were asked to declare any items of value.' },
+  { id:'travel_guidebook',      topic:'Travel',      word:'guidebook',      pos:'noun', def:'A book containing useful information about a place for tourists.',        ex:'The guidebook recommended several local restaurants.' },
+  // Work (20)
+  { id:'work_applicant',        topic:'Work',        word:'applicant',      pos:'noun', def:'A person who applies for a job or course.',                              ex:'Over two hundred applicants applied for the position.' },
+  { id:'work_colleague',        topic:'Work',        word:'colleague',      pos:'noun', def:'A person you work with.',                                                ex:'She introduced me to her colleagues at the marketing department.' },
+  { id:'work_deadline',         topic:'Work',        word:'deadline',       pos:'noun', def:'The latest time by which something must be completed.',                  ex:'The report has to be finished by the deadline on Friday.' },
+  { id:'work_promotion',        topic:'Work',        word:'promotion',      pos:'noun', def:'An advancement to a higher position or rank.',                           ex:'She was offered a promotion after three years with the company.' },
+  { id:'work_redundancy',       topic:'Work',        word:'redundancy',     pos:'noun', def:'The situation where a job is no longer needed.',                         ex:'Many workers faced redundancy when the factory closed down.' },
+  { id:'work_entrepreneur',     topic:'Work',        word:'entrepreneur',   pos:'noun', def:'A person who sets up a business and takes financial risks.',             ex:'She became a successful entrepreneur after launching her own company at 25.' },
+  { id:'work_internship',       topic:'Work',        word:'internship',     pos:'noun', def:'A period of supervised work experience.',                               ex:'He completed a six-month internship at a law firm during his studies.' },
+  { id:'work_recruitment',      topic:'Work',        word:'recruitment',    pos:'noun', def:'The process of finding and hiring new employees.',                       ex:'The company spent a great deal on recruitment this year.' },
+  { id:'work_salary',           topic:'Work',        word:'salary',         pos:'noun', def:'A fixed regular payment for employment.',                               ex:'She negotiated a higher salary before accepting the job offer.' },
+  { id:'work_initiative',       topic:'Work',        word:'initiative',     pos:'noun', def:'The ability to assess and act independently without instructions.',      ex:'Employers value workers who show initiative and solve problems independently.' },
+  { id:'work_resignation',      topic:'Work',        word:'resignation',    pos:'noun', def:'The act of formally leaving a job.',                                     ex:'He handed in his resignation after disagreeing with the new management.' },
+  { id:'work_overtime',         topic:'Work',        word:'overtime',       pos:'noun', def:'Time worked beyond normal working hours.',                              ex:'Staff were asked to work overtime to meet the project deadline.' },
+  { id:'work_productivity',     topic:'Work',        word:'productivity',   pos:'noun', def:'The effectiveness of productive effort.',                               ex:'Open-plan offices can reduce productivity due to noise and distractions.' },
+  { id:'work_candidate',        topic:'Work',        word:'candidate',      pos:'noun', def:'A person being considered for a position or job.',                      ex:'Three candidates were shortlisted for the final interview.' },
+  { id:'work_contract',         topic:'Work',        word:'contract',       pos:'noun', def:'A formal written agreement between an employer and employee.',           ex:'She signed a two-year contract with the media company.' },
+  { id:'work_freelance',        topic:'Work',        word:'freelance',      pos:'adj',  def:'Working independently for different companies, not employed by one.',   ex:'He works freelance as a graphic designer for several advertising firms.' },
+  { id:'work_appraisal',        topic:'Work',        word:'appraisal',      pos:'noun', def:'A formal assessment of an employee\'s performance.',                    ex:'Her annual appraisal highlighted her strong communication skills.' },
+  { id:'work_collaboration',    topic:'Work',        word:'collaboration',  pos:'noun', def:'Working jointly with others on a project.',                             ex:'The project was the result of close collaboration between two departments.' },
+  { id:'work_portfolio',        topic:'Work',        word:'portfolio',      pos:'noun', def:'A collection of work showing a person\'s skills and experience.',       ex:'She brought her design portfolio to the interview to showcase her work.' },
+  { id:'work_commute',          topic:'Work',        word:'commute',        pos:'noun', def:'The journey to and from work each day.',                                ex:'His daily commute takes over an hour each way by train.' },
+  // Health (20)
+  { id:'health_symptom',        topic:'Health',      word:'symptom',        pos:'noun', def:'A sign or indication of a condition or disease.',                       ex:'Fatigue and a high temperature are common symptoms of the flu.' },
+  { id:'health_diagnosis',      topic:'Health',      word:'diagnosis',      pos:'noun', def:'The identification of an illness from its symptoms.',                   ex:'After several tests, the doctor gave her a diagnosis of anaemia.' },
+  { id:'health_prescription',   topic:'Health',      word:'prescription',   pos:'noun', def:'A written instruction for medication from a doctor.',                   ex:'The doctor gave her a prescription for antibiotics.' },
+  { id:'health_immunity',       topic:'Health',      word:'immunity',       pos:'noun', def:'The ability of the body to resist a disease.',                          ex:'Vaccination helps build immunity against serious diseases.' },
+  { id:'health_nutrition',      topic:'Health',      word:'nutrition',      pos:'noun', def:'The process of providing or obtaining food for health.',                ex:'Good nutrition is essential for maintaining energy throughout the day.' },
+  { id:'health_obesity',        topic:'Health',      word:'obesity',        pos:'noun', def:'The condition of being excessively overweight.',                        ex:'Obesity is linked to a higher risk of heart disease and diabetes.' },
+  { id:'health_chronic',        topic:'Health',      word:'chronic',        pos:'adj',  def:'Lasting for a long time or constantly recurring.',                      ex:'She suffers from chronic back pain that affects her daily life.' },
+  { id:'health_sedentary',      topic:'Health',      word:'sedentary',      pos:'adj',  def:'Characterised by little physical activity.',                            ex:'A sedentary lifestyle is associated with an increased risk of illness.' },
+  { id:'health_rehabilitation', topic:'Health',      word:'rehabilitation', pos:'noun', def:'The process of recovering through training and therapy.',               ex:'After the operation, he underwent several months of rehabilitation.' },
+  { id:'health_prevalence',     topic:'Health',      word:'prevalence',     pos:'noun', def:'The fact of being widespread in a community.',                          ex:'The prevalence of mental health issues among young people is rising.' },
+  { id:'health_remedy',         topic:'Health',      word:'remedy',         pos:'noun', def:'A medicine or treatment that cures or relieves a condition.',           ex:'She used a traditional herbal remedy to soothe her sore throat.' },
+  { id:'health_ailment',        topic:'Health',      word:'ailment',        pos:'noun', def:'A minor illness or complaint.',                                         ex:'Common ailments such as colds and headaches are rarely serious.' },
+  { id:'health_contagious',     topic:'Health',      word:'contagious',     pos:'adj',  def:'Able to be passed from one person to another through contact.',         ex:'The disease is highly contagious, so patients must be isolated.' },
+  { id:'health_fatigue',        topic:'Health',      word:'fatigue',        pos:'noun', def:'Extreme tiredness resulting from mental or physical effort.',            ex:'Many healthcare workers reported severe fatigue after long shifts.' },
+  { id:'health_metabolism',     topic:'Health',      word:'metabolism',     pos:'noun', def:'The chemical processes in the body that maintain life.',                ex:'Regular exercise can help to speed up your metabolism.' },
+  { id:'health_wellbeing',      topic:'Health',      word:'wellbeing',      pos:'noun', def:'The state of being comfortable, healthy, and happy.',                   ex:'Workplace wellbeing programmes can reduce stress and improve productivity.' },
+  { id:'health_outbreak',       topic:'Health',      word:'outbreak',       pos:'noun', def:'A sudden occurrence of disease in a community.',                        ex:'Health authorities acted quickly to contain the outbreak of the virus.' },
+  { id:'health_susceptible',    topic:'Health',      word:'susceptible',    pos:'adj',  def:'Likely to be affected by a particular disease or influence.',           ex:'Elderly people are more susceptible to serious complications from the flu.' },
+  { id:'health_inflammatory',   topic:'Health',      word:'inflammatory',   pos:'adj',  def:'Relating to or causing inflammation in the body.',                      ex:'The doctor prescribed an anti-inflammatory drug for her joint pain.' },
+  { id:'health_disorder',       topic:'Health',      word:'disorder',       pos:'noun', def:'A disruption of normal physical or mental functions.',                  ex:'She was diagnosed with an anxiety disorder and referred to therapy.' },
+  // Technology (20)
+  { id:'tech_algorithm',        topic:'Technology',  word:'algorithm',      pos:'noun', def:'A set of rules for solving a problem or performing a task.',            ex:'Search engines use complex algorithms to rank websites.' },
+  { id:'tech_bandwidth',        topic:'Technology',  word:'bandwidth',      pos:'noun', def:'The amount of data that can be transmitted over a network.',            ex:'Video streaming requires a lot of bandwidth to run smoothly.' },
+  { id:'tech_cybersecurity',    topic:'Technology',  word:'cybersecurity',  pos:'noun', def:'The practice of protecting systems and data from digital attacks.',     ex:'Companies must invest in cybersecurity to protect customer data.' },
+  { id:'tech_encryption',       topic:'Technology',  word:'encryption',     pos:'noun', def:'Converting information into code to prevent unauthorised access.',      ex:'The app uses end-to-end encryption to keep messages private.' },
+  { id:'tech_innovation',       topic:'Technology',  word:'innovation',     pos:'noun', def:'A new method, idea, or product.',                                       ex:'The company is known for its constant innovation in product design.' },
+  { id:'tech_interface',        topic:'Technology',  word:'interface',      pos:'noun', def:'The way a user interacts with a device or software.',                  ex:'A clean, intuitive interface makes apps much easier to use.' },
+  { id:'tech_malware',          topic:'Technology',  word:'malware',        pos:'noun', def:'Software designed to disrupt or damage a computer system.',            ex:'The malware spread rapidly through the company\'s network.' },
+  { id:'tech_platform',         topic:'Technology',  word:'platform',       pos:'noun', def:'A digital system or service used to do tasks online.',                 ex:'Social media platforms are changing the way people consume news.' },
+  { id:'tech_prototype',        topic:'Technology',  word:'prototype',      pos:'noun', def:'An early version of a product used for testing.',                      ex:'Engineers built a prototype of the device before mass production.' },
+  { id:'tech_automation',       topic:'Technology',  word:'automation',     pos:'noun', def:'Using technology to perform tasks without human intervention.',         ex:'Automation has replaced many manual jobs in the manufacturing sector.' },
+  { id:'tech_surveillance',     topic:'Technology',  word:'surveillance',   pos:'noun', def:'Close monitoring or observation, often using technology.',              ex:'CCTV surveillance cameras are used to improve public safety.' },
+  { id:'tech_virtual_reality',  topic:'Technology',  word:'virtual reality', pos:'noun', def:'A simulated experience using computer technology.',                    ex:'Virtual reality is increasingly used in training surgeons.' },
+  { id:'tech_digital_literacy', topic:'Technology',  word:'digital literacy', pos:'noun', def:'The ability to use technology and digital media effectively.',        ex:'Digital literacy is now considered an essential skill in most workplaces.' },
+  { id:'tech_connectivity',     topic:'Technology',  word:'connectivity',   pos:'noun', def:'The ability to connect to a network or the internet.',                 ex:'Improved connectivity in rural areas is a key government priority.' },
+  { id:'tech_obsolete',         topic:'Technology',  word:'obsolete',       pos:'adj',  def:'No longer produced or used; out of date.',                             ex:'Cassette tapes became obsolete with the introduction of digital music.' },
+  { id:'tech_disruptive',       topic:'Technology',  word:'disruptive',     pos:'adj',  def:'Causing major changes to the way things are done.',                    ex:'Smartphones were a disruptive technology that changed everyday life.' },
+  { id:'tech_infrastructure',   topic:'Technology',  word:'infrastructure', pos:'noun', def:'The basic physical systems of a country or organisation.',             ex:'Upgrading digital infrastructure is essential for economic growth.' },
+  { id:'tech_biometric',        topic:'Technology',  word:'biometric',      pos:'adj',  def:'Relating to unique physical characteristics used for identification.',  ex:'Biometric data such as fingerprints is used to unlock smartphones.' },
+  { id:'tech_semiconductor',    topic:'Technology',  word:'semiconductor',  pos:'noun', def:'A material that conducts electricity under certain conditions.',        ex:'Semiconductors are a crucial component in all modern electronic devices.' },
+  { id:'tech_cloud_computing',  topic:'Technology',  word:'cloud computing', pos:'noun', def:'Storing and accessing data and programs over the internet.',           ex:'Cloud computing allows teams to collaborate from different locations.' },
+  // Environment (20)
+  { id:'env_biodiversity',      topic:'Environment', word:'biodiversity',   pos:'noun', def:'The variety of plant and animal life in a particular habitat.',         ex:'Deforestation threatens biodiversity in tropical rainforests.' },
+  { id:'env_conservation',      topic:'Environment', word:'conservation',   pos:'noun', def:'The protection of natural environments and wildlife.',                  ex:'Conservation efforts have helped to increase the population of the species.' },
+  { id:'env_deforestation',     topic:'Environment', word:'deforestation',  pos:'noun', def:'The clearing of forests on a large scale.',                            ex:'Deforestation is one of the leading causes of habitat loss worldwide.' },
+  { id:'env_emissions',         topic:'Environment', word:'emissions',      pos:'noun', def:'Gases or particles released into the atmosphere.',                     ex:'The government has pledged to cut carbon emissions by 50% by 2030.' },
+  { id:'env_renewable',         topic:'Environment', word:'renewable',      pos:'adj',  def:'Energy from sources that are naturally replenished.',                  ex:'Solar and wind power are clean, renewable sources of energy.' },
+  { id:'env_ecosystem',         topic:'Environment', word:'ecosystem',      pos:'noun', def:'A system of living organisms interacting with their environment.',     ex:'Coral reefs are among the world\'s most complex ecosystems.' },
+  { id:'env_greenhouse_gas',    topic:'Environment', word:'greenhouse gas',  pos:'noun', def:'A gas that traps heat in the atmosphere.',                            ex:'Carbon dioxide is the most significant greenhouse gas produced by humans.' },
+  { id:'env_pollution',         topic:'Environment', word:'pollution',      pos:'noun', def:'The introduction of harmful substances into the environment.',          ex:'Air pollution in major cities has serious effects on respiratory health.' },
+  { id:'env_sustainable',       topic:'Environment', word:'sustainable',    pos:'adj',  def:'Able to be maintained without depleting natural resources.',           ex:'Sustainable farming methods are essential to feed growing populations.' },
+  { id:'env_erosion',           topic:'Environment', word:'erosion',        pos:'noun', def:'The gradual destruction of something by natural forces.',               ex:'Soil erosion caused by intensive farming is reducing agricultural land.' },
+  { id:'env_extinction',        topic:'Environment', word:'extinction',     pos:'noun', def:'The process of a species dying out completely.',                       ex:'Scientists warn that many species face extinction within a century.' },
+  { id:'env_habitat',           topic:'Environment', word:'habitat',        pos:'noun', def:'The natural environment in which a species lives.',                    ex:'Wetlands are an important habitat for many species of birds and fish.' },
+  { id:'env_landfill',          topic:'Environment', word:'landfill',       pos:'noun', def:'A site where waste material is buried under the ground.',              ex:'Millions of tonnes of plastic waste end up in landfill every year.' },
+  { id:'env_overpopulation',    topic:'Environment', word:'overpopulation', pos:'noun', def:'An excess of population in an area relative to resources.',            ex:'Overpopulation in cities puts pressure on housing and infrastructure.' },
+  { id:'env_carbon_footprint',  topic:'Environment', word:'carbon footprint', pos:'noun', def:'The total amount of greenhouse gases one produces.',                 ex:'Taking fewer flights is one way to reduce your carbon footprint.' },
+  { id:'env_reforestation',     topic:'Environment', word:'reforestation',  pos:'noun', def:'The process of replanting trees in an area.',                          ex:'Large-scale reforestation projects can help to absorb CO₂.' },
+  { id:'env_contamination',     topic:'Environment', word:'contamination',  pos:'noun', def:'The process of making something impure or toxic.',                     ex:'Industrial waste caused serious contamination of the local river.' },
+  { id:'env_drought',           topic:'Environment', word:'drought',        pos:'noun', def:'A prolonged period of abnormally low rainfall.',                       ex:'The region suffered a severe drought, destroying crops and livestock.' },
+  { id:'env_flora_fauna',       topic:'Environment', word:'flora and fauna', pos:'noun', def:'The plants and animals of a particular region.',                      ex:'The national park protects the diverse flora and fauna of the area.' },
+  { id:'env_geothermal',        topic:'Environment', word:'geothermal',     pos:'adj',  def:'Relating to heat from the earth\'s interior.',                         ex:'Iceland uses geothermal energy to heat homes and generate electricity.' },
+  // Culture (20)
+  { id:'cult_heritage',         topic:'Culture',     word:'heritage',       pos:'noun', def:'Traditions, values, and history passed down through generations.',     ex:'The country takes great pride in its cultural heritage and traditions.' },
+  { id:'cult_multicultural',    topic:'Culture',     word:'multicultural',  pos:'adj',  def:'Relating to or including several cultural groups.',                    ex:'London is one of the most multicultural cities in the world.' },
+  { id:'cult_integration',      topic:'Culture',     word:'integration',    pos:'noun', def:'The process of combining or incorporating into society.',               ex:'The integration of immigrants into the local community takes time.' },
+  { id:'cult_stereotype',       topic:'Culture',     word:'stereotype',     pos:'noun', def:'A fixed, oversimplified idea about a group of people.',                ex:'It is important to challenge harmful stereotypes about different cultures.' },
+  { id:'cult_dialect',          topic:'Culture',     word:'dialect',        pos:'noun', def:'A regional variety of a language with distinct grammar and words.',    ex:'The local dialect was so strong that he struggled to understand the people.' },
+  { id:'cult_tradition',        topic:'Culture',     word:'tradition',      pos:'noun', def:'A long-established custom passed through generations.',                ex:'Every year, the village celebrates the traditional harvest festival.' },
+  { id:'cult_indigenous',       topic:'Culture',     word:'indigenous',     pos:'adj',  def:'Originating or occurring naturally in a place; native.',               ex:'The indigenous peoples of the Amazon have lived in the forest for centuries.' },
+  { id:'cult_ritual',           topic:'Culture',     word:'ritual',         pos:'noun', def:'A ceremony or action regularly performed.',                            ex:'The coming-of-age ritual marks the transition to adulthood in many cultures.' },
+  { id:'cult_assimilation',     topic:'Culture',     word:'assimilation',   pos:'noun', def:'The process of becoming part of a different culture.',                 ex:'Assimilation into a new culture can be both exciting and challenging.' },
+  { id:'cult_bilingual',        topic:'Culture',     word:'bilingual',      pos:'adj',  def:'Speaking two languages fluently.',                                     ex:'Growing up in a bilingual household gave her a great advantage later in life.' },
+  { id:'cult_folklore',         topic:'Culture',     word:'folklore',       pos:'noun', def:'The traditional stories and customs of a community.',                  ex:'The region has a rich folklore, full of tales about dragons and spirits.' },
+  { id:'cult_prejudice',        topic:'Culture',     word:'prejudice',      pos:'noun', def:'An unfair negative opinion not based on reason or experience.',        ex:'Fighting prejudice and discrimination is a key social challenge.' },
+  { id:'cult_diversity',        topic:'Culture',     word:'diversity',      pos:'noun', def:'A range of many people or things that are very different from each other.', ex:'The university celebrates diversity among its international student body.' },
+  { id:'cult_contemporary',     topic:'Culture',     word:'contemporary',   pos:'adj',  def:'Belonging to or occurring in the present.',                            ex:'The gallery focuses on contemporary art from emerging artists worldwide.' },
+  { id:'cult_subculture',       topic:'Culture',     word:'subculture',     pos:'noun', def:'A cultural group within a larger culture with distinct beliefs.',      ex:'Punk was a youth subculture that emerged in Britain in the 1970s.' },
+  { id:'cult_censorship',       topic:'Culture',     word:'censorship',     pos:'noun', def:'The suppression of parts of media deemed harmful or sensitive.',       ex:'Many artists argue that censorship restricts freedom of creative expression.' },
+  { id:'cult_globalisation',    topic:'Culture',     word:'globalisation',  pos:'noun', def:'The process of international integration due to trade and exchange.',  ex:'Globalisation has led to both greater cultural exchange and the loss of local traditions.' },
+  { id:'cult_appreciation',     topic:'Culture',     word:'appreciation',   pos:'noun', def:'The recognition and enjoyment of quality.',                            ex:'Living abroad gave her a greater appreciation of her own culture.' },
+  { id:'cult_manuscript',       topic:'Culture',     word:'manuscript',     pos:'noun', def:'A handwritten or typed document, especially a historical one.',        ex:'Scholars discovered a medieval manuscript containing previously unknown poems.' },
+  { id:'cult_aesthetic',        topic:'Culture',     word:'aesthetic',      pos:'noun', def:'A set of principles concerned with beauty or the appreciation of art.', ex:'The minimalist aesthetic of Scandinavian design is globally influential.' },
+];
+
+// ── SRS logic ────────────────────────────────────────────────────────────
+const SRS_KEY = 'b2_srs';
+// Boxes: 1=new, 2=learning, 3=review, 4=known, 5=mastered
+// Intervals (days): 1→0, 2→1, 3→3, 4→7, 5→14
+const INTERVALS = [0, 1, 3, 7, 14];
+
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function addDays(iso, n) {
+  const d = new Date(iso + 'T00:00:00');
+  d.setDate(d.getDate() + n);
+  return d.toISOString().slice(0, 10);
+}
+
+function loadSRS() {
+  try { return JSON.parse(localStorage.getItem(SRS_KEY)) || {}; }
+  catch { return {}; }
+}
+
+function saveSRS(data) {
+  try { localStorage.setItem(SRS_KEY, JSON.stringify(data)); }
+  catch {}
+}
+
+function getWordState(srs, id) {
+  return srs[id] || { box: 1, due: today(), reviews: 0 };
+}
+
+function updateWord(srs, id, grade) {
+  // grade: 1=again, 2=hard, 3=good, 4=easy
+  const s = getWordState(srs, id);
+  let newBox = s.box;
+
+  if (grade === 1) { newBox = 1; }
+  else if (grade === 2) { newBox = Math.max(1, s.box - 1); }
+  else if (grade === 3) { newBox = Math.min(5, s.box + 1); }
+  else if (grade === 4) { newBox = Math.min(5, s.box + 2); }
+
+  srs[id] = {
+    box:     newBox,
+    due:     addDays(today(), INTERVALS[newBox - 1]),
+    reviews: (s.reviews || 0) + 1,
+  };
+  return srs;
+}
+
+// ── Session state ─────────────────────────────────────────────────────────
+let deck = [];
+let pos  = 0;
+let sessionCorrect = 0;
+let sessionTotal   = 0;
+let revealed       = false;
+
+function buildDeck() {
+  const srs  = loadSRS();
+  const t    = today();
+  // Due cards first, then new cards (box 1 never reviewed)
+  const due  = ALL_WORDS.filter(w => {
+    const s = getWordState(srs, w.id);
+    return s.due <= t;
+  });
+  // Shuffle
+  for (let i = due.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [due[i], due[j]] = [due[j], due[i]];
+  }
+  return due;
+}
+
+function renderOverview() {
+  const srs   = loadSRS();
+  const t     = today();
+  const boxes = [0, 0, 0, 0, 0];
+  ALL_WORDS.forEach(w => {
+    const s = getWordState(srs, w.id);
+    boxes[s.box - 1]++;
+  });
+  const due = ALL_WORDS.filter(w => getWordState(srs, w.id).due <= t).length;
+
+  const colors = ['#dc2626','#ea580c','#ca8a04','#16a34a','#2563eb'];
+  const labels = ['New','Learning','Review soon','Known','Mastered'];
+
+  document.getElementById('srs-overview').innerHTML = [
+    { num: due,      label: 'Due today', color: due > 0 ? '#7c3aed' : '#059669' },
+    ...boxes.map((n, i) => ({ num: n, label: labels[i], color: colors[i] })),
+    { num: ALL_WORDS.length, label: 'Total words', color: 'var(--text)' },
+  ].map(s => `<div class="srs-stat">
+    <div class="srs-stat-num" style="color:${s.color}">${s.num}</div>
+    <div class="srs-stat-label">${s.label}</div>
+  </div>`).join('');
+}
+
+function renderCard() {
+  const wrap = document.getElementById('srs-card-wrap');
+
+  if (deck.length === 0) {
+    const srs = loadSRS();
+    const t   = today();
+    const nextDue = ALL_WORDS.map(w => getWordState(srs, w.id).due)
+                              .filter(d => d > t)
+                              .sort()[0];
+    wrap.innerHTML = `<div class="srs-empty">
+      <div style="font-size:2.5rem;margin-bottom:14px">🎉</div>
+      <h2>All caught up!</h2>
+      <p>You have no words due for review today.<br>
+      ${nextDue ? `Come back ${nextDue === addDays(today(), 1) ? 'tomorrow' : 'on ' + nextDue} for your next session.` : 'Start by doing a vocabulary topic first.'}</p>
+      <a href="index.html" class="fc-btn fc-btn-ok" style="display:inline-block;text-decoration:none;margin-top:8px">Go to topics →</a>
+    </div>`;
+    renderOverview();
+    return;
+  }
+
+  if (pos >= deck.length) {
+    wrap.innerHTML = `<div class="srs-done">
+      <div style="font-size:2.5rem;margin-bottom:14px">✅</div>
+      <h2>Session complete!</h2>
+      <p>You reviewed <strong>${deck.length} word${deck.length !== 1 ? 's' : ''}</strong> this session.<br>
+      Your progress has been saved. Keep it up!</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="srs-btn srs-btn-good" onclick="restartSession()">Review again ↩</button>
+        <a href="index.html" class="srs-btn" style="background:var(--border);color:var(--text);text-decoration:none">Back to topics</a>
+      </div>
+    </div>`;
+    renderOverview();
+    return;
+  }
+
+  const word  = deck[pos];
+  const srs   = loadSRS();
+  const state = getWordState(srs, word.id);
+  const boxColors = ['box-1','box-2','box-3','box-4','box-5'];
+
+  const pct = Math.round(pos / deck.length * 100);
+  wrap.innerHTML = `
+    <div class="srs-progress-bar" style="width:100%;max-width:560px">
+      <div class="srs-progress-fill" style="width:${pct}%"></div>
+    </div>
+    <div class="srs-progress-txt">${pos} / ${deck.length} reviewed this session</div>
+    <div class="srs-card" id="srs-card" onclick="revealCard()">
+      <span class="srs-card-meta">${word.topic}</span>
+      <span class="srs-card-box ${boxColors[state.box-1]}">Box ${state.box}</span>
+      <div class="srs-pos">${word.pos}</div>
+      <div class="srs-word">${word.word}</div>
+      <div class="srs-hint">Click to reveal definition</div>
+      <div class="srs-reveal">
+        <div class="srs-def">${word.def}</div>
+        <div class="srs-ex"><em>"${word.ex}"</em></div>
+      </div>
+    </div>
+    <div class="srs-actions" id="srs-actions" style="display:none">
+      <button class="srs-btn srs-btn-again" onclick="grade(1)">😕 Again</button>
+      <button class="srs-btn srs-btn-hard"  onclick="grade(2)">🤔 Hard</button>
+      <button class="srs-btn srs-btn-good"  onclick="grade(3)">😊 Good</button>
+      <button class="srs-btn srs-btn-easy"  onclick="grade(4)">🚀 Easy</button>
+    </div>`;
+  revealed = false;
+}
+
+function revealCard() {
+  if (revealed) return;
+  revealed = true;
+  document.getElementById('srs-card').classList.add('revealed');
+  document.getElementById('srs-actions').style.display = 'flex';
+}
+
+function grade(g) {
+  const word = deck[pos];
+  let srs = loadSRS();
+  srs = updateWord(srs, word.id, g);
+  saveSRS(srs);
+  pos++;
+  renderCard();
+}
+
+function restartSession() {
+  deck = buildDeck();
+  pos  = 0;
+  renderCard();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderOverview();
+  deck = buildDeck();
+  renderCard();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📝</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Error Tracker · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.err-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow);
+}
+.err-form-title {
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+.err-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+@media (max-width: 600px) { .err-grid { grid-template-columns: 1fr; } }
+.err-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.err-field label {
+  font-size: .73rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.err-field input, .err-field select, .err-field textarea {
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: .88rem;
+  line-height: 1.5;
+  width: 100%;
+}
+.err-field textarea { resize: vertical; min-height: 64px; }
+.err-field input:focus, .err-field select:focus, .err-field textarea:focus {
+  outline: none;
+  border-color: var(--sel);
+  box-shadow: 0 0 0 3px rgba(37,99,235,.1);
+}
+.err-add-btn {
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-family: inherit;
+  font-size: .88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.err-add-btn:hover { opacity: .85; }
+
+.err-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.err-filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+}
+.err-filter-btn.active, .err-filter-btn:hover {
+  border-color: #dc2626;
+  color: #dc2626;
+  background: rgba(220,38,38,.06);
+}
+
+.err-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--muted);
+  font-size: .9rem;
+}
+.err-empty .err-empty-icon { font-size: 2.4rem; margin-bottom: 12px; }
+
+.err-list { display: flex; flex-direction: column; gap: 12px; }
+.err-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 4px solid #dc2626;
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+  transition: opacity .2s;
+}
+.err-item.mastered {
+  border-left-color: #059669;
+  opacity: .65;
+}
+.err-item-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.err-cat-badge {
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: rgba(220,38,38,.1);
+  color: #dc2626;
+}
+.err-item.mastered .err-cat-badge {
+  background: rgba(5,150,105,.1);
+  color: #059669;
+}
+.err-date {
+  font-size: .72rem;
+  color: var(--muted);
+  margin-left: auto;
+}
+.err-wrong {
+  font-size: .88rem;
+  color: #dc2626;
+  text-decoration: line-through;
+  margin-bottom: 4px;
+}
+.err-correct {
+  font-size: .88rem;
+  color: #059669;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.err-note {
+  font-size: .8rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-top: 4px;
+}
+.err-actions { display: flex; gap: 8px; margin-top: 10px; }
+.err-action-btn {
+  padding: 4px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: .75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+}
+.err-action-btn:hover { border-color: var(--sel); color: var(--text); }
+.err-mastered-btn { border-color: #059669; color: #059669; }
+.err-mastered-btn:hover { background: rgba(5,150,105,.08); }
+.err-delete-btn:hover { border-color: #dc2626; color: #dc2626; }
+
+.err-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.err-stat {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 18px;
+  text-align: center;
+  flex: 1;
+  min-width: 90px;
+}
+.err-stat-num { font-size: 1.5rem; font-weight: 800; color: var(--text); }
+.err-stat-label { font-size: .72rem; color: var(--muted); margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link">🗺️ My Roadmap</a>
+        <a href="../strategy.html" class="nav-link">🎯 Exam Strategy</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="paper1.html" class="nav-link">Paper 1 <span class="badge">Ready</span></a>
+        <a href="paper2.html" class="nav-link">Paper 2 <span class="badge">Ready</span></a>
+        <a href="paper3.html" class="nav-link">Paper 3 <span class="badge">Ready</span></a>
+        <a href="paper6.html" class="nav-link">Paper 6 <span class="badge">Ready</span></a>
+        <a href="paper7.html" class="nav-link">Paper 7 <span class="badge">Ready</span></a>
+        <a href="errors.html" class="nav-link active">📝 Error Log</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="../reading/paper1.html" class="nav-link">Paper 1</a>
+        <a href="../reading/paper2.html" class="nav-link">Paper 2</a>
+        <a href="../reading/paper3.html" class="nav-link">Paper 3</a>
+        <a href="../reading/paper6.html" class="nav-link">Paper 6</a>
+        <a href="../reading/paper7.html" class="nav-link">Paper 7</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Vocabulary</span>
+        <a href="../vocabulary/index.html" class="nav-link">📚 All Topics</a>
+        <a href="../vocabulary/collocations.html" class="nav-link">🔗 Collocations</a>
+        <a href="../vocabulary/review.html" class="nav-link">🔁 Smart Review</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <a href="paper1.html">Writing</a>
+        <span>›</span>
+        Error Log
+      </div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">📝 My Writing Error Log</h1>
+      <p class="page-subtitle">Track mistakes you keep making — when you see the pattern, you can fix it</p>
+
+      <!-- Stats -->
+      <div class="err-stats" id="err-stats"></div>
+
+      <!-- Add error form -->
+      <div class="err-form">
+        <div class="err-form-title">➕ Log a new mistake</div>
+        <div class="err-grid">
+          <div class="err-field">
+            <label>Category</label>
+            <select id="err-cat">
+              <option value="Grammar">Grammar</option>
+              <option value="Tense">Tense</option>
+              <option value="Preposition">Preposition</option>
+              <option value="Article">Article (a/an/the)</option>
+              <option value="Vocabulary">Vocabulary choice</option>
+              <option value="Collocation">Collocation</option>
+              <option value="Register">Register (formal/informal)</option>
+              <option value="Linking">Linking words</option>
+              <option value="Spelling">Spelling</option>
+              <option value="Word order">Word order</option>
+              <option value="Punctuation">Punctuation</option>
+              <option value="Structure">Structure / Organisation</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="err-field" style="align-items:flex-end">
+            <label>&nbsp;</label>
+            <button class="err-add-btn" onclick="addError()">Add to log ✓</button>
+          </div>
+        </div>
+        <div class="err-grid">
+          <div class="err-field">
+            <label>❌ What I wrote (wrong)</label>
+            <textarea id="err-wrong" placeholder="e.g. I am living in this city since 2010"></textarea>
+          </div>
+          <div class="err-field">
+            <label>✅ Correct version</label>
+            <textarea id="err-correct" placeholder="e.g. I have been living in this city since 2010"></textarea>
+          </div>
+        </div>
+        <div class="err-field">
+          <label>💡 Note / Why it's wrong (optional)</label>
+          <input type="text" id="err-note" placeholder="e.g. Use present perfect continuous for ongoing actions started in the past">
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="err-filters" id="err-filters">
+        <button class="err-filter-btn active" data-cat="All" onclick="setFilter('All')">All</button>
+      </div>
+
+      <!-- Stats -->
+      <div id="err-list"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const STORAGE_KEY = 'b2_errors';
+
+function loadErrors() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch { return []; }
+}
+
+function saveErrors(errors) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(errors)); }
+  catch {}
+}
+
+let currentFilter = 'All';
+
+function setFilter(cat) {
+  currentFilter = cat;
+  document.querySelectorAll('.err-filter-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.cat === cat);
+  });
+  renderList();
+}
+
+function addError() {
+  const cat     = document.getElementById('err-cat').value;
+  const wrong   = document.getElementById('err-wrong').value.trim();
+  const correct = document.getElementById('err-correct').value.trim();
+  const note    = document.getElementById('err-note').value.trim();
+
+  if (!wrong || !correct) {
+    alert('Please fill in both the wrong and correct versions.');
+    return;
+  }
+
+  const errors = loadErrors();
+  errors.unshift({
+    id:       Date.now(),
+    cat,
+    wrong,
+    correct,
+    note,
+    date:     new Date().toISOString().slice(0, 10),
+    mastered: false,
+  });
+  saveErrors(errors);
+
+  document.getElementById('err-wrong').value   = '';
+  document.getElementById('err-correct').value = '';
+  document.getElementById('err-note').value    = '';
+
+  renderAll();
+}
+
+function toggleMastered(id) {
+  const errors = loadErrors();
+  const idx = errors.findIndex(e => e.id === id);
+  if (idx >= 0) errors[idx].mastered = !errors[idx].mastered;
+  saveErrors(errors);
+  renderAll();
+}
+
+function deleteError(id) {
+  if (!confirm('Remove this error from your log?')) return;
+  const errors = loadErrors().filter(e => e.id !== id);
+  saveErrors(errors);
+  renderAll();
+}
+
+function renderFilters() {
+  const errors = loadErrors();
+  const cats = ['All', ...new Set(errors.map(e => e.cat))];
+  const filters = document.getElementById('err-filters');
+  filters.innerHTML = cats.map(c => {
+    const count = c === 'All' ? errors.length : errors.filter(e => e.cat === c).length;
+    return `<button class="err-filter-btn ${c === currentFilter ? 'active' : ''}" data-cat="${c}" onclick="setFilter('${c}')">
+      ${c} <span style="opacity:.6;font-weight:400">${count}</span>
+    </button>`;
+  }).join('');
+}
+
+function renderStats() {
+  const errors = loadErrors();
+  const total    = errors.length;
+  const mastered = errors.filter(e => e.mastered).length;
+  const active   = total - mastered;
+  const cats     = new Set(errors.map(e => e.cat)).size;
+
+  document.getElementById('err-stats').innerHTML = `
+    <div class="err-stat">
+      <div class="err-stat-num" style="color:#dc2626">${active}</div>
+      <div class="err-stat-label">To fix</div>
+    </div>
+    <div class="err-stat">
+      <div class="err-stat-num" style="color:#059669">${mastered}</div>
+      <div class="err-stat-label">Mastered</div>
+    </div>
+    <div class="err-stat">
+      <div class="err-stat-num">${total}</div>
+      <div class="err-stat-label">Total logged</div>
+    </div>
+    <div class="err-stat">
+      <div class="err-stat-num" style="color:#7c3aed">${cats}</div>
+      <div class="err-stat-label">Categories</div>
+    </div>`;
+}
+
+function formatDate(iso) {
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function renderList() {
+  const all    = loadErrors();
+  const errors = currentFilter === 'All' ? all : all.filter(e => e.cat === currentFilter);
+  const el     = document.getElementById('err-list');
+
+  if (errors.length === 0) {
+    el.innerHTML = `<div class="err-empty">
+      <div class="err-empty-icon">${currentFilter === 'All' ? '🎉' : '🔍'}</div>
+      <div>${currentFilter === 'All'
+        ? 'No errors logged yet.<br>Add a mistake above to start tracking your progress.'
+        : 'No errors in this category yet.'}</div>
+    </div>`;
+    return;
+  }
+
+  el.innerHTML = `<div class="err-list">` + errors.map(e => `
+    <div class="err-item ${e.mastered ? 'mastered' : ''}" id="err-${e.id}">
+      <div class="err-item-header">
+        <span class="err-cat-badge">${e.cat}</span>
+        ${e.mastered ? '<span style="font-size:.72rem;color:#059669;font-weight:600">✓ Mastered</span>' : ''}
+        <span class="err-date">${formatDate(e.date)}</span>
+      </div>
+      <div class="err-wrong">${escHtml(e.wrong)}</div>
+      <div class="err-correct">→ ${escHtml(e.correct)}</div>
+      ${e.note ? `<div class="err-note">💡 ${escHtml(e.note)}</div>` : ''}
+      <div class="err-actions">
+        <button class="err-action-btn err-mastered-btn" onclick="toggleMastered(${e.id})">
+          ${e.mastered ? '↩ Unmark' : '✓ Got it!'}
+        </button>
+        <button class="err-action-btn err-delete-btn" onclick="deleteError(${e.id})">✕ Delete</button>
+      </div>
+    </div>`).join('') + `</div>`;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderAll() {
+  renderStats();
+  renderFilters();
+  renderList();
+}
+
+document.addEventListener('DOMContentLoaded', renderAll);
+</script>
+</body>
+</html>
