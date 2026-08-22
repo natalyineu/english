@@ -213,7 +213,9 @@ window.UI = (() => {
     if (!nav) return;
 
     const mins = getTimerMins();
-    const timerHtml = isExamPage() ? `
+    // Skip sidebar timer if the page already has its own timer.js widget
+    const hasPageTimer = typeof window.TIMER !== 'undefined';
+    const timerHtml = isExamPage() && !hasPageTimer ? `
       <div class="ui-timer-block">
         <div id="ui-timer-display" class="ui-timer-display">${String(mins).padStart(2,'0')}:00</div>
         <div class="ui-timer-row">
@@ -299,11 +301,48 @@ window.UI = (() => {
     });
   }
 
+  // ── Sidebar nav badge status ──────────────────────────
+  function updateSidebarBadges() {
+    function getLocal(pageId) {
+      try { return JSON.parse(localStorage.getItem('b2_page_' + pageId)); } catch { return null; }
+    }
+    function isDone(pageId, d) {
+      if (!d) return false;
+      if (pageId.startsWith('reading_'))   return !!(d.p1_checked && d.p2_checked && d.p3_checked);
+      if (pageId.startsWith('listening_')) return !!(d.p1_checked && d.p4_checked);
+      if (pageId.startsWith('writing_'))   return (d.task1?.length > 30) || (d.task2?.length > 30);
+      return false;
+    }
+    function hrefToPageId(href) {
+      const m = href.match(/\/(reading|writing|listening|speaking)\/paper(\d+)\.html/);
+      return m ? m[1] + '_paper' + m[2] : null;
+    }
+
+    document.querySelectorAll('.sidebar-nav .nav-link').forEach(a => {
+      const badge = a.querySelector('.badge');
+      if (!badge) return;
+      const pageId = hrefToPageId(a.getAttribute('href'));
+      if (!pageId || pageId.startsWith('speaking_')) return; // speaking has no auto-check
+      const d = getLocal(pageId);
+      if (isDone(pageId, d)) {
+        badge.textContent = '✓ Done';
+        badge.className = 'badge done-badge';
+      } else if (d && Object.keys(d).length > 0) {
+        badge.textContent = '⟳ Started';
+        badge.className = 'badge started-badge';
+      } else {
+        badge.textContent = '—';
+        badge.className = 'badge not-started-badge';
+      }
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     injectSidebar();
     initSidebarAccordion();
     injectFloatingBtn();
     injectMobileNav();
+    updateSidebarBadges();
     if (document.querySelector('.option-btn')) initKeyboardShortcuts();
   });
 

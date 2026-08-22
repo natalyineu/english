@@ -249,6 +249,9 @@ img { max-width: 100%; }
   flex-shrink: 0;
 }
 .nav-link .badge.done { background: #065f46; color: #6ee7b7; }
+.nav-link .badge.done-badge     { background: #065f46; color: #6ee7b7; }
+.nav-link .badge.started-badge  { background: #92400e; color: #fcd34d; }
+.nav-link .badge.not-started-badge { background: rgba(255,255,255,.07); color: rgba(224,216,255,.4); }
 
 .nav-link[href="#"] {
   color: rgba(224,216,255,.22);
