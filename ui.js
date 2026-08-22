@@ -155,6 +155,58 @@ window.UI = (() => {
     } catch {}
   }
 
+  // ── Sidebar accordion ────────────────────────────────
+  function initSidebarAccordion() {
+    const path = location.pathname;
+    const section = path.includes('/reading/') ? 'Reading'
+      : path.includes('/listening/') ? 'Listening'
+      : path.includes('/writing/') ? 'Writing'
+      : path.includes('/speaking/') ? 'Speaking'
+      : path.includes('roadmap') ? 'Overview'
+      : 'Overview';
+
+    document.querySelectorAll('.sidebar-nav .nav-section').forEach(el => {
+      const label = el.querySelector('.nav-section-label');
+      if (!label) return;
+      const labelText = label.textContent.trim();
+      const isDisplay = labelText === 'Display';
+      if (isDisplay) return;
+
+      const links = el.querySelectorAll('.nav-link');
+      const isActive = labelText === section;
+
+      // Wrap links in collapsible div
+      const wrap = document.createElement('div');
+      wrap.className = 'nav-section-links';
+      wrap.style.cssText = isActive
+        ? 'overflow:hidden;transition:max-height .25s ease'
+        : 'overflow:hidden;max-height:0;transition:max-height .25s ease';
+      links.forEach(l => wrap.appendChild(l));
+      el.appendChild(wrap);
+
+      // Make label a toggle
+      label.style.cssText = 'cursor:pointer;user-select:none;display:flex;justify-content:space-between;align-items:center';
+      const arrow = document.createElement('span');
+      arrow.className = 'nav-arrow';
+      arrow.textContent = isActive ? '▾' : '▸';
+      arrow.style.cssText = 'font-size:.7rem;opacity:.6;transition:transform .2s';
+      label.appendChild(arrow);
+
+      if (isActive) wrap.style.maxHeight = wrap.scrollHeight + 'px';
+
+      label.addEventListener('click', () => {
+        const open = wrap.style.maxHeight && wrap.style.maxHeight !== '0px';
+        if (open) {
+          wrap.style.maxHeight = '0';
+          arrow.textContent = '▸';
+        } else {
+          wrap.style.maxHeight = wrap.scrollHeight + 'px';
+          arrow.textContent = '▾';
+        }
+      });
+    });
+  }
+
   // ── Inject sidebar controls ────────────────────────────
   function injectSidebar() {
     const nav = document.querySelector('.sidebar-nav');
@@ -249,6 +301,7 @@ window.UI = (() => {
 
   document.addEventListener('DOMContentLoaded', () => {
     injectSidebar();
+    initSidebarAccordion();
     injectFloatingBtn();
     injectMobileNav();
     if (document.querySelector('.option-btn')) initKeyboardShortcuts();

@@ -5,8 +5,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>My Roadmap · B2 🎓</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
+<link rel="stylesheet" href="style.css">
 <script src="db.js"></script>
 <script src="ui.js"></script>
 <style>
@@ -25,11 +24,15 @@ body {
 /* ── Tokens ── */
 :root {
   --bg:      #0d1117;
+  --card:    #161b22;
   --surf:    #161b22;
   --surf2:   #21262d;
   --border:  #30363d;
   --text:    #c9d1d9;
   --muted:   #8b949e;
+  --violet:  #a78bfa;
+  --sel:     #a78bfa;
+  --sel-bg:  rgba(167,139,250,.15);
   --gold:    #f0c040;
   --gold2:   #d4a017;
   --road:    #1c2333;
@@ -575,25 +578,68 @@ body {
 </style>
 </head>
 <body>
+<div class="site-wrap">
 
-<!-- Top nav -->
-<nav class="topnav">
-  <a href="index.html" class="home">🏠 Dashboard</a>
-  <div class="nav-title">🗺️ My Roadmap</div>
-  <div class="topnav-skills">
-    <a href="reading/paper1.html">📖 Reading</a>
-    <a href="writing/paper1.html">✍️ Writing</a>
-    <a href="listening/paper1.html">👂 Listening</a>
-    <a href="speaking/paper1.html">🗣️ Speaking</a>
-    <a href="vocabulary/index.html">📝 Vocab</a>
-    <a href="grammar/index.html">🔤 Grammar</a>
-  </div>
-  <div class="exam-date-wrap">
-    <label for="examDateInput">📅 Exam date:</label>
-    <input type="date" id="examDateInput">
-    <span id="countdown"></span>
-  </div>
-</nav>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="roadmap.html" class="nav-link active nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Reading</span>
+        <a href="reading/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="reading/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="reading/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="reading/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="reading/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="listening/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="listening/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="listening/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="listening/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="listening/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="writing/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="writing/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="writing/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="writing/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="writing/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Speaking</span>
+        <a href="speaking/paper1.html" class="nav-link">Paper 1 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper2.html" class="nav-link">Paper 2 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper3.html" class="nav-link">Paper 3 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper6.html" class="nav-link">Paper 6 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper7.html" class="nav-link">Paper 7 <span class="badge done">Ready</span></a>
+        <a href="speaking/paper8.html" class="nav-link">Paper 8 <span class="badge done">Ready</span></a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">My Roadmap</div>
+      <div class="exam-date-wrap" style="display:flex;align-items:center;gap:10px;font-size:.82rem;color:var(--muted)">
+        <label for="examDateInput">📅 Exam date:</label>
+        <input type="date" id="examDateInput" style="border:1px solid var(--border);border-radius:6px;padding:4px 8px;background:var(--card);color:var(--text);font-size:.82rem">
+        <span id="countdown" style="font-weight:600;color:var(--violet)"></span>
+      </div>
+    </div>
 
 <!-- Profile banner -->
 <div class="profile-banner">
@@ -1324,5 +1370,7 @@ function syncFromPapers(p) {
   }
 })();
 </script>
+  </main>
+</div>
 </body>
 </html>
