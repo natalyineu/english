@@ -1,10 +1,23 @@
-// ai.js — AI writing feedback via Groq (free tier)
+// ai.js — AI writing feedback via Groq (free tier, user-supplied key)
 
 window.AI = (() => {
-  const API_URL  = 'https://api.groq.com/openai/v1/chat/completions';
-  const API_KEY  = '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';
-  const MODELS   = ['openai/gpt-oss-120b', 'qwen/qwen3.6-27b', 'groq/compound', 'llama-3.3-70b-versatile', 'llama3-70b-8192'];
-  let   modelIdx = 0;
+  const API_URL   = 'https://api.groq.com/openai/v1/chat/completions';
+  const KEY_STORE = 'b2_groq_key';
+  const MODELS    = ['llama-3.3-70b-versatile', 'llama3-70b-8192', 'llama-3.1-8b-instant'];
+  let   modelIdx  = 0;
+
+  function getKey() {
+    return localStorage.getItem(KEY_STORE) || '';
+  }
+
+  function saveKey(k) {
+    localStorage.setItem(KEY_STORE, k.trim());
+  }
+
+  function clearKey() {
+    localStorage.removeItem(KEY_STORE);
+    modelIdx = 0;
+  }
 
   const SYSTEM_PROMPT = `You are an experienced LanguageCert B2 Communicator examiner.
 You assess writing tasks against the official B2 criteria:
@@ -31,6 +44,12 @@ Reply in this exact JSON format:
 }`;
 
   async function checkEssay(taskText, essayText, resultEl) {
+    const apiKey = getKey();
+    if (!apiKey) {
+      renderKeyPrompt(resultEl, () => checkEssay(taskText, essayText, resultEl));
+      return;
+    }
+
     resultEl.innerHTML = '<div class="ai-loading">⏳ Checking your writing…</div>';
     resultEl.style.display = 'block';
 
@@ -42,7 +61,7 @@ Reply in this exact JSON format:
         const resp = await fetch(API_URL, {
           method: 'POST',
           headers: {
-            'Authorization': 'Bearer ' + API_KEY,
+            'Authorization': 'Bearer ' + apiKey,
             'Content-Type':  'application/json',
           },
           body: JSON.stringify({
@@ -56,6 +75,11 @@ Reply in this exact JSON format:
           }),
         });
 
+        if (resp.status === 401) {
+          clearKey();
+          renderKeyPrompt(resultEl, () => checkEssay(taskText, essayText, resultEl), 'Invalid API key. Please enter a valid Groq key.');
+          return;
+        }
         if (resp.status === 404) { modelIdx = i + 1; continue; } // try next model
         if (!resp.ok) {
           const err = await resp.text();
@@ -78,6 +102,31 @@ Reply in this exact JSON format:
     if (modelIdx >= MODELS.length) {
       resultEl.innerHTML = '<div class="ai-error">❌ No available model found. Please try again later.</div>';
     }
+  }
+
+  function renderKeyPrompt(el, onSuccess, msg) {
+    el.style.display = 'block';
+    el.innerHTML = `
+      <div style="background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:20px 22px">
+        <div style="font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:6px">🔑 Groq API Key required</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:12px;line-height:1.6">
+          ${msg || 'This checker uses the <a href="https://console.groq.com/keys" target="_blank" style="color:var(--indigo)">Groq free API</a> — add your key once and it stays in your browser only (never sent to any server except Groq).'}
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="ai-key-input" type="password" placeholder="gsk_…"
+            style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-family:monospace;font-size:.85rem"
+            onkeydown="if(event.key==='Enter')AI._saveKey(this,arguments[0])">
+          <button onclick="AI._saveKey(document.getElementById('ai-key-input'))"
+            style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-family:inherit;font-size:.85rem;font-weight:600;cursor:pointer;white-space:nowrap">
+            Save &amp; check
+          </button>
+        </div>
+        <div style="font-size:.72rem;color:var(--muted);margin-top:8px">
+          Get a free key at <a href="https://console.groq.com/keys" target="_blank" style="color:var(--indigo)">console.groq.com/keys</a> · stored only in your browser
+        </div>
+      </div>`;
+    // Store callback so the save handler can call it
+    el._onSuccess = onSuccess;
   }
 
   function renderResult(r, el) {
@@ -229,5 +278,21 @@ Reply in this exact JSON format:
     checkEssay(taskText, essay, resultEl);
   }
 
-  return { check, checkById };
+  function _saveKey(inputEl) {
+    const k = inputEl ? inputEl.value.trim() : '';
+    if (!k.startsWith('gsk_') || k.length < 20) {
+      inputEl.style.borderColor = '#dc2626';
+      inputEl.placeholder = 'Must start with gsk_…';
+      return;
+    }
+    saveKey(k);
+    // Find the nearest result container and trigger the stored callback
+    const resultEl = inputEl.closest('[id$="-result"]') ||
+                     document.querySelector('[id$="-result"]');
+    if (resultEl && typeof resultEl._onSuccess === 'function') {
+      resultEl._onSuccess();
+    }
+  }
+
+  return { check, checkById, _saveKey };
 })();
