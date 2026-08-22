@@ -315,7 +315,7 @@ window.UI = (() => {
       if (!d) return false;
       if (pageId.startsWith('reading_'))   return !!(d.p1_checked && d.p2_checked && d.p3_checked);
       if (pageId.startsWith('listening_')) return !!(d.p1_checked && d.p4_checked);
-      if (pageId.startsWith('writing_'))   return (d.task1?.length > 30) || (d.task2?.length > 30);
+      if (pageId.startsWith('writing_'))   return (d.task1?.length > 150) && (d.task2?.length > 150);
       return false;
     }
     function hrefToPageId(href) {
