@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔗</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Collocations · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.coll-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  align-items: center;
+}
+.coll-search {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: .9rem;
+}
+.coll-search:focus { outline: none; border-color: var(--sel); }
+.coll-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.coll-tab {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+}
+.coll-tab.active, .coll-tab:hover {
+  border-color: var(--indigo);
+  color: var(--indigo);
+  background: rgba(99,102,241,.07);
+}
+.coll-section-title {
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.coll-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.coll-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+}
+.coll-card:hover { border-color: var(--sel); box-shadow: 0 2px 12px rgba(26,95,180,.1); }
+.coll-card.saved { border-left: 3px solid var(--indigo); }
+.coll-phrase {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.coll-phrase strong { color: var(--indigo); }
+.coll-example {
+  font-size: .78rem;
+  color: var(--muted);
+  line-height: 1.5;
+  font-style: italic;
+  display: none;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.coll-card.open .coll-example { display: block; }
+.coll-save-btn {
+  float: right;
+  font-size: .7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 600;
+  transition: all .15s;
+  margin-left: 6px;
+}
+.coll-save-btn:hover { border-color: var(--indigo); color: var(--indigo); }
+.coll-card.saved .coll-save-btn { border-color: var(--indigo); color: var(--indigo); background: rgba(99,102,241,.07); }
+.coll-empty { text-align: center; padding: 40px; color: var(--muted); }
+.coll-count { font-size: .78rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../roadmap.html" class="nav-link">🗺️ My Roadmap</a>
+        <a href="../strategy.html" class="nav-link">🎯 Exam Strategy</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Vocabulary</span>
+        <a href="index.html" class="nav-link">📚 All Topics</a>
+        <a href="travel.html" class="nav-link">✈️ Travel</a>
+        <a href="work.html" class="nav-link">💼 Work</a>
+        <a href="health.html" class="nav-link">❤️ Health</a>
+        <a href="technology.html" class="nav-link">💻 Technology</a>
+        <a href="environment.html" class="nav-link">🌿 Environment</a>
+        <a href="culture.html" class="nav-link">🌍 Culture</a>
+        <a href="collocations.html" class="nav-link active">🔗 Collocations</a>
+        <a href="review.html" class="nav-link">🔁 Smart Review</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="../writing/paper1.html" class="nav-link">Paper 1</a>
+        <a href="../writing/errors.html" class="nav-link">📝 Error Log</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb">
+        <a href="../index.html">Dashboard</a>
+        <span>›</span>
+        <a href="index.html">Vocabulary</a>
+        <span>›</span>
+        Collocations
+      </div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">🔗 B2 Collocation Bank</h1>
+      <p class="page-subtitle">High-frequency word combinations for B2 writing and speaking · Click any card to see an example</p>
+
+      <div class="coll-controls">
+        <input class="coll-search" id="coll-search" type="search" placeholder="🔍 Search collocations…" oninput="renderColls()">
+        <span class="coll-count" id="coll-count"></span>
+      </div>
+
+      <div class="coll-tabs" id="coll-tabs"></div>
+      <div id="coll-output"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const CATEGORIES = [
+  { id:'verb-noun',   label:'Verb + Noun',      icon:'⚡' },
+  { id:'adj-noun',    label:'Adj + Noun',        icon:'🎨' },
+  { id:'adv-adj',     label:'Adv + Adj',         icon:'✨' },
+  { id:'verb-prep',   label:'Verb + Prep',       icon:'🔀' },
+  { id:'fixed',       label:'Fixed phrases',     icon:'📌' },
+];
+
+const COLLS = [
+  // ── Verb + Noun ───────────────────────────────────────────────────────────
+  { cat:'verb-noun', phrase:'make a <strong>decision</strong>',       ex:'It took her a long time to make a decision about which university to attend.' },
+  { cat:'verb-noun', phrase:'make an <strong>effort</strong>',        ex:'You need to make more of an effort if you want to improve your writing.' },
+  { cat:'verb-noun', phrase:'make <strong>progress</strong>',         ex:'The students have made significant progress since the beginning of the course.' },
+  { cat:'verb-noun', phrase:'make a <strong>difference</strong>',     ex:'Even small changes in behaviour can make a big difference to the environment.' },
+  { cat:'verb-noun', phrase:'make an <strong>impression</strong>',    ex:'She wanted to make a good impression at her first job interview.' },
+  { cat:'verb-noun', phrase:'make <strong>arrangements</strong>',     ex:'We need to make arrangements for the conference well in advance.' },
+  { cat:'verb-noun', phrase:'take <strong>responsibility</strong>',   ex:'It is important to take responsibility for your own learning outside the classroom.' },
+  { cat:'verb-noun', phrase:'take <strong>advantage of</strong>',     ex:'Students should take advantage of every opportunity to practise speaking.' },
+  { cat:'verb-noun', phrase:'take <strong>action</strong>',           ex:'The government must take action to reduce carbon emissions immediately.' },
+  { cat:'verb-noun', phrase:'take <strong>part in</strong>',          ex:'All students are encouraged to take part in extracurricular activities.' },
+  { cat:'verb-noun', phrase:'take <strong>into account</strong>',     ex:'When planning a trip, you should take the weather into account.' },
+  { cat:'verb-noun', phrase:'take <strong>place</strong>',            ex:'The annual ceremony takes place in the main hall every June.' },
+  { cat:'verb-noun', phrase:'have an <strong>impact</strong>',        ex:'Social media has had a huge impact on the way young people communicate.' },
+  { cat:'verb-noun', phrase:'have an <strong>influence</strong>',     ex:'Your environment has a strong influence on the choices you make.' },
+  { cat:'verb-noun', phrase:'have an <strong>effect</strong>',        ex:'Lack of sleep can have a serious effect on your ability to concentrate.' },
+  { cat:'verb-noun', phrase:'have <strong>difficulty</strong>',       ex:'Many learners have difficulty with the use of articles in English.' },
+  { cat:'verb-noun', phrase:'have <strong>experience</strong>',       ex:'Do you have any previous experience working with children?' },
+  { cat:'verb-noun', phrase:'give <strong>priority to</strong>',      ex:'The city council has decided to give priority to public transport over private cars.' },
+  { cat:'verb-noun', phrase:'give <strong>rise to</strong>',          ex:'The new policy has given rise to a great deal of controversy.' },
+  { cat:'verb-noun', phrase:'give a <strong>speech</strong>',         ex:'She was asked to give a speech at the graduation ceremony.' },
+  { cat:'verb-noun', phrase:'reach an <strong>agreement</strong>',    ex:'After several hours of discussion, both sides reached an agreement.' },
+  { cat:'verb-noun', phrase:'reach a <strong>conclusion</strong>',    ex:'Having examined all the evidence, I have reached a conclusion.' },
+  { cat:'verb-noun', phrase:'reach a <strong>compromise</strong>',    ex:'Neither party was completely satisfied, but they managed to reach a compromise.' },
+  { cat:'verb-noun', phrase:'raise <strong>awareness</strong>',       ex:'The campaign aims to raise awareness about the dangers of plastic pollution.' },
+  { cat:'verb-noun', phrase:'raise <strong>concerns</strong>',        ex:'Several residents have raised concerns about the proposed development.' },
+  { cat:'verb-noun', phrase:'raise <strong>standards</strong>',       ex:'The new regulations are designed to raise standards across the industry.' },
+  { cat:'verb-noun', phrase:'face <strong>challenges</strong>',       ex:'Young people today face many challenges that previous generations did not.' },
+  { cat:'verb-noun', phrase:'face <strong>consequences</strong>',     ex:'Those who break the rules will face serious consequences.' },
+  { cat:'verb-noun', phrase:'pay <strong>attention</strong>',         ex:'Please pay attention to the instructions before you begin the exam.' },
+  { cat:'verb-noun', phrase:'meet <strong>requirements</strong>',     ex:'All applicants must meet the minimum requirements to be considered.' },
+  { cat:'verb-noun', phrase:'meet a <strong>deadline</strong>',       ex:'The team worked overtime to ensure they met the deadline.' },
+  { cat:'verb-noun', phrase:'set a <strong>goal</strong>',            ex:'Setting realistic goals is the first step towards achieving success.' },
+  { cat:'verb-noun', phrase:'set an <strong>example</strong>',        ex:'Teachers should set a good example by following the same rules as the students.' },
+  { cat:'verb-noun', phrase:'draw a <strong>conclusion</strong>',     ex:'It is too early to draw any conclusions from such limited data.' },
+  { cat:'verb-noun', phrase:'play a <strong>role</strong>',           ex:'Technology plays a vital role in modern education and the workplace.' },
+  { cat:'verb-noun', phrase:'carry out <strong>research</strong>',    ex:'Scientists have carried out extensive research into the causes of the disease.' },
+
+  // ── Adj + Noun ───────────────────────────────────────────────────────────
+  { cat:'adj-noun', phrase:'<strong>strong</strong> argument',         ex:'She made a strong argument in favour of stricter environmental regulations.' },
+  { cat:'adj-noun', phrase:'<strong>strong</strong> evidence',         ex:'There is strong evidence to suggest that diet affects mental health.' },
+  { cat:'adj-noun', phrase:'<strong>strong</strong> emphasis',         ex:'The course places a strong emphasis on developing communication skills.' },
+  { cat:'adj-noun', phrase:'<strong>heavy</strong> traffic',           ex:'There was heavy traffic on the motorway due to an accident, causing long delays.' },
+  { cat:'adj-noun', phrase:'<strong>heavy</strong> workload',          ex:'Many employees are struggling to cope with an increasingly heavy workload.' },
+  { cat:'adj-noun', phrase:'<strong>heavy</strong> reliance',          ex:'Our heavy reliance on fossil fuels is contributing to climate change.' },
+  { cat:'adj-noun', phrase:'<strong>high</strong> demand',             ex:'There is a high demand for skilled workers in the technology sector.' },
+  { cat:'adj-noun', phrase:'<strong>high</strong> expectations',       ex:'Parents often have high expectations of their children\'s academic performance.' },
+  { cat:'adj-noun', phrase:'<strong>high</strong> priority',           ex:'Reducing unemployment is a high priority for the new government.' },
+  { cat:'adj-noun', phrase:'<strong>significant</strong> impact',      ex:'The closure of the factory will have a significant impact on the local economy.' },
+  { cat:'adj-noun', phrase:'<strong>significant</strong> improvement', ex:'There has been a significant improvement in air quality over the past decade.' },
+  { cat:'adj-noun', phrase:'<strong>significant</strong> role',        ex:'Education plays a significant role in reducing social inequality.' },
+  { cat:'adj-noun', phrase:'<strong>effective</strong> solution',      ex:'Recycling alone is not an effective solution to the problem of waste.' },
+  { cat:'adj-noun', phrase:'<strong>effective</strong> communication', ex:'Effective communication is essential for a successful working relationship.' },
+  { cat:'adj-noun', phrase:'<strong>wide</strong> range',              ex:'The museum offers a wide range of activities suitable for all ages.' },
+  { cat:'adj-noun', phrase:'<strong>wide</strong> variety',            ex:'There is a wide variety of accommodation available to suit all budgets.' },
+  { cat:'adj-noun', phrase:'<strong>serious</strong> concern',         ex:'Rising sea levels are a serious concern for coastal communities.' },
+  { cat:'adj-noun', phrase:'<strong>serious</strong> consequence',     ex:'Ignoring climate change could have serious consequences for future generations.' },
+  { cat:'adj-noun', phrase:'<strong>close</strong> relationship',      ex:'She has always had a close relationship with her older sister.' },
+  { cat:'adj-noun', phrase:'<strong>close</strong> attention',         ex:'Please pay close attention to the feedback you receive from your tutor.' },
+  { cat:'adj-noun', phrase:'<strong>growing</strong> concern',         ex:'There is growing concern about the impact of screen time on children\'s health.' },
+  { cat:'adj-noun', phrase:'<strong>growing</strong> number',          ex:'A growing number of people are choosing to work from home permanently.' },
+  { cat:'adj-noun', phrase:'<strong>main</strong> reason',             ex:'The main reason I chose this course was the excellent reputation of the tutors.' },
+  { cat:'adj-noun', phrase:'<strong>vital</strong> importance',        ex:'It is of vital importance that we act now to protect endangered species.' },
+  { cat:'adj-noun', phrase:'<strong>key</strong> factor',              ex:'A good diet is a key factor in maintaining long-term physical health.' },
+  { cat:'adj-noun', phrase:'<strong>long-term</strong> solution',      ex:'We need a long-term solution to the problem of youth unemployment.' },
+  { cat:'adj-noun', phrase:'<strong>lasting</strong> impact',          ex:'The industrial revolution had a lasting impact on the way people live and work.' },
+
+  // ── Adverb + Adjective ───────────────────────────────────────────────────
+  { cat:'adv-adj', phrase:'<strong>highly</strong> recommended',      ex:'The restaurant comes highly recommended by food critics and regular visitors alike.' },
+  { cat:'adv-adj', phrase:'<strong>highly</strong> competitive',      ex:'The job market is highly competitive, so it is essential to stand out.' },
+  { cat:'adv-adj', phrase:'<strong>highly</strong> motivated',        ex:'Successful language learners are typically highly motivated and self-disciplined.' },
+  { cat:'adv-adj', phrase:'<strong>highly</strong> unlikely',         ex:'It is highly unlikely that she will change her mind after all this time.' },
+  { cat:'adv-adj', phrase:'<strong>deeply</strong> concerned',        ex:'Many scientists are deeply concerned about the rate of deforestation in the Amazon.' },
+  { cat:'adv-adj', phrase:'<strong>deeply</strong> committed',        ex:'She is deeply committed to improving conditions for workers in developing countries.' },
+  { cat:'adv-adj', phrase:'<strong>deeply</strong> disappointed',     ex:'We were deeply disappointed by the poor quality of service during our stay.' },
+  { cat:'adv-adj', phrase:'<strong>widely</strong> available',        ex:'High-speed internet is now widely available in most urban areas.' },
+  { cat:'adv-adj', phrase:'<strong>widely</strong> recognised',       ex:'It is widely recognised that exercise has significant benefits for mental health.' },
+  { cat:'adv-adj', phrase:'<strong>widely</strong> accepted',         ex:'It is widely accepted that a balanced diet contributes to good overall health.' },
+  { cat:'adv-adj', phrase:'<strong>entirely</strong> different',      ex:'The experience of working abroad is entirely different from simply visiting as a tourist.' },
+  { cat:'adv-adj', phrase:'<strong>entirely</strong> responsible',    ex:'Each individual is not entirely responsible for their carbon footprint.' },
+  { cat:'adv-adj', phrase:'<strong>increasingly</strong> common',     ex:'Remote working has become increasingly common since the pandemic.' },
+  { cat:'adv-adj', phrase:'<strong>increasingly</strong> difficult',  ex:'It is becoming increasingly difficult to find affordable housing in the city.' },
+  { cat:'adv-adj', phrase:'<strong>increasingly</strong> important',  ex:'Soft skills are becoming increasingly important in the modern workplace.' },
+  { cat:'adv-adj', phrase:'<strong>strongly</strong> advised',        ex:'Travellers are strongly advised to purchase comprehensive travel insurance.' },
+  { cat:'adv-adj', phrase:'<strong>strongly</strong> recommend',      ex:'I would strongly recommend visiting the old quarter during your stay.' },
+  { cat:'adv-adj', phrase:'<strong>extremely</strong> important',     ex:'Good time management is extremely important when preparing for exams.' },
+  { cat:'adv-adj', phrase:'<strong>particularly</strong> useful',     ex:'The vocabulary exercises are particularly useful for learners at B2 level.' },
+  { cat:'adv-adj', phrase:'<strong>absolutely</strong> essential',    ex:'It is absolutely essential to check your work carefully before submitting it.' },
+  { cat:'adv-adj', phrase:'<strong>undoubtedly</strong> true',        ex:'It is undoubtedly true that technology has transformed the way we communicate.' },
+
+  // ── Verb + Preposition ───────────────────────────────────────────────────
+  { cat:'verb-prep', phrase:'depend <strong>on</strong>',           ex:'The success of the project will depend on the cooperation of all team members.' },
+  { cat:'verb-prep', phrase:'consist <strong>of</strong>',          ex:'The examination consists of three papers, which must all be completed on the same day.' },
+  { cat:'verb-prep', phrase:'contribute <strong>to</strong>',      ex:'Everyone can contribute to protecting the environment in small but meaningful ways.' },
+  { cat:'verb-prep', phrase:'result <strong>in</strong>',           ex:'Prolonged stress can result in serious physical and mental health problems.' },
+  { cat:'verb-prep', phrase:'lead <strong>to</strong>',            ex:'Poor time management often leads to unnecessary stress and reduced productivity.' },
+  { cat:'verb-prep', phrase:'be aware <strong>of</strong>',        ex:'It is important to be aware of the cultural differences before travelling abroad.' },
+  { cat:'verb-prep', phrase:'be responsible <strong>for</strong>', ex:'Each member of the team is responsible for a different aspect of the project.' },
+  { cat:'verb-prep', phrase:'be committed <strong>to</strong>',    ex:'The organisation is committed to reducing its environmental impact year on year.' },
+  { cat:'verb-prep', phrase:'be concerned <strong>about</strong>', ex:'Many parents are concerned about the amount of time their children spend online.' },
+  { cat:'verb-prep', phrase:'be involved <strong>in</strong>',     ex:'She has been involved in environmental campaigning for more than a decade.' },
+  { cat:'verb-prep', phrase:'be familiar <strong>with</strong>',  ex:'All students should be familiar with the exam format before the day of the test.' },
+  { cat:'verb-prep', phrase:'be capable <strong>of</strong>',      ex:'With the right training, most people are capable of learning a second language.' },
+  { cat:'verb-prep', phrase:'focus <strong>on</strong>',           ex:'The report focuses on the economic impact of the new transport policy.' },
+  { cat:'verb-prep', phrase:'benefit <strong>from</strong>',      ex:'All students can benefit from practising their writing on a regular basis.' },
+  { cat:'verb-prep', phrase:'cope <strong>with</strong>',         ex:'Many employees find it difficult to cope with the pressure of tight deadlines.' },
+  { cat:'verb-prep', phrase:'deal <strong>with</strong>',         ex:'The new legislation is designed to deal with the problem of online misinformation.' },
+  { cat:'verb-prep', phrase:'aim <strong>at</strong>',             ex:'The campaign is aimed at raising awareness among young people aged 16–25.' },
+  { cat:'verb-prep', phrase:'adapt <strong>to</strong>',           ex:'It can take time to adapt to a new culture when you move abroad.' },
+  { cat:'verb-prep', phrase:'apply <strong>for</strong>',          ex:'I am writing to apply for the position of marketing assistant advertised online.' },
+  { cat:'verb-prep', phrase:'appeal <strong>to</strong>',          ex:'The proposal will need to appeal to a wide audience if it is to gain public support.' },
+
+  // ── Fixed phrases ─────────────────────────────────────────────────────────
+  { cat:'fixed', phrase:'in <strong>addition to</strong>',          ex:'In addition to the written exam, candidates must also complete an oral assessment.' },
+  { cat:'fixed', phrase:'in <strong>contrast to</strong>',          ex:'In contrast to the previous year, sales figures have shown a marked improvement.' },
+  { cat:'fixed', phrase:'in <strong>favour of</strong>',            ex:'The majority of those surveyed were in favour of stricter environmental laws.' },
+  { cat:'fixed', phrase:'in <strong>terms of</strong>',             ex:'In terms of cost, public transport is far more affordable than owning a car.' },
+  { cat:'fixed', phrase:'in <strong>response to</strong>',          ex:'In response to customer feedback, the company has redesigned its website.' },
+  { cat:'fixed', phrase:'as a <strong>result of</strong>',          ex:'As a result of the flooding, several roads in the area remain closed.' },
+  { cat:'fixed', phrase:'as a <strong>consequence of</strong>',     ex:'As a consequence of the new law, many small businesses were forced to close.' },
+  { cat:'fixed', phrase:'on <strong>behalf of</strong>',            ex:'I am writing on behalf of the residents\' association to express our concerns.' },
+  { cat:'fixed', phrase:'on <strong>the other hand</strong>',       ex:'Working from home offers greater flexibility; on the other hand, it can feel isolating.' },
+  { cat:'fixed', phrase:'on <strong>the whole</strong>',            ex:'On the whole, I found the course to be both informative and well-organised.' },
+  { cat:'fixed', phrase:'with <strong>regard to</strong>',          ex:'With regard to your recent complaint, I am pleased to inform you that the issue has been resolved.' },
+  { cat:'fixed', phrase:'with <strong>reference to</strong>',       ex:'With reference to your letter of 12 August, I am writing to confirm the details of your booking.' },
+  { cat:'fixed', phrase:'to a <strong>great extent</strong>',       ex:'To a great extent, success in language learning depends on consistent daily practice.' },
+  { cat:'fixed', phrase:'for the <strong>time being</strong>',      ex:'We are happy with our current arrangements for the time being, but may review them later.' },
+  { cat:'fixed', phrase:'at <strong>all costs</strong>',            ex:'We must avoid a situation where costs rise at all costs, so careful budgeting is essential.' },
+  { cat:'fixed', phrase:'by <strong>contrast</strong>',             ex:'Urban areas have seen rapid population growth; by contrast, rural communities are declining.' },
+  { cat:'fixed', phrase:'it goes <strong>without saying</strong>',  ex:'It goes without saying that regular practice is essential if you want to improve your English.' },
+  { cat:'fixed', phrase:'it is <strong>worth noting</strong>',      ex:'It is worth noting that the figures in the report do not include data from the final quarter.' },
+  { cat:'fixed', phrase:'there is <strong>no doubt that</strong>',  ex:'There is no doubt that climate change represents one of the greatest challenges of our time.' },
+  { cat:'fixed', phrase:'it is <strong>widely believed</strong>',   ex:'It is widely believed that early childhood education has a lasting effect on development.' },
+];
+
+const SAVED_KEY = 'b2_coll_saved';
+
+function getSaved() {
+  try { return new Set(JSON.parse(localStorage.getItem(SAVED_KEY)) || []); }
+  catch { return new Set(); }
+}
+
+function setSaved(set) {
+  try { localStorage.setItem(SAVED_KEY, JSON.stringify([...set])); }
+  catch {}
+}
+
+let activeTab = 'all';
+
+function toggleSave(idx, e) {
+  e.stopPropagation();
+  const saved = getSaved();
+  if (saved.has(idx)) saved.delete(idx);
+  else saved.add(idx);
+  setSaved(saved);
+  renderColls();
+}
+
+function toggleCard(cardEl) {
+  cardEl.classList.toggle('open');
+}
+
+function renderColls() {
+  const q      = document.getElementById('coll-search').value.toLowerCase().trim();
+  const saved  = getSaved();
+
+  const filtered = COLLS.map((c, i) => ({ ...c, idx: i })).filter(c => {
+    const matchTab = activeTab === 'all' || (activeTab === 'saved' && saved.has(c.idx)) || c.cat === activeTab;
+    const matchQ   = !q || c.phrase.replace(/<[^>]+>/g,'').toLowerCase().includes(q) || c.ex.toLowerCase().includes(q);
+    return matchTab && matchQ;
+  });
+
+  document.getElementById('coll-count').textContent = filtered.length + ' collocations';
+
+  if (filtered.length === 0) {
+    document.getElementById('coll-output').innerHTML =
+      '<div class="coll-empty">🔍 No collocations match your search. Try a different word.</div>';
+    return;
+  }
+
+  // Group by category
+  const groups = {};
+  filtered.forEach(c => {
+    if (!groups[c.cat]) groups[c.cat] = [];
+    groups[c.cat].push(c);
+  });
+
+  const catOrder = activeTab === 'all' || activeTab === 'saved'
+    ? CATEGORIES.map(c => c.id)
+    : [activeTab];
+
+  let html = '';
+  catOrder.forEach(catId => {
+    const items = groups[catId];
+    if (!items || items.length === 0) return;
+    const catMeta = CATEGORIES.find(c => c.id === catId);
+    html += `<div class="coll-section-title">${catMeta.icon} ${catMeta.label}</div>
+      <div class="coll-grid">` +
+      items.map(c => `
+        <div class="coll-card${saved.has(c.idx) ? ' saved' : ''}" onclick="toggleCard(this)">
+          <button class="coll-save-btn" onclick="toggleSave(${c.idx},event)" title="${saved.has(c.idx)?'Remove bookmark':'Bookmark'}">
+            ${saved.has(c.idx) ? '★' : '☆'}
+          </button>
+          <div class="coll-phrase">${c.phrase}</div>
+          <div class="coll-example">${escHtml(c.ex)}</div>
+        </div>`).join('') +
+      `</div>`;
+  });
+
+  document.getElementById('coll-output').innerHTML = html;
+}
+
+function renderTabs() {
+  const saved = getSaved();
+  const tabs = [
+    { id:'all',   label:'All',          icon:'🔗' },
+    { id:'saved', label:`Saved (${saved.size})`, icon:'★' },
+    ...CATEGORIES,
+  ];
+  document.getElementById('coll-tabs').innerHTML = tabs.map(t =>
+    `<button class="coll-tab ${activeTab === t.id ? 'active' : ''}" onclick="switchTab('${t.id}')">${t.icon||''} ${t.label}</button>`
+  ).join('');
+}
+
+function switchTab(id) {
+  activeTab = id;
+  renderTabs();
+  renderColls();
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderTabs();
+  renderColls();
+});
+</script>
+</body>
+</html>
