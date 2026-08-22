@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocab Quiz · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.quiz-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  padding: 32px 36px;
+  box-shadow: var(--shadow);
+  max-width: 640px;
+  margin: 0 auto 24px;
+}
+.quiz-prompt { font-size: 1.05rem; font-weight: 600; color: var(--text); margin-bottom: 24px; line-height: 1.5; }
+.quiz-hint { font-size: .8rem; color: var(--muted); margin-bottom: 20px; }
+.option-btn {
+  display: block; width: 100%; text-align: left;
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px;
+  padding: 13px 18px; margin-bottom: 10px; font-size: .92rem; font-weight: 500;
+  color: var(--text); cursor: pointer; transition: background .15s, border-color .15s;
+}
+.option-btn:hover { border-color: var(--sel); background: var(--sel-bg); }
+.option-btn.correct { background: #d1fae5; border-color: #059669; color: #065f46; }
+.option-btn.wrong   { background: #fee2e2; border-color: #dc2626; color: #991b1b; }
+.option-btn:disabled { cursor: default; }
+.quiz-progress { font-size: .8rem; color: var(--muted); margin-bottom: 8px; }
+.quiz-bar { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 28px; }
+.quiz-bar-fill { height: 100%; background: #7c3aed; border-radius: 99px; transition: width .4s; }
+.result-box {
+  background: var(--card); border: 1.5px solid var(--border);
+  border-radius: 14px; padding: 36px; text-align: center;
+  max-width: 640px; margin: 0 auto; box-shadow: var(--shadow);
+}
+.result-score { font-size: 3rem; font-weight: 800; margin-bottom: 8px; }
+.result-band { font-size: 1.1rem; font-weight: 600; margin-bottom: 24px; }
+.missed-list { text-align: left; margin-top: 20px; }
+.missed-item { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: .88rem; }
+.missed-item .wrong-ans { color: #dc2626; text-decoration: line-through; }
+.missed-item .right-ans { color: #059669; font-weight: 600; }
+.tag-chip { display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: .72rem; font-weight: 700; margin-right: 6px; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../progress.html" class="nav-link">📊 My Progress</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Vocabulary</span>
+        <a href="index.html" class="nav-link">📚 All Topics</a>
+        <a href="quiz.html" class="nav-link active">🧠 Quick Quiz</a>
+        <a href="review.html" class="nav-link">🔁 Smart Review</a>
+        <a href="collocations.html" class="nav-link">🔗 Collocations</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb"><a href="../index.html">Home</a> › <a href="index.html">Vocabulary</a> › Quick Quiz</div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">Quick Vocabulary Quiz</h1>
+      <p class="page-subtitle">10 random questions from all B2 topics · multiple choice · instant feedback</p>
+
+      <div id="quiz-start" style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 32px;max-width:640px;margin:0 auto 24px;box-shadow:var(--shadow)">
+        <div style="font-size:.85rem;color:var(--muted);margin-bottom:16px;line-height:1.7">
+          Choose a quiz mode and hit <strong>Start</strong>. Each quiz has 10 questions — choose the correct definition or fill the collocation. Your score is saved and shown on the Progress page.
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px">
+          <button onclick="startQuiz('all')" class="btn-primary" style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:11px 24px;font-size:.92rem;font-weight:700;cursor:pointer">🧠 All topics</button>
+          <button onclick="startQuiz('collocations')" style="background:var(--bg);color:var(--text);border:1.5px solid var(--border);border-radius:8px;padding:11px 20px;font-size:.88rem;font-weight:600;cursor:pointer">🔗 Collocations only</button>
+          <button onclick="startQuiz('vocab')" style="background:var(--bg);color:var(--text);border:1.5px solid var(--border);border-radius:8px;padding:11px 20px;font-size:.88rem;font-weight:600;cursor:pointer">📚 Vocab words only</button>
+        </div>
+        <div id="best-score" style="font-size:.8rem;color:var(--muted)"></div>
+      </div>
+
+      <div id="quiz-area" style="display:none">
+        <div class="quiz-card">
+          <div class="quiz-progress" id="q-progress"></div>
+          <div class="quiz-bar"><div class="quiz-bar-fill" id="q-bar" style="width:0%"></div></div>
+          <div class="quiz-prompt" id="q-prompt"></div>
+          <div class="quiz-hint" id="q-hint"></div>
+          <div id="q-options"></div>
+          <div id="q-feedback" style="display:none;margin-top:14px;padding:12px 16px;border-radius:8px;font-size:.88rem"></div>
+          <button id="q-next" onclick="nextQuestion()" style="display:none;margin-top:16px;background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:10px 24px;font-size:.88rem;font-weight:600;cursor:pointer">Next →</button>
+        </div>
+      </div>
+
+      <div id="quiz-result" style="display:none">
+        <div class="result-box">
+          <div class="result-score" id="r-score"></div>
+          <div class="result-band" id="r-band"></div>
+          <button onclick="startQuiz(window._lastMode)" style="background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:11px 24px;font-size:.92rem;font-weight:700;cursor:pointer;margin-bottom:16px">Try again</button>
+          <div class="missed-list" id="r-missed"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+// ── Question bank ──────────────────────────────────────────
+const VOCAB_QS = [
+  // Travel
+  { q:'A place with good transport links is easy to ___', a:'access', opts:['access','follow','arrive','connect'], tag:'Travel', hint:'verb: reach or enter a place' },
+  { q:'To go somewhere regularly, e.g. to work, is to ___', a:'commute', opts:['commute','travel','wander','migrate'], tag:'Travel', hint:'verb: daily journey' },
+  { q:'The place you are travelling to is your ___', a:'destination', opts:['destination','journey','route','departure'], tag:'Travel', hint:'noun: where you are going' },
+  { q:'The facilities and services in a hotel room are called ___', a:'amenities', opts:['amenities','luxuries','features','utilities'], tag:'Travel', hint:'noun: comforts provided' },
+  { q:'A journey where you return to the starting point is a ___', a:'round trip', opts:['round trip','detour','circuit','loop'], tag:'Travel', hint:'phrase: there and back' },
+  // Work
+  { q:'Working together to achieve a goal is called ___', a:'collaboration', opts:['collaboration','competition','negotiation','mediation'], tag:'Work', hint:'noun: team effort' },
+  { q:'The skills and experience you gain over time are your ___', a:'expertise', opts:['expertise','knowledge','talent','ability'], tag:'Work', hint:'noun: specialist knowledge' },
+  { q:'To officially leave a job because of age is to ___', a:'retire', opts:['retire','resign','dismiss','quit'], tag:'Work', hint:'verb: end a career' },
+  { q:'The money paid to an employee each month is a ___', a:'salary', opts:['salary','wage','fee','bonus'], tag:'Work', hint:'noun: monthly fixed pay' },
+  { q:'A person who starts a business is an ___', a:'entrepreneur', opts:['entrepreneur','employer','investor','director'], tag:'Work', hint:'noun: business creator' },
+  // Health
+  { q:'To get better after being ill is to ___', a:'recover', opts:['recover','heal','cure','improve'], tag:'Health', hint:'verb: return to health' },
+  { q:'Medicine you take to prevent disease is a ___', a:'vaccine', opts:['vaccine','remedy','pill','supplement'], tag:'Health', hint:'noun: disease prevention injection' },
+  { q:'The state of being physically and mentally well is ___', a:'wellbeing', opts:['wellbeing','fitness','health','condition'], tag:'Health', hint:'noun: overall good state' },
+  { q:'A doctor who specialises in a particular area is a ___', a:'specialist', opts:['specialist','doctor','physician','practitioner'], tag:'Health', hint:'noun: expert doctor' },
+  { q:'To feel very tired is to feel ___', a:'exhausted', opts:['exhausted','tired','weary','drained'], tag:'Health', hint:'adjective: extremely tired' },
+  // Technology
+  { q:'A system that stores and processes data online is the ___', a:'cloud', opts:['cloud','server','network','database'], tag:'Technology', hint:'noun: online storage system' },
+  { q:'To make data impossible to read without a key is to ___ it', a:'encrypt', opts:['encrypt','protect','secure','lock'], tag:'Technology', hint:'verb: code data for security' },
+  { q:'A connected group of computers is a ___', a:'network', opts:['network','system','grid','web'], tag:'Technology', hint:'noun: connected computers' },
+  { q:'Technology that copies human thinking is ___ intelligence', a:'artificial', opts:['artificial','digital','machine','computer'], tag:'Technology', hint:'adjective: not natural' },
+  { q:'To make a program or system work again after a crash is to ___', a:'reboot', opts:['reboot','restart','refresh','reload'], tag:'Technology', hint:'verb: start again' },
+  // Environment
+  { q:'Using resources in a way that doesn\'t damage the future is ___', a:'sustainable', opts:['sustainable','renewable','ecological','green'], tag:'Environment', hint:'adjective: long-term friendly' },
+  { q:'The variety of animals and plants in an area is ___', a:'biodiversity', opts:['biodiversity','ecology','wildlife','habitat'], tag:'Environment', hint:'noun: variety of life' },
+  { q:'Gas released when burning fossil fuels is carbon ___', a:'emissions', opts:['emissions','release','output','waste'], tag:'Environment', hint:'noun: released gases' },
+  { q:'To clear a forest by cutting down all its trees is ___', a:'deforestation', opts:['deforestation','logging','clearing','cutting'], tag:'Environment', hint:'noun: removal of forest' },
+  { q:'Energy from sunlight is ___ energy', a:'solar', opts:['solar','wind','renewable','clean'], tag:'Environment', hint:'adjective: from the sun' },
+  // Culture
+  { q:'The beliefs, customs and arts of a group are its ___', a:'culture', opts:['culture','tradition','identity','heritage'], tag:'Culture', hint:'noun: way of life' },
+  { q:'Something passed down through generations is part of ___', a:'heritage', opts:['heritage','tradition','legacy','history'], tag:'Culture', hint:'noun: inherited from the past' },
+  { q:'The way you see yourself and others see you is your ___', a:'identity', opts:['identity','character','personality','image'], tag:'Culture', hint:'noun: who you are' },
+  { q:'A widely held but oversimplified view of a group is a ___', a:'stereotype', opts:['stereotype','prejudice','assumption','bias'], tag:'Culture', hint:'noun: oversimplified image' },
+  { q:'The process of settling and adapting to a new country is ___', a:'integration', opts:['integration','assimilation','migration','immigration'], tag:'Culture', hint:'noun: becoming part of a society' },
+];
+
+const COLL_QS = [
+  { q:'She ___ a decision after careful thought.', a:'made', opts:['made','did','took','had'], tag:'Collocation', hint:'verb+noun: make a ___' },
+  { q:'The new law will ___ an impact on small businesses.', a:'have', opts:['have','make','do','create'], tag:'Collocation', hint:'verb+noun: have an ___' },
+  { q:'The charity aims to ___ awareness of mental health.', a:'raise', opts:['raise','increase','spread','grow'], tag:'Collocation', hint:'verb+noun: raise ___' },
+  { q:'He decided to ___ responsibility for the mistake.', a:'take', opts:['take','make','have','accept'], tag:'Collocation', hint:'verb+noun: take ___' },
+  { q:'The factory has ___ rise to serious pollution problems.', a:'given', opts:['given','led','brought','caused'], tag:'Collocation', hint:'phrase: give ___ to' },
+  { q:'The report shows a ___ improvement in test scores.', a:'significant', opts:['significant','big','major','large'], tag:'Collocation', hint:'adj+noun: ___ improvement' },
+  { q:'She is ___ concerned about climate change.', a:'deeply', opts:['deeply','very','highly','greatly'], tag:'Collocation', hint:'adv+adj: ___ concerned' },
+  { q:'The medicine is ___ available in most pharmacies.', a:'widely', opts:['widely','broadly','largely','commonly'], tag:'Collocation', hint:'adv+adj: ___ available' },
+  { q:'He made a ___ effort to improve his English.', a:'considerable', opts:['considerable','great','huge','big'], tag:'Collocation', hint:'adj+noun: ___ effort' },
+  { q:'The restaurant is ___ recommended by food critics.', a:'highly', opts:['highly','deeply','greatly','strongly'], tag:'Collocation', hint:'adv+adj: ___ recommended' },
+  { q:'The team managed to ___ progress on the project.', a:'make', opts:['make','do','have','achieve'], tag:'Collocation', hint:'verb+noun: make ___' },
+  { q:'Please ___ advantage of this limited offer.', a:'take', opts:['take','make','use','have'], tag:'Collocation', hint:'phrase: take ___ of' },
+  { q:'The policy was introduced ___ behalf of all employees.', a:'on', opts:['on','in','for','at'], tag:'Collocation', hint:'prep phrase: ___ behalf of' },
+  { q:'The company was able to ___ a profit last year.', a:'make', opts:['make','do','earn','achieve'], tag:'Collocation', hint:'verb+noun: make a ___' },
+  { q:'He tends to ___ advantage of people\'s kindness.', a:'take', opts:['take','make','use','have'], tag:'Collocation', hint:'phrase: take ___ of' },
+];
+
+let deck = [], current = 0, score = 0, missed = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+function startQuiz(mode) {
+  window._lastMode = mode;
+  let pool;
+  if (mode === 'collocations') pool = COLL_QS;
+  else if (mode === 'vocab') pool = VOCAB_QS;
+  else pool = [...VOCAB_QS, ...COLL_QS];
+
+  deck = shuffle(pool).slice(0, 10);
+  current = 0; score = 0; missed = [];
+
+  document.getElementById('quiz-start').style.display = 'none';
+  document.getElementById('quiz-result').style.display = 'none';
+  document.getElementById('quiz-area').style.display = 'block';
+
+  renderQuestion();
+
+  // best score
+  const best = localStorage.getItem('b2_quiz_best_' + mode) || 0;
+  const bs = document.getElementById('best-score');
+  if (bs) bs.textContent = 'Best: ' + best + '/10';
+}
+
+function renderQuestion() {
+  const q = deck[current];
+  document.getElementById('q-progress').textContent = `Question ${current + 1} of ${deck.length}`;
+  document.getElementById('q-bar').style.width = (current / deck.length * 100) + '%';
+  document.getElementById('q-prompt').textContent = q.q;
+  document.getElementById('q-hint').textContent = q.hint ? '💡 Hint: ' + q.hint : '';
+  document.getElementById('q-feedback').style.display = 'none';
+  document.getElementById('q-next').style.display = 'none';
+
+  const opts = shuffle(q.opts);
+  document.getElementById('q-options').innerHTML = opts.map(o =>
+    `<button class="option-btn" onclick="answer(this,'${o.replace(/'/g,"\\'")}','${q.a.replace(/'/g,"\\'")}',${JSON.stringify(q)})">${o}</button>`
+  ).join('');
+}
+
+function answer(btn, chosen, correct, q) {
+  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  const fb = document.getElementById('q-feedback');
+  if (chosen === correct) {
+    btn.classList.add('correct');
+    score++;
+    fb.style.background = '#d1fae5'; fb.style.border = '1px solid #059669'; fb.style.color = '#065f46';
+    fb.innerHTML = '✅ Correct!';
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.option-btn').forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+    fb.style.background = '#fee2e2'; fb.style.border = '1px solid #dc2626'; fb.style.color = '#991b1b';
+    fb.innerHTML = `❌ The answer is <strong>${correct}</strong>`;
+    missed.push({ q: q.q, chosen, correct, tag: q.tag });
+  }
+  fb.style.display = 'block';
+  document.getElementById('q-next').style.display = 'inline-block';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= deck.length) {
+    showResult();
+  } else {
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-area').style.display = 'none';
+  document.getElementById('quiz-result').style.display = 'block';
+
+  const pct = Math.round(score / deck.length * 100);
+  const col = pct >= 80 ? '#059669' : pct >= 60 ? '#2563eb' : '#dc2626';
+  const band = pct >= 80 ? 'Excellent! 🎉' : pct >= 60 ? 'Good — keep practising' : 'Keep going — review these words';
+
+  document.getElementById('r-score').innerHTML = `<span style="color:${col}">${score}/${deck.length}</span>`;
+  document.getElementById('r-band').textContent = band;
+
+  // save best
+  const key = 'b2_quiz_best_' + (window._lastMode || 'all');
+  const prev = parseInt(localStorage.getItem(key) || '0');
+  if (score > prev) localStorage.setItem(key, score);
+
+  const missedEl = document.getElementById('r-missed');
+  if (missed.length === 0) {
+    missedEl.innerHTML = '<div style="text-align:center;color:#059669;font-weight:600;padding:12px">Perfect score! All correct.</div>';
+  } else {
+    missedEl.innerHTML = `<div style="font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Review these (${missed.length}):</div>` +
+      missed.map(m => `
+        <div class="missed-item">
+          <span class="tag-chip" style="background:#ede9fe;color:#7c3aed">${m.tag}</span>
+          <span style="color:var(--text)">${m.q}</span><br>
+          <span class="wrong-ans">${m.chosen}</span>
+          → <span class="right-ans">${m.correct}</span>
+        </div>`).join('');
+  }
+}
+
+// Show best score on load
+(function() {
+  const best = localStorage.getItem('b2_quiz_best_all');
+  if (best) document.getElementById('best-score').textContent = 'Best (all topics): ' + best + '/10';
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎧</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Listening · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<style>
+.paper-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 40px; }
+.paper-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; box-shadow: var(--shadow); display: block; color: inherit;
+  text-decoration: none; transition: transform .15s, box-shadow .15s;
+}
+.paper-card:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(27,42,74,.14); text-decoration: none; }
+.paper-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+.paper-name { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.paper-meta { font-size: .78rem; color: var(--muted); margin-bottom: 14px; line-height: 1.5; }
+.score-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 6px;
+  font-size: .75rem; font-weight: 700;
+}
+.tip-box {
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 20px 24px; margin-bottom: 28px; box-shadow: var(--shadow);
+}
+.tip-row { display: flex; gap: 10px; margin-bottom: 10px; font-size: .88rem; color: var(--text); }
+.tip-icon { font-size: 1rem; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../progress.html" class="nav-link">📊 My Progress</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Listening</span>
+        <a href="index.html" class="nav-link active">🎧 All Papers</a>
+        <a href="paper1.html" class="nav-link">Paper 1</a>
+        <a href="paper2.html" class="nav-link">Paper 2</a>
+        <a href="paper3.html" class="nav-link">Paper 3</a>
+        <a href="paper6.html" class="nav-link">Paper 6</a>
+        <a href="paper7.html" class="nav-link">Paper 7</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Other Skills</span>
+        <a href="../reading/paper1.html" class="nav-link">📖 Reading</a>
+        <a href="../writing/index.html" class="nav-link">✍️ Writing</a>
+        <a href="../speaking/paper1.html" class="nav-link">🗣️ Speaking</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb"><a href="../index.html">Home</a> › Listening</div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">Listening Practice</h1>
+      <p class="page-subtitle">5 paper types · 26 marks · ~30 minutes · all with transcripts and gap-fill exercises</p>
+
+      <!-- Exam info strip -->
+      <div style="display:flex;gap:24px;flex-wrap:wrap;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 24px;margin-bottom:24px;box-shadow:var(--shadow)">
+        <div><div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px">Total marks</div><div style="font-size:1.1rem;font-weight:700">26</div></div>
+        <div><div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px">Time</div><div style="font-size:1.1rem;font-weight:700">~30 min</div></div>
+        <div><div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px">Paper types</div><div style="font-size:1.1rem;font-weight:700">5 (P1, P2, P3, P6, P7)</div></div>
+        <div><div style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px">Format</div><div style="font-size:1.1rem;font-weight:700">Gap-fill · MC · matching</div></div>
+      </div>
+
+      <!-- Papers grid -->
+      <div class="paper-grid" id="paper-grid"></div>
+
+      <!-- Strategy tips -->
+      <div style="font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">🎯 Key Strategies</div>
+      <div class="tip-box">
+        <div class="tip-row"><span class="tip-icon">👁</span><span><strong>Preview the questions first.</strong> Before you listen, read through the questions or gaps carefully. This tells you what to listen for.</span></div>
+        <div class="tip-row"><span class="tip-icon">✏️</span><span><strong>Write as you listen.</strong> Don't wait until the end — make notes the moment you hear the answer.</span></div>
+        <div class="tip-row"><span class="tip-icon">🔤</span><span><strong>Spelling counts.</strong> In gap-fill tasks, incorrect spelling means you lose the mark, so check your answers carefully.</span></div>
+        <div class="tip-row"><span class="tip-icon">🔄</span><span><strong>Use the second listen.</strong> In the real exam, each recording is played twice. Use the first listen for key ideas, the second for detail.</span></div>
+        <div class="tip-row"><span class="tip-icon">🎭</span><span><strong>Identify the context quickly.</strong> Speakers, situation, and tone tell you a lot. Tune in in the first 10 seconds.</span></div>
+        <div class="tip-row"><span class="tip-icon">❌</span><span><strong>Don't leave blanks.</strong> There is no negative marking, so always write something — even an educated guess.</span></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const PAPERS = [
+  {
+    id: 'paper1', href: 'paper1.html',
+    icon: '🗣️',
+    name: 'Paper 1 — Short Conversations',
+    meta: 'Multiple speakers · short exchanges · identify topic, attitude and opinion',
+    marks: 6,
+  },
+  {
+    id: 'paper2', href: 'paper2.html',
+    icon: '📻',
+    name: 'Paper 2 — Monologue',
+    meta: 'Single speaker · longer talk or announcement · note-taking and gap-fill',
+    marks: 6,
+  },
+  {
+    id: 'paper3', href: 'paper3.html',
+    icon: '💬',
+    name: 'Paper 3 — Interview or Discussion',
+    meta: 'Two or more speakers · topic-based conversation · comprehension questions',
+    marks: 6,
+  },
+  {
+    id: 'paper6', href: 'paper6.html',
+    icon: '📋',
+    name: 'Paper 6 — Note Completion',
+    meta: 'Longer recording · fill in missing words from a form or set of notes',
+    marks: 4,
+  },
+  {
+    id: 'paper7', href: 'paper7.html',
+    icon: '🎯',
+    name: 'Paper 7 — Multiple Matching',
+    meta: 'Short extracts · match speakers to statements · identify attitude or purpose',
+    marks: 4,
+  },
+];
+
+const scoreColor = (pct) => pct >= 70 ? '#059669' : pct >= 50 ? '#d97706' : '#dc2626';
+const scoreBg    = (pct) => pct >= 70 ? '#d1fae5' : pct >= 50 ? '#fef3c7' : '#fee2e2';
+
+document.getElementById('paper-grid').innerHTML = PAPERS.map(p => {
+  const saved = JSON.parse(localStorage.getItem('b2_page_listening-' + p.id.replace('paper','paper')) || '{}');
+  const hasDone = saved.score !== undefined && saved.score > 0;
+  const pct = hasDone ? Math.round(saved.score / saved.total * 100) : null;
+
+  return `
+  <a href="${p.href}" class="paper-card">
+    <span class="paper-icon">${p.icon}</span>
+    <div class="paper-name">${p.name}</div>
+    <div class="paper-meta">${p.meta}</div>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:.78rem;color:var(--muted)">${p.marks} marks</span>
+      ${hasDone
+        ? `<span class="score-badge" style="background:${scoreBg(pct)};color:${scoreColor(pct)}">${saved.score}/${saved.total} · ${pct}%</span>`
+        : `<span class="score-badge" style="background:var(--bg);color:var(--muted);border:1px solid var(--border)">Not started</span>`
+      }
+    </div>
+  </a>`;
+}).join('');
+</script>
+</body>
+</html>

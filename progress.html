@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📊</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Progress · B2 🎓</title>
+<link rel="stylesheet" href="style.css">
+<script src="ui.js"></script>
+<style>
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: var(--shadow);
+}
+.stat-label { font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.stat-value { font-size: 2rem; font-weight: 800; color: var(--text); line-height: 1.1; }
+.stat-sub { font-size: .78rem; color: var(--muted); margin-top: 4px; }
+.section-heading {
+  font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted); margin: 28px 0 12px;
+}
+.prog-row { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+.prog-name { font-size: .88rem; font-weight: 600; color: var(--text); min-width: 160px; }
+.prog-bar { flex: 1; height: 8px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 99px; transition: width .5s; }
+.prog-pct { font-size: .8rem; font-weight: 700; color: var(--muted); min-width: 38px; text-align: right; }
+.box-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.box-chip {
+  padding: 8px 16px; border-radius: 8px; font-size: .82rem; font-weight: 700;
+  display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 72px;
+}
+.box-chip-n { font-size: 1.4rem; font-weight: 800; }
+.error-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.error-chip {
+  background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 14px; font-size: .82rem;
+}
+.error-chip strong { display: block; font-size: 1.1rem; color: var(--text); }
+.empty-note { font-size: .85rem; color: var(--muted); font-style: italic; padding: 12px 0; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="progress.html" class="nav-link active">📊 My Progress</a>
+        <a href="roadmap.html" class="nav-link nav-roadmap">🗺️ My Roadmap</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Vocabulary</span>
+        <a href="vocabulary/index.html" class="nav-link">📚 All Topics</a>
+        <a href="vocabulary/review.html" class="nav-link">🔁 Smart Review</a>
+        <a href="vocabulary/collocations.html" class="nav-link">🔗 Collocations</a>
+        <a href="vocabulary/quiz.html" class="nav-link">🧠 Quick Quiz</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="writing/index.html" class="nav-link">✍️ Tasks Bank</a>
+        <a href="writing/errors.html" class="nav-link">📝 Error Log</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb"><a href="index.html">Home</a> › My Progress</div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">My Progress</h1>
+      <p class="page-subtitle">All your stats in one place — updated live from your browser storage.</p>
+
+      <!-- Top stat cards -->
+      <div class="stat-grid" id="top-stats"></div>
+
+      <!-- SRS section -->
+      <div class="section-heading">🔁 Smart Review — Spaced Repetition</div>
+      <div class="box-row" id="srs-boxes"></div>
+      <div id="srs-due-note" class="empty-note"></div>
+
+      <!-- Error Log section -->
+      <div class="section-heading">📝 Error Log</div>
+      <div class="error-row" id="error-cats"></div>
+      <div id="error-empty" class="empty-note" style="display:none">No errors logged yet — add mistakes from the <a href="writing/errors.html">Error Log</a>.</div>
+
+      <!-- Collocations section -->
+      <div class="section-heading">🔗 Collocations Saved</div>
+      <div id="coll-stat" style="font-size:.88rem;color:var(--muted);margin-bottom:20px"></div>
+
+      <!-- Papers progress -->
+      <div class="section-heading">📖 Papers Completed</div>
+      <div id="papers-progress" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;box-shadow:var(--shadow)"></div>
+
+    </div>
+  </main>
+</div>
+
+<script>
+(function() {
+  const today = () => new Date().toISOString().slice(0,10);
+
+  // ── SRS stats ────────────────────────────────────────────
+  const srsRaw = JSON.parse(localStorage.getItem('b2_srs') || '{}');
+  const TOTAL_WORDS = 120;
+  let srsNew = 0, srsLearning = 0, srsDue = 0, srsKnown = 0, srsMastered = 0;
+  const srsEntries = Object.values(srsRaw);
+  for (const s of srsEntries) {
+    if (s.box >= 5) srsMastered++;
+    else if (s.box >= 3) srsKnown++;
+    else srsLearning++;
+    if (s.due <= today()) srsDue++;
+  }
+  srsNew = TOTAL_WORDS - srsEntries.length;
+  const boxCounts = [0,0,0,0,0];
+  for (const s of srsEntries) boxCounts[Math.min(s.box,5)-1]++;
+
+  // ── Error log stats ───────────────────────────────────────
+  const errors = JSON.parse(localStorage.getItem('b2_errors') || '[]');
+  const errActive   = errors.filter(e => !e.mastered).length;
+  const errMastered = errors.filter(e => e.mastered).length;
+  const errByCat = {};
+  for (const e of errors.filter(e => !e.mastered)) {
+    errByCat[e.cat] = (errByCat[e.cat] || 0) + 1;
+  }
+
+  // ── Collocations saved ────────────────────────────────────
+  let collSaved = 0;
+  try { collSaved = JSON.parse(localStorage.getItem('b2_coll_saved') || '[]').length; } catch {}
+
+  // ── Papers progress ───────────────────────────────────────
+  const skillKeys = {
+    reading:   ['reading-paper1','reading-paper2','reading-paper3','reading-paper6','reading-paper7'],
+    listening: ['listening-paper1','listening-paper2','listening-paper3','listening-paper6','listening-paper7'],
+    writing:   ['writing-paper1','writing-paper2','writing-paper3','writing-paper6','writing-paper7'],
+    grammar:   ['grammar-passive','grammar-conditionals','grammar-modals','grammar-reported','grammar-relative','grammar-tenses','grammar-transformations'],
+  };
+  const skillDone = {};
+  for (const [skill, keys] of Object.entries(skillKeys)) {
+    let done = 0;
+    for (const k of keys) {
+      const d = JSON.parse(localStorage.getItem('b2_page_' + k) || '{}');
+      if (d.score !== undefined && d.score > 0) done++;
+    }
+    skillDone[skill] = { done, total: keys.length };
+  }
+
+  // ── Render top stats ──────────────────────────────────────
+  const topStats = [
+    { label: 'SRS due today', value: srsDue, sub: 'words to review', color: srsDue > 0 ? '#dc2626' : '#059669' },
+    { label: 'Words mastered', value: srsMastered, sub: `of ${TOTAL_WORDS} total`, color: '#059669' },
+    { label: 'Active errors', value: errActive, sub: `${errMastered} fixed`, color: errActive > 0 ? '#d97706' : '#059669' },
+    { label: 'Collocations saved', value: collSaved, sub: 'bookmarked', color: '#7c3aed' },
+  ];
+  document.getElementById('top-stats').innerHTML = topStats.map(s => `
+    <div class="stat-card">
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-value" style="color:${s.color}">${s.value}</div>
+      <div class="stat-sub">${s.sub}</div>
+    </div>`).join('');
+
+  // ── Render SRS boxes ──────────────────────────────────────
+  const boxColors = ['#dc2626','#d97706','#2563eb','#059669','#7c3aed'];
+  const boxLabels = ['Box 1\nAgain','Box 2\nLearning','Box 3\nReview','Box 4\nKnown','Box 5\nMastered'];
+  const boxBgs    = ['#fee2e2','#fef3c7','#dbeafe','#d1fae5','#ede9fe'];
+  document.getElementById('srs-boxes').innerHTML = [
+    { label: 'New', count: srsNew, color: '#6b7280', bg: 'var(--bg)' },
+    ...boxCounts.map((c, i) => ({ label: boxLabels[i].split('\n')[1], count: c, color: boxColors[i], bg: boxBgs[i] })),
+  ].map(b => `
+    <div class="box-chip" style="background:${b.bg};color:${b.color};border:1px solid ${b.color}22">
+      <span class="box-chip-n">${b.count}</span>
+      <span>${b.label}</span>
+    </div>`).join('');
+
+  const dueNote = document.getElementById('srs-due-note');
+  if (srsDue > 0) {
+    dueNote.innerHTML = `<strong>${srsDue} word${srsDue>1?'s':''}</strong> due — <a href="vocabulary/review.html">start review →</a>`;
+    dueNote.style.fontStyle = 'normal';
+  } else if (srsEntries.length === 0) {
+    dueNote.textContent = 'No words studied yet — start Smart Review to begin.';
+  } else {
+    dueNote.textContent = 'All caught up! Check back tomorrow.';
+  }
+
+  // ── Render error categories ───────────────────────────────
+  const catEl = document.getElementById('error-cats');
+  const cats = Object.entries(errByCat).sort((a,b) => b[1]-a[1]);
+  if (cats.length === 0) {
+    catEl.style.display = 'none';
+    document.getElementById('error-empty').style.display = 'block';
+  } else {
+    catEl.innerHTML = cats.map(([cat, n]) => `
+      <div class="error-chip">
+        <strong>${n}</strong>${cat}
+      </div>`).join('');
+  }
+
+  // ── Render collocations ───────────────────────────────────
+  document.getElementById('coll-stat').innerHTML = collSaved > 0
+    ? `You've saved <strong>${collSaved}</strong> collocations. <a href="vocabulary/collocations.html">Review them →</a>`
+    : 'No collocations bookmarked yet — browse the <a href="vocabulary/collocations.html">Collocation Bank</a> and save the ones you want to remember.';
+
+  // ── Render papers progress ────────────────────────────────
+  const skillIcons = { reading:'📖', listening:'🎧', writing:'✍️', grammar:'📐' };
+  const skillColors = { reading:'#2563eb', listening:'#059669', writing:'#7c3aed', grammar:'#d97706' };
+  document.getElementById('papers-progress').innerHTML = Object.entries(skillDone).map(([skill, {done, total}]) => {
+    const pct = Math.round(done / total * 100);
+    return `<div class="prog-row">
+      <div class="prog-name">${skillIcons[skill]} ${skill.charAt(0).toUpperCase()+skill.slice(1)}</div>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%;background:${skillColors[skill]}"></div></div>
+      <div class="prog-pct">${done}/${total}</div>
+    </div>`;
+  }).join('');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✍️</text></svg>">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Writing Tasks Bank · B2 🎓</title>
+<link rel="stylesheet" href="../style.css">
+<script src="../db.js"></script>
+<script src="../ui.js"></script>
+<script src="../ai.js" defer></script>
+<style>
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }
+.filter-btn {
+  padding: 7px 16px; border-radius: 20px; border: 1.5px solid var(--border);
+  background: var(--bg); color: var(--text); font-size: .82rem; font-weight: 600;
+  cursor: pointer; transition: background .12s, border-color .12s;
+}
+.filter-btn.active, .filter-btn:hover { background: #7c3aed; border-color: #7c3aed; color: #fff; }
+.task-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  margin-bottom: 20px; box-shadow: var(--shadow); overflow: hidden;
+}
+.task-header {
+  padding: 18px 22px; display: flex; align-items: center; gap: 14px; cursor: pointer;
+}
+.task-type-chip {
+  padding: 4px 10px; border-radius: 6px; font-size: .72rem; font-weight: 700;
+  white-space: nowrap;
+}
+.task-title { font-size: .95rem; font-weight: 700; color: var(--text); flex: 1; }
+.task-meta  { font-size: .75rem; color: var(--muted); }
+.task-body  { display: none; padding: 0 22px 20px; border-top: 1px solid var(--border); }
+.task-body.open { display: block; }
+.task-prompt {
+  background: var(--bg); border-left: 3px solid #7c3aed;
+  border-radius: 0 8px 8px 0; padding: 14px 18px; margin: 16px 0;
+  font-size: .88rem; line-height: 1.7; color: var(--text);
+}
+.model-btn {
+  background: var(--bg); border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 8px 16px; font-size: .82rem; font-weight: 600; cursor: pointer; color: var(--text);
+  margin-bottom: 12px;
+}
+.model-answer {
+  display: none; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px 20px; font-size: .88rem; line-height: 1.8;
+  color: var(--text); margin-bottom: 16px;
+}
+.model-answer.open { display: block; }
+.word-count { font-size: .75rem; color: var(--muted); margin-top: 6px; }
+.ai-error { background:#fee2e2;border:1px solid #dc2626;border-radius:8px;padding:10px 14px;color:#991b1b;font-size:.82rem; }
+.ai-loading { color:var(--muted);font-size:.85rem;padding:10px 0; }
+</style>
+</head>
+<body>
+<div class="site-wrap">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="text-decoration:none">
+        <span class="site-title">B2 Communicator<br>Practice</span>
+        <span class="level-tag">LanguageCert · CEFR B2</span>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <span class="nav-section-label">Overview</span>
+        <a href="../index.html" class="nav-link">🏠 Dashboard</a>
+        <a href="../progress.html" class="nav-link">📊 My Progress</a>
+      </div>
+      <div class="nav-section">
+        <span class="nav-section-label">Writing</span>
+        <a href="index.html" class="nav-link active">✍️ Tasks Bank</a>
+        <a href="paper1.html" class="nav-link">Paper 1</a>
+        <a href="paper2.html" class="nav-link">Paper 2</a>
+        <a href="paper3.html" class="nav-link">Paper 3</a>
+        <a href="paper6.html" class="nav-link">Paper 6</a>
+        <a href="paper7.html" class="nav-link">Paper 7</a>
+        <a href="errors.html" class="nav-link">📝 Error Log</a>
+      </div>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="page-header">
+      <div class="breadcrumb"><a href="../index.html">Home</a> › Writing Tasks Bank</div>
+    </div>
+    <div class="page-content">
+      <h1 class="page-title">Writing Tasks Bank</h1>
+      <p class="page-subtitle">20 B2 prompts · formal email, report, essay, review, article · model answers + AI checker</p>
+
+      <div class="filter-row" id="filters">
+        <button class="filter-btn active" onclick="filter('all',this)">All (20)</button>
+        <button class="filter-btn" onclick="filter('email',this)">📧 Email (5)</button>
+        <button class="filter-btn" onclick="filter('report',this)">📋 Report (4)</button>
+        <button class="filter-btn" onclick="filter('essay',this)">📄 Essay (5)</button>
+        <button class="filter-btn" onclick="filter('review',this)">⭐ Review (3)</button>
+        <button class="filter-btn" onclick="filter('article',this)">📰 Article (3)</button>
+      </div>
+
+      <div id="tasks-list"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const TASKS = [
+  // ── EMAILS ──────────────────────────────────────────────
+  {
+    type:'email', title:'Formal complaint to a hotel',
+    target:'180–200 words', marks:'24',
+    prompt:`You stayed at the Grand View Hotel last week and were very disappointed with your stay. The room was noisy, the breakfast was poor quality, and the Wi-Fi did not work.
+
+Write a formal letter of complaint to the hotel manager. In your letter you should:
+• explain why you are writing
+• describe the problems you experienced
+• say what action you would like the hotel to take`,
+    model:`Dear Hotel Manager,
+
+I am writing to express my deep dissatisfaction with the service I received during my stay at the Grand View Hotel from 12th to 14th August.
+
+First of all, the room I was allocated was situated directly above the hotel bar, which meant that I was unable to sleep before midnight due to excessive noise. Furthermore, the breakfast provided each morning fell far below the standard advertised on your website. The selection was extremely limited and the food was lukewarm. In addition, despite being assured that Wi-Fi was available throughout the hotel, I was unable to connect to the network at any point during my stay.
+
+I would be grateful if you could look into these matters as a matter of urgency. I would appreciate a full refund for at least one night's accommodation, as the conditions made my stay thoroughly unenjoyable.
+
+I look forward to your prompt response.
+
+Yours faithfully,
+A. Guest`
+  },
+  {
+    type:'email', title:'Formal application for a volunteer position',
+    target:'180–200 words', marks:'24',
+    prompt:`You have seen an advertisement for volunteers at a local community centre. The centre is looking for people to help run activities for young people aged 10–16.
+
+Write a formal email to the centre director. In your email you should:
+• explain why you are interested in the role
+• describe your relevant skills and experience
+• ask about the time commitment required`,
+    model:`Dear Mr/Ms [Name],
+
+I am writing to apply for the volunteer position advertised on your website. Having always had a strong interest in working with young people, I was immediately drawn to this opportunity.
+
+Currently, I am studying Education at university, which has given me a thorough understanding of child development and group dynamics. Moreover, I have two years of experience coaching a junior football team at a local club, where I regularly organised activities and resolved conflicts between team members. I am confident that these skills would be of considerable benefit to your centre.
+
+I am particularly interested in helping to run creative arts and sports activities, as I believe these are highly effective ways of building confidence in young people.
+
+Could you please let me know the number of hours required per week and whether training is provided? I would also be grateful for any further information about the programme.
+
+I look forward to hearing from you.
+
+Yours sincerely,
+[Your name]`
+  },
+  {
+    type:'email', title:'Request for information about a language course',
+    target:'180–200 words', marks:'24',
+    prompt:`You have seen an advertisement for an intensive English language course abroad. Before you apply, you need more information.
+
+Write a formal email to the language school. In your email you should:
+• say how you heard about the course
+• ask about accommodation options and costs
+• enquire about the level of English required to join`,
+    model:`Dear Sir or Madam,
+
+I am writing to enquire about the intensive English course advertised in the June edition of International Student Magazine.
+
+I am currently a B2-level student of English and am hoping to improve my language skills with a view to taking a Cambridge examination later this year. I am therefore very interested in attending your summer programme.
+
+Could you please provide more details about the accommodation options available? In particular, I would like to know whether students have the choice of staying with a host family or in student residences, and what the approximate weekly costs are for each option.
+
+Furthermore, I would be grateful if you could clarify the level of English required to enrol on the intensive course. Is a placement test conducted on arrival, or are students required to hold a recognised qualification?
+
+I look forward to receiving further details and would appreciate any brochures or course timetables you are able to send.
+
+Yours faithfully,
+[Your name]`
+  },
+  {
+    type:'email', title:'Email to a friend recommending a city to visit',
+    target:'180–200 words', marks:'24',
+    prompt:`Your English-speaking friend is planning a holiday in your country and has asked you to recommend a city to visit.
+
+Write an email to your friend. In your email you should:
+• recommend a city and explain why
+• suggest two or three things to do there
+• give some practical advice about the visit`,
+    model:`Hi Sarah,
+
+Great to hear from you! I'm so excited that you're finally coming to visit. I've given it some thought and I'd definitely recommend Kraków — it's a city you'll absolutely love.
+
+Kraków has a stunning old town which has been beautifully preserved. The Main Square is said to be one of the largest medieval squares in Europe and is particularly atmospheric in the evening. You simply must visit Wawel Castle, which sits on a hill overlooking the city — the views are breathtaking. If you're interested in history, I'd also suggest visiting the Schindler's Factory Museum, which is genuinely fascinating.
+
+Practically speaking, the city is very easy to get around on foot since the old town is quite compact. I'd advise booking accommodation in advance, especially in summer, as the city gets very busy with tourists. Also, the local food is fantastic and very affordable — try the restaurant I've recommended below!
+
+Let me know your dates and I'll see if I can join you for part of the trip.
+
+Lots of love,
+[Your name]`
+  },
+  {
+    type:'email', title:'Formal email responding to a job advertisement',
+    target:'180–200 words', marks:'24',
+    prompt:`You have seen an advertisement for a part-time receptionist at a sports centre. The advertisement says candidates should have good communication skills and experience of working with the public.
+
+Write a formal email applying for the position. In your email you should:
+• explain why you are suitable for the job
+• give details of your relevant experience
+• say when you would be available for an interview`,
+    model:`Dear Hiring Manager,
+
+I am writing in response to your advertisement for a part-time receptionist, which I saw posted on the Sports Centre noticeboard last week.
+
+I believe I am an excellent candidate for this role. I have spent two years working in a busy café, where I regularly dealt with customer enquiries, handled complaints professionally and managed bookings. This experience has given me strong communication skills and the ability to remain calm under pressure, even during peak periods.
+
+In addition, I am a keen sports enthusiast and regularly use local leisure facilities, which means I am already familiar with the kinds of enquiries that visitors are likely to make. I also have basic IT skills, including experience with booking software, which I believe would allow me to settle into the role quickly.
+
+I am available for interview on weekdays after 3 pm and all day at weekends. I would be delighted to discuss my application further at your convenience.
+
+Thank you for considering my application.
+
+Yours sincerely,
+[Your name]`
+  },
+
+  // ── REPORTS ──────────────────────────────────────────────
+  {
+    type:'report', title:'Report on facilities at your college',
+    target:'180–200 words', marks:'24',
+    prompt:`Your college principal has asked students to write a report on the current facilities at the college and to make recommendations for improvements.
+
+Write your report. In your report you should:
+• describe the current situation
+• identify two or three problems
+• make recommendations for how to improve the facilities`,
+    model:`Report on College Facilities
+
+Introduction
+The aim of this report is to assess the current facilities at Westfield College and to put forward recommendations for improvement, based on feedback gathered from students during the past term.
+
+Current Situation
+The college is equipped with a library, three computer rooms and a canteen. While these facilities are adequate for general use, several significant shortcomings have been identified.
+
+Problems
+To begin with, the library opening hours are insufficient, as it closes at 5 pm, which prevents many part-time students from using it. Furthermore, the computer rooms frequently suffer from technical problems, with several machines out of order at any given time. The canteen, meanwhile, offers a limited menu with few healthy options.
+
+Recommendations
+It is strongly recommended that the library extend its opening hours until at least 8 pm on weekdays. In addition, the IT department should conduct regular maintenance checks to ensure all equipment is functioning correctly. Finally, the canteen should introduce a wider range of nutritious meal options to promote student wellbeing.
+
+With these improvements in place, student satisfaction is likely to increase considerably.`
+  },
+  {
+    type:'report', title:'Report on tourism in your area',
+    target:'180–200 words', marks:'24',
+    prompt:`The local council has asked residents to write a report on tourism in the area. They want to know about the advantages and disadvantages of tourism and what could be done to manage it better.
+
+Write your report for the council.`,
+    model:`Report on Tourism in the Local Area
+
+Introduction
+This report has been prepared in response to the council's request for resident feedback on the impact of tourism in the local area. Information was gathered through a survey of 50 residents conducted in July.
+
+Advantages of Tourism
+Tourism brings considerable economic benefits to the area. Many local businesses — particularly shops, restaurants and hotels — depend heavily on visitor income, especially during summer months. In addition, tourism has encouraged investment in local infrastructure, including improved transport links and the restoration of historic buildings.
+
+Disadvantages of Tourism
+Despite these benefits, tourism creates several problems. Traffic congestion has worsened significantly in recent years, and parking in the town centre is increasingly difficult for residents. Moreover, some residents have expressed concern about the rise in accommodation costs, which many attribute to the growth of short-term holiday lets.
+
+Recommendations
+The council should consider introducing a visitor levy to fund infrastructure improvements. It would also be advisable to promote off-season tourism in order to reduce pressure during peak months.
+
+Conclusion
+With careful management, tourism can continue to benefit the area without compromising quality of life for residents.`
+  },
+  {
+    type:'report', title:'Report on a local sports event',
+    target:'180–200 words', marks:'24',
+    prompt:`You helped to organise a charity sports day at your school. Your headteacher has asked you to write a report on the event.
+
+Write your report. Include:
+• what happened on the day
+• what went well and what did not go well
+• recommendations for future events`,
+    model:`Report on the Annual Charity Sports Day
+
+Introduction
+This report provides an overview of the charity sports day held on 10th June, including an evaluation of its successes and areas for improvement.
+
+Overview of the Event
+The event was attended by approximately 200 students and 50 members of the public. Activities included a 5km fun run, relay races and a penalty shoot-out competition. A total of £1,400 was raised for the local food bank.
+
+Successes
+The event was, on the whole, a great success. Participation levels exceeded expectations, and the atmosphere was highly positive throughout the day. The catering arrangements worked extremely well, with food stalls provided by local businesses who donated their profits to the cause.
+
+Areas for Improvement
+Unfortunately, the event suffered from organisational issues. In particular, the timetable was not adhered to, causing several activities to run simultaneously. Additionally, a lack of signage meant that some participants struggled to locate specific events.
+
+Recommendations
+For future events, it is recommended that a detailed schedule be shared with all participants in advance. Clear signposting should also be put in place across the venue.`
+  },
+  {
+    type:'report', title:'Report on students' use of technology',
+    target:'180–200 words', marks:'24',
+    prompt:`Your school has asked you to write a report on how students use technology in their studies. The school wants to know whether more technology would benefit students.
+
+Write your report.`,
+    model:`Report on Students' Use of Technology
+
+Introduction
+This report examines how students at our school currently use technology for academic purposes and evaluates whether greater access to digital tools would improve learning outcomes.
+
+Current Usage
+The majority of students use technology primarily for research and for completing written assignments. Online educational platforms, such as video tutorials and language learning applications, are also widely used, particularly by students studying languages. However, access to devices is unequal, as not all students own a personal laptop.
+
+Benefits of Increased Technology Use
+There is strong evidence to suggest that technology enhances learning. Interactive resources can make complex topics more accessible, while online collaboration tools enable students to work together outside school hours. Moreover, digital submissions reduce the environmental impact of paper use.
+
+Concerns
+Some students and teachers have raised concerns about distraction. Without proper guidelines, devices may be used for non-academic purposes during lessons.
+
+Recommendations
+The school should invest in a loan scheme for laptops and introduce clear policies on device use in the classroom. Digital literacy training should also be provided for both students and staff.`
+  },
+
+  // ── ESSAYS ───────────────────────────────────────────────
+  {
+    type:'essay', title:'Should schools ban smartphones?',
+    target:'180–200 words', marks:'24',
+    prompt:`Some people think that smartphones should be completely banned in schools. Others believe that students should be allowed to use them.
+
+Write an essay discussing both views. Give your own opinion.`,
+    model:`The question of whether smartphones should be banned in schools is a highly contentious one. While some argue that they are a distraction, others maintain that they are a valuable educational resource.
+
+Those in favour of a ban point out that smartphones frequently disrupt lessons. Students are often tempted to check social media or send messages during class, which can significantly reduce their focus and academic performance. Furthermore, the constant pressure to remain connected can contribute to anxiety and poor mental health among young people.
+
+On the other hand, those who oppose a ban argue that smartphones, when used appropriately, can greatly enhance learning. They provide instant access to information, allow students to use educational apps, and enable teachers to incorporate interactive activities into their lessons. In addition, teaching students to use technology responsibly is an important skill for modern life.
+
+In my view, an outright ban is neither practical nor desirable. Instead, schools should implement clear guidelines that restrict personal use during lessons while permitting educational use under supervision. This approach balances the need for focus with the reality that technology is an integral part of contemporary education.`
+  },
+  {
+    type:'essay', title:'Is social media good or bad for society?',
+    target:'180–200 words', marks:'24',
+    prompt:`Social media has transformed the way people communicate. Some people believe its effects are largely positive; others think it has done more harm than good.
+
+Write an essay discussing both views. Give your own opinion and support it with reasons and examples.`,
+    model:`Social media has undoubtedly changed the way in which we interact, yet its overall impact on society remains a subject of heated debate.
+
+Proponents of social media argue that it has made communication easier and more accessible than ever before. People are now able to maintain relationships across great distances and connect with others who share their interests. Furthermore, social media has given a voice to individuals and groups who might otherwise struggle to be heard, contributing to greater social awareness and political engagement.
+
+Critics, however, highlight several serious drawbacks. The spread of misinformation is a particular concern, as false information can be shared widely before it is fact-checked. Moreover, studies have linked heavy social media use to increased rates of anxiety and depression, particularly among teenagers who compare their lives to the apparently perfect images presented online.
+
+In my opinion, social media is neither inherently good nor bad; its value depends on how it is used. With greater digital literacy education and stronger regulation of harmful content, it is possible to harness the benefits of social media while minimising its negative consequences.`
+  },
+  {
+    type:'essay', title:'Should public transport be free?',
+    target:'180–200 words', marks:'24',
+    prompt:`Some people think public transport should be free for everyone. Others believe people should always pay to use it.
+
+Write an essay giving your opinion. Include arguments on both sides.`,
+    model:`The proposal to make public transport free for all citizens is one that attracts both enthusiastic support and considerable scepticism. Both sides of the argument deserve careful consideration.
+
+Those in favour argue that free public transport would reduce traffic congestion and air pollution significantly, as more people would be encouraged to leave their cars at home. It would also help to alleviate financial hardship for low-income households, for whom transport costs represent a substantial expense. Luxembourg and several other countries have already implemented free public transport schemes with promising results.
+
+Opponents, however, raise important concerns about funding. Public transport systems require constant investment in infrastructure, staff and vehicles. Without passenger revenue, governments would need to raise taxes or divert funds from other essential services, which many consider an unacceptable trade-off. Critics also argue that targeted subsidies for those on low incomes would be a more efficient solution.
+
+In my view, making public transport free would bring significant environmental and social benefits. Provided that adequate funding mechanisms are in place, the long-term advantages outweigh the costs, and such a policy merits serious consideration.`
+  },
+  {
+    type:'essay', title:'The impact of remote working',
+    target:'180–200 words', marks:'24',
+    prompt:`Working from home has become much more common in recent years. Some people believe this trend has been largely positive. Others think it has caused more problems than it has solved.
+
+Write an essay discussing both views. Give your own opinion.`,
+    model:`Remote working has become a defining feature of modern professional life, particularly since the global pandemic of 2020. Its consequences, however, remain a matter of considerable debate.
+
+Advocates of home working argue that it offers significant advantages for employees. Removing the daily commute saves both time and money, and many workers report greater productivity in a quieter home environment. Moreover, flexible working arrangements can improve work-life balance, leading to higher levels of job satisfaction and reduced staff turnover.
+
+Conversely, critics point out that working from home can be deeply isolating. The absence of face-to-face interaction with colleagues may hinder collaboration and weaken team cohesion. There are also concerns about the blurring of boundaries between professional and personal life, which can lead to employees feeling unable to switch off. For those in small homes or with young children, maintaining concentration can be particularly challenging.
+
+On balance, I believe that a hybrid model — combining time in the office with working from home — offers the most effective solution. This approach allows individuals to enjoy the benefits of flexibility while preserving the social and collaborative elements of office life.`
+  },
+  {
+    type:'essay', title:'Should wild animals be kept in zoos?',
+    target:'180–200 words', marks:'24',
+    prompt:`Some people believe that keeping wild animals in zoos is cruel and should be banned. Others argue that zoos play an important role in conservation.
+
+Write an essay giving your views. Consider arguments on both sides.`,
+    model:`The debate over whether wild animals should be kept in captivity is one that raises fundamental questions about our relationship with the natural world.
+
+Critics of zoos argue that confining animals to enclosures, no matter how spacious, is inherently cruel. Animals in the wild roam vast territories, and no zoo environment can adequately replicate their natural habitat. There is compelling evidence that captive animals often develop abnormal behaviours as a result of stress and confinement. On these grounds, opponents contend that zoos should be phased out entirely.
+
+Supporters of zoos, on the other hand, emphasise their vital role in conservation. Many species, such as the Arabian oryx and the California condor, have been saved from extinction through captive breeding programmes. Zoos also contribute to scientific research, raise public awareness of endangered species, and generate funding for habitat protection projects worldwide.
+
+In my view, while the ethical concerns surrounding zoos are legitimate, we should not overlook their contribution to conservation. Rather than abolishing zoos, the focus should be on improving standards of animal welfare and ensuring that all institutions prioritise education and conservation above entertainment.`
+  },
+
+  // ── REVIEWS ──────────────────────────────────────────────
+  {
+    type:'review', title:'Review of a film you have seen recently',
+    target:'180–200 words', marks:'24',
+    prompt:`A local English-language magazine is asking readers to submit reviews of films they have seen recently. Write a review of a film you have seen.
+
+In your review you should:
+• give a brief summary of the film
+• comment on the performances and direction
+• say whether you would recommend it and why`,
+    model:`Review: The Quiet Storm
+
+The Quiet Storm is a thought-provoking drama directed by Ana Rodrigues, released earlier this year to widespread critical acclaim. The film tells the story of a retired music teacher who discovers a box of old letters that leads her to question her entire past.
+
+The performances are outstanding throughout. Lead actress Maria Voss delivers a nuanced and deeply moving portrayal of a woman confronting painful memories, while the supporting cast provides excellent balance, adding moments of warmth and gentle humour. Rodrigues's direction is particularly impressive; she allows the story to unfold at a deliberate pace, which some viewers may find slow, but which ultimately gives the film its emotional weight.
+
+The cinematography deserves special mention. The grey tones of the winter landscape mirror the protagonist's mood beautifully, creating an atmosphere that lingers long after the credits roll.
+
+Overall, The Quiet Storm is a quietly powerful film that rewards patient viewing. While it may not appeal to those seeking fast-paced entertainment, anyone who appreciates thoughtful, character-driven cinema will find it deeply satisfying. Highly recommended.`
+  },
+  {
+    type:'review', title:'Review of a restaurant',
+    target:'180–200 words', marks:'24',
+    prompt:`An English-language travel website is asking visitors to submit reviews of restaurants they have visited. Write a review of a restaurant you have been to.
+
+Your review should cover: the food, the atmosphere and the service. Say whether you would recommend it.`,
+    model:`Review: Casa del Mar, Lisbon ⭐⭐⭐⭐⭐
+
+Casa del Mar is a hidden gem tucked away in Lisbon's historic Alfama district, and it is, without doubt, one of the finest dining experiences I have had in recent memory.
+
+The menu focuses on traditional Portuguese seafood, with an emphasis on freshness and simplicity. The grilled sea bass was exceptional — perfectly seasoned and served with a rich lemon butter sauce that complemented the delicate fish beautifully. The desserts, particularly the pastel de nata, were equally impressive.
+
+The atmosphere is wonderfully intimate, with exposed stone walls and soft lighting creating a romantic, unhurried ambience. On the evening of our visit, a live musician played traditional fado music, which added enormously to the experience.
+
+Service was attentive without being intrusive. Our waiter was knowledgeable about the menu and offered thoughtful wine recommendations to accompany each course. Prices are on the higher end but, given the quality of the food and service, they represent excellent value.
+
+I would wholeheartedly recommend Casa del Mar to anyone visiting Lisbon who is looking for an authentic and memorable dining experience.`
+  },
+  {
+    type:'review', title:'Review of a book',
+    target:'180–200 words', marks:'24',
+    prompt:`A student magazine is collecting reviews of books that students have read recently. Write a review of a book you have read.
+
+In your review you should:
+• briefly describe what the book is about
+• comment on the writing style and characters
+• say whether you would recommend it and to whom`,
+    model:`Review: The Midnight Library by Matt Haig
+
+The Midnight Library is a deeply original and uplifting novel that has already become a modern classic. At its heart, it is the story of Nora Seed, a woman who finds herself in a mysterious library between life and death, where each book represents a different version of the life she could have lived.
+
+Haig's writing style is accessible and warm, with moments of genuine philosophical depth that never feel heavy-handed. The concept is executed with great skill — each alternative life that Nora explores reveals something new about the choices we make and the regrets we carry. The central character is beautifully drawn; her vulnerability and self-doubt feel entirely authentic.
+
+While some readers might find the pacing uneven in places, the emotional impact of the story is undeniable. The novel's central message — that it is never too late to find meaning in life — is delivered with subtlety and sincerity.
+
+I would recommend The Midnight Library to anyone who enjoys character-driven fiction with a philosophical edge. It is particularly suited to readers who appreciate stories that leave them reflecting long after the final page.`
+  },
+
+  // ── ARTICLES ─────────────────────────────────────────────
+  {
+    type:'article', title:'The importance of learning a foreign language',
+    target:'180–200 words', marks:'24',
+    prompt:`You have been asked to write an article for your school magazine about the benefits of learning a foreign language.
+
+Write your article. You should:
+• discuss the practical benefits
+• mention the cultural benefits
+• encourage your readers to start learning a new language`,
+    model:`Why Learning a Foreign Language Could Change Your Life
+
+In an increasingly connected world, the ability to speak more than one language is a skill that can open doors in ways that few others can. Yet many people still dismiss language learning as too difficult or too time-consuming. Here is why that view deserves to be challenged.
+
+The practical advantages are undeniable. Being bilingual significantly improves your career prospects, particularly in fields such as business, diplomacy and tourism. Employers consistently report that candidates who speak a second language stand out in competitive job markets.
+
+Beyond professional benefits, learning a language offers a window into an entirely different culture. When you can read a novel, watch a film or hold a conversation in another language, you gain insights into a way of thinking that simply cannot be translated. This cultural understanding fosters empathy and broadens your perspective in ways that are difficult to quantify.
+
+Perhaps most surprisingly, research has shown that learning a language strengthens memory, improves concentration and may even delay the onset of cognitive decline in later life.
+
+So, whether you choose French, Mandarin or Swahili, there has never been a better time to start. Your future self will thank you.`
+  },
+  {
+    type:'article', title:'How to reduce stress as a student',
+    target:'180–200 words', marks:'24',
+    prompt:`You have been asked to write an article for a student magazine giving advice on how to manage stress effectively.
+
+Write your article. Include practical advice and try to engage your readers.`,
+    model:`Stressed? Here's What Actually Helps
+
+Let's be honest: student life is stressful. Deadlines, exams, social pressures — it can all feel overwhelming at times. But the good news is that stress is manageable, and a few simple strategies can make a significant difference.
+
+First and foremost, prioritise sleep. It sounds obvious, but it is remarkable how many students sacrifice sleep in favour of extra study time. Research consistently shows that a well-rested brain retains information far more effectively than an exhausted one.
+
+Secondly, break large tasks down into smaller, more manageable steps. Rather than staring at a blank page and panicking, try writing down three small things you can achieve today. This approach builds momentum and reduces the paralysing effect of feeling overwhelmed.
+
+Physical activity is another powerful tool. Even a 20-minute walk can reduce anxiety and improve your mood dramatically. And do not underestimate the value of talking to someone — whether a friend, family member or counsellor.
+
+Finally, remember that some stress is entirely normal. The aim is not to eliminate it entirely, but to prevent it from taking control. You are more capable than you think.`
+  },
+  {
+    type:'article', title:'The future of travel',
+    target:'180–200 words', marks:'24',
+    prompt:`A travel magazine has asked readers to write an article about how they think travel will change in the future.
+
+Write your article. Consider both positive and negative developments.`,
+    model:`The Future of Travel: Exciting, Uncertain and Greener?
+
+Travel has always evolved alongside technology, and the coming decades promise changes more dramatic than anything we have seen before. But will these changes be for better or worse?
+
+On the optimistic side, advances in electric aviation and hydrogen-powered aircraft suggest that flying may soon become far less damaging to the environment. High-speed rail networks are expanding rapidly across Europe and Asia, offering a cleaner alternative to short-haul flights. Meanwhile, digital technology is transforming the travel experience itself — from AI-powered itinerary planning to virtual reality previews of destinations.
+
+However, not all developments are cause for celebration. Overtourism remains a critical challenge, with iconic destinations such as Venice and Machu Picchu struggling to cope with visitor numbers. As travel becomes cheaper and more accessible, this pressure is likely to intensify unless managed thoughtfully.
+
+The rise of "set-jetting" — visiting locations made famous by films and television series — is also creating new pressures on fragile environments and local communities.
+
+The future of travel, then, is one of great possibility but also significant responsibility. The choices we make as travellers over the next decade will shape the world we leave behind.`
+  },
+];
+
+const TYPE_COLORS = {
+  email:  { bg:'#dbeafe', color:'#1d4ed8' },
+  report: { bg:'#d1fae5', color:'#065f46' },
+  essay:  { bg:'#ede9fe', color:'#6d28d9' },
+  review: { bg:'#fef3c7', color:'#92400e' },
+  article:{ bg:'#fee2e2', color:'#991b1b' },
+};
+const TYPE_ICONS = { email:'📧', report:'📋', essay:'📄', review:'⭐', article:'📰' };
+
+let activeFilter = 'all';
+
+function filter(type, btn) {
+  activeFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTasks();
+}
+
+function renderTasks() {
+  const filtered = activeFilter === 'all' ? TASKS : TASKS.filter(t => t.type === activeFilter);
+  document.getElementById('tasks-list').innerHTML = filtered.map((t, i) => {
+    const { bg, color } = TYPE_COLORS[t.type];
+    const icon = TYPE_ICONS[t.type];
+    const id = 'task-' + i;
+    return `
+    <div class="task-card" data-type="${t.type}">
+      <div class="task-header" onclick="toggleTask('${id}')">
+        <span class="task-type-chip" style="background:${bg};color:${color}">${icon} ${t.type.charAt(0).toUpperCase()+t.type.slice(1)}</span>
+        <div>
+          <div class="task-title">${t.title}</div>
+          <div class="task-meta">${t.target} · ${t.marks} marks</div>
+        </div>
+        <span style="font-size:.85rem;color:var(--muted);margin-left:auto">▾</span>
+      </div>
+      <div class="task-body" id="${id}">
+        <div class="task-prompt">${t.prompt.replace(/\n/g,'<br>')}</div>
+        <button class="model-btn" onclick="toggleModel('${id}-model', this)">👁 Show model answer</button>
+        <div class="model-answer" id="${id}-model">${t.model.replace(/\n\n/g,'</p><p>').replace(/^/,'<p>').replace(/$/,'</p>')}</div>
+        <div style="margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden">
+          <div style="padding:12px 16px;font-size:.82rem;font-weight:700;color:var(--muted);border-bottom:1px solid var(--border)">🤖 AI Writing Checker</div>
+          <div style="padding:14px 16px">
+            <textarea id="${id}-essay" rows="8" placeholder="Write your response here…"
+              style="width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:.87rem;line-height:1.6;resize:vertical;font-family:inherit;box-sizing:border-box"></textarea>
+            <div id="${id}-wc" class="word-count">0 words</div>
+            <button onclick="AI.checkById('${id}-essay','${id}-result')"
+              style="margin-top:10px;background:#7c3aed;color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:.86rem;font-weight:600;cursor:pointer">
+              ✅ Check my writing
+            </button>
+            <div id="${id}-result" style="display:none;margin-top:12px"></div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // word count listeners
+  document.querySelectorAll('[id$="-essay"]').forEach(ta => {
+    const wcEl = document.getElementById(ta.id.replace('-essay','-wc'));
+    if (!wcEl) return;
+    ta.addEventListener('input', () => {
+      const n = ta.value.trim().split(/\s+/).filter(Boolean).length;
+      wcEl.textContent = n + ' word' + (n !== 1 ? 's' : '');
+      wcEl.style.color = (n >= 180 && n <= 220) ? '#059669' : n > 220 ? '#dc2626' : 'var(--muted)';
+    });
+  });
+}
+
+function toggleTask(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+}
+
+function toggleModel(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+  btn.textContent = el.classList.contains('open') ? '🙈 Hide model answer' : '👁 Show model answer';
+}
+
+renderTasks();
+</script>
+</body>
+</html>
